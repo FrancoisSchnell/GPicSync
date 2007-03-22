@@ -178,7 +178,7 @@ if __name__=="__main__":
     tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=int(options.offset))
     
     for fileName in os.listdir ( options.dir ):
-        if fnmatch.fnmatch ( fileName, '*.jpg' ):
+        if fnmatch.fnmatch ( fileName, '*.JPG' ):
             print "\nFound fileName ",fileName," Processing now ..."
             geo.syncPicture(options.dir+'/'+fileName)
 

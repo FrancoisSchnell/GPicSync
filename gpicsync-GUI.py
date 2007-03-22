@@ -172,7 +172,7 @@ class GUI(wx.Frame):
             self.consoleEntry.AppendText("Beginning synchronisation with "
             +"UTC Offset="+self.utcEntry.GetValue()+"\n")
             if self.log==True:
-                f=open(self.picDir+'\\gpicsync.log','w')
+                f=open(self.picDir+'/gpicsync.log','w')
                 f.write("Synchronisation with UTC Offset="+
                 self.utcEntry.GetValue()+"\n")
                 f.write("Pictures Folder: "+self.picDir+"\n")
@@ -180,11 +180,11 @@ class GUI(wx.Frame):
                 
             for fileName in os.listdir ( self.picDir ):
                 if self.stop==True: break
-                if fnmatch.fnmatch ( fileName, '*.jpg' ):
+                if fnmatch.fnmatch ( fileName, '*.JPG' ):
                     print "\nFound fileName ",fileName," Processing now ..."
                     self.consoleEntry.AppendText("\nFound "+fileName+" ")
-                    print self.picDir+'\\'+fileName
-                    result=geo.syncPicture(self.picDir+'\\'+fileName)
+                    print self.picDir+'/'+fileName
+                    result=geo.syncPicture(self.picDir+'/'+fileName)
                     self.consoleEntry.AppendText(result+"\n")
                     if self.log==True:
                         f.write("Processed image "+fileName+" : "+result+"\n")
