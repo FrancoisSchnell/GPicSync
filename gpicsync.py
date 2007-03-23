@@ -148,7 +148,7 @@ if __name__=="__main__":
     help="Path to the gpx file. Expl. mypicture/tracklog.gpx")
     parser.add_option("-o", "--offset",dest="offset",
     help="A positive or negative number to indicate offset hours\
-    to the greenwich meriadian (East positive, West negative, 1 for France)")
+    to the greenwich meridian (East positive, West negative, 1 for France)")
     parser.add_option("--tcam",dest="tcam",
     help="Actual time of the camera only if it was out of sync with the gps \
      Expl. 09:34:02")
@@ -166,7 +166,7 @@ if __name__=="__main__":
         print "I need a .gpx file \nType Python gpicsync.py -h for help."
         sys.exit(1)
     
-    print "\n Engage using the following arguments ...\n" 
+    print "\nEngage processing using the following arguments ...\n" 
     print "-Directory containing the pictures:",options.dir
     print "-Path to the gpx file:",options.gpx
     print "-UTC Offset (hours):",options.offset
@@ -178,8 +178,7 @@ if __name__=="__main__":
     tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=int(options.offset))
     
     for fileName in os.listdir ( options.dir ):
-        #will add a '*.JPG' or '*.jpg' match
-        if fnmatch.fnmatch ( fileName, '*.JPG' ):
+        if fnmatch.fnmatch (fileName, '*.JPG') or fnmatch.fnmatch (fileName, '*.jpg'):
             print "\nFound fileName ",fileName," Processing now ..."
             geo.syncPicture(options.dir+'/'+fileName)
 

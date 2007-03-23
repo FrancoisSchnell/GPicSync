@@ -180,8 +180,7 @@ class GUI(wx.Frame):
                 
             for fileName in os.listdir ( self.picDir ):
                 if self.stop==True: break
-                # will add a fnmatch for "JPG" or "jpg"
-                if fnmatch.fnmatch ( fileName, '*.JPG' ):
+                if fnmatch.fnmatch ( fileName, '*.JPG' )or fnmatch.fnmatch ( fileName, '*.jpg' ):
                     print "\nFound fileName ",fileName," Processing now ..."
                     self.consoleEntry.AppendText("\nFound "+fileName+" ")
                     print self.picDir+'/'+fileName
