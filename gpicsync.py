@@ -107,7 +107,7 @@ class GpicSync(object):
             if latitude != "" and longitude !="":
                 if float(longitude)<0:longitude=str(abs(float(longitude)))
                 if float(latitude)<0:latitude=str(abs(float(latitude)))
-                print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,
+                print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
                 pic.writeLatLong(latitude,longitude,latRef,longRef)
                 #return tpic_tgps_l
@@ -122,7 +122,7 @@ class GpicSync(object):
             if latitude != "" and longitude !="":
                 if float(longitude)<0:longitude=str(abs(float(longitude)))
                 if float(latitude)<0:latitude=str(abs(float(latitude)))
-                print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,
+                print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
                 pic.writeLatLong(latitude,longitude,latRef,longRef)
                 response= "Writting best latitude/longitude match to EXIF picture: "+latRef+\
