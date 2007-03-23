@@ -34,7 +34,7 @@ class GpicSync(object):
     """
     A class to manage the geolocalisation from a .gpx file.
     """
-    def __init__(self,gpxFile,tcam_l="00:00:00",tgps_l="00:00:00",UTCoffset=0,dateProcess=False):
+    def __init__(self,gpxFile,tcam_l="00:00:00",tgps_l="00:00:00",UTCoffset=0,dateProcess=True):
         """Extracts data from the gpx file and compute local offset duration"""
         myGpx=Gpx(gpxFile)   
         self.track=myGpx.extract()
@@ -178,6 +178,7 @@ if __name__=="__main__":
     tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=int(options.offset))
     
     for fileName in os.listdir ( options.dir ):
+        #will add a '*.JPG' or '*.jpg' match
         if fnmatch.fnmatch ( fileName, '*.JPG' ):
             print "\nFound fileName ",fileName," Processing now ..."
             geo.syncPicture(options.dir+'/'+fileName)
