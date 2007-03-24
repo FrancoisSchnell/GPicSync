@@ -51,10 +51,14 @@ class GUI(wx.Frame):
         menuBar.Append(menu1,"&Options")
         menu2=wx.Menu()
         about=menu2.Append(wx.NewId(),"About...")
+        menuTools=wx.Menu()
+        menuBar.Append(menuTools,"&Tools")
+        exifReader=menuTools.Append(wx.NewId(),"EXIF reader")
         menuBar.Append(menu2,"&Help")
         statusBar=self.CreateStatusBar()
         self.Bind(wx.EVT_MENU,self.localtimeFrame,timeShift)
         self.Bind(wx.EVT_MENU,self.aboutApp,about)
+        self.Bind(wx.EVT_MENU,self.exifFrame,exifReader)
         
         dirButton=wx.Button(bkg,size=(150,-1),label="Pictures folder")
         gpxButton=wx.Button(bkg,size=(150,-1),label="GPS file (.gpx)")
@@ -115,7 +119,7 @@ class GUI(wx.Frame):
     def aboutApp(self,evt): 
         """An about message dialog"""
         text="""
-        GPicSync version 0.50 - March 2007 
+        GPicSync version 0.6 - March 2007 
          
         GPicSync is Free Software (GPL v2)
         
@@ -230,6 +234,31 @@ class GUI(wx.Frame):
         border=5,border=20)
         bkg.SetSizer(vbox)
         self.winOpt.Show()
+    def exifFrame(self,evt):
+        """A frame for the exifReader tool"""
+        self.winExifReader=wx.Frame(win,size=(350,200),title="EXIF Reader")
+        bkg=wx.Panel(self.winExifReader)
+        #bkg.SetBackgroundColour('White')
+        text="""
+        This tool reads the EXIF metadata of the selected picture"""
+        introLabel = wx.StaticText(bkg, -1,text)
+        readButton=wx.Button(bkg,size=(130,30),label="Select a picture")
+        self.Bind(wx.EVT_BUTTON, self.readEXIF, readButton)
+        vbox=wx.BoxSizer(wx.VERTICAL)
+        vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        bkg.SetSizer(vbox)
+        self.winExifReader.Show()
+    def readEXIF(self,evt):
+        self.winExifReader.Close()
+        picture=wx.FileDialog(self)
+        picture.SetWildcard("*.jpg")
+        picture.ShowModal()
+        pathPicture=picture.GetPath()
+        myPicture=GeoExif(pathPicture)
+        self.consoleEntry.AppendText(myPicture.readExifAll())
+        self.winExifReader.Close()
+        
         
 app=wx.App(redirect=False)
 win=GUI(None,title="GPicSync GUI")
