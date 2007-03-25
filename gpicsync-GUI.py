@@ -240,7 +240,7 @@ class GUI(wx.Frame):
         bkg=wx.Panel(self.winExifReader)
         #bkg.SetBackgroundColour('White')
         text="""
-        This tool reads the EXIF metadata of the selected picture"""
+        This tool reads the EXIF metadata of the selected picture."""
         introLabel = wx.StaticText(bkg, -1,text)
         readButton=wx.Button(bkg,size=(130,30),label="Select a picture")
         self.Bind(wx.EVT_BUTTON, self.readEXIF, readButton)
@@ -256,6 +256,7 @@ class GUI(wx.Frame):
         picture.ShowModal()
         pathPicture=picture.GetPath()
         myPicture=GeoExif(pathPicture)
+        self.consoleEntry.AppendText("\n----------------------------\n\n")
         self.consoleEntry.AppendText(myPicture.readExifAll())
         self.winExifReader.Close()
         
