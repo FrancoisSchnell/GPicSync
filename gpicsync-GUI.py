@@ -54,11 +54,13 @@ class GUI(wx.Frame):
         menuTools=wx.Menu()
         menuBar.Append(menuTools,"&Tools")
         exifReader=menuTools.Append(wx.NewId(),"EXIF reader")
+        renameToolMenu=menuTools.Append(wx.NewId(),"Geo-Rename pictures")
         menuBar.Append(menu2,"&Help")
         statusBar=self.CreateStatusBar()
         self.Bind(wx.EVT_MENU,self.localtimeFrame,timeShift)
         self.Bind(wx.EVT_MENU,self.aboutApp,about)
         self.Bind(wx.EVT_MENU,self.exifFrame,exifReader)
+        self.Bind(wx.EVT_MENU,self.renameFrame,renameToolMenu)
         
         dirButton=wx.Button(bkg,size=(150,-1),label="Pictures folder")
         gpxButton=wx.Button(bkg,size=(150,-1),label="GPS file (.gpx)")
@@ -259,7 +261,34 @@ class GUI(wx.Frame):
         self.consoleEntry.AppendText("\n----------------------------\n\n")
         self.consoleEntry.AppendText(myPicture.readExifAll())
         self.winExifReader.Close()
-        
+    def renameFrame(self,evt):
+        """A frame for the rename tool"""
+        self.winRenameTool=wx.Frame(win,size=(400,200),title="Renaming tool")
+        bkg=wx.Panel(self.winRenameTool)
+        #bkg.SetBackgroundColour('White')
+        text="""
+        This tool renames your pictures with time/date or locaiton lat./long."""
+        introLabel = wx.StaticText(bkg, -1,text)
+        readButton=wx.Button(bkg,size=(130,30),label="Select a picture")
+        self.Bind(wx.EVT_BUTTON, self.renamePicture, readButton)
+        vbox=wx.BoxSizer(wx.VERTICAL)
+        vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        bkg.SetSizer(vbox)
+        self.winRenameTool.Show()
+    def renamePicture(self,evt):
+        """A tool to rename pictures of a directory"""
+        self.winRenameTool.Close()
+        picture=wx.FileDialog(self)
+        picture.SetWildcard("*.jpg")
+        picture.ShowModal()
+        pathPicture=picture.GetPath()
+        myPicture=GeoExif(pathPicture)
+        self.consoleEntry.AppendText("\n----------------------------\n\n")
+        string=myPicture.readDateTime()[0]+"T"+myPicture.readDateTime()[1]
+        print string.replace(":","-")
+        #self.consoleEntry.AppendText(myPicture.readExifAll())
+        self.winRenameTool.Close()
         
 app=wx.App(redirect=False)
 win=GUI(None,title="GPicSync GUI")
