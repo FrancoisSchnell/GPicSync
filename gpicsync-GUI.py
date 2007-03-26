@@ -280,12 +280,13 @@ class GUI(wx.Frame):
         """A tool to rename pictures of a directory"""
         self.winRenameTool.Close()
         picture=wx.FileDialog(self)
-        picture.SetWildcard("*.jpg")
         picture.ShowModal()
+        picture.SetWildcard("*.jpg")
         pathPicture=picture.GetPath()
         myPicture=GeoExif(pathPicture)
         self.consoleEntry.AppendText("\n----------------------------\n\n")
         string=myPicture.readDateTime()[0]+"T"+myPicture.readDateTime()[1]
+        myPicture.readLatLong()
         print string.replace(":","-")
         #self.consoleEntry.AppendText(myPicture.readExifAll())
         self.winRenameTool.Close()

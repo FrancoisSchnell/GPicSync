@@ -66,7 +66,23 @@ class GeoExif(object):
             return longitude
         else:
             return "None"
-        
+    
+    def readLatLong(self):
+        """read latitude AND longitude at the same time"""
+        result=os.popen('%s -n -GPSLatitude -GPSLatitudeRef \
+        -GPSLongitude -GPSLongitudeRef   "%s" ' \
+        % (self.exifcmd, self.picPath)).read().split("\n")
+        if len(result)>=4:
+            print "hello"
+            result[0]=result[0].split(":")[1].strip()
+            result[1]=result[1].split(":")[1].strip()
+            result[2]=result[2].split(":")[1].strip()
+            result[3]=result[3].split(":")[1].strip()
+           
+        latlong= result[1]+result[0]+"-"+result[3]+result[2]
+        print latlong
+        return latlong
+
     def writeLatitude(self,lat):
         """
         write the latitude value given in argument in the EXIF
