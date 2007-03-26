@@ -270,7 +270,7 @@ class GUI(wx.Frame):
         This tool renames your pictures with time/date or locaiton lat./long."""
         introLabel = wx.StaticText(bkg, -1,text)
         readButton=wx.Button(bkg,size=(130,30),label="Select a picture")
-        self.Bind(wx.EVT_BUTTON, self.renamePicture, readButton)
+        self.Bind(wx.EVT_BUTTON, self.renamePicturesInFolder, readButton)
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
@@ -285,11 +285,34 @@ class GUI(wx.Frame):
         pathPicture=picture.GetPath()
         myPicture=GeoExif(pathPicture)
         self.consoleEntry.AppendText("\n----------------------------\n\n")
-        string=myPicture.readDateTime()[0]+"T"+myPicture.readDateTime()[1]
-        myPicture.readLatLong()
-        print string.replace(":","-")
-        #self.consoleEntry.AppendText(myPicture.readExifAll())
+        string=myPicture.readDateTime()[0]+"-T"+myPicture.readDateTime()[1]
+        string=string.replace(":","-")
+        latlong=myPicture.readLatLong()
+        print "latlong= ",latlong
+        os.rename(pathPicture,os.path.dirname(pathPicture)+"/"+latlong+" D"+string+".jpg")
+        self.consoleEntry.AppendText("*")
         self.winRenameTool.Close()
+    def renamePicturesInFolder(self,evt):
+        self.stop=False        
+        self.winRenameTool.Close()
+        openDir=wx.DirDialog(self)
+        openDir.ShowModal()
+        self.picDir=openDir.GetPath()
+        for fileName in os.listdir ( self.picDir ):
+                if self.stop==True: break
+                if fnmatch.fnmatch ( fileName, '*.JPG' )or fnmatch.fnmatch ( fileName, '*.jpg' ):
+                    print "\nFound fileName ",fileName," Processing now ..."
+                    self.consoleEntry.AppendText("\nFound "+fileName+" ")
+                    print self.picDir+'/'+fileName
+                    myPicture=GeoExif(self.picDir+"/"+fileName)
+                    self.consoleEntry.AppendText("\n----------------------------\n\n")
+                    string=myPicture.readDateTime()[0]+"-T"+myPicture.readDateTime()[1]
+                    string=string.replace(":","-")
+                    latlong=myPicture.readLatLong()
+                    print "latlong= ",latlong
+                    os.rename(self.picDir+'/'+fileName,self.picDir+"/"+latlong+" D"+string+".jpg")
+                    self.consoleEntry.AppendText("Done")
+                    
         
 app=wx.App(redirect=False)
 win=GUI(None,title="GPicSync GUI")
