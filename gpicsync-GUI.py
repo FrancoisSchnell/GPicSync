@@ -238,28 +238,51 @@ class GUI(wx.Frame):
         self.winOpt.Show()
     def exifFrame(self,evt):
         """A frame for the exifReader tool"""
-        self.winExifReader=wx.Frame(win,size=(350,200),title="EXIF Reader")
+        self.winExifReader=wx.Frame(win,size=(350,250),title="EXIF Reader")
         bkg=wx.Panel(self.winExifReader)
         #bkg.SetBackgroundColour('White')
         text="""
-        This tool reads the EXIF metadata of the selected picture."""
+        Read the EXIF metadata of the selected picture."""
         introLabel = wx.StaticText(bkg, -1,text)
+        radio1=wx.RadioButton(bkg,-1,"All EXIT metadata")
+        radio2=wx.RadioButton(bkg,-1,"Date/Time/Lat./Long.")
+        def onRadio(evt):
+            radioSelected=evt.GetEventObject()
+            self.ExifReaderSelected=radioSelected.GetLabel()
+        for eachRadio in [radio1,radio2]:
+            self.Bind(wx.EVT_RADIOBUTTON ,onRadio,eachRadio)
         readButton=wx.Button(bkg,size=(130,30),label="Select a picture")
         self.Bind(wx.EVT_BUTTON, self.readEXIF, readButton)
+        
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        vbox.Add(radio1,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=10)
+        vbox.Add(radio2,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=10)
         vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         bkg.SetSizer(vbox)
         self.winExifReader.Show()
     def readEXIF(self,evt):
+        print "Selected ",self.ExifReaderSelected
         self.winExifReader.Close()
         picture=wx.FileDialog(self)
         picture.SetWildcard("*.jpg")
         picture.ShowModal()
         pathPicture=picture.GetPath()
         myPicture=GeoExif(pathPicture)
-        self.consoleEntry.AppendText("\n----------------------------\n\n")
-        self.consoleEntry.AppendText(myPicture.readExifAll())
+        def read():
+            self.consoleEntry.AppendText("\n\nSelected metada in the EXIF header of the picture : \n")
+            self.consoleEntry.AppendText("---------------------------------------------------------------\n")
+            if self.ExifReaderSelected=="All EXIT metadata":
+                self.consoleEntry.AppendText(myPicture.readExifAll())
+            if self.ExifReaderSelected=="Date/Time/Lat./Long.":
+                dateTime=myPicture.readDateTime()
+                datetimeString=dateTime[0]+":"+dateTime[1]
+                if len(datetimeString)>5:
+                    self.consoleEntry.AppendText(datetimeString)
+                    self.consoleEntry.AppendText("    "+myPicture.readLatLong())
+                else:
+                    self.consoleEntry.AppendText("None")
+        start_new_thread(read,())
         self.winExifReader.Close()
     def renameFrame(self,evt):
         """A frame for the rename tool"""
