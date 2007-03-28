@@ -238,7 +238,7 @@ class GUI(wx.Frame):
         self.winOpt.Show()
     def exifFrame(self,evt):
         """A frame for the exifReader tool"""
-        self.winExifReader=wx.Frame(win,size=(350,250),title="EXIF Reader")
+        self.winExifReader=wx.Frame(win,size=(280,220),title="EXIF Reader")
         bkg=wx.Panel(self.winExifReader)
         #bkg.SetBackgroundColour('White')
         text="""
@@ -274,7 +274,7 @@ class GUI(wx.Frame):
             def read():
                 self.consoleEntry.AppendText("\n\nSelected metada in the EXIF header of the picture : \n")
                 self.consoleEntry.AppendText("---------------------------------------------------------------\n")
-                if self.ExifReaderSelected=="All EXIT metadata":
+                if self.ExifReaderSelected=="All EXIF metadata":
                     self.consoleEntry.AppendText(myPicture.readExifAll())
                 if self.ExifReaderSelected=="Date/Time/Lat./Long.":
                     dateTime=myPicture.readDateTime()
