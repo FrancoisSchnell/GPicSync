@@ -292,8 +292,8 @@ class GUI(wx.Frame):
         text="""
         This tool renames your pictures with the original time/date and lat./long. (if present)"""
         introLabel = wx.StaticText(bkg, -1,text)
-        readButton=wx.Button(bkg,size=(150,30),label="Rename a single picture")
-        readButtonFolder=wx.Button(bkg,size=(150,30),label="Rename pictures in a folder")
+        readButton=wx.Button(bkg,size=(150,30),label="Rename pictures in a folder")
+        readButtonFolder=wx.Button(bkg,size=(150,30),label="Rename a single picture")
         self.Bind(wx.EVT_BUTTON, self.renamePicturesInFolder, readButton)
         self.Bind(wx.EVT_BUTTON, self.renamePicture, readButtonFolder)
         vbox=wx.BoxSizer(wx.VERTICAL)
@@ -304,40 +304,52 @@ class GUI(wx.Frame):
         self.winRenameTool.Show()
     def renamePicture(self,evt):
         """A tool to rename pictures of a directory"""
-        self.winRenameTool.Close()
         picture=wx.FileDialog(self)
         picture.ShowModal()
         picture.SetWildcard("*.jpg")
         pathPicture=picture.GetPath()
-        myPicture=GeoExif(pathPicture)
-        self.consoleEntry.AppendText("\n----------------------------\n\n")
-        string=myPicture.readDateTime()[0]+"-T"+myPicture.readDateTime()[1]
-        string=string.replace(":","-")
-        latlong=myPicture.readLatLong()
-        print "latlong= ",latlong
-        os.rename(pathPicture,os.path.dirname(pathPicture)+"/"+latlong+" D"+string+".jpg")
-        self.consoleEntry.AppendText("*")
         self.winRenameTool.Close()
+        def rename():
+            myPicture=GeoExif(pathPicture)
+            string=myPicture.readDateTime()[0]+" "+myPicture.readDateTime()[1]
+            latlong=myPicture.readLatLong()
+            if latlong==None: latlong=""
+            if len(string)<5:
+                self.consoleEntry.AppendText("\nDidn't find Original Time/Date for "+fileName)
+            else:
+                os.rename(pathPicture,os.path.dirname(pathPicture)+"/"+string+" "+latlong+".jpg")
+                self.consoleEntry.AppendText("\nRenamed "+fileName+" to "+string+latlong+".jpg")
+        start_new_thread(rename,())
     def renamePicturesInFolder(self,evt):
         self.stop=False        
         self.winRenameTool.Close()
         openDir=wx.DirDialog(self)
         openDir.ShowModal()
         self.picDir=openDir.GetPath()
-        for fileName in os.listdir ( self.picDir ):
-                if self.stop==True: break
-                if fnmatch.fnmatch ( fileName, '*.JPG' )or fnmatch.fnmatch ( fileName, '*.jpg' ):
-                    print "\nFound fileName ",fileName," Processing now ..."
-                    self.consoleEntry.AppendText("\nFound "+fileName+" ")
-                    print self.picDir+'/'+fileName
-                    myPicture=GeoExif(self.picDir+"/"+fileName)
-                    self.consoleEntry.AppendText("\n----------------------------\n\n")
-                    string=myPicture.readDateTime()[0]+"-T"+myPicture.readDateTime()[1]
-                    string=string.replace(":","-")
-                    latlong=myPicture.readLatLong()
-                    print "latlong= ",latlong
-                    os.rename(self.picDir+'/'+fileName,self.picDir+"/"+latlong+" D"+string+".jpg")
-                    self.consoleEntry.AppendText("Done")
+        self.consoleEntry.AppendText("\nBeginning renaming...")
+        def rename():
+            for fileName in os.listdir ( self.picDir ):
+                    if self.stop==True:
+                        self.consoleEntry.AppendText("\nInterrupted by the user") 
+                        self.stop=False
+                        break
+                    if fnmatch.fnmatch ( fileName, '*.JPG' )or \
+                    fnmatch.fnmatch ( fileName, '*.jpg' ):
+                        print self.picDir+'/'+fileName
+                        myPicture=GeoExif(self.picDir+"/"+fileName)
+                        string=myPicture.readDateTime()[0]+" "+myPicture.readDateTime()[1]
+                        print string, len(string)
+                        if len(string)<5:
+                            self.consoleEntry.AppendText("\nDidn't find Original Time/Date for "+fileName)
+                            break
+                        string=string.replace(":","-")
+                        latlong=myPicture.readLatLong()
+                        if latlong==None: latlong=""
+                        print "latlong= ",latlong
+                        os.rename(self.picDir+'/'+fileName,self.picDir+"/"+string+" "+latlong+".jpg")
+                        self.consoleEntry.AppendText("\nRenamed "+fileName+" to "+string+" "+latlong+".jpg")
+            self.consoleEntry.AppendText("\nFinished")
+        start_new_thread(rename,())
                     
         
 app=wx.App(redirect=False)
