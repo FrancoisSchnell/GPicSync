@@ -286,17 +286,20 @@ class GUI(wx.Frame):
         self.winExifReader.Close()
     def renameFrame(self,evt):
         """A frame for the rename tool"""
-        self.winRenameTool=wx.Frame(win,size=(400,200),title="Renaming tool")
+        self.winRenameTool=wx.Frame(win,size=(460,220),title="Renaming tool")
         bkg=wx.Panel(self.winRenameTool)
         #bkg.SetBackgroundColour('White')
         text="""
-        This tool renames your pictures with time/date or locaiton lat./long."""
+        This tool renames your pictures with the original time/date and lat./long. (if present)"""
         introLabel = wx.StaticText(bkg, -1,text)
-        readButton=wx.Button(bkg,size=(130,30),label="Select a picture")
+        readButton=wx.Button(bkg,size=(150,30),label="Rename a single picture")
+        readButtonFolder=wx.Button(bkg,size=(150,30),label="Rename pictures in a folder")
         self.Bind(wx.EVT_BUTTON, self.renamePicturesInFolder, readButton)
+        self.Bind(wx.EVT_BUTTON, self.renamePicture, readButtonFolder)
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
-        vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=10)
+        vbox.Add(readButtonFolder,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=10)
         bkg.SetSizer(vbox)
         self.winRenameTool.Show()
     def renamePicture(self,evt):
