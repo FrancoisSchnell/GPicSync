@@ -5,8 +5,8 @@
 [Setup]
 AppName=GPicSync
 AppId=GPicSync
-AppVerName=GPicSync 0.4
-AppVersion=0.4
+AppVerName=GPicSync 0.6
+AppVersion=0.6
 AppPublisher=francois schnell
 AppPublisherURL=http://francois.schnell.free.fr
 AppSupportURL=http://code.google.com/p/gpicsync/
@@ -14,6 +14,7 @@ AppUpdatesURL=http://code.google.com/p/gpicsync/
 DefaultDirName={pf}\GPicSync
 DefaultGroupName=GPicSync
 OutputDir=Output
+LicenseFile=license.txt
 
 [Dirs]
 

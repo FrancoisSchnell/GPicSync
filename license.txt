@@ -1,19 +1,9 @@
 
-You will find below the license of GPicSync, my python application (GPL v 2).
+There is no WARRANTY coming with this application that you use at your own risk.
 
 The source code and help is available at: http://code.google.com/p/gpicsync/
 
-I use the exifftool librairy Phil Harvey also GPL: http://www.sno.phy.queensu.ca/~phil/exiftool/
-
-Python: http://www.python.org/
-
-WxPython: http://www.wxpython.org/
-
-Distributuion made with py2exe: http://www.py2exe.org/
-
-some dll files in this distribution are maybe not GPL.
-
--------------------------------------------------------------------------------
+(some dll files in this windows installer are maybe not GPL).
 
 
 		    GNU GENERAL PUBLIC LICENSE
