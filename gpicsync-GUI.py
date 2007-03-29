@@ -244,7 +244,7 @@ class GUI(wx.Frame):
         text="""
         Read the EXIF metadata of the selected picture."""
         introLabel = wx.StaticText(bkg, -1,text)
-        radio1=wx.RadioButton(bkg,-1,"All EXIT metadata")
+        radio1=wx.RadioButton(bkg,-1,"All EXIF metadata")
         radio2=wx.RadioButton(bkg,-1,"Date/Time/Lat./Long.")
         def onRadio(evt):
             radioSelected=evt.GetEventObject()
