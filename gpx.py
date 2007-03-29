@@ -53,9 +53,10 @@ class Gpx(object):
         self.geoData=[]
         for line in self.gpx_trkpts:
             lineTree=ET.fromstring(line)
+            time= re.search('(<time.*?</time>)',line).group()
             self.geoData.append({
-            'date':lineTree[1].text[0:10],
-            'time':lineTree[1].text[11:-1],
+            'date':time[6:16],
+            'time':time[17:25],
             'lat':lineTree.attrib["lat"],
             'lon':lineTree.attrib["lon"]
             })
