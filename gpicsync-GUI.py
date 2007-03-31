@@ -363,17 +363,17 @@ class GUI(wx.Frame):
                     
     def gpxInspectorFrame(self,evt):
         """A frame to inspect a gpx file"""
-        self.winGpxInspector=wx.Frame(win,size=(280,220),title="GPX Inspector")
+        self.winGpxInspector=wx.Frame(win,size=(280,180),title="GPX Inspector")
         bkg=wx.Panel(self.winGpxInspector)
         text="""
         Inspect a gpx file and show tracklog data ."""
         introLabel = wx.StaticText(bkg, -1,text)
         readButton=wx.Button(bkg,size=(150,30),label="Select a gpx file")
         self.Bind(wx.EVT_BUTTON, self.gpxInspector, readButton)
-        self.gpxInGECheck=wx.CheckBox(bkg,-1,"Show also path in GoogleEarth")
+        #self.gpxInGECheck=wx.CheckBox(bkg,-1,"Show also path in GoogleEarth")
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
-        vbox.Add(self.gpxInGECheck,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=10)
+        #vbox.Add(self.gpxInGECheck,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=10)
         vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         bkg.SetSizer(vbox)
         self.winGpxInspector.Show()
@@ -389,9 +389,18 @@ class GUI(wx.Frame):
         if gpxPath =="" or None:
             self.consoleEntry.AppendText("\nSelect a gpx file first.")
         else:
-            myGpx=Gpx(gpxPath).extract() 
-            self.consoleEntry.AppendText("\nNumber of valid track point found: "+
-            len(myGpx))
+            myGpx=Gpx(gpxPath).extract()
+            self.consoleEntry.AppendText("\nLooking at "+gpxPath+"\n")
+            self.consoleEntry.AppendText("\nNumber of valid track points found : "+str(len(myGpx))+"\n\n")
+            def inspect():
+                for trkpt in myGpx:
+                    self.consoleEntry.AppendText("Date: "+trkpt["date"]+"\tTime: "\
+                    +trkpt["time"]+"\tLatitude: "+trkpt["lat"]+"\tLongitude: "+trkpt["lon"]+"\n")
+                """if self.gpxInGECheck.GetValue()==True:
+                    print "trying to ..."
+                    os.system("c:\\Program Files\\Google\\Google Earth\\googleearth.exe "+gpxPath)
+                """
+            start_new_thread(inspect,())
             
 app=wx.App(redirect=False)
 win=GUI(None,title="GPicSync GUI")
