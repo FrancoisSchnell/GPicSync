@@ -55,12 +55,14 @@ class GUI(wx.Frame):
         menuBar.Append(menuTools,"&Tools")
         exifReader=menuTools.Append(wx.NewId(),"EXIF reader")
         renameToolMenu=menuTools.Append(wx.NewId(),"Geo-Rename pictures")
+        gpxInspectorMenu=menuTools.Append(wx.NewId(),"GPX Inspector")
         menuBar.Append(menu2,"&Help")
         statusBar=self.CreateStatusBar()
         self.Bind(wx.EVT_MENU,self.localtimeFrame,timeShift)
         self.Bind(wx.EVT_MENU,self.aboutApp,about)
         self.Bind(wx.EVT_MENU,self.exifFrame,exifReader)
         self.Bind(wx.EVT_MENU,self.renameFrame,renameToolMenu)
+        self.Bind(wx.EVT_MENU,self.gpxInspectorFrame,gpxInspectorMenu)
         
         dirButton=wx.Button(bkg,size=(150,-1),label="Pictures folder")
         gpxButton=wx.Button(bkg,size=(150,-1),label="GPS file (.gpx)")
@@ -359,7 +361,38 @@ class GUI(wx.Frame):
                 self.consoleEntry.AppendText("\nFinished")
             start_new_thread(rename,())
                     
+    def gpxInspectorFrame(self,evt):
+        """A frame to inspect a gpx file"""
+        self.winGpxInspector=wx.Frame(win,size=(280,220),title="GPX Inspector")
+        bkg=wx.Panel(self.winGpxInspector)
+        text="""
+        Inspect a gpx file and show tracklog data ."""
+        introLabel = wx.StaticText(bkg, -1,text)
+        readButton=wx.Button(bkg,size=(150,30),label="Select a gpx file")
+        self.Bind(wx.EVT_BUTTON, self.gpxInspector, readButton)
+        self.gpxInGECheck=wx.CheckBox(bkg,-1,"Show also path in GoogleEarth")
+        vbox=wx.BoxSizer(wx.VERTICAL)
+        vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        vbox.Add(self.gpxInGECheck,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=10)
+        vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        bkg.SetSizer(vbox)
+        self.winGpxInspector.Show()
         
+    def gpxInspector(self,evt):
+        """A tool to display data from a gpx file"""
+        gpx=wx.FileDialog(self)
+        gpx.ShowModal()
+        gpx.SetWildcard("*.gpx")
+        gpxPath=gpx.GetPath()
+        self.winGpxInspector.Close()
+        print "gpxPath=", gpxPath
+        if gpxPath =="" or None:
+            self.consoleEntry.AppendText("\nSelect a gpx file first.")
+        else:
+            myGpx=Gpx(gpxPath).extract() 
+            self.consoleEntry.AppendText("\nNumber of valid track point found: "+
+            len(myGpx))
+            
 app=wx.App(redirect=False)
 win=GUI(None,title="GPicSync GUI")
 win.Show()
