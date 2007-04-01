@@ -28,6 +28,7 @@ import os,sys,fnmatch
 from geoexif import *
 from gpx import *
 from gpicsync import *
+from kmlGen import *
 from thread import start_new_thread
 
 class GUI(wx.Frame):
@@ -182,6 +183,8 @@ class GUI(wx.Frame):
         print "utcOffset= ",utcOffset
         geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
         UTCoffset=utcOffset,dateProcess=dateProcess)
+        if self.geCheck.GetValue()==True:
+            localKml=KML(self.picDir+"/local-google-earth")
         def sync():
             self.consoleEntry.AppendText("Beginning synchronisation with "
             +"UTC Offset="+self.utcEntry.GetValue()+"\n")
@@ -202,11 +205,15 @@ class GUI(wx.Frame):
                     self.consoleEntry.AppendText(result+"\n")
                     if self.log==True:
                         f.write("Processed image "+fileName+" : "+result+"\n")
+                    if self.geCheck.GetValue()==True:
+                        localKml.placemark(self.picDir+"/"+fileName)
             if self.stop==False:
                 self.consoleEntry.AppendText("\n *** FINISHED ***\n")
             if self.stop==True:
                 self.consoleEntry.AppendText("\n *** Processing STOPPED bu the user ***\n")
             if self.log==True: f.close()
+            if self.geCheck.GetValue()==True:
+                localKml.close()
         start_new_thread(sync,())
         
     def localtimeCorrection(self,evt):

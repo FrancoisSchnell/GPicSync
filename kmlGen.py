@@ -99,9 +99,6 @@ class KML(object):
 if __name__=="__main__":
     
     import os,sys,fnmatch
-    # folder = basename of the path ? => portable even if created outside
-    # of gpicsync intall directory : integrate as a default the intial sync
-    # and add a comment in the kml to explain what to do for live
     folder="C:/Documents and Settings/franz/Bureau/gpicsync.googlecode.com/trunk/GE-test"
     myKml=KML(folder+"/test")
     for fileName in os.listdir ( folder ):
