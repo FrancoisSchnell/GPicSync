@@ -1,9 +1,19 @@
 
-There is no WARRANTY coming with this application that you use at your own risk.
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  
+See the GNU General Public License for more details.
 
-The source code and help is available at: http://code.google.com/p/gpicsync/
+Always check the results with proper maps.
+
+The source code and help is available at:
+
+- http://code.google.com/p/gpicsync/
+- http://groups.google.com/group/gpicsync
 
 (some dll files in this windows installer are maybe not GPL).
+
+----
 
 
 		    GNU GENERAL PUBLIC LICENSE

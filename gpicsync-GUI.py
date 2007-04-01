@@ -216,7 +216,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
         UTCoffset=utcOffset,dateProcess=dateProcess)
         if self.geCheck.GetValue()==True:
-            self.consoleEntry.AppendText("\nCreating a Google Earth file in picture folder: local-google-earth.kml\n\n")
+            self.consoleEntry.AppendText("\nStarting to generate a Google Earth file (local-google-earth.kml) in the picture folder ... \n\n")
             localKml=KML(self.picDir+"/local-google-earth")
         def sync():
             self.consoleEntry.AppendText("Beginning synchronisation with "
@@ -247,7 +247,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             if self.log==True: f.close()
             if self.geCheck.GetValue()==True:
                 localKml.close()
-                self.consoleEntry.AppendText("\n\nYou should be able to visualize relusts in Google Earth (click on the 'View in Google Earth' button)...\n")
+                self.consoleEntry.AppendText("\n\nYou should be able to visualize your pictures in Google Earth (click on the 'View in Google Earth' button).\n")
         start_new_thread(sync,())
         #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         

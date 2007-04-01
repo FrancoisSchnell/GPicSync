@@ -4,14 +4,11 @@
 # (c) francois.schnell  francois.schnell@gmail.com
 #                       http://francois.schnell.free.fr  
 #
-# This script is released under the GPL license
+# This script is released under the GPL v2 license
 #
 ###############################################################################
 
-"""
-A quick and dirty kml generator in progress for gpicsync
-(for live viewing in Google Earth)
-"""
+
 
 from geoexif import *
 import SimpleHTTPServer,time
@@ -71,17 +68,18 @@ class KML(object):
         #start_new_thread(serverGo,())
 
     def placemark(self,picName):
-        print "placemark!"
+        """Creates a placemark tag for the given picture in the kml file"""
+        #print "placemark!"
         mypicture=GeoExif(picName)
         lat=mypicture.readLatitude()
         long=mypicture.readLongitude()
-        pmHead="""<Placemark>
-        <name>"""+picName+"</name>"
+        pmHead="""\n\n<Placemark>
+        <name>"""+picName+"</name>\n"
         pmDescription="<description><![CDATA["+\
         "<img src='"+picName+"' width='640' height='480'/>]]>"+\
-        "</description><name>"+os.path.basename(picName)+"</name><Point>"+\
+        "</description>\n<name>"+os.path.basename(picName)+"</name>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
-        "</coordinates></Point>"
+        "</coordinates>\n</Point>\n"
         pmTail="</Placemark>"
         self.f.write(pmHead)
         self.f.write(pmDescription)
@@ -89,10 +87,7 @@ class KML(object):
         
     def close(self):
         print "close kml!"
-        kmlTail="""
-        </Document>
-        </kml>
-        """
+        kmlTail="\n\n</Document>\n</kml>"
         self.f.write(kmlTail)
         self.f.close()
         
