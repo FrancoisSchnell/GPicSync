@@ -35,7 +35,7 @@ class GUI(wx.Frame):
     def __init__(self,parent, title):
         """Initialize the main frame"""
         
-        wx.Frame.__init__(self, parent, -1, title="GPicSync",size=(850,400))
+        wx.Frame.__init__(self, parent, -1, title="GPicSync",size=(900,600))
         self.tcam_l="00:00:00"
         self.tgps_l="00:00:00"
         self.log=False
@@ -66,16 +66,18 @@ class GUI(wx.Frame):
         
         dirButton=wx.Button(bkg,size=(150,-1),label="Pictures folder")
         gpxButton=wx.Button(bkg,size=(150,-1),label="GPS file (.gpx)")
-        syncButton=wx.Button(bkg,size=(150,-1),label=" Synchronise ! ")
-        quitButton=wx.Button(bkg,label="Quit")
-        stopButton=wx.Button(bkg,label="Stop")
-        clearButton=wx.Button(bkg,label="Clear")
+        syncButton=wx.Button(bkg,size=(250,-1),label=" Synchronise ! ")
+        quitButton=wx.Button(bkg,label="Quit",size=(130,-1))
+        stopButton=wx.Button(bkg,label="Stop",size=(130,-1))
+        clearButton=wx.Button(bkg,label="Clear",size=(130,-1))
         
         utcLabel = wx.StaticText(bkg, -1,"UTC Offset=")
         self.logFile=wx.CheckBox(bkg,-1,"Create a log file in picture folder")
         self.logFile.SetValue(True)
         self.dateCheck=wx.CheckBox(bkg,-1,"Dates must match")
         self.dateCheck.SetValue(True)
+        self.geCheck=wx.CheckBox(bkg,-1,"View result in Google Earth")
+        self.geCheck.SetValue(True)
 
         self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
         self.Bind(wx.EVT_BUTTON, self.findGpx, gpxButton)
@@ -100,19 +102,23 @@ class GUI(wx.Frame):
         hbox2.Add(self.gpxEntry,proportion=1,flag=wx.EXPAND)
         
         hbox3=wx.BoxSizer()
-        hbox3.Add(utcLabel,proportion=0,flag=wx.LEFT,border=5)
-        hbox3.Add(self.utcEntry,proportion=0,flag=wx.LEFT,border=5)
-        hbox3.Add(self.logFile,proportion=0,flag=wx.LEFT,border=5)
-        hbox3.Add(self.dateCheck,proportion=0,flag=wx.LEFT,border=5)
-        hbox3.Add(syncButton,proportion=0,flag=wx.LEFT,border=5)
-        hbox3.Add(stopButton,proportion=0,flag=wx.LEFT,border=5)
-        hbox3.Add(clearButton,proportion=0,flag=wx.LEFT,border=5)
-        hbox3.Add(quitButton,proportion=0,flag=wx.LEFT,border=5)
+        hbox3.Add(self.logFile,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
+        hbox3.Add(self.dateCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
+        hbox3.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
+        
+        hbox4=wx.BoxSizer()
+        hbox4.Add(utcLabel,proportion=0,flag=wx.LEFT,border=5)
+        hbox4.Add(self.utcEntry,proportion=0,flag=wx.LEFT,border=5)
+        hbox4.Add(syncButton,proportion=0,flag=wx.LEFT,border=5)
+        hbox4.Add(stopButton,proportion=0,flag=wx.LEFT,border=5)
+        hbox4.Add(clearButton,proportion=0,flag=wx.LEFT,border=5)
+        hbox4.Add(quitButton,proportion=0,flag=wx.LEFT,border=5)
         
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(hbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox2,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox3,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        vbox.Add(hbox4,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         #vbox.Add(syncButton,proportion=0,flag=wx.EXPAND | wx.LEFT, border=5)
         vbox.Add(self.consoleEntry,proportion=1,flag=wx.EXPAND | wx.LEFT, border=5)
         #vbox.Add(quitButton,proportion=0,flag=wx.EXPAND | wx.LEFT, border=5)
