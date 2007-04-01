@@ -5,8 +5,8 @@
 [Setup]
 AppName=GPicSync
 AppId=GPicSync
-AppVerName=GPicSync 0.6
-AppVersion=0.6
+AppVerName=GPicSync 0.7
+AppVersion=0.7
 AppPublisher=francois schnell
 AppPublisherURL=http://francois.schnell.free.fr
 AppSupportURL=http://code.google.com/p/gpicsync/
@@ -24,6 +24,9 @@ Source: dist\_controls_.pyd; DestDir:{app}
 Source: dist\_core_.pyd; DestDir:{app}
 Source: dist\_gdi_.pyd; DestDir:{app}
 Source: dist\_misc_.pyd; DestDir:{app}
+Source: dist\_socket.pyd; DestDir:{app}
+Source: dist\_ssl.pyd; DestDir:{app}
+Source: dist\_win32sysloader.pyd; DestDir:{app}
 Source: dist\_windows_.pyd; DestDir:{app}
 Source: dist\bz2.pyd; DestDir:{app}
 Source: dist\exiftool.exe; DestDir:{app}
@@ -33,8 +36,12 @@ Source: dist\license.txt; DestDir:{app}
 Source: dist\MSVCR71.dll; DestDir:{app}
 Source: dist\pyexpat.pyd; DestDir:{app}
 Source: dist\python25.dll; DestDir:{app}
+Source: dist\pythoncom25.dll; DestDir:{app}
+Source: dist\pywintypes25.dll; DestDir:{app}
 Source: dist\README.txt; DestDir:{app}
 Source: dist\unicodedata.pyd; DestDir:{app}
+Source: dist\win32api.pyd; DestDir:{app}
+Source: dist\win32ui.pyd; DestDir:{app}
 Source: dist\w9xpopen.exe; DestDir:{app}
 Source: dist\wxbase28h_net_vc.dll; DestDir:{app}
 Source: dist\wxbase28h_vc.dll; DestDir:{app}
@@ -42,6 +49,7 @@ Source: dist\wxmsw28h_adv_vc.dll; DestDir:{app}
 Source: dist\wxmsw28h_core_vc.dll; DestDir:{app}
 Source: dist\wxmsw28h_html_vc.dll; DestDir:{app}
 Source: dist\test.ico; DestDir:{app}
+;Source: dist\mfc71.dll; DestDir:{app}
 ;Source: dist\Website; DestDir:{app}
 
 [Run]
