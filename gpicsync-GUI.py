@@ -72,7 +72,7 @@ class GUI(wx.Frame):
         quitButton=wx.Button(bkg,label="Quit",size=(100,-1))
         stopButton=wx.Button(bkg,label="Stop",size=(100,-1))
         clearButton=wx.Button(bkg,label="Clear",size=(100,-1))
-        viewInGEButton=wx.Button(bkg,label="View result in Google Earth",size=(-1,-1))
+        viewInGEButton=wx.Button(bkg,label="View in Google Earth",size=(-1,-1))
         
         utcLabel = wx.StaticText(bkg, -1,"UTC Offset=")
         self.logFile=wx.CheckBox(bkg,-1,"Create a log file in picture folder")
@@ -151,13 +151,31 @@ class GUI(wx.Frame):
     def viewInGE(self,evt):
         """View a local kml file in Google Earth"""
         googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
-        #while not googleEarth.IsInitialized():
-        #    print "waiting for Google Earth to initialize"
-        path=self.picDir+'\\local-google-earth.kml'
-        print "path=",path
-        googleEarth.OpenKmlFile(path,True)
-        #googleEarth.OpenKmlFile(r'C:/"Documents and Settings"/franz/Bureau/GE-Short-test/local-google-earth.kml')
-        #googleEarth.OpenKmlFile("C:/Documents and Settings/franz/Bureau/GE-Short-test/local-google-earth.kml",True)
+        try:
+            path=self.picDir+'\\local-google-earth.kml'
+            print "path=",path
+        except:
+            text="""
+---
+To visualize the results in Google Earth you  must either:
+            
+- finish a synchronisation (message "***FINISHED***)  in the main window then click "View in Google Earth"
+
+- select a folder you've synchronized with the button "Pictures Folder" then click "View in Google Earth"
+(the folder must contains a local-google-eath.kml file and must be at the same place as when it was synchronized.
+
+A tool to export the results in Google Earth will be available soon.
+
+Note that you can always look at your geolocalized pictures from Picassa then Google Earth (in Picassa: "Tools">"Geolocalize">"Display in Google Earth").
+For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/group/gpicsync \n
+---
+"""
+            self.consoleEntry.AppendText(text)
+        try:
+            googleEarth.OpenKmlFile(path,True)
+        except:
+            self.consoleEntry.AppendText("\nCouldn't find or launch Google Earth\n")
+
     def exitApp(self,evt):
         """Quit properly the app"""
         print "Exiting the app..."
@@ -229,19 +247,9 @@ class GUI(wx.Frame):
             if self.log==True: f.close()
             if self.geCheck.GetValue()==True:
                 localKml.close()
-                self.consoleEntry.AppendText("\nAttempting to visualize data in Google Earth...\n")
-                #try:
-                #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
-                #while not googleEarth.IsInitialized():
-                #    print "waiting for Google Earth to initialize"
-                #time.sleep(5)
-                #path=self.picDir+'\\local-google-earth.kml'
-                #print "path=",path
-                #googleEarth.OpenKmlFile(path)
-                #except:
-                #    self.consoleEntry.AppendText("\nCouldn't find or launch Google Earth...\n")
+                self.consoleEntry.AppendText("\n\nYou should be able to visualize relusts in Google Earth (click on the 'View in Google Earth' button)...\n")
         start_new_thread(sync,())
-        googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
+        #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         
     def localtimeCorrection(self,evt):
             """ Local time correction if GPS and camera wasn't synchronized """
