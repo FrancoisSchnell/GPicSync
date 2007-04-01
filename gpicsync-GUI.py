@@ -25,6 +25,7 @@ http://code.google.com/p/gpicsync/
 
 import wx,time
 import os,sys,fnmatch
+import win32com.client
 from geoexif import *
 from gpx import *
 from gpicsync import *
@@ -68,16 +69,17 @@ class GUI(wx.Frame):
         dirButton=wx.Button(bkg,size=(150,-1),label="Pictures folder")
         gpxButton=wx.Button(bkg,size=(150,-1),label="GPS file (.gpx)")
         syncButton=wx.Button(bkg,size=(250,-1),label=" Synchronise ! ")
-        quitButton=wx.Button(bkg,label="Quit",size=(130,-1))
-        stopButton=wx.Button(bkg,label="Stop",size=(130,-1))
-        clearButton=wx.Button(bkg,label="Clear",size=(130,-1))
+        quitButton=wx.Button(bkg,label="Quit",size=(100,-1))
+        stopButton=wx.Button(bkg,label="Stop",size=(100,-1))
+        clearButton=wx.Button(bkg,label="Clear",size=(100,-1))
+        viewInGEButton=wx.Button(bkg,label="View result in Google Earth",size=(-1,-1))
         
         utcLabel = wx.StaticText(bkg, -1,"UTC Offset=")
         self.logFile=wx.CheckBox(bkg,-1,"Create a log file in picture folder")
         self.logFile.SetValue(True)
         self.dateCheck=wx.CheckBox(bkg,-1,"Dates must match")
         self.dateCheck.SetValue(True)
-        self.geCheck=wx.CheckBox(bkg,-1,"View result in Google Earth")
+        self.geCheck=wx.CheckBox(bkg,-1,"Create a local Google Earth file")
         self.geCheck.SetValue(True)
 
         self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
@@ -86,6 +88,7 @@ class GUI(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.exitApp,quitButton)
         self.Bind(wx.EVT_BUTTON, self.stopApp,stopButton)
         self.Bind(wx.EVT_BUTTON, self.clearConsole,clearButton)
+        self.Bind(wx.EVT_BUTTON, self.viewInGE,viewInGEButton)
         
         self.dirEntry=wx.TextCtrl(bkg)
         self.gpxEntry=wx.TextCtrl(bkg)
@@ -113,6 +116,7 @@ class GUI(wx.Frame):
         hbox4.Add(syncButton,proportion=0,flag=wx.LEFT,border=5)
         hbox4.Add(stopButton,proportion=0,flag=wx.LEFT,border=5)
         hbox4.Add(clearButton,proportion=0,flag=wx.LEFT,border=5)
+        hbox4.Add(viewInGEButton,proportion=0,flag=wx.LEFT,border=5)
         hbox4.Add(quitButton,proportion=0,flag=wx.LEFT,border=5)
         
         vbox=wx.BoxSizer(wx.VERTICAL)
@@ -130,7 +134,7 @@ class GUI(wx.Frame):
     def aboutApp(self,evt): 
         """An about message dialog"""
         text="""
-        GPicSync version 0.6 - March 2007 
+        GPicSync version 0.7 - March 2007 
          
         GPicSync is Free Software (GPL v2)
         
@@ -144,6 +148,16 @@ class GUI(wx.Frame):
         style=wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
         dialog.ShowModal()
         
+    def viewInGE(self,evt):
+        """View a local kml file in Google Earth"""
+        googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
+        #while not googleEarth.IsInitialized():
+        #    print "waiting for Google Earth to initialize"
+        path=self.picDir+'\\local-google-earth.kml'
+        print "path=",path
+        googleEarth.OpenKmlFile(path,True)
+        #googleEarth.OpenKmlFile(r'C:/"Documents and Settings"/franz/Bureau/GE-Short-test/local-google-earth.kml')
+        #googleEarth.OpenKmlFile("C:/Documents and Settings/franz/Bureau/GE-Short-test/local-google-earth.kml",True)
     def exitApp(self,evt):
         """Quit properly the app"""
         print "Exiting the app..."
@@ -184,6 +198,7 @@ class GUI(wx.Frame):
         geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
         UTCoffset=utcOffset,dateProcess=dateProcess)
         if self.geCheck.GetValue()==True:
+            self.consoleEntry.AppendText("\nCreating a Google Earth file in picture folder: local-google-earth.kml\n\n")
             localKml=KML(self.picDir+"/local-google-earth")
         def sync():
             self.consoleEntry.AppendText("Beginning synchronisation with "
@@ -214,7 +229,19 @@ class GUI(wx.Frame):
             if self.log==True: f.close()
             if self.geCheck.GetValue()==True:
                 localKml.close()
+                self.consoleEntry.AppendText("\nAttempting to visualize data in Google Earth...\n")
+                #try:
+                #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
+                #while not googleEarth.IsInitialized():
+                #    print "waiting for Google Earth to initialize"
+                #time.sleep(5)
+                #path=self.picDir+'\\local-google-earth.kml'
+                #print "path=",path
+                #googleEarth.OpenKmlFile(path)
+                #except:
+                #    self.consoleEntry.AppendText("\nCouldn't find or launch Google Earth...\n")
         start_new_thread(sync,())
+        googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         
     def localtimeCorrection(self,evt):
             """ Local time correction if GPS and camera wasn't synchronized """
