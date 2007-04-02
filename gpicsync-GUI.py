@@ -24,7 +24,7 @@ http://code.google.com/p/gpicsync/
 """
 
 import wx,time
-import os,sys,fnmatch
+import os,sys,fnmatch,zipfile
 import win32com.client
 from geoexif import *
 from gpx import *
@@ -58,6 +58,7 @@ class GUI(wx.Frame):
         exifReader=menuTools.Append(wx.NewId(),"EXIF reader")
         renameToolMenu=menuTools.Append(wx.NewId(),"Geo-Rename pictures")
         gpxInspectorMenu=menuTools.Append(wx.NewId(),"GPX Inspector")
+        kmzGeneratorMenu=menuTools.Append(wx.NewId(),"KMZ Generator")
         menuBar.Append(menu2,"&Help")
         statusBar=self.CreateStatusBar()
         self.Bind(wx.EVT_MENU,self.localtimeFrame,timeShift)
@@ -65,6 +66,7 @@ class GUI(wx.Frame):
         self.Bind(wx.EVT_MENU,self.exifFrame,exifReader)
         self.Bind(wx.EVT_MENU,self.renameFrame,renameToolMenu)
         self.Bind(wx.EVT_MENU,self.gpxInspectorFrame,gpxInspectorMenu)
+        self.Bind(wx.EVT_MENU,self.kmzGeneratorFrame,kmzGeneratorMenu)
         
         dirButton=wx.Button(bkg,size=(150,-1),label="Pictures folder")
         gpxButton=wx.Button(bkg,size=(150,-1),label="GPS file (.gpx)")
@@ -79,7 +81,7 @@ class GUI(wx.Frame):
         self.logFile.SetValue(True)
         self.dateCheck=wx.CheckBox(bkg,-1,"Dates must match")
         self.dateCheck.SetValue(True)
-        self.geCheck=wx.CheckBox(bkg,-1,"Create a local Google Earth file")
+        self.geCheck=wx.CheckBox(bkg,-1,"Create a Google Earth file")
         self.geCheck.SetValue(True)
 
         self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
@@ -408,7 +410,36 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                             self.consoleEntry.AppendText("\nRenamed "+fileName+" to "+string+" "+latlong+".jpg")
                 self.consoleEntry.AppendText("\nFinished")
             start_new_thread(rename,())
-                    
+    
+    def kmzGeneratorFrame(self,evt):
+        """A frame to generate a KMZ  file"""
+        self.winGpxInspector=wx.Frame(win,size=(280,180),title="GPX Inspector")
+        bkg=wx.Panel(self.winGpxInspector)
+        text="\nCreate a kmz file to distribute to others"
+        introLabel = wx.StaticText(bkg, -1,text)
+        readButton=wx.Button(bkg,size=(150,30),label="Create KMZ file !")
+        self.Bind(wx.EVT_BUTTON, self.kmzGenerator, readButton)
+        vbox=wx.BoxSizer(wx.VERTICAL)
+        vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        #vbox.Add(self.gpxInGECheck,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=10)
+        vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        bkg.SetSizer(vbox)
+        self.winGpxInspector.Show()
+    def kmzGenerator(self,evt):
+        """A tool to create a kmz file containing the geolocalized pictures"""
+        print  "kmz ordered ..."
+        zip = zipfile.ZipFile(self.picDir+'/'+os.path.basename(self.picDir)+".zip", 'w')
+        
+        zip.write(self.picDir+'/doc.kml','doc.kml',zipfile.ZIP_DEFLATED)
+        
+        for fileName in os.listdir ( self.picDir ):
+            if fnmatch.fnmatch ( fileName, '*.JPG' )or fnmatch.fnmatch ( fileName, '*.jpg' ):
+                zip.write(self.picDir+"/"+fileName,fileName,zipfile.ZIP_DEFLATED)
+        zip.close()
+
+        os.rename(self.picDir+'/'+os.path.basename(self.picDir)+".zip",self.picDir+'/'+os.path.basename(self.picDir)+".kmz")
+            
+        
     def gpxInspectorFrame(self,evt):
         """A frame to inspect a gpx file"""
         self.winGpxInspector=wx.Frame(win,size=(280,180),title="GPX Inspector")
