@@ -166,8 +166,6 @@ To visualize the results in Google Earth you  must either:
 - select a folder you've synchronized with the button "Pictures Folder" then click "View in Google Earth"
 (the folder must contains a doc.kml file) 
 
-A tool to export the results in Google Earth will be available soon.
-
 Note that you can always look at your geolocalized pictures from Picassa then Google Earth (in Picassa: "Tools">"Geolocalize">"Display in Google Earth").
 For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/group/gpicsync \n
 ---
@@ -413,8 +411,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
     
     def kmzGeneratorFrame(self,evt):
         """A frame to generate a KMZ  file"""
-        self.winGpxInspector=wx.Frame(win,size=(280,180),title="GPX Inspector")
-        bkg=wx.Panel(self.winGpxInspector)
+        self.winKmzGenerator=wx.Frame(win,size=(280,180),title="GPX Inspector")
+        bkg=wx.Panel(self.winKmzGenerator)
         text="\nCreate a kmz file to distribute to others"
         introLabel = wx.StaticText(bkg, -1,text)
         readButton=wx.Button(bkg,size=(150,30),label="Create KMZ file !")
@@ -424,21 +422,42 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         #vbox.Add(self.gpxInGECheck,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=10)
         vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         bkg.SetSizer(vbox)
-        self.winGpxInspector.Show()
+        self.winKmzGenerator.Show()
     def kmzGenerator(self,evt):
         """A tool to create a kmz file containing the geolocalized pictures"""
         print  "kmz ordered ..."
-        zip = zipfile.ZipFile(self.picDir+'/'+os.path.basename(self.picDir)+".zip", 'w')
-        
-        zip.write(self.picDir+'/doc.kml','doc.kml',zipfile.ZIP_DEFLATED)
-        
-        for fileName in os.listdir ( self.picDir ):
-            if fnmatch.fnmatch ( fileName, '*.JPG' )or fnmatch.fnmatch ( fileName, '*.jpg' ):
-                zip.write(self.picDir+"/"+fileName,fileName,zipfile.ZIP_DEFLATED)
-        zip.close()
-
-        os.rename(self.picDir+'/'+os.path.basename(self.picDir)+".zip",self.picDir+'/'+os.path.basename(self.picDir)+".kmz")
+        self.winKmzGenerator.Close()
+        self.consoleEntry.AppendText("\nCreating a KMZ file in the pictures folder...\n")
+        if self.picDir != None or self.picDir !="":
+            zip = zipfile.ZipFile(self.picDir+'/'+os.path.basename(self.picDir)+".zip", 'w')
+            zip.write(self.picDir+'/doc.kml','doc.kml',zipfile.ZIP_DEFLATED)
+            self.consoleEntry.AppendText("\nAdding doc.kml")
+            for fileName in os.listdir ( self.picDir ):
+                if fnmatch.fnmatch ( fileName, '*.JPG' )or fnmatch.fnmatch ( fileName, '*.jpg' ):
+                    zip.write(self.picDir+"/"+fileName,fileName,zipfile.ZIP_DEFLATED)
+                    self.consoleEntry.AppendText("\nAdding "+fileName)
+            zip.close()
+            try:
+                os.rename(self.picDir+'/'+os.path.basename(self.picDir)+".zip",self.picDir+'/'+os.path.basename(self.picDir)+".kmz")
+                self.consoleEntry.AppendText("\nKMZ file Created in pictures folder\n")
+            except WindowsError:
+                self.consoleEntry.AppendText("\nCouldn't rename the zip file to kmz\n(Maybe a previous kmz file with the same name already exist, check first and retry)\n")
+        else:
+            text="""
+---
+To create a Google Earth kmz file you must either:
             
+- finish a synchronisation (message "***FINISHED***) in the main window then select "KMZ Generator" in "Tools" menu
+
+- select a folder you've synchronized with the button "Pictures Folder" then select "KMZ Generator" in "Tools" menu
+(the folder must contains a doc.kml file) 
+
+Note that you can always look at your geolocalized pictures from Picassa then Google Earth (in Picassa: "Tools">"Geolocalize">"Display in Google Earth").
+For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/group/gpicsync \n
+---
+"""
+            self.consoleEntry.AppendText(text)
+                
         
     def gpxInspectorFrame(self,evt):
         """A frame to inspect a gpx file"""
