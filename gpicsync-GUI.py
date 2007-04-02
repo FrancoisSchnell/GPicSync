@@ -152,7 +152,7 @@ class GUI(wx.Frame):
         """View a local kml file in Google Earth"""
         googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         try:
-            path=self.picDir+'\\local-google-earth.kml'
+            path=self.picDir+'\\doc.kml'
             print "path=",path
         except:
             text="""
@@ -162,7 +162,7 @@ To visualize the results in Google Earth you  must either:
 - finish a synchronisation (message "***FINISHED***)  in the main window then click "View in Google Earth"
 
 - select a folder you've synchronized with the button "Pictures Folder" then click "View in Google Earth"
-(the folder must contains a local-google-eath.kml file and must be at the same place as when it was synchronized.
+(the folder must contains a doc.kml file) 
 
 A tool to export the results in Google Earth will be available soon.
 
@@ -216,8 +216,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
         UTCoffset=utcOffset,dateProcess=dateProcess)
         if self.geCheck.GetValue()==True:
-            self.consoleEntry.AppendText("\nStarting to generate a Google Earth file (local-google-earth.kml) in the picture folder ... \n\n")
-            localKml=KML(self.picDir+"/local-google-earth")
+            self.consoleEntry.AppendText("\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n\n")
+            localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir))
         def sync():
             self.consoleEntry.AppendText("Beginning synchronisation with "
             +"UTC Offset="+self.utcEntry.GetValue()+"\n")
