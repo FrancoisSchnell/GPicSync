@@ -42,6 +42,7 @@ class GUI(wx.Frame):
         self.tgps_l="00:00:00"
         self.log=False
         self.stop=False
+        self.picDir=""
         
         bkg=wx.Panel(self)
         #bkg.SetBackgroundColour('light blue steel')
@@ -136,7 +137,7 @@ class GUI(wx.Frame):
     def aboutApp(self,evt): 
         """An about message dialog"""
         text="""
-        GPicSync version 0.7 - March 2007 
+        GPicSync version 0.75 - March 2007 
          
         GPicSync is Free Software (GPL v2)
         
@@ -411,7 +412,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
     
     def kmzGeneratorFrame(self,evt):
         """A frame to generate a KMZ  file"""
-        self.winKmzGenerator=wx.Frame(win,size=(280,180),title="GPX Inspector")
+        self.winKmzGenerator=wx.Frame(win,size=(280,180),title="KMZ Generator")
         bkg=wx.Panel(self.winKmzGenerator)
         text="\nCreate a kmz file to distribute to others"
         introLabel = wx.StaticText(bkg, -1,text)
@@ -427,8 +428,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         """A tool to create a kmz file containing the geolocalized pictures"""
         print  "kmz ordered ..."
         self.winKmzGenerator.Close()
-        self.consoleEntry.AppendText("\nCreating a KMZ file in the pictures folder...\n")
-        if self.picDir != None or self.picDir !="":
+        if self.picDir == None or self.picDir !="":
+            self.consoleEntry.AppendText("\nCreating a KMZ file in the pictures folder...\n")
             zip = zipfile.ZipFile(self.picDir+'/'+os.path.basename(self.picDir)+".zip", 'w')
             zip.write(self.picDir+'/doc.kml','doc.kml',zipfile.ZIP_DEFLATED)
             self.consoleEntry.AppendText("\nAdding doc.kml")
@@ -439,7 +440,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             zip.close()
             try:
                 os.rename(self.picDir+'/'+os.path.basename(self.picDir)+".zip",self.picDir+'/'+os.path.basename(self.picDir)+".kmz")
-                self.consoleEntry.AppendText("\nKMZ file Created in pictures folder\n")
+                self.consoleEntry.AppendText("\nKMZ file (which contains the geolocalized pictures) created in pictures folder\nYou can share this file with friends or put it on a webserver.\n")
             except WindowsError:
                 self.consoleEntry.AppendText("\nCouldn't rename the zip file to kmz\n(Maybe a previous kmz file with the same name already exist, check first and retry)\n")
         else:
