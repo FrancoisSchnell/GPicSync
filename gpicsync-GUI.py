@@ -137,7 +137,7 @@ class GUI(wx.Frame):
     def aboutApp(self,evt): 
         """An about message dialog"""
         text="""
-        GPicSync version 0.75 - March 2007 
+        GPicSync version 0.8 - March 2007 
          
         GPicSync is Free Software (GPL v2)
         
@@ -247,6 +247,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                 self.consoleEntry.AppendText("\n *** Processing STOPPED bu the user ***\n")
             if self.log==True: f.close()
             if self.geCheck.GetValue()==True:
+                localKml.path(self.gpxFile)
                 localKml.close()
                 self.consoleEntry.AppendText("\n\nYou should be able to visualize your pictures in Google Earth (click on the 'View in Google Earth' button).\n")
         start_new_thread(sync,())

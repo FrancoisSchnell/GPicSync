@@ -11,6 +11,7 @@
 
 
 from geoexif import *
+from gpx import *
 import SimpleHTTPServer,time
 import SocketServer
 from thread import start_new_thread
@@ -27,6 +28,12 @@ class KML(object):
 <kml xmlns="http://earth.google.com/kml/2.1">
 <Document>
 <name>"""+name+"""</name>
+<Style id="lineStyle">
+<LineStyle>
+<color>64eeee17</color>
+<width>6</width>
+</LineStyle>
+</Style>
 <Style id="sh_ylw-pushpin_copy2">
 <IconStyle>
 <scale>1.3</scale>
@@ -85,6 +92,26 @@ class KML(object):
         self.f.write(pmDescription)
         self.f.write(pmTail)
         
+    def path(self,gpxFile):
+        """ Creates the path of the GPX file in the kml"""
+        headPath="""
+<Placemark>
+<name>Path</name>
+<styleUrl>#lineStyle</styleUrl>
+<LineString>
+<tessellate>1</tessellate>
+<coordinates>\n"""
+        endPath="\n</coordinates>\n</LineString>\n</Placemark>\n\n"
+        
+        bodyPath=""
+        myGpx=Gpx(gpxFile) 
+        track=myGpx.extract()
+        for rec in track:
+            bodyPath=bodyPath+rec['lon']+','+rec['lat']+',0 '
+        self.f.write(headPath)
+        self.f.write(bodyPath)
+        self.f.write(endPath)
+
     def close(self):
         print "close kml!"
         kmlTail="\n\n</Document>\n</kml>"
