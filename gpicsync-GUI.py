@@ -425,6 +425,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         bkg.SetSizer(vbox)
         self.winKmzGenerator.Show()
+        
     def kmzGenerator(self,evt):
         """A tool to create a kmz file containing the geolocalized pictures"""
         print  "kmz ordered ..."
