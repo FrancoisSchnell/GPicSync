@@ -236,11 +236,11 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                     self.consoleEntry.AppendText("\nFound "+fileName+" ")
                     print self.picDir+'/'+fileName
                     result=geo.syncPicture(self.picDir+'/'+fileName)
-                    self.consoleEntry.AppendText(result+"\n")
+                    self.consoleEntry.AppendText(result[0]+"\n")
                     if self.log==True:
-                        f.write("Processed image "+fileName+" : "+result+"\n")
+                        f.write("Processed image "+fileName+" : "+result[0]+"\n")
                     if self.geCheck.GetValue()==True:
-                        localKml.placemark(self.picDir+"/"+fileName)
+                        localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2])
             if self.stop==False:
                 self.consoleEntry.AppendText("\n *** FINISHED ***\n")
             if self.stop==True:

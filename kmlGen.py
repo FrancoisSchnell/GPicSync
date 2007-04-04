@@ -74,12 +74,22 @@ class KML(object):
         httpd.serve_forever()
         #start_new_thread(serverGo,())
 
-    def placemark(self,picName):
-        """Creates a placemark tag for the given picture in the kml file"""
+    def placemark(self,picName="",lat="",long=""):
+        """
+        Creates a placemark tag for the given picture in the kml file.
+        If only a picture path is given in argument, latitude and longitude will
+        be searched in the picture EXIF.
+        It's also possible to give the values in argument
+        (a string representing decimal degress, - sign ok)
+        """
         #print "placemark!"
-        mypicture=GeoExif(picName)
-        lat=mypicture.readLatitude()
-        long=mypicture.readLongitude()
+        #print "lat =",lat
+        #print "long =",long
+        if lat and long == "":
+            mypicture=GeoExif(picName)
+            lat=mypicture.readLatitude()
+            long=mypicture.readLongitude()
+        
         pmHead="\n\n<Placemark>\n<name>"+\
         os.path.basename(picName)+"</name>\n"
         pmDescription="<description><![CDATA["+\

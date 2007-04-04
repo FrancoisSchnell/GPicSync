@@ -3,14 +3,13 @@
 
 ###############################################################################
 #  EXIF reader utility in relation to geolalisation
-# (c) francois.schnell  francois.schnell@gmail.com
-#                       http://francois.schnell.free.fr 
-#  
 # This script is released under the GPL license v2
 #
-# Integrated patch from Marc Nozell (http://nozell.com/blog):
-# for multi-OS compatibility with exiftool (windows-linux) 
-#
+# francois.schnell (http://francois.schnell.free.fr)
+#                        
+# Contributions from Marc Nozell (http://nozell.com/blog) in particular for
+# the Linux port.
+#  
 # This script use the GPL exiftool.exe  app. see: 
 # http://www.sno.phy.queensu.ca/%7Ephil/exiftool/
 ###############################################################################

@@ -62,7 +62,10 @@ class GpicSync(object):
     def syncPicture(self,picture):
         """ 
         Find the nearest trackpoint from the recorded time in the picture.
-        Returns tpic_tgps_l (to judge the quality of the geolocalisation)
+        This method returns now a list [response,latitude,longitude]
+        where 'response' is the general reslult to be show to the user
+        latitude and longitude are strings (+- decimal degrees) to be use
+        by other part of the program calling this method. 
         """
         pic=GeoExif(picture)
         self.shotTime=pic.readDateTime()[1]
@@ -105,19 +108,20 @@ class GpicSync(object):
                     else: longRef="W"
         if self.dateCheck==True:
             if latitude != "" and longitude !="":
-                if float(longitude)<0:longitude=str(abs(float(longitude)))
-                if float(latitude)<0:latitude=str(abs(float(latitude)))
+                #if float(longitude)<0:longitude=str(abs(float(longitude)))
+                #if float(latitude)<0:latitude=str(abs(float(latitude)))
                 print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
                 pic.writeLatLong(latitude,longitude,latRef,longRef)
                 #return tpic_tgps_l
-                return "taken "+self.shotDate+"-"+self.shotTime+\
+                return [ "taken "+self.shotDate+"-"+self.shotTime+\
                 "  - Writting best match to picture  -> "+latRef+\
-                " "+latitude+" ,"+longRef+" "+longitude+" : time difference (s)= "+str(tpic_tgps_l)
+                " "+latitude+" ,"+longRef+" "+longitude+" : time difference (s)= "+str(tpic_tgps_l),
+                latitude,longitude]
             else:
                 print "Didn't find any picture for this day"
-                return " : Failure, didn't find any trackpoint at this picture's date: "\
-                +self.shotDate+"-"+self.shotTime
+                return [" : Failure, didn't find any trackpoint at this picture's date: "\
+                +self.shotDate+"-"+self.shotTime,"",""]
         if self.dateCheck==False:
             if latitude != "" and longitude !="":
                 if float(longitude)<0:longitude=str(abs(float(longitude)))
@@ -130,10 +134,10 @@ class GpicSync(object):
                 if self.shotDate != trkptDay:
                     response=response+"\nWarning: Picture date "+self.shotDate+\
                    " and track point date "+trkptDay+" are different ! " 
-                return response
+                return [response,latitude,longitude]
             else:
                 print "Didn't find any suitable trackpoint"
-                return "Didn't find any suitable trackpoint"
+                return ["Didn't find any suitable trackpoint","",""]
             
 if __name__=="__main__":
     
@@ -180,6 +184,6 @@ if __name__=="__main__":
     for fileName in os.listdir ( options.dir ):
         if fnmatch.fnmatch (fileName, '*.JPG') or fnmatch.fnmatch (fileName, '*.jpg'):
             print "\nFound fileName ",fileName," Processing now ..."
-            geo.syncPicture(options.dir+'/'+fileName)
+            geo.syncPicture(options.dir+'/'+fileName)[0]
 
     
