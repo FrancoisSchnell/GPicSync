@@ -84,7 +84,7 @@ class KML(object):
         os.path.basename(picName)+"</name>\n"
         pmDescription="<description><![CDATA["+\
         "<img src='"+os.path.basename(picName)+"' width='640' height='480'/>]]>"+\
-        "</description>\n<name>"+os.path.basename(picName)+"</name>\n<Point>"+\
+        "</description>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
         "</coordinates>\n</Point>\n"
         pmTail="</Placemark>"
@@ -95,14 +95,13 @@ class KML(object):
     def path(self,gpxFile):
         """ Creates the path of the GPX file in the kml"""
         headPath="""
-<Placemark>
+\n<Placemark>
 <name>Path</name>
 <styleUrl>#lineStyle</styleUrl>
 <LineString>
 <tessellate>1</tessellate>
 <coordinates>\n"""
         endPath="\n</coordinates>\n</LineString>\n</Placemark>\n\n"
-        
         bodyPath=""
         myGpx=Gpx(gpxFile) 
         track=myGpx.extract()
@@ -113,8 +112,9 @@ class KML(object):
         self.f.write(endPath)
 
     def close(self):
+        """Ending of the kml file"""
         print "close kml!"
-        kmlTail="\n\n</Document>\n</kml>"
+        kmlTail="\n</Document>\n</kml>"
         self.f.write(kmlTail)
         self.f.close()
         
