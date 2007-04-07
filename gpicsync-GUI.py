@@ -78,7 +78,7 @@ class GUI(wx.Frame):
         viewInGEButton=wx.Button(bkg,label="View in Google Earth",size=(-1,-1))
         
         utcLabel = wx.StaticText(bkg, -1,"UTC Offset=")
-        timerangeLabel=wx.StaticText(bkg, -1,"Geocode only if time difference less than (seconds)=")
+        timerangeLabel=wx.StaticText(bkg, -1,"Geocode only if time difference is less than (seconds)=")
         self.logFile=wx.CheckBox(bkg,-1,"Create a log file in picture folder")
         self.logFile.SetValue(True)
         self.dateCheck=wx.CheckBox(bkg,-1,"Dates must match")
@@ -219,6 +219,10 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
     
     def syncPictures(self,evt):
         """Sync. pictures with the .gpx file"""
+        if self.dirEntry.GetValue()=="" or self.gpxEntry.GetValue=="":
+                self.consoleEntry.AppendText("You must first select a pictures folder and a GPX file\n")
+        else:
+            pass
         self.stop=False
         utcOffset=int(self.utcEntry.GetValue())
         dateProcess=self.dateCheck.GetValue()
@@ -232,7 +236,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         def sync():
             self.consoleEntry.AppendText("Beginning synchronisation with "
             +"UTC Offset="+self.utcEntry.GetValue()+
-            " and Time range= "+self.timerangeEntry.GetValue() +"\n")
+            " hours and Time range= "+self.timerangeEntry.GetValue() +" seconds.\n")
             if self.log==True:
                 f=open(self.picDir+'/gpicsync.log','w')
                 f.write("Synchronisation with UTC Offset="+
@@ -260,7 +264,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             if self.geCheck.GetValue()==True:
                 localKml.path(self.gpxFile)
                 localKml.close()
-                self.consoleEntry.AppendText("\n\nYou should be able to visualize track and geocoded photos in Google Earth (click on the 'View in Google Earth' button).\n")
+                self.consoleEntry.AppendText("\n\nYou should be able to visualize the track log and your geocoded photos in Google Earth (click on the 'View in Google Earth' button).\n")
         start_new_thread(sync,())
         #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         
