@@ -34,7 +34,7 @@ class GpicSync(object):
     """
     A class to manage the geolocalisation from a .gpx file.
     """
-    def __init__(self,gpxFile,tcam_l="00:00:00",tgps_l="00:00:00",UTCoffset=0,dateProcess=True):
+    def __init__(self,gpxFile,tcam_l="00:00:00",tgps_l="00:00:00",UTCoffset=0,dateProcess=True,timerange=3600):
         """Extracts data from the gpx file and compute local offset duration"""
         myGpx=Gpx(gpxFile)   
         self.track=myGpx.extract()
@@ -43,6 +43,7 @@ class GpicSync(object):
         self.UTCoffset=UTCoffset*3600
         tcam_l=int(tcam_l[0:2])*3600+int(tcam_l[3:5])*60+int(tcam_l[6:8])
         tgps_l=int(tgps_l[0:2])*3600+int(tgps_l[3:5])*60+int(tgps_l[6:8])
+        self.timerange=timerange
         self.localOffset=tcam_l-(tgps_l+self.UTCoffset)
         print "local UTC Offset (seconds)= ", self.localOffset
         #print self.track
@@ -107,7 +108,7 @@ class GpicSync(object):
                         longRef="E"
                     else: longRef="W"
         if self.dateCheck==True:
-            if latitude != "" and longitude !="":
+            if latitude != "" and longitude !="" and (tpic_tgps_l< self.timerange):
                 #if float(longitude)<0:longitude=str(abs(float(longitude)))
                 #if float(latitude)<0:latitude=str(abs(float(latitude)))
                 print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
@@ -119,11 +120,15 @@ class GpicSync(object):
                 " "+latitude+" ,"+longRef+" "+longitude+" : time difference (s)= "+str(tpic_tgps_l),
                 latitude,longitude]
             else:
-                print "Didn't find any picture for this day"
-                return [" : Failure, didn't find any trackpoint at this picture's date: "\
-                +self.shotDate+"-"+self.shotTime,"",""]
+                print "Didn't find any picture for this day or timerange"
+                if tpic_tgps_l !=86400:
+                    return [" : Warning: DIDN'T GEOCODE, no trackpoint below the maximum timerange ("\
+                    +str(self.timerange)+" s) : " +self.shotDate+"-"+self.shotTime+" time difference (s)= "+str(tpic_tgps_l),"",""]
+                else:
+                    return [" : Warning: DIDN'T GEOCODE, no trackpoint at this picture date "\
+                     +self.shotDate+"-"+self.shotTime,"",""]
         if self.dateCheck==False:
-            if latitude != "" and longitude !="":
+            if latitude != "" and longitude !=""and (tpic_tgps_l<self.timerange):
                 #if float(longitude)<0:longitude=str(abs(float(longitude)))
                 #if float(latitude)<0:latitude=str(abs(float(latitude)))
                 print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
@@ -136,8 +141,8 @@ class GpicSync(object):
                    " and track point date "+trkptDay+" are different ! " 
                 return [response,latitude,longitude]
             else:
-                print "Didn't find any suitable trackpoint"
-                return ["Didn't find any suitable trackpoint","",""]
+                print " WARNING: Didn't geocode, no suitable trackpoint below time range (seconds)= ",self.timerange
+                return ["WARNING: Didn't geocode, no suitable trackpoint below timerange, "+" time difference (s)= "+str(tpic_tgps_l),"",""]
             
 if __name__=="__main__":
     
@@ -179,7 +184,7 @@ if __name__=="__main__":
     print "\n"
     
     geo=GpicSync(gpxFile=options.gpx,
-    tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=int(options.offset))
+    tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=int(options.offset),timerange=3600)
     
     for fileName in os.listdir ( options.dir ):
         if fnmatch.fnmatch (fileName, '*.JPG') or fnmatch.fnmatch (fileName, '*.jpg'):

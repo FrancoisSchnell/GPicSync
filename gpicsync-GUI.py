@@ -225,13 +225,14 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         self.log=self.logFile.GetValue()
         print "utcOffset= ",utcOffset
         geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
-        UTCoffset=utcOffset,dateProcess=dateProcess)
+        UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()))
         if self.geCheck.GetValue()==True:
             self.consoleEntry.AppendText("\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n\n")
             localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir))
         def sync():
             self.consoleEntry.AppendText("Beginning synchronisation with "
-            +"UTC Offset="+self.utcEntry.GetValue()+"\n")
+            +"UTC Offset="+self.utcEntry.GetValue()+
+            " and Time range= "+self.timerangeEntry.GetValue() +"\n")
             if self.log==True:
                 f=open(self.picDir+'/gpicsync.log','w')
                 f.write("Synchronisation with UTC Offset="+
@@ -249,7 +250,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                     self.consoleEntry.AppendText(result[0]+"\n")
                     if self.log==True:
                         f.write("Processed image "+fileName+" : "+result[0]+"\n")
-                    if self.geCheck.GetValue()==True:
+                    if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2])
             if self.stop==False:
                 self.consoleEntry.AppendText("\n *** FINISHED ***\n")
@@ -259,7 +260,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             if self.geCheck.GetValue()==True:
                 localKml.path(self.gpxFile)
                 localKml.close()
-                self.consoleEntry.AppendText("\n\nYou should be able to visualize your pictures in Google Earth (click on the 'View in Google Earth' button).\n")
+                self.consoleEntry.AppendText("\n\nYou should be able to visualize track and geocoded photos in Google Earth (click on the 'View in Google Earth' button).\n")
         start_new_thread(sync,())
         #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         
