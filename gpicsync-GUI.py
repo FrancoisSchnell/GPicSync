@@ -78,12 +78,16 @@ class GUI(wx.Frame):
         viewInGEButton=wx.Button(bkg,label="View in Google Earth",size=(-1,-1))
         
         utcLabel = wx.StaticText(bkg, -1,"UTC Offset=")
+        timerangeLabel=wx.StaticText(bkg, -1,"Geocode only if time difference less than (seconds)=")
         self.logFile=wx.CheckBox(bkg,-1,"Create a log file in picture folder")
         self.logFile.SetValue(True)
         self.dateCheck=wx.CheckBox(bkg,-1,"Dates must match")
         self.dateCheck.SetValue(True)
         self.geCheck=wx.CheckBox(bkg,-1,"Create a Google Earth file")
         self.geCheck.SetValue(True)
+        self.backupCheck=wx.CheckBox(bkg,-1,"backup pictures")
+        self.backupCheck.SetValue(True)
+        
 
         self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
         self.Bind(wx.EVT_BUTTON, self.findGpx, gpxButton)
@@ -97,13 +101,15 @@ class GUI(wx.Frame):
         self.gpxEntry=wx.TextCtrl(bkg)
         self.utcEntry=wx.TextCtrl(bkg,size=(40,-1))
         self.utcEntry.SetValue("0")
+        self.timerangeEntry=wx.TextCtrl(bkg,size=(40,-1))
+        self.timerangeEntry.SetValue("120")
         self.consoleEntry=wx.TextCtrl(bkg,style=wx.TE_MULTILINE | wx.HSCROLL)
         #self.consoleEntry.SetBackgroundColour("light grey")
         
         hbox=wx.BoxSizer()
         hbox.Add(dirButton,proportion=0,flag=wx.LEFT,border=5)
         hbox.Add(self.dirEntry,proportion=1,flag=wx.EXPAND)
-
+    
         hbox2=wx.BoxSizer()
         hbox2.Add(gpxButton,proportion=0,flag=wx.LEFT,border=5)
         hbox2.Add(self.gpxEntry,proportion=1,flag=wx.EXPAND)
@@ -112,10 +118,15 @@ class GUI(wx.Frame):
         hbox3.Add(self.logFile,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
         hbox3.Add(self.dateCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
         hbox3.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
+        hbox3.Add(self.backupCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
+        
+        hbox1=wx.BoxSizer()
+        hbox1.Add(utcLabel,proportion=0,flag=wx.LEFT,border=10)
+        hbox1.Add(self.utcEntry,proportion=0,flag=wx.LEFT,border=10)
+        hbox1.Add(timerangeLabel,proportion=0,flag=wx.LEFT,border=10)
+        hbox1.Add(self.timerangeEntry,proportion=0,flag=wx.LEFT,border=10)
         
         hbox4=wx.BoxSizer()
-        hbox4.Add(utcLabel,proportion=0,flag=wx.LEFT,border=5)
-        hbox4.Add(self.utcEntry,proportion=0,flag=wx.LEFT,border=5)
         hbox4.Add(syncButton,proportion=0,flag=wx.LEFT,border=5)
         hbox4.Add(stopButton,proportion=0,flag=wx.LEFT,border=5)
         hbox4.Add(clearButton,proportion=0,flag=wx.LEFT,border=5)
@@ -126,10 +137,9 @@ class GUI(wx.Frame):
         vbox.Add(hbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox2,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox3,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        vbox.Add(hbox1,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox4,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        #vbox.Add(syncButton,proportion=0,flag=wx.EXPAND | wx.LEFT, border=5)
         vbox.Add(self.consoleEntry,proportion=1,flag=wx.EXPAND | wx.LEFT, border=5)
-        #vbox.Add(quitButton,proportion=0,flag=wx.EXPAND | wx.LEFT, border=5)
         
         bkg.SetSizer(vbox)
         self.SetMenuBar(menuBar)
