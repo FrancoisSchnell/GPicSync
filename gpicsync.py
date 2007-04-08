@@ -34,7 +34,8 @@ class GpicSync(object):
     """
     A class to manage the geolocalisation from a .gpx file.
     """
-    def __init__(self,gpxFile,tcam_l="00:00:00",tgps_l="00:00:00",UTCoffset=0,dateProcess=True,timerange=3600):
+    def __init__(self,gpxFile,tcam_l="00:00:00",tgps_l="00:00:00",UTCoffset=0,
+    dateProcess=True,timerange=3600,backup=True):
         """Extracts data from the gpx file and compute local offset duration"""
         myGpx=Gpx(gpxFile)   
         self.track=myGpx.extract()
@@ -45,6 +46,7 @@ class GpicSync(object):
         tgps_l=int(tgps_l[0:2])*3600+int(tgps_l[3:5])*60+int(tgps_l[6:8])
         self.timerange=timerange
         self.localOffset=tcam_l-(tgps_l+self.UTCoffset)
+        self.backup=backup
         print "local UTC Offset (seconds)= ", self.localOffset
         #print self.track
         
@@ -113,7 +115,7 @@ class GpicSync(object):
                 #if float(latitude)<0:latitude=str(abs(float(latitude)))
                 print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
-                pic.writeLatLong(latitude,longitude,latRef,longRef)
+                pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup)
                 #return tpic_tgps_l
                 return [ "taken "+self.shotDate+"-"+self.shotTime+\
                 "  - Writting best match to picture  -> "+latRef+\
@@ -133,7 +135,7 @@ class GpicSync(object):
                 #if float(latitude)<0:latitude=str(abs(float(latitude)))
                 print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
-                pic.writeLatLong(latitude,longitude,latRef,longRef)
+                pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup)
                 response= "Writting best latitude/longitude match to EXIF picture: "+latRef+\
                 " "+latitude+" ,"+longRef+" "+longitude+" with time difference (s)= "+str(tpic_tgps_l)
                 if self.shotDate != trkptDay:

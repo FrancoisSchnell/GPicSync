@@ -114,11 +114,15 @@ class GeoExif(object):
             os.popen('%s -GPSLongitudeRef="W" "%s"' % (self.exifcmd, self.picPath))
         os.popen('%s -GPSLongitude=%s  "%s" '% (self.exifcmd, long,self.picPath))
         
-    def writeLatLong(self,lat,long,latRef,longRef):
+    def writeLatLong(self,lat,long,latRef,longRef,backup):
         """Write both latitudeRef/latitude and longitudeRef/longitude in EXIF"""
-        os.popen('%s -GPSLongitude=%s -GPSLatitude=%s \
-        -GPSLongitudeRef=%s -GPSLatitudeRef=%s  "%s"'%(self.exifcmd, long,lat,longRef,latRef,self.picPath))
-
+        if backup==True:
+            os.popen('%s -GPSLongitude=%s -GPSLatitude=%s \
+            -GPSLongitudeRef=%s -GPSLatitudeRef=%s  "%s"'%(self.exifcmd, long,lat,longRef,latRef,self.picPath))
+        else:
+            os.popen('%s -overwrite_original -GPSLongitude=%s -GPSLatitude=%s \
+            -GPSLongitudeRef=%s -GPSLatitudeRef=%s  "%s"'%(self.exifcmd, long,lat,longRef,latRef,self.picPath))
+            
 if __name__=="__main__":
     
     mypicture=GeoExif("test.jpg")

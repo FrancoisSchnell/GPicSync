@@ -229,7 +229,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         self.log=self.logFile.GetValue()
         print "utcOffset= ",utcOffset
         geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
-        UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()))
+        UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),
+        backup=self.backupCheck.GetValue())
         if self.geCheck.GetValue()==True:
             self.consoleEntry.AppendText("\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n\n")
             localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir))
