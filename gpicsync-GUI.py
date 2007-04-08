@@ -147,7 +147,7 @@ class GUI(wx.Frame):
     def aboutApp(self,evt): 
         """An about message dialog"""
         text="""
-        GPicSync version 0.8 - March 2007 
+        GPicSync version 0.83 - April 2007 
          
         GPicSync is Free Software (GPL v2)
         
