@@ -172,7 +172,7 @@ class GUI(wx.Frame):
 ---
 To visualize the results in Google Earth you  must either:
             
-- finish a synchronisation (message "***FINISHED***)  in the main window then click "View in Google Earth"
+- finish a synchronisation (message "*** FINISHED GEOCODING PROCESS ***)  in the main window then click "View in Google Earth"
 
 - select a folder you've synchronized with the button "Pictures Folder" then click "View in Google Earth"
 (the folder must contains a doc.kml file) 
@@ -232,16 +232,17 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),
         backup=self.backupCheck.GetValue())
         if self.geCheck.GetValue()==True:
-            self.consoleEntry.AppendText("\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n\n")
+            self.consoleEntry.AppendText("\n------\n\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n\n")
             localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir))
         def sync():
-            self.consoleEntry.AppendText("Beginning synchronisation with "
-            +"UTC Offset="+self.utcEntry.GetValue()+
-            " hours and Time range= "+self.timerangeEntry.GetValue() +" seconds.\n")
+            self.consoleEntry.AppendText("Beginning synchronization with "
+            +"UTC Offset ="+self.utcEntry.GetValue()+
+            " hours and maximum time difference = "+self.timerangeEntry.GetValue() +" seconds.\n")
             if self.log==True:
                 f=open(self.picDir+'/gpicsync.log','w')
-                f.write("Synchronisation with UTC Offset="+
-                self.utcEntry.GetValue()+"\n")
+                f.write("Geocoded with UTC Offset= "+
+                self.utcEntry.GetValue()+" and  Maximum time difference = "\
+                +self.timerangeEntry.GetValue()+"\n")
                 f.write("Pictures Folder: "+self.picDir+"\n")
                 f.write("GPX file: "+self.gpxEntry.GetValue()+"\n\n")
                 
@@ -258,14 +259,15 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2])
             if self.stop==False:
-                self.consoleEntry.AppendText("\n *** FINISHED ***\n")
+                self.consoleEntry.AppendText("\n*** FINISHED GEOCODING PROCESS ***\n")
             if self.stop==True:
-                self.consoleEntry.AppendText("\n *** Processing STOPPED bu the user ***\n")
+                self.consoleEntry.AppendText("\n *** PROCESSING STOPPED BY THE USER ***\n")
             if self.log==True: f.close()
             if self.geCheck.GetValue()==True:
                 localKml.path(self.gpxFile)
                 localKml.close()
-                self.consoleEntry.AppendText("\n\nYou should be able to visualize the track log and your geocoded photos in Google Earth (click on the 'View in Google Earth' button).\n")
+                self.consoleEntry.AppendText("\nClick on the 'View in Google Earth' button if you want to visualize directly the track log and geocoded photos in Google Earth .\n")
+                self.consoleEntry.AppendText("( A Google Earth doc.kml file has been created in your picture folder. You can also produce a kmz file with 'Tools'->'KMZ Generator' )")
         start_new_thread(sync,())
         #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         
