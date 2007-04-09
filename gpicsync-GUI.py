@@ -238,7 +238,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             backup=self.backupCheck.GetValue())
             
             if self.geCheck.GetValue()==True:
-                self.consoleEntry.AppendText("\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n\n")
+                self.consoleEntry.AppendText("\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n")
                 localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir))
 
             if self.log==True:
@@ -267,6 +267,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                 self.consoleEntry.AppendText("\n *** PROCESSING STOPPED BY THE USER ***\n")
             if self.log==True: f.close()
             if self.geCheck.GetValue()==True:
+                self.consoleEntry.AppendText("\nAdding the GPS track log to the Google Earth kml file...\n")
                 localKml.path(self.gpxFile)
                 localKml.close()
                 self.consoleEntry.AppendText("\nClick on the 'View in Google Earth' button if you want to visualize directly the track log and geocoded photos in Google Earth .\n")
