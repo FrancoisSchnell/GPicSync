@@ -10,6 +10,9 @@
 #
 # More informations and help can be found here: http://code.google.com/p/gpicsync/
 #
+# Contributions from Marc Nozell (http://nozell.com/blog) in particular for
+# the Linux port.
+#
 ###############################################################################
 
 """
@@ -25,7 +28,8 @@ http://code.google.com/p/gpicsync/
 
 import wx,time
 import os,sys,fnmatch,zipfile
-import win32com.client
+if sys.platform == 'win32':
+    import win32com.client
 from geoexif import *
 from gpx import *
 from gpicsync import *
@@ -163,7 +167,9 @@ class GUI(wx.Frame):
         
     def viewInGE(self,evt):
         """View a local kml file in Google Earth"""
-        googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
+
+	if sys.platform == 'win32':
+            googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         try:
             path=self.picDir+'\\doc.kml'
             print "path=",path
