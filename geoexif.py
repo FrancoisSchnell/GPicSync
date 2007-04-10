@@ -117,10 +117,10 @@ class GeoExif(object):
     def writeLatLong(self,lat,long,latRef,longRef,backup):
         """Write both latitudeRef/latitude and longitudeRef/longitude in EXIF"""
         if backup==True:
-            os.popen('%s -GPSLongitude=%s -GPSLatitude=%s \
-            -GPSLongitudeRef=%s -GPSLatitudeRef=%s  "%s"'%(self.exifcmd, long,lat,longRef,latRef,self.picPath))
+            os.popen('%s -n -GPSLongitude=%s -GPSLatitude=%s \
+            -GPSLongitudeRef=%s -GPSLatitudeRef=%s  -GPSAltitude=0.0 -GPSAltitudeRef=0 "%s"'%(self.exifcmd, long,lat,longRef,latRef,self.picPath))
         else:
-            os.popen('%s -overwrite_original -GPSLongitude=%s -GPSLatitude=%s \
+            os.popen('%s -overwrite_original -n -GPSLongitude=%s -GPSLatitude=%s \
             -GPSLongitudeRef=%s -GPSLatitudeRef=%s  "%s"'%(self.exifcmd, long,lat,longRef,latRef,self.picPath))
             
 if __name__=="__main__":
@@ -130,10 +130,11 @@ if __name__=="__main__":
 #    mypicture.writeLongitude(7.222333)
 #    mypicture.writeLatitude(48.419973)
     dateAndTime= mypicture.readDateTime()
-#    mypicture.writeLatLong(7.222333,48.419973,"N","E")
+    mypicture.writeLatLong(7.222333,48.419973,"N","E",True)
     latitude=mypicture.readLatitude()
     longitude=mypicture.readLongitude()
-    print "dateAndTime= ",dateAndTime
-    print "latitude= ",latitude
-    print "longitude= ",longitude
-    print "EXIF= ", exif
+    #print "dateAndTime= ",dateAndTime
+    #print "latitude= ",latitude
+    #print "longitude= ",longitude
+    #print "EXIF= ", exif
+    print mypicture.readLatLong()

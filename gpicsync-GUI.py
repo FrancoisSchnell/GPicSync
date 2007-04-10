@@ -78,7 +78,7 @@ class GUI(wx.Frame):
         viewInGEButton=wx.Button(bkg,label="View in Google Earth",size=(-1,-1))
         
         utcLabel = wx.StaticText(bkg, -1,"UTC Offset=")
-        timerangeLabel=wx.StaticText(bkg, -1,"Geocode only if time difference is less than (seconds)=")
+        timerangeLabel=wx.StaticText(bkg, -1,"Geocode picture only if time difference to nearest track point is below (seconds)=")
         self.logFile=wx.CheckBox(bkg,-1,"Create a log file in picture folder")
         self.logFile.SetValue(True)
         self.dateCheck=wx.CheckBox(bkg,-1,"Dates must match")
@@ -147,7 +147,7 @@ class GUI(wx.Frame):
     def aboutApp(self,evt): 
         """An about message dialog"""
         text="""
-        GPicSync version 0.84 - April 2007 
+        GPicSync version 0.85 - April 2007 
          
         GPicSync is Free Software (GPL v2)
         

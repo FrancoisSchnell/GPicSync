@@ -111,8 +111,8 @@ class GpicSync(object):
                     else: longRef="W"
         if self.dateCheck==True:
             if latitude != "" and longitude !="" and (tpic_tgps_l< self.timerange):
-                #if float(longitude)<0:longitude=str(abs(float(longitude)))
-                #if float(latitude)<0:latitude=str(abs(float(latitude)))
+                if float(longitude)<0:longitude=str(abs(float(longitude)))
+                if float(latitude)<0:latitude=str(abs(float(latitude)))
                 print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
                 pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup)
@@ -131,8 +131,8 @@ class GpicSync(object):
                      +self.shotDate+"-"+self.shotTime,"",""]
         if self.dateCheck==False:
             if latitude != "" and longitude !=""and (tpic_tgps_l<self.timerange):
-                #if float(longitude)<0:longitude=str(abs(float(longitude)))
-                #if float(latitude)<0:latitude=str(abs(float(latitude)))
+                if float(longitude)<0:longitude=str(abs(float(longitude)))
+                if float(latitude)<0:latitude=str(abs(float(latitude)))
                 print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
                 pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup)
