@@ -37,7 +37,8 @@ If you prefer the command-line version (or if you can't have the right wxpython 
 $ python gpicsync.py --help
  
 
-Thanks to Marc Nozell for his patch on geoexif.py
+Thanks to Marc Nozell (marc@nozell.com) for his patch on geoexif.py,
+gpicsync-GUI.py
 
 
 --
