@@ -47,7 +47,7 @@ class GUI(wx.Frame):
         self.log=False
         self.stop=False
         self.picDir=""
-        
+                
         bkg=wx.Panel(self)
         #bkg.SetBackgroundColour('light blue steel')
         #toolbar=self.CreateToolBar()
@@ -329,6 +329,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         text="""
         Read the EXIF metadata of the selected picture."""
         introLabel = wx.StaticText(bkg, -1,text)
+        self.ExifReaderSelected="All EXIF metadata"
         radio1=wx.RadioButton(bkg,-1,"All EXIF metadata")
         radio2=wx.RadioButton(bkg,-1,"Date/Time/Lat./Long.")
         def onRadio(evt):
@@ -349,9 +350,11 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         
     def readEXIF(self,evt):
         print "Selected ",self.ExifReaderSelected
-        self.winExifReader.Close()
+        #self.winExifReader.Close()
         picture=wx.FileDialog(self)
-        picture.SetWildcard("*.jpg")
+        #picture.SetWildcard("*.JPG")
+        picture.SetWildcard("*.JPG")
+        
         picture.ShowModal()
         pathPicture=picture.GetPath()
         if pathPicture !="" or None:
