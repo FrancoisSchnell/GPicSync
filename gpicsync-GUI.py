@@ -169,8 +169,10 @@ class GUI(wx.Frame):
         """View a local kml file in Google Earth"""
         if sys.platform == 'win32':
             googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
+        if sys.platform.find("linux")!=-1:
+            googleEarth= os.path.expanduser("~/google-earth/googleearth")
         try:
-            path=self.picDir+'\\doc.kml'
+            path=self.picDir+'/doc.kml'
             print "path=",path
         except:
             text="""
@@ -188,7 +190,11 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
 """
             self.consoleEntry.AppendText(text)
         try:
-            googleEarth.OpenKmlFile(path,True)
+            if sys.platform == 'win32':
+                googleEarth.OpenKmlFile(path,True)
+            if sys.platform.find("linux")!=-1:
+                os.system(googleEarth +" "+path) 
+                
         except:
             self.consoleEntry.AppendText("\nCouldn't find or launch Google Earth\n")
 
