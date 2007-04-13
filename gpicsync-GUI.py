@@ -167,8 +167,7 @@ class GUI(wx.Frame):
         
     def viewInGE(self,evt):
         """View a local kml file in Google Earth"""
-
-	if sys.platform == 'win32':
+        if sys.platform == 'win32':
             googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         try:
             path=self.picDir+'\\doc.kml'
