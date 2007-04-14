@@ -195,7 +195,7 @@ Note that you can always look at your geolocalized pictures from Picassa then Go
 For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/group/gpicsync \n
 ---
 """
-            self.consoleEntry.AppendText(text)
+            wx.CallAfter(self.consolePrint,text)
         try:
             if sys.platform == 'win32':
                 googleEarth.OpenKmlFile(path,True)
@@ -203,7 +203,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                 os.system(googleEarth +" "+path) 
                 
         except:
-            self.consoleEntry.AppendText("\nCouldn't find or launch Google Earth\n")
+            wx.CallAfter(self.consolePrint,"\nCouldn't find or launch Google Earth\n")
 
     def exitApp(self,evt):
         """Quit properly the app"""
@@ -238,7 +238,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
     def syncPictures(self,evt):
         """Sync. pictures with the .gpx file"""
         if self.dirEntry.GetValue()=="" or self.gpxEntry.GetValue=="":
-                self.consoleEntry.AppendText("You must first select a pictures folder and a GPX file\n")
+                #wx.CallAfter(self.consolePrint,"You must first select a pictures folder and a GPX file\n")
+                wx.CallAfter(self.consolePrint,"You must first select a pictures folder and a GPX file\n")
         else:
             pass
         self.stop=False
@@ -248,15 +249,16 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         print "utcOffset= ",utcOffset
 
         def sync():
-            self.consoleEntry.AppendText("\n------\nBeginning synchronization with "
+            wx.CallAfter(self.consolePrint,"\n------\nBeginning synchronization with "
             +"UTC Offset ="+self.utcEntry.GetValue()+
             " hours and maximum time difference = "+self.timerangeEntry.GetValue() +" seconds.\n")
+            
             geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
             UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),
             backup=self.backupCheck.GetValue())
             
             if self.geCheck.GetValue()==True:
-                self.consoleEntry.AppendText("\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n")
+                wx.CallAfter(self.consolePrint,"\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n")
                 localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir))
 
             if self.log==True:
@@ -271,25 +273,25 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                 if self.stop==True: break
                 if fnmatch.fnmatch ( fileName, '*.JPG' )or fnmatch.fnmatch ( fileName, '*.jpg' ):
                     print "\nFound fileName ",fileName," Processing now ..."
-                    self.consoleEntry.AppendText("\nFound "+fileName+" ")
+                    wx.CallAfter(self.consolePrint,"\nFound "+fileName+" ")
                     print self.picDir+'/'+fileName
                     result=geo.syncPicture(self.picDir+'/'+fileName)
-                    self.consoleEntry.AppendText(result[0]+"\n")
+                    wx.CallAfter(self.consolePrint,result[0]+"\n")
                     if self.log==True:
                         f.write("Processed image "+fileName+" : "+result[0]+"\n")
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2])
             if self.stop==False:
-                self.consoleEntry.AppendText("\n*** FINISHED GEOCODING PROCESS ***\n")
+                wx.CallAfter(self.consolePrint,"\n*** FINISHED GEOCODING PROCESS ***\n")
             if self.stop==True:
-                self.consoleEntry.AppendText("\n *** PROCESSING STOPPED BY THE USER ***\n")
+                wx.CallAfter(self.consolePrint,"\n *** PROCESSING STOPPED BY THE USER ***\n")
             if self.log==True: f.close()
             if self.geCheck.GetValue()==True:
-                self.consoleEntry.AppendText("\nAdding the GPS track log to the Google Earth kml file...\n")
+                wx.CallAfter(self.consolePrint,"\nAdding the GPS track log to the Google Earth kml file...\n")
                 localKml.path(self.gpxFile)
                 localKml.close()
-                self.consoleEntry.AppendText("\nClick on the 'View in Google Earth' button if you want to visualize directly the track log and geocoded photos in Google Earth .\n")
-                self.consoleEntry.AppendText("( A Google Earth doc.kml file has been created in your picture folder. You can also produce a kmz file with 'Tools'->'KMZ Generator' )")
+                wx.CallAfter(self.consolePrint,"\nClick on the 'View in Google Earth' button if you want to visualize directly the track log and geocoded photos in Google Earth .\n")
+                wx.CallAfter(self.consolePrint,"( A Google Earth doc.kml file has been created in your picture folder. You can also produce a kmz file with 'Tools'->'KMZ Generator' )")
         start_new_thread(sync,())
         #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         
@@ -376,11 +378,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                     datetimeString=dateTime[0]+":"+dateTime[1]
                     if len(datetimeString)>5:
                         wx.CallAfter(self.consolePrint,datetimeString)
-                        #self.consoleEntry.AppendText(datetimeString)
-                        #self.consoleEntry.AppendText("    lat./long.="+str(myPicture.readLatLong()))
                         wx.CallAfter(self.consolePrint,"    lat./long.="+str(myPicture.readLatLong()))
                     else:
-                        #self.consoleEntry.AppendText("None")
                         wx.CallAfter(self.consolePrint,"None")
             start_new_thread(read,())
             self.winExifReader.Close()
@@ -392,8 +391,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         #bkg.SetBackgroundColour('White')
         text="This tool renames your pictures with the \noriginal time/date and lat./long.(if present)"
         introLabel = wx.StaticText(bkg, -1,text)
-        readButton=wx.Button(bkg,size=(150,30),label="Rename pictures in a folder")
-        readButtonFolder=wx.Button(bkg,size=(150,30),label="Rename a single picture")
+        readButton=wx.Button(bkg,size=(200,30),label="Rename pictures in a folder")
+        readButtonFolder=wx.Button(bkg,size=(200,30),label="Rename a single picture")
         self.Bind(wx.EVT_BUTTON, self.renamePicturesInFolder, readButton)
         self.Bind(wx.EVT_BUTTON, self.renamePicture, readButtonFolder)
         vbox=wx.BoxSizer(wx.VERTICAL)
@@ -407,11 +406,11 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         """A tool to rename pictures of a directory"""
         picture=wx.FileDialog(self)
         picture.ShowModal()
-        picture.SetWildcard("*.jpg")
+        picture.SetWildcard("*.JPG")
         self.pathPicture=picture.GetPath()
         self.winRenameTool.Close()
         if self.pathPicture !="" or None:
-            self.consoleEntry.AppendText("\nBeginning renaming...")
+            wx.CallAfter(self.consolePrint,"\nBeginning renaming...")
             def rename():
                 myPicture=GeoExif(self.pathPicture)
                 string=myPicture.readDateTime()[0]+" "+myPicture.readDateTime()[1]
@@ -419,10 +418,10 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                 latlong=myPicture.readLatLong()
                 if latlong==None: latlong=""
                 if len(string)<5:
-                    self.consoleEntry.AppendText("\nDidn't find Original Time/Date for "+self.pathPicture)
+                    wx.CallAfter(self.consolePrint,"\nDidn't find Original Time/Date for "+self.pathPicture)
                 else:
                     os.rename(self.pathPicture,os.path.dirname(self.pathPicture)+"/"+string+" "+latlong+".jpg")
-                    self.consoleEntry.AppendText("\nRenamed "+os.path.basename(self.pathPicture)+" to "+string+latlong+".jpg")
+                    wx.CallAfter(self.consolePrint,"\nRenamed "+os.path.basename(self.pathPicture)+" to "+string+latlong+".jpg")
             start_new_thread(rename,())
             
     def renamePicturesInFolder(self,evt):
@@ -432,11 +431,11 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         openDir.ShowModal()
         self.picDir=openDir.GetPath()
         if self.picDir!="" or None:
-            self.consoleEntry.AppendText("\nBeginning renaming...")
+            wx.CallAfter(self.consolePrint,"\nBeginning renaming...")
             def rename():
                 for fileName in os.listdir ( self.picDir ):
                         if self.stop==True:
-                            self.consoleEntry.AppendText("\nInterrupted by the user") 
+                            wx.CallAfter(self.consolePrint,"\nInterrupted by the user") 
                             self.stop=False
                             break
                         if fnmatch.fnmatch ( fileName, '*.JPG' )or \
@@ -446,15 +445,15 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                             string=myPicture.readDateTime()[0]+" "+myPicture.readDateTime()[1]
                             print string, len(string)
                             if len(string)<5:
-                                self.consoleEntry.AppendText("\nDidn't find Original Time/Date for "+fileName)
+                                wx.CallAfter(self.consolePrint,"\nDidn't find Original Time/Date for "+fileName)
                                 break
                             string=string.replace(":","-")
                             latlong=myPicture.readLatLong()
                             if latlong==None: latlong=""
                             print "latlong= ",latlong
                             os.rename(self.picDir+'/'+fileName,self.picDir+"/"+string+" "+latlong+".jpg")
-                            self.consoleEntry.AppendText("\nRenamed "+fileName+" to "+string+" "+latlong+".jpg")
-                self.consoleEntry.AppendText("\nFinished")
+                            wx.CallAfter(self.consolePrint,"\nRenamed "+fileName+" to "+string+" "+latlong+".jpg")
+                wx.CallAfter(self.consolePrint,"\nFinished")
             start_new_thread(rename,())
     
     def kmzGeneratorFrame(self,evt):
@@ -477,20 +476,20 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         print  "kmz ordered ..."
         self.winKmzGenerator.Close()
         if self.picDir == None or self.picDir !="":
-            self.consoleEntry.AppendText("\nCreating a KMZ file in the pictures folder...\n")
+            wx.CallAfter(self.consolePrint,"\nCreating a KMZ file in the pictures folder...\n")
             zip = zipfile.ZipFile(self.picDir+'/'+os.path.basename(self.picDir)+".zip", 'w')
             zip.write(self.picDir+'/doc.kml','doc.kml',zipfile.ZIP_DEFLATED)
-            self.consoleEntry.AppendText("\nAdding doc.kml")
+            wx.CallAfter(self.consolePrint,"\nAdding doc.kml")
             for fileName in os.listdir ( self.picDir ):
                 if fnmatch.fnmatch ( fileName, '*.JPG' )or fnmatch.fnmatch ( fileName, '*.jpg' ):
                     zip.write(self.picDir+"/"+fileName,fileName,zipfile.ZIP_DEFLATED)
-                    self.consoleEntry.AppendText("\nAdding "+fileName)
+                    wx.CallAfter(self.consolePrint,"\nAdding "+fileName)
             zip.close()
             try:
                 os.rename(self.picDir+'/'+os.path.basename(self.picDir)+".zip",self.picDir+'/'+os.path.basename(self.picDir)+".kmz")
-                self.consoleEntry.AppendText("\nKMZ file (which contains the geolocalized pictures) created in pictures folder\nYou can share this file with friends or put it on a webserver.\n")
+                wx.CallAfter(self.consolePrint,"\nKMZ file (which contains the geolocalized pictures) created in pictures folder\nYou can share this file with friends or put it on a webserver.\n")
             except WindowsError:
-                self.consoleEntry.AppendText("\nCouldn't rename the zip file to kmz\n(Maybe a previous kmz file with the same name already exist, check first and retry)\n")
+                wx.CallAfter(self.consolePrint,"\nCouldn't rename the zip file to kmz\n(Maybe a previous kmz file with the same name already exist, check first and retry)\n")
         else:
             text="""
 ---
@@ -505,7 +504,7 @@ Note that you can always look at your geolocalized pictures from Picassa then Go
 For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/group/gpicsync \n
 ---
 """
-            self.consoleEntry.AppendText(text)
+            wx.CallAfter(self.consolePrint,text)
                 
         
     def gpxInspectorFrame(self,evt):
@@ -534,14 +533,14 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         self.winGpxInspector.Close()
         print "gpxPath=", gpxPath
         if gpxPath =="" or None:
-            self.consoleEntry.AppendText("\nSelect a gpx file first.")
+            wx.CallAfter(self.consolePrint,"\nSelect a gpx file first.")
         else:
             myGpx=Gpx(gpxPath).extract()
-            self.consoleEntry.AppendText("\nLooking at "+gpxPath+"\n")
-            self.consoleEntry.AppendText("\nNumber of valid track points found : "+str(len(myGpx))+"\n\n")
+            wx.CallAfter(self.consolePrint,"\nLooking at "+gpxPath+"\n")
+            wx.CallAfter(self.consolePrint,"\nNumber of valid track points found : "+str(len(myGpx))+"\n\n")
             def inspect():
                 for trkpt in myGpx:
-                    self.consoleEntry.AppendText("Date: "+trkpt["date"]+"\tTime: "\
+                    wx.CallAfter(self.consolePrint,"Date: "+trkpt["date"]+"\tTime: "\
                     +trkpt["time"]+"\tLatitude: "+trkpt["lat"]+"\tLongitude: "+trkpt["lon"]+"\n")
                 """if self.gpxInGECheck.GetValue()==True:
                     print "trying to ..."
