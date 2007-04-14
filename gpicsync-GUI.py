@@ -147,6 +147,13 @@ class GUI(wx.Frame):
         
         bkg.SetSizer(vbox)
         self.SetMenuBar(menuBar)
+    
+    def consolePrint(self,msg):
+        """
+        Print the given message in the console window 
+        (GUI safe to call with a CallAfter in threads to avoid refresh problems)
+        """
+        self.consoleEntry.AppendText(msg)
         
     def aboutApp(self,evt): 
         """An about message dialog"""
@@ -349,29 +356,32 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         self.winExifReader.Show()
         
     def readEXIF(self,evt):
+        """read the selected EXIF informations"""
         print "Selected ",self.ExifReaderSelected
         #self.winExifReader.Close()
         picture=wx.FileDialog(self)
-        #picture.SetWildcard("*.JPG")
         picture.SetWildcard("*.JPG")
-        
         picture.ShowModal()
         pathPicture=picture.GetPath()
         if pathPicture !="" or None:
             myPicture=GeoExif(pathPicture)
             def read():
-                self.consoleEntry.AppendText("\n\nSelected metada in the EXIF header of the picture : \n")
-                self.consoleEntry.AppendText("---------------------------------------------------------------\n")
+                wx.CallAfter(self.consolePrint,"\n\nSelected metada in the EXIF header of the picture : \n")
+                wx.CallAfter(self.consolePrint,"---------------------------------------------------------------\n")
                 if self.ExifReaderSelected=="All EXIF metadata":
-                    self.consoleEntry.AppendText(myPicture.readExifAll())
+                    wx.CallAfter(self.consolePrint,myPicture.readExifAll())
+                    
                 if self.ExifReaderSelected=="Date/Time/Lat./Long.":
                     dateTime=myPicture.readDateTime()
                     datetimeString=dateTime[0]+":"+dateTime[1]
                     if len(datetimeString)>5:
-                        self.consoleEntry.AppendText(datetimeString)
-                        self.consoleEntry.AppendText("    lat./long.="+str(myPicture.readLatLong()))
+                        wx.CallAfter(self.consolePrint,datetimeString)
+                        #self.consoleEntry.AppendText(datetimeString)
+                        #self.consoleEntry.AppendText("    lat./long.="+str(myPicture.readLatLong()))
+                        wx.CallAfter(self.consolePrint,"    lat./long.="+str(myPicture.readLatLong()))
                     else:
-                        self.consoleEntry.AppendText("None")
+                        #self.consoleEntry.AppendText("None")
+                        wx.CallAfter(self.consolePrint,"None")
             start_new_thread(read,())
             self.winExifReader.Close()
             
