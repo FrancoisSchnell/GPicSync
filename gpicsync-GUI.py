@@ -10,9 +10,6 @@
 #
 # More informations and help can be found here: http://code.google.com/p/gpicsync/
 #
-# Contributions from Marc Nozell (http://nozell.com/blog) in particular for
-# the Linux port.
-#
 ###############################################################################
 
 """

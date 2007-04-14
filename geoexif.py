@@ -7,8 +7,9 @@
 #
 # francois.schnell (http://francois.schnell.free.fr)
 #                        
-# Contributions from Marc Nozell (http://nozell.com/blog) in particular for
-# the Linux port.
+# Thanks to Marc Nozell for testing GPicSync on Linux before I had the time to
+# do it and for putting some specific Windows code behind a plateform check 
+#(changing  "exiftool.exe" to  "exiftool" for Linux)
 #  
 # This script use the GPL exiftool.exe  app. see: 
 # http://www.sno.phy.queensu.ca/%7Ephil/exiftool/

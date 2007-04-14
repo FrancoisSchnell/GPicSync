@@ -33,20 +33,43 @@ GPicSync requires:
 - Python2.5
 - exiftool
 - wxpython for the GUI (2.8 but it could maybe work with a previous verion)
-- Google Earth (for Google Earth features)
+- Google Earth (for Google Earth features). The Google-earth folder must in your home folder.
 
-GPicSync was tested successfully on Linux Ubuntu "Feisty Fawn" 
+I've tested GPicSync successfully on Linux Ubuntu "Feisty Fawn" 
 (Python 2.5 is already installed as a default for this distribution). 
 
 In synaptic install exiftool and python-wgtk2.8
 
+To install GoogleEarth on Ubuntu:
+- fetch GoogleEarthLinux.bin on Google Earth website
+- chmod +x GoogleEarthLinux.bin
+- ./GoogleEarthLinux.bin
+
 If you prefer the command-line version (or if you can't have the right wxpython for your distro):
 
 $ python gpicsync.py --help
- 
 
-Thanks to Marc Nozell (marc@nozell.com) for his patch on geoexif.py,
-gpicsync-GUI.py (Windows-specific code behind a platform check)
+
+Linux version issues:
+---------------------
+
+As time of writting (14 of april):
+- the kmz tool in tools menu is not fuctionnal yet
+- layout to improve
+
+Still test to carry but main fuctionnalies are threre. 
+Don't hesitate to report any problem you may encounter !
+
+
+Thanks and contributions:
+-------------------------
+
+Thanks to Marc Nozell for testing GPicSync on Linux before I had the time to do it
+and for putting some specific Windows code behind a plateform check 
+(changing  "exiftool.exe" to  "exiftool" for Linux in geoexif.py)
+
+Big Thanks to all the users reporting bugs or asking for feature requests 
+(see contributions page on the wiki project + issues page + dedicated Google Group). 
 
 
 --
