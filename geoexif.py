@@ -48,10 +48,10 @@ class GeoExif(object):
     def readLatitude(self):
         """read the latitute tag is available and return a float"""
         result=os.popen('%s -n -GPSLatitude -GPSLatitudeRef  "%s"  ' % (self.exifcmd, self.picPath)).read().split("\n")
-        print result
+        #print result
         if len(result)>1:
             latitude=float(result[0].split(":")[1])
-            print "latitude= ",latitude
+            #print "latitude= ",latitude
             return latitude
         else:
             return "None"
@@ -59,10 +59,10 @@ class GeoExif(object):
     def readLongitude(self):
         """read the longitude tag if available"""
         result=os.popen('%s -n -GPSLongitude -GPSLongitudeRef   "%s" ' % (self.exifcmd, self.picPath)).read().split("\n")
-        print result
+        #print result
         if len(result)>1:
             longitude=float(result[0].split(":")[1])
-            print "longitude= ",longitude
+            #print "longitude= ",longitude
             return longitude
         else:
             return "None"
