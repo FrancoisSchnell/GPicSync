@@ -95,7 +95,7 @@ class GUI(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.findGpx, gpxButton)
         self.Bind(wx.EVT_BUTTON, self.syncPictures, syncButton)
         self.Bind(wx.EVT_BUTTON, self.exitApp,quitButton)
-        self.Bind(wx.EVT_BUTTON, self.stopApp,stopButton)
+        self.Bind(wx.EVT_BUTTON, self.stopApp,stopButton) 
         self.Bind(wx.EVT_BUTTON, self.clearConsole,clearButton)
         self.Bind(wx.EVT_BUTTON, self.viewInGE,viewInGEButton)
         
@@ -294,7 +294,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                         gnCountry=nearby.findCountry()
                         gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnCountry
                         wx.CallAfter(self.consolePrint,"geonames.org search: "+gnSummary+" (writting to keywords tag in picture EXIF).\n")
-                        os.popen('%s -keywords=%s -keywords=%s -keywords="%s" "%s" '% (self.exifcmd,gnPlace,gnCountry,gnSummary,self.picDir+'/'+fileName))
+                        os.popen('%s -keywords="%s" -keywords="%s" -keywords="%s" "%s" '\
+                        % (self.exifcmd,gnPlace,gnCountry,gnSummary,self.picDir+'/'+fileName))
                         
             if self.stop==False:
                 wx.CallAfter(self.consolePrint,"\n*** FINISHED GEOCODING PROCESS ***\n")
