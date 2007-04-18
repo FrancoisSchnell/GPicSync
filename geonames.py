@@ -25,6 +25,7 @@ class Geonames(object):
         Either give the path to a geocoded picture or 
         give latitute/longitude strings
         """
+            
         self.lat=lat
         self.long=long
         self.picName=picName
@@ -41,7 +42,7 @@ class Geonames(object):
         print "url= ",url
         self.page = urlopen(url).read()
         print self.page
-    
+        
     def searchTag(self,tag,page):
         """
         Returns the content of a <tag> in the given page (string)

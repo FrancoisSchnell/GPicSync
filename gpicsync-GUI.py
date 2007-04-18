@@ -89,7 +89,7 @@ class GUI(wx.Frame):
         self.geCheck.SetValue(True)
         self.backupCheck=wx.CheckBox(bkg,-1,"backup pictures")
         self.backupCheck.SetValue(True)
-        self.geonamesCheck=wx.CheckBox(bkg,-1,"add geonames")
+        self.geonamesCheck=wx.CheckBox(bkg,-1,"write geoname metadata")
         
         self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
         self.Bind(wx.EVT_BUTTON, self.findGpx, gpxButton)
@@ -146,7 +146,12 @@ class GUI(wx.Frame):
         
         bkg.SetSizer(vbox)
         self.SetMenuBar(menuBar)
-    
+        
+        if sys.platform == 'win32':
+            self.exifcmd = 'exiftool.exe'
+        else:
+            self.exifcmd = 'exiftool'
+        
     def consolePrint(self,msg):
         """
         Print the given message in the console window 
@@ -157,7 +162,7 @@ class GUI(wx.Frame):
     def aboutApp(self,evt): 
         """An about message dialog"""
         text="""
-        GPicSync version 0.85 - April 2007 
+        GPicSync version 0.90 - April 2007 
          
         GPicSync is Free Software (GPL v2)
         
@@ -278,15 +283,19 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                     wx.CallAfter(self.consolePrint,result[0]+"\n")
                     if self.log==True:
                         f.write("Processed image "+fileName+" : "+result[0]+"\n")
+                        
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2])
+                        
                     if self.geonamesCheck.GetValue()==True:
                         nearby=Geonames(lat=result[1],long=result[2])
                         gnPlace=nearby.findNearbyPlace()
                         gnDistance=nearby.findDistance()
                         gnCountry=nearby.findCountry()
-                        gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnCountry+"\n"
-                        wx.CallAfter(self.consolePrint,gnSummary)
+                        gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnCountry
+                        wx.CallAfter(self.consolePrint,"geonames.org search: "+gnSummary+" (writting to keywords tag in picture EXIF).\n")
+                        os.popen('%s -keywords=%s -keywords=%s -keywords="%s" "%s" '% (self.exifcmd,gnPlace,gnCountry,gnSummary,self.picDir+'/'+fileName))
+                        
             if self.stop==False:
                 wx.CallAfter(self.consolePrint,"\n*** FINISHED GEOCODING PROCESS ***\n")
             if self.stop==True:
