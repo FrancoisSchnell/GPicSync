@@ -31,6 +31,7 @@ from geoexif import *
 from gpx import *
 from gpicsync import *
 from kmlGen import *
+from geonames import *
 from thread import start_new_thread
 
 class GUI(wx.Frame):
@@ -88,8 +89,8 @@ class GUI(wx.Frame):
         self.geCheck.SetValue(True)
         self.backupCheck=wx.CheckBox(bkg,-1,"backup pictures")
         self.backupCheck.SetValue(True)
+        self.geonamesCheck=wx.CheckBox(bkg,-1,"add geonames")
         
-
         self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
         self.Bind(wx.EVT_BUTTON, self.findGpx, gpxButton)
         self.Bind(wx.EVT_BUTTON, self.syncPictures, syncButton)
@@ -120,6 +121,7 @@ class GUI(wx.Frame):
         hbox3.Add(self.dateCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
         hbox3.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         hbox3.Add(self.backupCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
+        hbox3.Add(self.geonamesCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         
         hbox1=wx.BoxSizer()
         hbox1.Add(utcLabel,proportion=0,flag=wx.LEFT,border=10)
@@ -278,6 +280,13 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                         f.write("Processed image "+fileName+" : "+result[0]+"\n")
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2])
+                    if self.geonamesCheck.GetValue()==True:
+                        nearby=Geonames(lat=result[1],long=result[2])
+                        gnPlace=nearby.findNearbyPlace()
+                        gnDistance=nearby.findDistance()
+                        gnCountry=nearby.findCountry()
+                        gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnCountry+"\n"
+                        wx.CallAfter(self.consolePrint,gnSummary)
             if self.stop==False:
                 wx.CallAfter(self.consolePrint,"\n*** FINISHED GEOCODING PROCESS ***\n")
             if self.stop==True:
