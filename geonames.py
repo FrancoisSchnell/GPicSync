@@ -38,7 +38,7 @@ class Geonames(object):
             
         print "latitude= ",self.lat,"  longitude= ",self.long
         
-        url= "http://ws.geonames.org/findNearbyPlaceName?lat="+str(self.lat)+"&lng="+str(self.long)
+        url= "http://ws.geonames.org/findNearbyPlaceName?lat="+str(self.lat)+"&lng="+str(self.long)+"&style=full"
         print "url= ",url
         self.page = urlopen(url).read()
         print self.page
@@ -70,13 +70,20 @@ class Geonames(object):
         self.countryName=self.searchTag("countryName",self.page)
         print self.countryName
         return self.countryName
-        
+
+    def findRegion(self):
+        """ find region (adminName1) at geonames.org"""
+        self.regionName=self.searchTag("adminName1",self.page)
+        print self.regionName
+        return self.regionName
+    
 if __name__=="__main__":
     nearby=Geonames(picName="test.jpg")
     #nearby=Geonames(lat="48.57",long="7.84")
     nearby.findNearbyPlace()
     nearby.findDistance()
     nearby.findCountry()
+    nearby.findRegion()
     
     
 

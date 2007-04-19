@@ -23,7 +23,7 @@ More informations at this URL:
 http://code.google.com/p/gpicsync/
 """
 
-import wx,time
+import wx,time,decimal
 import os,sys,fnmatch,zipfile
 if sys.platform == 'win32':
     import win32com.client
@@ -89,7 +89,7 @@ class GUI(wx.Frame):
         self.geCheck.SetValue(True)
         self.backupCheck=wx.CheckBox(bkg,-1,"backup pictures")
         self.backupCheck.SetValue(True)
-        self.geonamesCheck=wx.CheckBox(bkg,-1,"write geoname metadata")
+        self.geonamesCheck=wx.CheckBox(bkg,-1,"add geonames and geotags")
         
         self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
         self.Bind(wx.EVT_BUTTON, self.findGpx, gpxButton)
@@ -287,16 +287,23 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2])
                         
-                    if self.geonamesCheck.GetValue()==True:
-                        nearby=Geonames(lat=result[1],long=result[2])
-                        gnPlace=nearby.findNearbyPlace()
-                        gnDistance=nearby.findDistance()
-                        gnCountry=nearby.findCountry()
-                        gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnCountry
-                        wx.CallAfter(self.consolePrint,"geonames.org search: "+gnSummary+" (writting to keywords tag in picture EXIF).\n")
-                        os.popen('%s -keywords="%s" -keywords="%s" -keywords="%s" "%s" '\
-                        % (self.exifcmd,gnPlace,gnCountry,gnSummary,self.picDir+'/'+fileName))
-                        
+                    if self.geonamesCheck.GetValue()==True and result[1] !="" and result[2] !="":
+                        try:
+                            nearby=Geonames(lat=result[1],long=result[2])
+                            gnPlace=nearby.findNearbyPlace()
+                            gnDistance=nearby.findDistance()
+                            gnRegion=nearby.findRegion()
+                            gnCountry=nearby.findCountry()
+                            gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnRegion+", "+gnCountry
+                            geotag="geotagged"
+                            geotagLat="geo:lat="+str(decimal.Decimal(result[1]).quantize(decimal.Decimal('0.000001'))) 
+                            geotagLon="geo:lon="+str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
+                            wx.CallAfter(self.consolePrint,gnSummary+" (writting geonames and geotags to keywords tag in picture EXIF).\n")
+                            os.popen('%s -keywords="%s" -keywords="%s" -keywords="%s" \
+                            -keywords="%s"  -keywords="%s" -keywords="%s" -keywords="%s" "%s" '\
+                            % (self.exifcmd,gnPlace,gnCountry,gnSummary,gnRegion,geotag,geotagLat,geotagLon,self.picDir+'/'+fileName))
+                        except:
+                            wx.CallAfter(self.consolePrint,"Couldn't retrieve geonames data...\n")
             if self.stop==False:
                 wx.CallAfter(self.consolePrint,"\n*** FINISHED GEOCODING PROCESS ***\n")
             if self.stop==True:
