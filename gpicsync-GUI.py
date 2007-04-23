@@ -162,7 +162,7 @@ class GUI(wx.Frame):
     def aboutApp(self,evt): 
         """An about message dialog"""
         text="""
-        GPicSync version 0.90 - April 2007 
+        GPicSync version 0.91 - April 2007 
          
         GPicSync is Free Software (GPL v2)
         
@@ -258,8 +258,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             " hours and maximum time difference = "+self.timerangeEntry.GetValue() +" seconds.\n")
             
             geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
-            UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),
-            backup=self.backupCheck.GetValue())
+            UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),backup=self.backupCheck.GetValue())
             
             if self.geCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n")
@@ -300,7 +299,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                             geotagLon="geo:lon="+str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
                             wx.CallAfter(self.consolePrint,gnSummary+" (writting geonames and geotags to keywords tag in picture EXIF).\n")
                             os.popen('%s -keywords="%s" -keywords="%s" -keywords="%s" \
-                            -keywords="%s"  -keywords="%s" -keywords="%s" -keywords="%s" "%s" '\
+                            -keywords="%s"  -overwrite_original -keywords="%s" -keywords="%s" -keywords="%s" "%s" '\
                             % (self.exifcmd,gnPlace,gnCountry,gnSummary,gnRegion,geotag,geotagLat,geotagLon,self.picDir+'/'+fileName))
                         except:
                             wx.CallAfter(self.consolePrint,"Couldn't retrieve geonames data...\n")

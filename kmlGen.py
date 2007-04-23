@@ -38,7 +38,7 @@ class KML(object):
 <IconStyle>
 <scale>1.3</scale>
 <Icon>
-<href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+<href>http://maps.google.com/mapfiles/kml/pal4/icon46.png</href>
 </Icon>
 <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
 </IconStyle>
@@ -47,7 +47,7 @@ class KML(object):
 <IconStyle>
 <scale>1.1</scale>
 <Icon>
-    <href>http://maps.google.com/mapfiles/kml/pushpin/ylw-pushpin.png</href>
+    <href>http://maps.google.com/mapfiles/kml/pal4/icon46.png</href>
 </Icon>
 <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
 </IconStyle>

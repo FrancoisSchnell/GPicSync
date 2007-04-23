@@ -128,7 +128,7 @@ class GpicSync(object):
                 print "Didn't find any picture for this day or timerange"
                 if tpic_tgps_l !=86400:
                     return [" : WARNING: DIDN'T GEOCODE, no track point below the maximum time range ("\
-                    +str(self.timerange)+" s) : " +self.shotDate+"-"+self.shotTime+" time difference (s)= "+str(tpic_tgps_l),"",""]
+                    +str(self.timerange)+" s) : " +self.shotDate+"-"+self.shotTime+" time difference (s)= "+str(tpic_tgps_l),"","",self.picWidth,self.picHeight]
                 else:
                     return [" : WARNING: DIDN'T GEOCODE, no track point at this picture date "\
                      +self.shotDate+"-"+self.shotTime,"","",self.picWidth,self.picHeight]

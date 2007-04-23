@@ -56,10 +56,14 @@ class GeoExif(object):
         print answer
         date=answer[34:44]
         time=answer[45:53]
-        size=answer.split("Image Size")[1].split(":")[1].strip().split("x")
-        width=size[0]
-        height=size[1]
-        timeDate= [answer[34:44],answer[45:53]]
+        #timeDate= [answer[34:44],answer[45:53]]
+        try:
+            size=answer.split("Image Size")[1].split(":")[1].strip().split("x")
+            width=size[0]
+            height=size[1]
+        except:
+            width=640
+            height=480
         return [date,time,width,height]
     
     def readLatitude(self):
