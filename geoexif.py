@@ -45,6 +45,23 @@ class GeoExif(object):
         timeDate= [result[34:44],result[45:53]]
         return timeDate
     
+    def readDateTimeSize(self):
+        """
+        Read the time / date when the picture was taken (if available)
+        plus the size of the picture
+        Returns a list containing strings[date,time,width,height]
+        like  ['2007:02:12', '16:09:10','800','600']
+        """
+        answer=os.popen('%s -DateTimeOriginal -ImageSize "%s"' % (self.exifcmd, self.picPath)).read()
+        print answer
+        date=answer[34:44]
+        time=answer[45:53]
+        size=answer.split("Image Size")[1].split(":")[1].strip().split("x")
+        width=size[0]
+        height=size[1]
+        timeDate= [answer[34:44],answer[45:53]]
+        return [date,time,width,height]
+    
     def readLatitude(self):
         """read the latitute tag is available and return a float"""
         result=os.popen('%s -n -GPSLatitude -GPSLatitudeRef  "%s"  ' % (self.exifcmd, self.picPath)).read().split("\n")
@@ -132,12 +149,12 @@ if __name__=="__main__":
 #    exif=mypicture.readExifAll()
 #    mypicture.writeLongitude(7.222333)
 #    mypicture.writeLatitude(48.419973)
-    dateAndTime= mypicture.readDateTime()
-    mypicture.writeLatLong(7.222333,48.419973,"N","E",True)
-    latitude=mypicture.readLatitude()
-    longitude=mypicture.readLongitude()
+    print  mypicture.readDateTimeSize()
+    #mypicture.writeLatLong(7.222333,48.419973,"N","E",True)
+    #latitude=mypicture.readLatitude()
+    #longitude=mypicture.readLongitude()
     #print "dateAndTime= ",dateAndTime
     #print "latitude= ",latitude
     #print "longitude= ",longitude
     #print "EXIF= ", exif
-    print mypicture.readLatLong()
+    #print mypicture.readLatLong()

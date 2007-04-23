@@ -74,7 +74,7 @@ class KML(object):
         httpd.serve_forever()
         #start_new_thread(serverGo,())
 
-    def placemark(self,picName="",lat="",long=""):
+    def placemark(self,picName="",lat="",long="",width="800",height="600"):
         """
         Creates a placemark tag for the given picture in the kml file.
         If only a picture path is given in argument, latitude and longitude will
@@ -85,6 +85,23 @@ class KML(object):
         #print "placemark!"
         #print "lat =",lat
         #print "long =",long
+
+        w=float(width)
+        h=float(height)
+        
+        if width>height:
+            print "width > height"
+            width=(800./w)*w
+            height=(800./w)*h
+        
+        if height>width:
+            print "height  > width"
+            height=(600./h)*h
+            width=(600./h)*w
+        
+        width=str(int(width))
+        height=str(int(height))
+                    
         if lat and long == "":
             mypicture=GeoExif(picName)
             lat=mypicture.readLatitude()
@@ -93,7 +110,7 @@ class KML(object):
         pmHead="\n\n<Placemark>\n<name>"+\
         os.path.basename(picName)+"</name>\n"
         pmDescription="<description><![CDATA["+\
-        "<img src='"+os.path.basename(picName)+"' width='640' height='480'/>]]>"+\
+        "<img src='"+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>]]>"+\
         "</description>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
         "</coordinates>\n</Point>\n"

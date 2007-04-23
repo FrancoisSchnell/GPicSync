@@ -285,7 +285,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                         f.write("Processed image "+fileName+" : "+result[0]+"\n")
                         
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
-                        localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2])
+                        localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4])
                         
                     if self.geonamesCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         try:

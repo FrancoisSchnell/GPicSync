@@ -5,7 +5,7 @@
 [Setup]
 AppName=GPicSync
 AppId=GPicSync
-AppVerName=GPicSync 0.85
+AppVerName=GPicSync 0.90
 AppVersion=0.85
 AppPublisher=francois schnell
 AppPublisherURL=http://francois.schnell.free.fr
