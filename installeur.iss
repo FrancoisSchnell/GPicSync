@@ -61,8 +61,14 @@ Name: Allemand; MessagesFile: compiler:Languages\German.isl
 
 [Icons]
 Name: {group}\GPicSync.exe; Filename: {app}\gpicsync-GUI.exe; IconIndex: 0; WorkingDir: {app};IconFilename: {app}\test.ico
-;Name: {group}\Website; Filename: {app}\Website; IconIndex: 0; WorkingDir: {app}
+Name: {group}\Website with documentation; Filename: GPicSync_website.url;  WorkingDir: {app}
+Name: {group}\Web Google Group; Filename: GoogleGroup.url;  WorkingDir: {app}
+Name: {group}\Uninstall GPicSync; Filename: {uninstallexe}; IconFilename: {app}\unins000.exe; WorkingDir: {app}
 Name: {commondesktop}\GPicSync; Filename: {app}\Gpicsync-GUI.exe; IconIndex: 0; WorkingDir: {app};IconFilename: {app}\test.ico
+;Name: {group}\Website; Filename: {app}\Website; IconIndex: 0; WorkingDir: {app}
+;Name: {group}\Uninstall GPicSync; Filename: {uninstallexe}; IconFilename: {app}\unins000.exe; WorkingDir: {app}
+
+
 
 [Registry]
 
