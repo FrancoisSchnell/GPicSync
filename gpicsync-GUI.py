@@ -1,5 +1,4 @@
 #!/usr/bin/python
-# -*- coding: iso-8859-15 -*-
 
 ###############################################################################
 #
@@ -493,7 +492,10 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         #vbox.Add(self.gpxInGECheck,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=10)
         vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         bkg.SetSizer(vbox)
-        self.winKmzGenerator.Show()
+        if sys.platform.find("linux")!=-1:
+            wx.CallAfter(self.consolePrint,"\nSorry this tool is not yet available for the Linux version (soon)\n")
+        else:
+            self.winKmzGenerator.Show()
         
     def kmzGenerator(self,evt):
         """A tool to create a kmz file containing the geolocalized pictures"""
