@@ -204,7 +204,9 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             if sys.platform == 'win32':
                 googleEarth.OpenKmlFile(path,True)
             if sys.platform.find("linux")!=-1:
-                os.system(googleEarth +" "+path) 
+                def goGELinux():
+                    os.system(googleEarth +" "+path)
+                start_new_thread(goGELinux,())
                 
         except:
             wx.CallAfter(self.consolePrint,"\nCouldn't find or launch Google Earth\n")
