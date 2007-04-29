@@ -87,7 +87,7 @@ class GUI(wx.Frame):
         self.geCheck=wx.CheckBox(bkg,-1,"Create a Google Earth file")
         self.geCheck.SetValue(True)
         self.gmCheck=wx.CheckBox(bkg,-1,"Googlemaps export,  base URL=")
-        self.urlEntry=wx.TextCtrl(bkg,size=(200,-1))
+        self.urlEntry=wx.TextCtrl(bkg,size=(300,-1))
         self.backupCheck=wx.CheckBox(bkg,-1,"backup pictures")
         self.backupCheck.SetValue(True)
         self.geonamesCheck=wx.CheckBox(bkg,-1,"add geonames and geotags")
@@ -168,7 +168,7 @@ class GUI(wx.Frame):
     def aboutApp(self,evt): 
         """An about message dialog"""
         text="""
-        GPicSync version 0.91 - April 2007 
+        GPicSync version 0.92 - April 2007 
          
         GPicSync is Free Software (GPL v2)
         
@@ -297,7 +297,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4])
                     if self.gmCheck.GetValue()==True and result[1] !="" and result[2] !="":
-                        webKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4])
+                        webKml.placemark4Gmaps(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4])
                         
                     if self.geonamesCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         try:

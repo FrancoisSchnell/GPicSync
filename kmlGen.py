@@ -120,6 +120,43 @@ class KML(object):
         self.f.write(pmDescription)
         self.f.write(pmTail)
         
+    def placemark4Gmaps(self,picName="",lat="",long="",width="400",height="300"):
+        """
+        The same as placemark but with special values and features for G maps.
+        Creates a placemark tag for the given picture in the kml file.
+        If only a picture path is given in argument, latitude and longitude will
+        be searched in the picture EXIF.
+        It's also possible to give the values in argument
+        (a string representing decimal degress, - sign ok)
+        """
+        w=float(width)
+        h=float(height)
+        if width>height:
+            print "width > height"
+            width=(200./w)*w
+            height=(200./w)*h
+        if height>width:
+            print "height  > width"
+            height=(200./h)*h
+            width=(200./h)*w
+        width=str(int(width))
+        height=str(int(height))
+        if lat and long == "":
+            mypicture=GeoExif(picName)
+            lat=mypicture.readLatitude()
+            long=mypicture.readLongitude()
+        pmHead="\n\n<Placemark>\n<name>"+\
+        os.path.basename(picName)+"</name>\n"
+        pmDescription="<description><![CDATA["+\
+        "<img src='"+self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>]]>"+\
+        "</description>\n<Point>"+\
+        "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
+        "</coordinates>\n</Point>\n"
+        pmTail="</Placemark>"
+        self.f.write(pmHead)
+        self.f.write(pmDescription)
+        self.f.write(pmTail)
+
     def path(self,gpxFile):
         """ Creates the path of the GPX file in the kml"""
         headPath="""
