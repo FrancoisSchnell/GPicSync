@@ -271,7 +271,10 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             if self.geCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n")
                 localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir))
-
+            if self.gmCheck.GetValue()==True:
+                wx.CallAfter(self.consolePrint,"\nStarting to generate a Google Map file (doc-web.kml) in the picture folder ... \n")
+                webKml=KML(self.picDir+"/doc-web",os.path.basename(self.picDir),url=self.urlEntry.GetValue())
+                
             if self.log==True:
                 f=open(self.picDir+'/gpicsync.log','w')
                 f.write("Geocoded with UTC Offset= "+
@@ -293,6 +296,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                         
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4])
+                    if self.gmCheck.GetValue()==True and result[1] !="" and result[2] !="":
+                        webKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4])
                         
                     if self.geonamesCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         try:
@@ -316,12 +321,19 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             if self.stop==True:
                 wx.CallAfter(self.consolePrint,"\n *** PROCESSING STOPPED BY THE USER ***\n")
             if self.log==True: f.close()
+            
             if self.geCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\nAdding the GPS track log to the Google Earth kml file...\n")
                 localKml.path(self.gpxFile)
                 localKml.close()
                 wx.CallAfter(self.consolePrint,"\nClick on the 'View in Google Earth' button if you want to visualize directly the track log and geocoded photos in Google Earth .\n")
                 wx.CallAfter(self.consolePrint,"( A Google Earth doc.kml file has been created in your picture folder. You can also produce a kmz file with 'Tools'->'KMZ Generator' )")
+            
+            if self.gmCheck.GetValue()==True:
+                webKml.path(self.gpxFile)
+                webKml.close()
+                wx.CallAfter(self.consolePrint,"( A Googlemaps doc-web.kml file has been created with the given url' )")
+                
         start_new_thread(sync,())
         #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         

@@ -22,8 +22,9 @@ class KML(object):
     (for live viewing in Google Earth)
     """
     
-    def __init__(self,fileName,name):
+    def __init__(self,fileName,name,url=""):
         self.f=open(fileName+".kml","w")
+        self.url=url
         kmlHead="""<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.1">
 <Document>
@@ -110,7 +111,7 @@ class KML(object):
         pmHead="\n\n<Placemark>\n<name>"+\
         os.path.basename(picName)+"</name>\n"
         pmDescription="<description><![CDATA["+\
-        "<img src='"+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>]]>"+\
+        "<img src='"+self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>]]>"+\
         "</description>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
         "</coordinates>\n</Point>\n"
