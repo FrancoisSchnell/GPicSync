@@ -86,6 +86,8 @@ class GUI(wx.Frame):
         self.dateCheck.SetValue(True)
         self.geCheck=wx.CheckBox(bkg,-1,"Create a Google Earth file")
         self.geCheck.SetValue(True)
+        self.gmCheck=wx.CheckBox(bkg,-1,"Googlemaps export,  base URL=")
+        self.urlEntry=wx.TextCtrl(bkg,size=(200,-1))
         self.backupCheck=wx.CheckBox(bkg,-1,"backup pictures")
         self.backupCheck.SetValue(True)
         self.geonamesCheck=wx.CheckBox(bkg,-1,"add geonames and geotags")
@@ -107,6 +109,11 @@ class GUI(wx.Frame):
         self.consoleEntry=wx.TextCtrl(bkg,style=wx.TE_MULTILINE | wx.HSCROLL)
         #self.consoleEntry.SetBackgroundColour("light grey")
         
+        mapsbox=wx.BoxSizer()
+        mapsbox.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
+        mapsbox.Add(self.gmCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
+        mapsbox.Add(self.urlEntry,proportion=0,flag=wx.EXPAND| wx.ALL,border=5)
+        
         hbox=wx.BoxSizer()
         hbox.Add(dirButton,proportion=0,flag=wx.LEFT,border=5)
         hbox.Add(self.dirEntry,proportion=1,flag=wx.EXPAND)
@@ -118,7 +125,6 @@ class GUI(wx.Frame):
         hbox3=wx.BoxSizer()
         hbox3.Add(self.logFile,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
         hbox3.Add(self.dateCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
-        hbox3.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         hbox3.Add(self.backupCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         hbox3.Add(self.geonamesCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         
@@ -138,6 +144,7 @@ class GUI(wx.Frame):
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(hbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox2,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        vbox.Add(mapsbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox3,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox1,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox4,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
