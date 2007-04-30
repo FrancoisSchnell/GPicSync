@@ -86,7 +86,7 @@ class GUI(wx.Frame):
         self.dateCheck.SetValue(True)
         self.geCheck=wx.CheckBox(bkg,-1,"Create a Google Earth file")
         self.geCheck.SetValue(True)
-        self.gmCheck=wx.CheckBox(bkg,-1,"Googlemaps export,  base URL=")
+        self.gmCheck=wx.CheckBox(bkg,-1,"Google Maps export, folder URL=")
         self.urlEntry=wx.TextCtrl(bkg,size=(300,-1))
         self.backupCheck=wx.CheckBox(bkg,-1,"backup pictures")
         self.backupCheck.SetValue(True)
@@ -295,7 +295,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                 or fnmatch.fnmatch ( fileName, '*.ARW' )\
                 or fnmatch.fnmatch ( fileName, '*.RAF' ):
                     print "\nFound fileName ",fileName," Processing now ..."
-                    wx.CallAfter(self.consolePrint,"\nFound "+fileName+" ")
+                    wx.CallAfter(self.consolePrint,"\nFound "+fileName+" ...")
                     print self.picDir+'/'+fileName
                     result=geo.syncPicture(self.picDir+'/'+fileName)
                     wx.CallAfter(self.consolePrint,result[0]+"\n")
@@ -340,7 +340,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             if self.gmCheck.GetValue()==True:
                 webKml.path(self.gpxFile)
                 webKml.close()
-                wx.CallAfter(self.consolePrint,"( A Googlemaps doc-web.kml file has been created with the given url' )\n")
+                wx.CallAfter(self.consolePrint,"( A Google Maps doc-web.kml file has been created with the given url' )\n")
                 
         start_new_thread(sync,())
         #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")

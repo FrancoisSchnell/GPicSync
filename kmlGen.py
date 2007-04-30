@@ -31,39 +31,25 @@ class KML(object):
 <name>"""+name+"""</name>
 <Style id="lineStyle">
 <LineStyle>
-<color>64eeee17</color>
+<color>99eeee17</color>
 <width>6</width>
 </LineStyle>
 </Style>
-<Style id="sh_ylw-pushpin_copy2">
-<IconStyle>
-<scale>1.3</scale>
-<Icon>
-<href>http://maps.google.com/mapfiles/kml/pal4/icon46.png</href>
-</Icon>
-<hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
-</IconStyle>
-</Style>
-<Style id="sn_ylw-pushpin_copy2">
-<IconStyle>
+<Style id="camera">
 <scale>1.1</scale>
+<IconStyle>
+<color>ffffffff</color>
 <Icon>
-    <href>http://maps.google.com/mapfiles/kml/pal4/icon46.png</href>
+<href>root://icons/palette-4.png</href>
+<x>192</x>
+<y>96</y>
+<w>32</w>
+<h>32</h>
 </Icon>
 <hotSpot x="20" y="2" xunits="pixels" yunits="pixels"/>
 </IconStyle>
 </Style>
-<StyleMap id="msn_ylw-pushpin_copy2">
-<Pair>
-    <key>normal</key>
-    <styleUrl>#sn_ylw-pushpin_copy2</styleUrl>
-</Pair>
-<Pair>
-    <key>highlight</key>
-    <styleUrl>#sh_ylw-pushpin_copy2</styleUrl>
-</Pair>
-</StyleMap>
-        """
+"""
         self.f.write(kmlHead)
         
     def launchLocalServer(self):
@@ -112,7 +98,7 @@ class KML(object):
         os.path.basename(picName)+"</name>\n"
         pmDescription="<description><![CDATA["+\
         "<img src='"+self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>]]>"+\
-        "</description>\n<Point>"+\
+        "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
         "</coordinates>\n</Point>\n"
         pmTail="</Placemark>"
@@ -150,7 +136,7 @@ class KML(object):
         pmDescription="<description><![CDATA["+\
         "<a href='"+self.url+os.path.basename(picName)+"' target='_blank'> <img src='"+\
         self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/></a>]]>"+\
-        "</description>\n<Point>"+\
+        "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
         "</coordinates>\n</Point>\n"
         pmTail="</Placemark>"
