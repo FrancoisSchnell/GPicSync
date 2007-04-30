@@ -148,7 +148,8 @@ class KML(object):
         pmHead="\n\n<Placemark>\n<name>"+\
         os.path.basename(picName)+"</name>\n"
         pmDescription="<description><![CDATA["+\
-        "<img src='"+self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>]]>"+\
+        "<a href='"+self.url+os.path.basename(picName)+"' target='_blank'> <img src='"+\
+        self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/></a>]]>"+\
         "</description>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
         "</coordinates>\n</Point>\n"

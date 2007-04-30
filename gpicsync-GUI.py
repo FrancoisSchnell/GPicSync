@@ -327,12 +327,12 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                 localKml.path(self.gpxFile)
                 localKml.close()
                 wx.CallAfter(self.consolePrint,"\nClick on the 'View in Google Earth' button if you want to visualize directly the track log and geocoded photos in Google Earth .\n")
-                wx.CallAfter(self.consolePrint,"( A Google Earth doc.kml file has been created in your picture folder. You can also produce a kmz file with 'Tools'->'KMZ Generator' )")
+                wx.CallAfter(self.consolePrint,"( A Google Earth doc.kml file has been created in your picture folder. You can also produce a kmz file with 'Tools'->'KMZ Generator' )\n")
             
             if self.gmCheck.GetValue()==True:
                 webKml.path(self.gpxFile)
                 webKml.close()
-                wx.CallAfter(self.consolePrint,"( A Googlemaps doc-web.kml file has been created with the given url' )")
+                wx.CallAfter(self.consolePrint,"( A Googlemaps doc-web.kml file has been created with the given url' )\n")
                 
         start_new_thread(sync,())
         #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
