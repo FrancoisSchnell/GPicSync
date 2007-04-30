@@ -285,7 +285,15 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                 
             for fileName in os.listdir ( self.picDir ):
                 if self.stop==True: break
-                if fnmatch.fnmatch ( fileName, '*.JPG' )or fnmatch.fnmatch ( fileName, '*.jpg' ):
+                if fnmatch.fnmatch ( fileName, '*.JPG' )\
+                or fnmatch.fnmatch ( fileName, '*.jpg' )\
+                or fnmatch.fnmatch ( fileName, '*.CR2' )\
+                or fnmatch.fnmatch ( fileName, '*.CRW' )\
+                or fnmatch.fnmatch ( fileName, '*.NEF' )\
+                or fnmatch.fnmatch ( fileName, '*.PEF' )\
+                or fnmatch.fnmatch ( fileName, '*.SR2' )\
+                or fnmatch.fnmatch ( fileName, '*.ARW' )\
+                or fnmatch.fnmatch ( fileName, '*.RAF' ):
                     print "\nFound fileName ",fileName," Processing now ..."
                     wx.CallAfter(self.consolePrint,"\nFound "+fileName+" ")
                     print self.picDir+'/'+fileName
