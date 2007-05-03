@@ -394,8 +394,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         vbox.Add(camLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=5)
         vbox.Add(self.camEntry,proportion=0,flag=wx.ALIGN_CENTER,border=5)
         vbox.Add(gpsLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=5)
-        vbox.Add(self.gpsEntry,proportion=0,flag=wx.ALIGN_CENTER,border=5,
-        border=5)
+        vbox.Add(self.gpsEntry,proportion=0,flag=wx.ALIGN_CENTER,border=5)
         vbox.Add(applyButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,
         border=5,border=20)
         bkg.SetSizer(vbox)
