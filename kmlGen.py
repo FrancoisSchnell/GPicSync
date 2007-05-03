@@ -135,7 +135,7 @@ class KML(object):
         os.path.basename(picName)+"</name>\n"
         pmDescription="<description><![CDATA["+\
         "<a href='"+self.url+os.path.basename(picName)+"' target='_blank'> <img src='"+\
-        self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/></a>]]>"+\
+        self.url+"thumbs/thumb_"+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/></a>]]>"+\
         "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
         "</coordinates>\n</Point>\n"

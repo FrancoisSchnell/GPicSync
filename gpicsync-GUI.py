@@ -32,6 +32,8 @@ from gpicsync import *
 from kmlGen import *
 from geonames import *
 from thread import start_new_thread
+from PIL import Image
+from PIL import JpegImagePlugin
 
 class GUI(wx.Frame):
     """Main Frame of GPicSync"""
@@ -271,9 +273,11 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             if self.geCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n")
                 localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir))
+            
             if self.gmCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\nStarting to generate a Google Map file (doc-web.kml) in the picture folder ... \n")
                 webKml=KML(self.picDir+"/doc-web",os.path.basename(self.picDir),url=self.urlEntry.GetValue())
+                os.mkdir(self.picDir+'/thumbs')
                 
             if self.log==True:
                 f=open(self.picDir+'/gpicsync.log','w')
@@ -304,8 +308,21 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                         
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4])
+                    
                     if self.gmCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         webKml.placemark4Gmaps(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4])
+                        print "*************  GO ******************"
+                        im=Image.open(self.picDir+'/'+fileName)
+                        width=int(result[3])
+                        height=int(result[4])
+                        if width>height:
+                            max=width
+                        else:
+                            max=height
+                        zoom=float(160.0/max)
+                        im.thumbnail((int(width*zoom),int(height*zoom)))
+                        im.save(self.picDir+"/thumbs/"+"thumb_"+fileName)
+                        
                         
                     if self.geonamesCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         try:
