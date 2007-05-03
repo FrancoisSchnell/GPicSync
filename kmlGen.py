@@ -151,13 +151,16 @@ class KML(object):
         part=500 # cut the gpx file in part (to be sure it displays in GM)
         j=1 #Path j (a number for each section) 
         
-        headPath="""
+        def makeHeadPath(j):
+            headPath="""
 \n<Placemark>
 <name>Path """+str(j)+ """</name>
 <styleUrl>#lineStyle</styleUrl>
 <LineString>
 <tessellate>1</tessellate>
 <coordinates>\n"""
+            return headPath
+        
         endPath="\n</coordinates>\n</LineString>\n</Placemark>\n\n"
         bodyPath=""
         myGpx=Gpx(gpxFile) 
@@ -168,14 +171,14 @@ class KML(object):
                 bodyPath=bodyPath+rec['lon']+','+rec['lat']+',0 '
                 i=i+1
             if i==part:
-                self.f.write(headPath)
+                self.f.write(makeHeadPath(j))
                 self.f.write(bodyPath)
                 self.f.write(endPath)
                 i=1
                 j=j+1
                 bodyPath=""
-        j=j+1
-        self.f.write(headPath)
+
+        self.f.write(makeHeadPath(j))
         self.f.write(bodyPath)
         self.f.write(endPath)
 
