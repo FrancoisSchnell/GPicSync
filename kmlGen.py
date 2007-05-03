@@ -146,9 +146,13 @@ class KML(object):
 
     def path(self,gpxFile):
         """ Creates the path of the GPX file in the kml"""
+
+        i=1 # an iterator for the gpx file
+        part=500 # cut the gpx file in part (to be sure it displays in GM) 
+        
         headPath="""
 \n<Placemark>
-<name>Path</name>
+<name>Path """+str(i)+ """</name>
 <styleUrl>#lineStyle</styleUrl>
 <LineString>
 <tessellate>1</tessellate>
@@ -157,8 +161,17 @@ class KML(object):
         bodyPath=""
         myGpx=Gpx(gpxFile) 
         track=myGpx.extract()
+                
         for rec in track:
-            bodyPath=bodyPath+rec['lon']+','+rec['lat']+',0 '
+            if i<part:
+                bodyPath=bodyPath+rec['lon']+','+rec['lat']+',0 '
+                i=i+1
+            if i==part:
+                self.f.write(headPath)
+                self.f.write(bodyPath)
+                self.f.write(endPath)
+                i=1
+                bodyPath=""
         self.f.write(headPath)
         self.f.write(bodyPath)
         self.f.write(endPath)

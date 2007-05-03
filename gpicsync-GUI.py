@@ -277,7 +277,10 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             if self.gmCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\nStarting to generate a Google Map file (doc-web.kml) in the picture folder ... \n")
                 webKml=KML(self.picDir+"/doc-web",os.path.basename(self.picDir),url=self.urlEntry.GetValue())
-                os.mkdir(self.picDir+'/thumbs')
+                try:
+                    os.mkdir(self.picDir+'/thumbs')
+                except:
+                    print "Couldn't create the thumbs folder, it maybe already exist"
                 
             if self.log==True:
                 f=open(self.picDir+'/gpicsync.log','w')
