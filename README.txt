@@ -33,10 +33,12 @@ GPicSync requires:
 - Python2.5
 - exiftool
 - wxpython for the GUI (2.8 but it could maybe work with a previous verion)
+- python-imaging (from version 0.93 of GPicSync)
 - Google Earth (for Google Earth features). The Google-earth folder must in your home folder.
 
 I've tested GPicSync successfully on Linux Ubuntu "Feisty Fawn" 
-(Python 2.5 is already installed as a default for this distribution). 
+(Python 2.5 is already installed as a default for this distribution and you can add wxpython and python-imaging from synaptic
+for example). 
 
 In synaptic install exiftool and python-wgtk2.8
 
