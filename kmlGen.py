@@ -60,6 +60,12 @@ class KML(object):
         print "serving at port", PORT
         httpd.serve_forever()
         #start_new_thread(serverGo,())
+    
+    def writeInKml(self,text):
+        """
+        Print the given string in the kml file
+        """
+        self.f.write(text)
 
     def placemark(self,picName="",lat="",long="",width="800",height="600"):
         """
@@ -146,7 +152,7 @@ class KML(object):
 
     def path(self,gpxFile):
         """ Creates the path of the GPX file in the kml"""
-
+        self.f.write("\n<Folder>\n<name>Track</name>")
         i=1 # an iterator for the gpx file
         part=500 # cut the gpx file in part (to be sure it displays in GM)
         j=1 #Path j (a number for each section) 
@@ -181,6 +187,8 @@ class KML(object):
         self.f.write(makeHeadPath(j))
         self.f.write(bodyPath)
         self.f.write(endPath)
+        
+        self.f.write("</Folder>\n")
 
     def close(self):
         """Ending of the kml file"""

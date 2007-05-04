@@ -277,6 +277,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             if self.gmCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\nStarting to generate a Google Map file (doc-web.kml) in the picture folder ... \n")
                 webKml=KML(self.picDir+"/doc-web",os.path.basename(self.picDir),url=self.urlEntry.GetValue())
+                webKml.path(self.gpxFile)
+                webKml.writeInKml("\n<Folder>\n<name>Photos</name>")
                 try:
                     os.mkdir(self.picDir+'/thumbs')
                 except:
@@ -314,7 +316,6 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                     
                     if self.gmCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         webKml.placemark4Gmaps(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4])
-                        print "*************  GO ******************"
                         im=Image.open(self.picDir+'/'+fileName)
                         width=int(result[3])
                         height=int(result[4])
@@ -358,7 +359,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                 wx.CallAfter(self.consolePrint,"( A Google Earth doc.kml file has been created in your picture folder. You can also produce a kmz file with 'Tools'->'KMZ Generator' )\n")
             
             if self.gmCheck.GetValue()==True:
-                webKml.path(self.gpxFile)
+                #webKml.path(self.gpxFile)
+                webKml.writeInKml("</Folder>\n")
                 webKml.close()
                 wx.CallAfter(self.consolePrint,"( A Google Maps doc-web.kml file has been created with the given url' )\n")
                 
