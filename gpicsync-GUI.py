@@ -34,6 +34,7 @@ from geonames import *
 from thread import start_new_thread
 from PIL import Image
 from PIL import JpegImagePlugin
+from PIL import GifImagePlugin
 
 class GUI(wx.Frame):
     """Main Frame of GPicSync"""
@@ -170,7 +171,7 @@ class GUI(wx.Frame):
     def aboutApp(self,evt): 
         """An about message dialog"""
         text="""
-        GPicSync version 0.93 - April 2007 
+        GPicSync version 0.93 - 2007 
          
         GPicSync is Free Software (GPL v2)
         

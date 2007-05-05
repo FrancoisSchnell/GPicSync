@@ -5,8 +5,8 @@
 [Setup]
 AppName=GPicSync
 AppId=GPicSync
-AppVerName=GPicSync 0.92
-AppVersion=0.92
+AppVerName=GPicSync 0.93
+AppVersion=0.93
 AppPublisher=francois schnell
 AppPublisherURL=http://francois.schnell.free.fr
 AppSupportURL=http://code.google.com/p/gpicsync/
@@ -19,10 +19,14 @@ LicenseFile=license.txt
 [Dirs]
 
 [Files]
+;Source: dist\; DestDir:{app}
 
 Source: dist\_controls_.pyd; DestDir:{app}
 Source: dist\_core_.pyd; DestDir:{app}
+Source: dist\_ctypes.pyd; DestDir:{app}
 Source: dist\_gdi_.pyd; DestDir:{app}
+Source: dist\_hashlib.pyd; DestDir:{app}
+Source: dist\_imaging.pyd; DestDir:{app}
 Source: dist\_misc_.pyd; DestDir:{app}
 Source: dist\_socket.pyd; DestDir:{app}
 Source: dist\_ssl.pyd; DestDir:{app}
@@ -48,7 +52,7 @@ Source: dist\wxbase28h_vc.dll; DestDir:{app}
 Source: dist\wxmsw28h_adv_vc.dll; DestDir:{app}
 Source: dist\wxmsw28h_core_vc.dll; DestDir:{app}
 Source: dist\wxmsw28h_html_vc.dll; DestDir:{app}
-Source: dist\test.ico; DestDir:{app}
+Source: dist\gpicsync.ico; DestDir:{app}
 ;Source: dist\mfc71.dll; DestDir:{app}
 ;Source: dist\Website; DestDir:{app}
 
@@ -60,11 +64,11 @@ Name: Francais; MessagesFile: compiler:Languages\French.isl
 Name: Allemand; MessagesFile: compiler:Languages\German.isl
 
 [Icons]
-Name: {group}\GPicSync.exe; Filename: {app}\gpicsync-GUI.exe; IconIndex: 0; WorkingDir: {app};IconFilename: {app}\test.ico
+Name: {group}\GPicSync.exe; Filename: {app}\gpicsync-GUI.exe; IconIndex: 0; WorkingDir: {app};IconFilename: {app}\gpicsync.ico
 Name: {group}\Website with documentation; Filename: GPicSync_website.url;  WorkingDir: {app}
 Name: {group}\Web Google Group; Filename: GoogleGroup.url;  WorkingDir: {app}
 Name: {group}\Uninstall GPicSync; Filename: {uninstallexe}; IconFilename: {app}\unins000.exe; WorkingDir: {app}
-Name: {commondesktop}\GPicSync; Filename: {app}\Gpicsync-GUI.exe; IconIndex: 0; WorkingDir: {app};IconFilename: {app}\test.ico
+Name: {commondesktop}\GPicSync; Filename: {app}\Gpicsync-GUI.exe; IconIndex: 0; WorkingDir: {app};IconFilename: {app}\gpicsync.ico
 ;Name: {group}\Website; Filename: {app}\Website; IconIndex: 0; WorkingDir: {app}
 ;Name: {group}\Uninstall GPicSync; Filename: {uninstallexe}; IconFilename: {app}\unins000.exe; WorkingDir: {app}
 

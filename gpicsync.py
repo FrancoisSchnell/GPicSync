@@ -70,6 +70,7 @@ class GpicSync(object):
         latitude and longitude are strings (+- decimal degrees) to be use
         by other part of the program calling this method. 
         """
+        interpolation=True # To use or not an interpolation mode(instead of nearest point)
         pic=GeoExif(picture)
         picDateTimeSize=pic.readDateTimeSize()
         self.shotTime=picDateTimeSize[1]
@@ -80,26 +81,56 @@ class GpicSync(object):
         longitude=""
         #print "Picture shotTime was", self.shotTime
         tpic_tgps_l=86400 # maximum seconds interval in a day
+        
         if self.dateCheck==True:
-            for rec in self.track:
+            for n,rec in enumerate(self.track):
                 if rec['date']==self.shotDate:
                     rec["tpic_tgps_l"]= self.compareTime(self.shotTime,rec["time"])
                     if abs(rec["tpic_tgps_l"])<tpic_tgps_l:
+                        N=n
                         tpic_tgps_l=abs(rec["tpic_tgps_l"])
                         latitude=rec['lat']
-                        #print "latitude =",rec['lat']
+                        #print "Nearest point latitude =",rec['lat']
                         longitude=rec['lon']
-                        #print "longitude =",rec['lon']
+                        #print "Nearest point longitude =",rec['lon']
                         if float(latitude)>0:
                             latRef="N"
                         else: latRef="S"
                         if float(longitude)>0:
                             longRef="E"
                         else: longRef="W"
+            if interpolation==True:
+                print "N is= ",N #N (index in the list) is the nearest trackpoint 
+                print "Latitude of N= ", latitude
+                print "Longitude of N =",longitude
+                if abs(self.track[N+1]["tpic_tgps_l"])<abs(self.track[N-1]["tpic_tgps_l"]):
+                    M=N+1
+                else:
+                    M=N-1
+                print "M is= ",M # M is the second nearest trackpoint
+                dLonNM=float(self.track[M]['lon'])-float(self.track[N]['lon'])
+                dLatNM=float(self.track[M]['lat'])-float(self.track[N]['lat'])
+                print "dLonNM= ",dLonNM
+                print "dLatNM= ",dLatNM
+                ratio=abs(float(self.track[N]["tpic_tgps_l"]))/\
+                (abs(self.track[N]["tpic_tgps_l"])+abs(self.track[M]["tpic_tgps_l"]))
+                print "ratio= ",ratio
+                latitude=float(latitude)+ratio*dLatNM
+                longitude=float(longitude)+ratio*dLonNM
+                if float(latitude)>0:
+                    latRef="N"
+                else: latRef="S"
+                if float(longitude)>0:
+                    longRef="E"
+                else: longRef="W"
+                latitude=str(latitude)
+                longitude=str(longitude)
+                
         if self.dateCheck==False:
-            for rec in self.track:
+            for n,rec in enumerate(self.track):
                 rec["tpic_tgps_l"]= self.compareTime(self.shotTime,rec["time"])
                 if abs(rec["tpic_tgps_l"])<tpic_tgps_l:
+                    N=n
                     tpic_tgps_l=abs(rec["tpic_tgps_l"])
                     latitude=rec['lat']
                     #print "latitude =",rec['lat']
@@ -112,6 +143,33 @@ class GpicSync(object):
                     if float(longitude)>0:
                         longRef="E"
                     else: longRef="W"
+            if interpolation==True:
+                print "N is= ",N
+                print "Latitude of N= ", latitude
+                print "Longitude of N =",longitude
+                if abs(self.track[N+1]["tpic_tgps_l"])<abs(self.track[N-1]["tpic_tgps_l"]):
+                    M=N+1
+                else:
+                    M=N-1
+                print "M is= ",M
+                dLonNM=float(self.track[M]['lon'])-float(self.track[N]['lon'])
+                dLatNM=float(self.track[M]['lat'])-float(self.track[N]['lat'])
+                print "dLonNM= ",dLonNM
+                print "dLatNM= ",dLatNM
+                ratio=abs(float(self.track[N]["tpic_tgps_l"]))/\
+                (abs(self.track[N]["tpic_tgps_l"])+abs(self.track[M]["tpic_tgps_l"]))
+                print "ratio= ",ratio
+                latitude=float(latitude)+ratio*dLatNM
+                longitude=float(longitude)+ratio*dLonNM
+                if float(latitude)>0:
+                    latRef="N"
+                else: latRef="S"
+                if float(longitude)>0:
+                    longRef="E"
+                else: longRef="W"
+                latitude=str(latitude)
+                longitude=str(longitude)
+                
         if self.dateCheck==True:
             if latitude != "" and longitude !="" and (tpic_tgps_l< self.timerange):
                 #if float(longitude)<0:longitude=str(abs(float(longitude)))
@@ -133,6 +191,7 @@ class GpicSync(object):
                 else:
                     return [" : WARNING: DIDN'T GEOCODE, no track point at this picture date "\
                      +self.shotDate+"-"+self.shotTime,"","",self.picWidth,self.picHeight]
+        
         if self.dateCheck==False:
             if latitude != "" and longitude !=""and (tpic_tgps_l<self.timerange):
                 #if float(longitude)<0:longitude=str(abs(float(longitude)))
