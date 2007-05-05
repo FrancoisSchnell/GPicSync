@@ -46,6 +46,7 @@ class GUI(wx.Frame):
         self.tgps_l="00:00:00"
         self.log=False
         self.stop=False
+        self.interpolation=False
         self.picDir=""
                 
         bkg=wx.Panel(self)
@@ -93,6 +94,7 @@ class GUI(wx.Frame):
         self.urlEntry=wx.TextCtrl(bkg,size=(300,-1))
         self.backupCheck=wx.CheckBox(bkg,-1,"backup pictures")
         self.backupCheck.SetValue(True)
+        self.interpolationCheck=wx.CheckBox(bkg,-1,"interpolation")
         self.geonamesCheck=wx.CheckBox(bkg,-1,"add geonames and geotags")
         
         self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
@@ -128,6 +130,7 @@ class GUI(wx.Frame):
         hbox3=wx.BoxSizer()
         hbox3.Add(self.logFile,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
         hbox3.Add(self.dateCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
+        hbox3.Add(self.interpolationCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
         hbox3.Add(self.backupCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         hbox3.Add(self.geonamesCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         
@@ -261,6 +264,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         utcOffset=int(self.utcEntry.GetValue())
         dateProcess=self.dateCheck.GetValue()
         self.log=self.logFile.GetValue()
+        self.interpolation=self.interpolationCheck.GetValue()
         print "utcOffset= ",utcOffset
 
         def sync():
@@ -269,7 +273,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             " hours and maximum time difference = "+self.timerangeEntry.GetValue() +" seconds.\n")
             
             geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
-            UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),backup=self.backupCheck.GetValue())
+            UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),
+            backup=self.backupCheck.GetValue(),interpolation=self.interpolation)
             
             if self.geCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\nStarting to generate a Google Earth file (doc.kml) in the picture folder ... \n")

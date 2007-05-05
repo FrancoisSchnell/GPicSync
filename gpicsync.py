@@ -35,7 +35,7 @@ class GpicSync(object):
     A class to manage the geolocalisation from a .gpx file.
     """
     def __init__(self,gpxFile,tcam_l="00:00:00",tgps_l="00:00:00",UTCoffset=0,
-    dateProcess=True,timerange=3600,backup=True):
+    dateProcess=True,timerange=3600,backup=True,interpolation=False):
         """Extracts data from the gpx file and compute local offset duration"""
         myGpx=Gpx(gpxFile)   
         self.track=myGpx.extract()
@@ -47,6 +47,7 @@ class GpicSync(object):
         self.timerange=timerange
         self.localOffset=tcam_l-(tgps_l+self.UTCoffset)
         self.backup=backup
+        self.interpolation=interpolation
         print "local UTC Offset (seconds)= ", self.localOffset
         #print self.track
         
@@ -99,7 +100,7 @@ class GpicSync(object):
                         if float(longitude)>0:
                             longRef="E"
                         else: longRef="W"
-            if interpolation==True:
+            if self.interpolation==True:
                 print "N is= ",N #N (index in the list) is the nearest trackpoint 
                 print "Latitude of N= ", latitude
                 print "Longitude of N =",longitude
@@ -143,7 +144,7 @@ class GpicSync(object):
                     if float(longitude)>0:
                         longRef="E"
                     else: longRef="W"
-            if interpolation==True:
+            if self.interpolation==True:
                 print "N is= ",N
                 print "Latitude of N= ", latitude
                 print "Longitude of N =",longitude
