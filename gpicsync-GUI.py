@@ -22,7 +22,7 @@ More informations at this URL:
 http://code.google.com/p/gpicsync/
 """
 
-import wx,time,decimal
+import wx,time,decimal,gettext
 import os,sys,fnmatch,zipfile
 if sys.platform == 'win32':
     import win32com.client
@@ -35,6 +35,13 @@ from thread import start_new_thread
 from PIL import Image
 from PIL import JpegImagePlugin
 from PIL import GifImagePlugin
+
+#--------- i18n settings --------------------------
+
+localedir= "locale"
+gettext.install("gpicsync", localedir)
+
+#--------------------------------------------------
 
 class GUI(wx.Frame):
     """Main Frame of GPicSync"""
@@ -439,7 +446,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         print "Selected ",self.ExifReaderSelected
         #self.winExifReader.Close()
         picture=wx.FileDialog(self)
-        picture.SetWildcard("*.JPG")
+        #picture.SetWildcard("*.JPG")
         picture.ShowModal()
         pathPicture=picture.GetPath()
         if pathPicture !="" or None:

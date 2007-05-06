@@ -45,7 +45,8 @@ class GpicSync(object):
         tcam_l=int(tcam_l[0:2])*3600+int(tcam_l[3:5])*60+int(tcam_l[6:8])
         tgps_l=int(tgps_l[0:2])*3600+int(tgps_l[3:5])*60+int(tgps_l[6:8])
         self.timerange=timerange
-        self.localOffset=tcam_l-(tgps_l+self.UTCoffset)
+        #self.localOffset=tcam_l-(tgps_l+self.UTCoffset)
+        self.localOffset=tgps_l-(tcam_l+self.UTCoffset) # To test before next release !
         self.backup=backup
         self.interpolation=interpolation
         print "local UTC Offset (seconds)= ", self.localOffset
