@@ -180,7 +180,7 @@ msgid "Processed image "
 msgstr ""
 
 #: ..\..\..\gpicsync-GUI.py:342
-msgid " (writting geonames and geotagged to keywords tag in picture EXIF"
+msgid " (writting geonames and geotagged to keywords tag in picture EXIF)"
 msgstr ""
 
 #: ..\..\..\gpicsync-GUI.py:347
@@ -192,7 +192,7 @@ msgid "FINISHED GEOCODING PROCESS"
 msgstr ""
 
 #: ..\..\..\gpicsync-GUI.py:351
-msgid "PROCESSING STOPPED BY THE USER)"
+msgid "PROCESSING STOPPED BY THE USER"
 msgstr ""
 
 #: ..\..\..\gpicsync-GUI.py:355

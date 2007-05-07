@@ -153,152 +153,152 @@ msgstr "Commence à générer le fichier Google Earth (doc.kml) dans le dossier pho
 
 #: ..\..\..\gpicsync-GUI.py:278
 msgid "Starting to generate a Google Map file (doc-web.kml) in the picture folder"
-msgstr ""
+msgstr "Commence à générer le fichier Google Map (doc-web.kml) dans le dossier photo"
 
 #: ..\..\..\gpicsync-GUI.py:289
 msgid "Geocoded with UTC Offset= "
-msgstr ""
+msgstr "Synchronisé avec un décalage UTC= "
 
 #: ..\..\..\gpicsync-GUI.py:290
 msgid " and  Maximum time difference = "
-msgstr ""
+msgstr " et écart de temps maximum = "
 
 #: ..\..\..\gpicsync-GUI.py:292
 msgid "Pictures Folder: "
-msgstr ""
+msgstr "Dossier Photos: "
 
 #: ..\..\..\gpicsync-GUI.py:293
 msgid "GPX file: "
-msgstr ""
+msgstr "Fichier GPX: "
 
 #: ..\..\..\gpicsync-GUI.py:307
 msgid "(Found "
-msgstr ""
+msgstr "(Trouvé "
 
 #: ..\..\..\gpicsync-GUI.py:312
 msgid "Processed image "
-msgstr ""
+msgstr "Image "
 
 #: ..\..\..\gpicsync-GUI.py:342
-msgid " (writting geonames and geotagged to keywords tag in picture EXIF"
-msgstr ""
+msgid " (writting geonames and geotagged to keywords tag in picture EXIF)"
+msgstr " (ajout des geonames et geotagged dans l'entête EXIF)"
 
 #: ..\..\..\gpicsync-GUI.py:347
 msgid "Couldn't retrieve geonames data..."
-msgstr ""
+msgstr "Impossible de récupérer les données geonames..."
 
 #: ..\..\..\gpicsync-GUI.py:349
 msgid "FINISHED GEOCODING PROCESS"
-msgstr ""
+msgstr "FIN DU GEOCODAGE"
 
 #: ..\..\..\gpicsync-GUI.py:351
-msgid "PROCESSING STOPPED BY THE USER)"
-msgstr ""
+msgid "PROCESSING STOPPED BY THE USER"
+msgstr "ARRET DEMANDE PAR L'UTILISATEUR"
 
 #: ..\..\..\gpicsync-GUI.py:355
 msgid "Adding the GPS track log to the Google Earth kml file"
-msgstr ""
+msgstr "Ajout du parcours GPS au fichier kml (Google Earth)"
 
 #: ..\..\..\gpicsync-GUI.py:358
 msgid "Click on the 'View in Google Earth' button to visualize the result"
-msgstr ""
+msgstr "Cliquez sur le bouton 'Voir dans Google Earth' pour visualiser les photos localisées et le parcous."
 
 #: ..\..\..\gpicsync-GUI.py:359
 msgid "( A Google Earth doc.kml file has been created in your picture folder.)"
-msgstr ""
+msgstr "( Un fichier Google Earth doc.kml a été crée dans le dossier photos.)"
 
 #: ..\..\..\gpicsync-GUI.py:365
 msgid "( A Google Maps doc-web.kml file has been created with the given url )"
-msgstr ""
+msgstr "( Un fichier Google Maps doc-web.kml a été crée avec l'URL indiquée.)"
 
 #: ..\..\..\gpicsync-GUI.py:380
 msgid "Local time corrections"
-msgstr ""
+msgstr "Correction temporelle"
 
 #: ..\..\..\gpicsync-GUI.py:383
 msgid "Use this option ONLY if your camera local time is wrong."
-msgstr ""
+msgstr "A n'utiliser que si le temps indiqué par l'APN est faux."
 
 #: ..\..\..\gpicsync-GUI.py:384
 msgid "Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)"
-msgstr ""
+msgstr "Indiquez le temps local affiché par l'APN et le GPS maintenant (hh:mm:ss)"
 
 #: ..\..\..\gpicsync-GUI.py:386
 msgid "Local time displayed now by the camera"
-msgstr ""
+msgstr "Temps affiché par l'APN"
 
 #: ..\..\..\gpicsync-GUI.py:389
 msgid "Local time displayed now by the GPS"
-msgstr ""
+msgstr "Temps affiché par le GPS"
 
 #: ..\..\..\gpicsync-GUI.py:392
 msgid "Apply correction"
-msgstr ""
+msgstr "Valider"
 
 #: ..\..\..\gpicsync-GUI.py:406
 msgid "EXIF Reader"
-msgstr ""
+msgstr "Lecteur EXIF"
 
 #: ..\..\..\gpicsync-GUI.py:409
 msgid "Read the EXIF metadata of the selected picture."
-msgstr ""
+msgstr "Lire les métadonnées EXIF de la photo."
 
 #: ..\..\..\gpicsync-GUI.py:411 ..\..\..\gpicsync-GUI.py:412
 #: ..\..\..\gpicsync-GUI.py:443
 msgid "All EXIF metadata"
-msgstr ""
+msgstr "Toutes les métadonnées"
 
 #: ..\..\..\gpicsync-GUI.py:413 ..\..\..\gpicsync-GUI.py:446
 msgid "Date/Time/Lat./Long."
-msgstr ""
+msgstr "Date/Heure/Lat./Long."
 
 #: ..\..\..\gpicsync-GUI.py:419
 msgid "Select a picture"
-msgstr ""
+msgstr "Sélectionner"
 
 #: ..\..\..\gpicsync-GUI.py:441
 msgid "Selected metada "
-msgstr ""
+msgstr "Métadonnées sélectionnées "
 
 #: ..\..\..\gpicsync-GUI.py:451
 msgid "lat./long."
-msgstr ""
+msgstr "lat./long.""
 
 #: ..\..\..\gpicsync-GUI.py:453
 msgid "None"
-msgstr ""
+msgstr "Aucun"
 
 #: ..\..\..\gpicsync-GUI.py:459
 msgid "Renaming tool"
-msgstr ""
+msgstr "Renommage photos"
 
 #: ..\..\..\gpicsync-GUI.py:462
 msgid "This tool renames your pictures with the "
-msgstr ""
+msgstr "Cet outil renomme vos photos avec les "
 
 #: ..\..\..\gpicsync-GUI.py:462
 msgid "original time/date and lat./long.(if present)"
-msgstr ""
+msgstr "temps/date et lat./long.(si présent)"
 
 #: ..\..\..\gpicsync-GUI.py:464
 msgid "Rename pictures in a folder"
-msgstr ""
+msgstr "Renommer les photos d'un dossier"
 
 #: ..\..\..\gpicsync-GUI.py:465
 msgid "Rename a single picture"
-msgstr ""
+msgstr "Renommer une photo"
 
 #: ..\..\..\gpicsync-GUI.py:483 ..\..\..\gpicsync-GUI.py:504
 msgid "Beginning renaming..."
-msgstr ""
+msgstr "Début de renommage..."
 
 #: ..\..\..\gpicsync-GUI.py:491 ..\..\..\gpicsync-GUI.py:518
 msgid "Didn't find Original Time/Date for "
-msgstr ""
+msgstr "Temps/Date non trouvé pour "
 
 #: ..\..\..\gpicsync-GUI.py:494 ..\..\..\gpicsync-GUI.py:525
 msgid "Renamed "
-msgstr ""
+msgstr "Renommé "
 
 #: ..\..\..\gpicsync-GUI.py:508
 msgid "Interrupted by the user"
