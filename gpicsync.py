@@ -26,11 +26,14 @@ python gpicsync.py -d myfoderWithPictures -g myGpxFile.gpx -o UTCoffset
 For more options type gpicsync.py --help
 
 """
-
+import gettext
 from geoexif import *
 from gpx import *
 
+
 class GpicSync(object):
+
+
     """
     A class to manage the geolocalisation from a .gpx file.
     """
@@ -101,7 +104,7 @@ class GpicSync(object):
                         if float(longitude)>0:
                             longRef="E"
                         else: longRef="W"
-            if self.interpolation==True:
+            if self.interpolation==True and rec['date']==self.shotDate:
                 print "N is= ",N #N (index in the list) is the nearest trackpoint 
                 print "Latitude of N= ", latitude
                 print "Longitude of N =",longitude
@@ -180,18 +183,18 @@ class GpicSync(object):
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
                 pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup)
                 #return tpic_tgps_l
-                return [ "taken "+self.shotDate+"-"+self.shotTime+\
-                "  - Writting best match to picture  -> "+latRef+\
-                " "+latitude+" ,"+longRef+" "+longitude+" : time difference (s)= "+str(tpic_tgps_l),
+                return [ _("taken ")+self.shotDate+"-"+self.shotTime+\
+                _("  - Writting best match to picture  -> ")+latRef+\
+                " "+latitude+" ,"+longRef+" "+longitude+_(" : time difference (s)= ")+str(tpic_tgps_l),
                 latitude,longitude,self.picWidth,self.picHeight]
             else:
                 print "Didn't find any picture for this day or timerange"
                 if tpic_tgps_l !=86400:
-                    return [" : WARNING: DIDN'T GEOCODE, no track point below the maximum time range ("\
-                    +str(self.timerange)+" s) : " +self.shotDate+"-"+self.shotTime+" time difference (s)= "+str(tpic_tgps_l)\
-                    +"\nFor information nearest trackpoint was at lat="+latitude+" long="+longitude,"","",self.picWidth,self.picHeight]
+                    return [_(" : WARNING: DIDN'T GEOCODE, no track point below the maximum time range (")\
+                    +str(self.timerange)+" s) : " +self.shotDate+"-"+self.shotTime+_(" time difference (s)= ")+str(tpic_tgps_l)\
+                    +_("\nFor information nearest trackpoint was at lat=")+latitude+_(" long=")+longitude,"","",self.picWidth,self.picHeight]
                 else:
-                    return [" : WARNING: DIDN'T GEOCODE, no track point at this picture date "\
+                    return [_(" : WARNING: DIDN'T GEOCODE, no track point at this picture date ")\
                      +self.shotDate+"-"+self.shotTime,"","",self.picWidth,self.picHeight]
         
         if self.dateCheck==False:
@@ -201,15 +204,15 @@ class GpicSync(object):
                 print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
                 pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup)
-                response= "Writting best latitude/longitude match to EXIF picture: "+latRef+\
-                " "+latitude+" ,"+longRef+" "+longitude+" with time difference (s)= "+str(tpic_tgps_l)
+                response= _("Writting best latitude/longitude match to EXIF picture: ")+latRef+\
+                " "+latitude+" ,"+longRef+" "+longitude+_(" with time difference (s)= ")+str(tpic_tgps_l)
                 if self.shotDate != trkptDay:
-                    response=response+"\nWarning: Picture date "+self.shotDate+\
-                   " and track point date "+trkptDay+" are different ! " 
+                    response=response+_("\nWarning: Picture date ")+self.shotDate+\
+                   _(" and track point date ")+trkptDay+_(" are different ! ") 
                 return [response,latitude,longitude,self.picWidth,self.picHeight]
             else:
                 print " WARNING: DIDN'T GEOCODE, no suitable track point below maximum time difference (seconds)= ",self.timerange
-                return ["WARNING: DIDN'T GEOCODE, no suitable track point below maximum time difference, "+" time difference (s)= "+str(tpic_tgps_l),"","",self.picWidth,self.picHeight]
+                return [_("WARNING: DIDN'T GEOCODE, no suitable track point below maximum time difference, ")+_(" time difference (s)= ")+str(tpic_tgps_l),"","",self.picWidth,self.picHeight]
             
 if __name__=="__main__":
     

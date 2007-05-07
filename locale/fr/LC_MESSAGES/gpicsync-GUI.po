@@ -136,7 +136,7 @@ msgstr "Débute la synchronisation avec "
 
 #: ..\..\..\gpicsync-GUI.py:279
 msgid "UTC Offset ="
-msgstr "Décalage Offset ="
+msgstr "Décalage UTC ="
 
 #: ..\..\..\gpicsync-GUI.py:280
 msgid " hours and maximum time difference = "
@@ -145,6 +145,10 @@ msgstr " heure(s) et écart temporel maximum = "
 #: ..\..\..\gpicsync-GUI.py:280
 msgid " seconds.\n"
 msgstr " seconds.\n"
+
+#287
+msgid "Starting to generate a Google Earth file (doc.kml) in the picture folder ..."
+msgstr "Commence à générer le fichier Google Earth (doc.kml) dans le dossier photo... "
 
 #: ..\..\..\gpicsync-GUI.py:291
 msgid ""
@@ -250,6 +254,11 @@ msgstr "Valider"
 msgid "EXIF Reader"
 msgstr "Lecteur EXIF"
 
+#line 422 gpicsync-GUI.py
+
+msgid "Read the EXIF metadata of the selected picture."
+msgstr "Lire les métadonnées EXIF de la photo."
+
 #: ..\..\..\gpicsync-GUI.py:425
 #: ..\..\..\gpicsync-GUI.py:426
 #: ..\..\..\gpicsync-GUI.py:457
@@ -285,7 +294,7 @@ msgid ""
 "original time/date and lat./long.(if present)"
 msgstr ""
 "Cet outil renomme vos photos avec \n"
-"temps/date et lat./long.(si present)"
+"temps/date et lat./long.(si présent)"
 
 #: ..\..\..\gpicsync-GUI.py:478
 msgid "Rename pictures in a folder"
@@ -389,8 +398,8 @@ msgid ""
 "You can share this file with friends or put it on a webserver.\n"
 msgstr ""
 "\n"
-"fichier KMZ crée dans le dossier photo\n"
-"Il contient aussi les photos localisées.\n"
+"fichier KMZ crée dans le dossier photo.\n"
+"(Il contient aussi les photos localisées.)\n"
 
 #: ..\..\..\gpicsync-GUI.py:579
 msgid ""
@@ -426,7 +435,7 @@ msgstr ""
 "- finir une synchronisation au préalable"
 "\n"
 "- selectionner un dossier qui a déjà été synchronisé"
-"(il doit contenir un fichier doc.kml)  \n"
+" (il doit contenir un fichier doc.kml)  \n"
 "\n"
 ""
 ""
@@ -476,4 +485,72 @@ msgstr "\tLatitude: "
 #: ..\..\..\gpicsync-GUI.py:631
 msgid "\tLongitude: "
 msgstr "\tLongitude: "
+
+##########################################################################
+
+#: ..\..\..\gpicsync.py:190
+msgid "taken "
+msgstr "pris le "
+
+#: ..\..\..\gpicsync.py:191
+msgid "  - Writting best match to picture  -> "
+msgstr " - Meilleure postion vers photo ->"
+
+#: ..\..\..\gpicsync.py:192
+msgid " : time difference (s)= "
+msgstr " : écart temps (s)= "
+
+#: ..\..\..\gpicsync.py:197
+msgid " : WARNING: DIDN'T GEOCODE, no track point below the maximum time range ("
+msgstr " : ATTENTION: PAS DE GEOCODAGE, pas de point sous l'écart temporel maxi ("
+
+#: ..\..\..\gpicsync.py:198 ..\..\..\gpicsync.py:219
+msgid " time difference (s)= "
+msgstr " écart temps (s)= "
+
+#: ..\..\..\gpicsync.py:199
+msgid ""
+"\n"
+"For information nearest trackpoint was at lat="
+msgstr ""
+"\n"
+"Pour information le point le plus proche est à lat="
+
+#: ..\..\..\gpicsync.py:199
+msgid " long="
+msgstr " long="
+
+#: ..\..\..\gpicsync.py:201
+msgid " : WARNING: DIDN'T GEOCODE, no track point at this picture date "
+msgstr " : ATTENTION: PAS DE GEOCODAGE, pas de points trouvés à la date de la photo "
+
+#: ..\..\..\gpicsync.py:211
+msgid "Writting best latitude/longitude match to EXIF picture: "
+msgstr "Insertion de la meilleure latitude/longitude : "
+
+#: ..\..\..\gpicsync.py:212
+msgid " with time difference (s)= "
+msgstr " avec écart temporel (s) = "
+
+#: ..\..\..\gpicsync.py:214
+msgid ""
+"\n"
+"Warning: Picture date "
+msgstr ""
+"\n"
+"Attention: date photo "
+
+#: ..\..\..\gpicsync.py:215
+msgid " and track point date "
+msgstr " et date du parcours "
+
+#: ..\..\..\gpicsync.py:215
+msgid " are different ! "
+msgstr " sont differents ! "
+
+#: ..\..\..\gpicsync.py:219
+msgid "WARNING: DIDN'T GEOCODE, no suitable track point below maximum time difference, "
+msgstr "ATTENTION: PAS DE GEOCODAGE, pas de point sous le maximum de l'écart temporel, "
+
+
 
