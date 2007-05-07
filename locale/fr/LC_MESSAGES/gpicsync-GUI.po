@@ -302,130 +302,130 @@ msgstr "Renommé "
 
 #: ..\..\..\gpicsync-GUI.py:508
 msgid "Interrupted by the user"
-msgstr ""
+msgstr "Interrompu par l'utilisateur"
 
 #: ..\..\..\gpicsync-GUI.py:526
 msgid "Finished"
-msgstr ""
+msgstr "Fini"
 
 #: ..\..\..\gpicsync-GUI.py:533
 msgid "Create a kmz file archive"
-msgstr ""
+msgstr "Créer un fichier kmz"
 
 #: ..\..\..\gpicsync-GUI.py:535
 msgid "Create KMZ file !"
-msgstr ""
+msgstr "Créer fichier KMZ"
 
 #: ..\..\..\gpicsync-GUI.py:543
 msgid "Sorry this tool is not yet available for the Linux version"
-msgstr ""
+msgstr "Désolé cet outil n'est pas encore disponible sur la version Linux."
 
 #: ..\..\..\gpicsync-GUI.py:552
 msgid "Creating a KMZ file in the pictures folder..."
-msgstr ""
+msgstr "Création d'un fichier KMZ dans le dossier photos..."
 
 #: ..\..\..\gpicsync-GUI.py:555
 msgid "Adding doc.kml"
-msgstr ""
+msgstr "Ajout doc.kml"
 
 #: ..\..\..\gpicsync-GUI.py:559
 msgid "Adding "
-msgstr ""
+msgstr "Ajout "
 
 #: ..\..\..\gpicsync-GUI.py:563
 msgid "KMZ file created in pictures folder"
-msgstr ""
+msgstr "fichier KMZ crée dans le dossier photos"
 
 #: ..\..\..\gpicsync-GUI.py:565
 msgid "Couldn't rename the zip file to kmz (maybe a previous file already exist)"
-msgstr ""
+msgstr "Impossible de renommer le fichier zip en kmz (déjà existant ?)"
 
 #: ..\..\..\gpicsync-GUI.py:567
 msgid "To create a Google Earth kmz file you must either:"
-msgstr ""
+msgstr "Pour créer un fichier kmz vous devez (au choix):"
 
 #: ..\..\..\gpicsync-GUI.py:569
 msgid "- select a folder you've already synchronized then select the KMZ Generator tool"
-msgstr ""
+msgstr "- selectionner un dossier qui a déjà été synchronisé"
 
 #: ..\..\..\gpicsync-GUI.py:580
 msgid "Select a gpx file"
-msgstr ""
+msgstr "Sélectionnez un fichier gpx"
 
 #: ..\..\..\gpicsync-GUI.py:599
 msgid "Select a gpx file first."
-msgstr ""
+msgstr "Selectionnez d'abord un fichier gpx."
 
 #: ..\..\..\gpicsync-GUI.py:602
 msgid "Looking at "
-msgstr ""
+msgstr "Analyse "
 
 #: ..\..\..\gpicsync-GUI.py:603
 msgid "Number of valid track points found"
-msgstr ""
+msgstr "Nombre de points GPS valides trouvés"
 
 #: ..\..\..\gpicsync-GUI.py:606
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: ..\..\..\gpicsync-GUI.py:606
 msgid "Time"
-msgstr ""
+msgstr "Heure"
 
 #: ..\..\..\gpicsync-GUI.py:607
 msgid "Latitude"
-msgstr ""
+msgstr "Latitude"
 
 #: ..\..\..\gpicsync-GUI.py:607
 msgid "Longitude"
-msgstr ""
+msgstr "Longitude"
 
 #: ..\..\..\gpicsync.py:186
 msgid "taken "
-msgstr ""
+msgstr "pris "
 
 #: ..\..\..\gpicsync.py:187 ..\..\..\gpicsync.py:207
 msgid "Writting best latitude/longitude match to picture: "
-msgstr ""
+msgstr "Meilleure position vers photo: "
 
 #: ..\..\..\gpicsync.py:188 ..\..\..\gpicsync.py:194 ..\..\..\gpicsync.py:208
 #: ..\..\..\gpicsync.py:215
 msgid " time difference (s)= "
-msgstr ""
+msgstr " écart temporel (s)= "
 
 #: ..\..\..\gpicsync.py:193
 msgid "no track point below the maximum time range "
-msgstr ""
+msgstr "pas de point GPS sous l'écart temporel maxi "
 
 #: ..\..\..\gpicsync.py:193 ..\..\..\gpicsync.py:197 ..\..\..\gpicsync.py:215
 msgid " : WARNING: DIDN'T GEOCODE, "
-msgstr ""
+msgstr " : ATTENTION: PAS DE GEOCODAGE, "
 
 #: ..\..\..\gpicsync.py:195
 msgid " long="
-msgstr ""
+msgstr " long="
 
 #: ..\..\..\gpicsync.py:195
 msgid "For information nearest trackpoint was at lat="
-msgstr ""
+msgstr "Pour information le point le plus proche est à lat="
 
 #: ..\..\..\gpicsync.py:197
 msgid "no track point at this picture date "
-msgstr ""
+msgstr "pas de points trouvés à la date de la photo "
 
 #: ..\..\..\gpicsync.py:210
 msgid "Warning: Picture date "
-msgstr ""
+msgstr "Attention: date photo "
 
 #: ..\..\..\gpicsync.py:211
 msgid " and track point date "
-msgstr ""
+msgstr " et date du parcours GPS "
 
 #: ..\..\..\gpicsync.py:211
 msgid " are different ! "
-msgstr ""
+msgstr " sont differents ! "
 
 #: ..\..\..\gpicsync.py:215
 msgid " no suitable track point below maximum time difference, "
-msgstr ""
+msgstr " pas de point sous l'écart temporel maxi, "
 
