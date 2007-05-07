@@ -103,7 +103,7 @@ class GUI(wx.Frame):
         self.backupCheck=wx.CheckBox(bkg,-1,_("backup pictures"))
         self.backupCheck.SetValue(True)
         self.interpolationCheck=wx.CheckBox(bkg,-1,_("interpolation"))
-        self.geonamesCheck=wx.CheckBox(bkg,-1,_("add geonames and geotags"))
+        self.geonamesCheck=wx.CheckBox(bkg,-1,_("add geonames and geotagged"))
         
         self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
         self.Bind(wx.EVT_BUTTON, self.findGpx, gpxButton)
@@ -181,17 +181,11 @@ class GUI(wx.Frame):
         
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="""
-        GPicSync version 0.93 - 2007 
-         
-        GPicSync is Free Software (GPL v2)
-        
-        More informations and help:
-        
-        http://code.google.com/p/gpicsync/
-        
-        (c) 2007 - francois.schnell@gmail.com
-        """ 
+        text="GPicSync  0.93 - 2007 \n\n"\
+        +"GPicSync is Free Software (GPL v2)\n\n"\
+        +_("More informations and help:")+"\n\n"+\
+        "http://code.google.com/p/gpicsync/"+"\n\n"\
+        +"2007 - francois.schnell@gmail.com"
         dialog=wx.MessageDialog(self,message=text,
         style=wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
         dialog.ShowModal()
@@ -206,7 +200,7 @@ class GUI(wx.Frame):
             path=self.picDir+'/doc.kml'
             print "path=",path
         except:
-            text=_("To visualize the results in Google Earth you  must either:")+"\n\n"\
+            text=_("To visualize the results in Google Earth you must either:")+"\n\n"\
             +_("- finish a synchronisation")+"\n"\
             +("- select a folder you've already synchronized or double-click on the kml file in his folder'")
             wx.CallAfter(self.consolePrint,text)
@@ -266,10 +260,12 @@ class GUI(wx.Frame):
         print "utcOffset= ",utcOffset
 
         def sync():
-            wx.CallAfter(self.consolePrint,_("\n------\n"+_("Beginning synchronization with "))
-            +_("UTC Offset =")+self.utcEntry.GetValue()+
-            _(" hours and maximum time difference = ")+self.timerangeEntry.GetValue() +_(" seconds"+"\n"))
-            
+            if self.dirEntry.GetValue()!="" and self.gpxEntry.GetValue!="":
+                wx.CallAfter(self.consolePrint,_("\n------\n"+_("Beginning synchronization with "))
+                +_("UTC Offset =")+self.utcEntry.GetValue()+
+                _(" hours and maximum time difference = ")+self.timerangeEntry.GetValue() +_(" seconds"+"\n"))
+            else:
+                pass
             geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
             UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),
             backup=self.backupCheck.GetValue(),interpolation=self.interpolation)
@@ -343,7 +339,7 @@ class GUI(wx.Frame):
                             geotag="geotagged"
                             geotagLat="geo:lat="+str(decimal.Decimal(result[1]).quantize(decimal.Decimal('0.000001'))) 
                             geotagLon="geo:lon="+str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
-                            wx.CallAfter(self.consolePrint,gnSummary+_(" (writting geonames and geotagged to keywords tag in picture EXIF")+"\n")
+                            wx.CallAfter(self.consolePrint,gnSummary+_(" (writting geonames and geotagged to keywords tag in picture EXIF)")+"\n")
                             os.popen('%s -keywords="%s" -keywords="%s" -keywords="%s" \
                             -keywords="%s"  -overwrite_original -keywords="%s" -keywords="%s" -keywords="%s" "%s" '\
                             % (self.exifcmd,gnPlace,gnCountry,gnSummary,gnRegion,geotag,geotagLat,geotagLon,self.picDir+'/'+fileName))
@@ -352,14 +348,14 @@ class GUI(wx.Frame):
             if self.stop==False:
                 wx.CallAfter(self.consolePrint,"\n*** "+_("FINISHED GEOCODING PROCESS")+" ***\n")
             if self.stop==True:
-                wx.CallAfter(self.consolePrint,"\n *** "+_("PROCESSING STOPPED BY THE USER)")+" ***\n")
+                wx.CallAfter(self.consolePrint,"\n *** "+_("PROCESSING STOPPED BY THE USER")+" ***\n")
             if self.log==True: f.close()
             
             if self.geCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Adding the GPS track log to the Google Earth kml file")+"...\n")
                 localKml.path(self.gpxFile)
                 localKml.close()
-                wx.CallAfter(self.consolePrint,"\n"+_("Click on the 'View in Google Earth' button if you want to visualize directly the track log and geocoded photos in Google Earth")+" .\n")
+                wx.CallAfter(self.consolePrint,"\n"+_("Click on the 'View in Google Earth' button to visualize the result")+".\n")
                 wx.CallAfter(self.consolePrint,_("( A Google Earth doc.kml file has been created in your picture folder.)")+"\n")
             
             if self.gmCheck.GetValue()==True:
@@ -495,7 +491,7 @@ class GUI(wx.Frame):
                     wx.CallAfter(self.consolePrint,"\n"+_("Didn't find Original Time/Date for ")+self.pathPicture)
                 else:
                     os.rename(self.pathPicture,os.path.dirname(self.pathPicture)+"/"+string+" "+latlong+".jpg")
-                    wx.CallAfter(self.consolePrint,"\n"+_("Renamed ")+os.path.basename(self.pathPicture)+" to "+string+latlong+".jpg")
+                    wx.CallAfter(self.consolePrint,"\n"+_("Renamed ")+os.path.basename(self.pathPicture)+" -> "+string+latlong+".jpg")
             start_new_thread(rename,())
             
     def renamePicturesInFolder(self,evt):
@@ -566,11 +562,11 @@ class GUI(wx.Frame):
                 os.rename(self.picDir+'/'+os.path.basename(self.picDir)+".zip",self.picDir+'/'+os.path.basename(self.picDir)+".kmz")
                 wx.CallAfter(self.consolePrint,"\n"+_("KMZ file created in pictures folder")+"\n")
             except WindowsError:
-                wx.CallAfter(self.consolePrint,"\n"+_("Couldn't rename the zip file to kmz (Maybe a previous kmz file with the same name already exist")+"\n")
+                wx.CallAfter(self.consolePrint,"\n"+_("Couldn't rename the zip file to kmz (maybe a previous file already exist)")+"\n")
         else:
             text="\n --- \n"+_("To create a Google Earth kmz file you must either:")+"\n\n"\
             +_("- finish a synchronisation")+"\n"\
-            +_("- select a folder you've already synchronized then select use the KMZ Generator tool")+"\n --- \n"
+            +_("- select a folder you've already synchronized then select the KMZ Generator tool")+"\n --- \n"
             wx.CallAfter(self.consolePrint,text)
                 
         
@@ -578,8 +574,7 @@ class GUI(wx.Frame):
         """A frame to inspect a gpx file"""
         self.winGpxInspector=wx.Frame(win,size=(280,180),title=_("GPX Inspector"))
         bkg=wx.Panel(self.winGpxInspector)
-        text="""
-        Inspect a gpx file and show tracklog data ."""
+        text=_("Inspect a gpx file and show tracklog data.")
         introLabel = wx.StaticText(bkg, -1,text)
         readButton=wx.Button(bkg,size=(150,30),label=_("Select a gpx file"))
         self.Bind(wx.EVT_BUTTON, self.gpxInspector, readButton)
@@ -608,11 +603,7 @@ class GUI(wx.Frame):
             def inspect():
                 for trkpt in myGpx:
                     wx.CallAfter(self.consolePrint,_("Date")+": "+trkpt["date"]+"\t"+_("Time")+": "\
-                    +trkpt["time"]+"\t"+_("Latitude")+": "+trkpt["lat"]+"\t"+__("Longitude")+": "+trkpt["lon"]+"\n")
-                """if self.gpxInGECheck.GetValue()==True:
-                    print "trying to ..."
-                    os.system("c:\\Program Files\\Google\\Google Earth\\googleearth.exe "+gpxPath)
-                """
+                    +trkpt["time"]+"\t"+_("Latitude")+": "+trkpt["lat"]+"\t"+_("Longitude")+": "+trkpt["lon"]+"\n")
             start_new_thread(inspect,())
             
 app=wx.App(redirect=False)

@@ -184,7 +184,7 @@ class GpicSync(object):
                 pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup)
                 #return tpic_tgps_l
                 return [ _("taken ")+self.shotDate+"-"+self.shotTime+", "\
-                +_("Writting best latitude/longitude match to picture: ")+latRef+\
+                +_("writting best latitude/longitude match to picture: ")+latRef+\
                 " "+latitude+" ,"+longRef+" "+longitude+" :"+_(" time difference (s)= ")+str(tpic_tgps_l),
                 latitude,longitude,self.picWidth,self.picHeight]
             else:
@@ -204,7 +204,7 @@ class GpicSync(object):
                 print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
                 pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup)
-                response= _("Writting best latitude/longitude match to picture: ")+latRef+\
+                response= _("writting best latitude/longitude match to picture: ")+latRef+\
                 " "+latitude+" ,"+longRef+" "+longitude+" with"+_(" time difference (s)= ")+str(tpic_tgps_l)
                 if self.shotDate != trkptDay:
                     response=response+"\n"+_("Warning: Picture date ")+self.shotDate+\
