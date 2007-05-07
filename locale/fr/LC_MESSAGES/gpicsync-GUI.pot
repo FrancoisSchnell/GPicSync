@@ -348,6 +348,11 @@ msgstr ""
 msgid "- select a folder you've already synchronized then select the KMZ Generator tool"
 msgstr ""
 
+
+#: ..\..\..\gpicsync-GUI.py:578
+msgid "Inspect a gpx file and show tracklog data."
+msgstr ""
+
 #: ..\..\..\gpicsync-GUI.py:580
 msgid "Select a gpx file"
 msgstr ""
@@ -385,7 +390,7 @@ msgid "taken "
 msgstr ""
 
 #: ..\..\..\gpicsync.py:187 ..\..\..\gpicsync.py:207
-msgid "Writting best latitude/longitude match to picture: "
+msgid "writting best latitude/longitude match to picture: "
 msgstr ""
 
 #: ..\..\..\gpicsync.py:188 ..\..\..\gpicsync.py:194 ..\..\..\gpicsync.py:208

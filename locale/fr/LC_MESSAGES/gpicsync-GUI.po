@@ -125,7 +125,7 @@ msgstr "Pour visualiser les photos dans Google Earth vous devez (au choix):"
 
 #: ..\..\..\gpicsync-GUI.py:204 ..\..\..\gpicsync-GUI.py:568
 msgid "- finish a synchronization"
-msgstr ""- finir une synchronisation"
+msgstr "- finir une synchronisation"
 
 #: ..\..\..\gpicsync-GUI.py:216
 msgid "Couldn't find or launch Google Earth"
@@ -133,7 +133,7 @@ msgstr "Impossible de trouver ou de lancer Google Earth"
 
 #: ..\..\..\gpicsync-GUI.py:252
 msgid "You must first select a pictures folder and a GPX file."
-msgstr "Vous devez d'abord sélectionner un dossier photo et un ficher GPX."
+msgstr "Vous devez d'abord sélectionner un dossier photo et un fichier GPX."
 
 #: ..\..\..\gpicsync-GUI.py:264
 msgid "Beginning synchronization with "
@@ -145,7 +145,7 @@ msgstr "Décalage UTC ="
 
 #: ..\..\..\gpicsync-GUI.py:266
 msgid " hours and maximum time difference = "
-msgstr "heure(s) et écart temporel maximum = "
+msgstr " heure(s) et écart temporel maximum = "
 
 #: ..\..\..\gpicsync-GUI.py:274
 msgid "Starting to generate a Google Earth file (doc.kml) in the picture folder ..."
@@ -165,7 +165,7 @@ msgstr " et écart de temps maximum = "
 
 #: ..\..\..\gpicsync-GUI.py:292
 msgid "Pictures Folder: "
-msgstr "Dossier Photos: "
+msgstr "Dossier Photo: "
 
 #: ..\..\..\gpicsync-GUI.py:293
 msgid "GPX file: "
@@ -177,11 +177,11 @@ msgstr "(Trouvé "
 
 #: ..\..\..\gpicsync-GUI.py:312
 msgid "Processed image "
-msgstr "Image "
+msgstr "Photo "
 
 #: ..\..\..\gpicsync-GUI.py:342
 msgid " (writting geonames and geotagged to keywords tag in picture EXIF)"
-msgstr " (ajout des geonames et geotagged dans l'entête EXIF)"
+msgstr " (ajout geonames et geotagged dans l'entête EXIF)"
 
 #: ..\..\..\gpicsync-GUI.py:347
 msgid "Couldn't retrieve geonames data..."
@@ -201,7 +201,7 @@ msgstr "Ajout du parcours GPS au fichier kml (Google Earth)"
 
 #: ..\..\..\gpicsync-GUI.py:358
 msgid "Click on the 'View in Google Earth' button to visualize the result"
-msgstr "Cliquez sur le bouton 'Voir dans Google Earth' pour visualiser les photos localisées et le parcous."
+msgstr "Cliquez sur le bouton 'Voir dans Google Earth' pour visualiser les photos localisées et le parcours"
 
 #: ..\..\..\gpicsync-GUI.py:359
 msgid "( A Google Earth doc.kml file has been created in your picture folder.)"
@@ -262,7 +262,7 @@ msgstr "Métadonnées sélectionnées "
 
 #: ..\..\..\gpicsync-GUI.py:451
 msgid "lat./long."
-msgstr "lat./long.""
+msgstr "lat./long."
 
 #: ..\..\..\gpicsync-GUI.py:453
 msgid "None"
@@ -348,6 +348,10 @@ msgstr "Pour créer un fichier kmz vous devez (au choix):"
 msgid "- select a folder you've already synchronized then select the KMZ Generator tool"
 msgstr "- selectionner un dossier qui a déjà été synchronisé"
 
+#: ..\..\..\gpicsync-GUI.py:578
+msgid "Inspect a gpx file and show tracklog data."
+msgstr "Extraire les données du fichier gpx."
+
 #: ..\..\..\gpicsync-GUI.py:580
 msgid "Select a gpx file"
 msgstr "Sélectionnez un fichier gpx"
@@ -385,8 +389,8 @@ msgid "taken "
 msgstr "pris "
 
 #: ..\..\..\gpicsync.py:187 ..\..\..\gpicsync.py:207
-msgid "Writting best latitude/longitude match to picture: "
-msgstr "Meilleure position vers photo: "
+msgid "writting best latitude/longitude match to picture: "
+msgstr "meilleure position vers photo: "
 
 #: ..\..\..\gpicsync.py:188 ..\..\..\gpicsync.py:194 ..\..\..\gpicsync.py:208
 #: ..\..\..\gpicsync.py:215
