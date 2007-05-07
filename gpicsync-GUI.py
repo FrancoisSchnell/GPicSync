@@ -206,19 +206,9 @@ class GUI(wx.Frame):
             path=self.picDir+'/doc.kml'
             print "path=",path
         except:
-            text=("""
----
-To visualize the results in Google Earth you  must either:
-            
-- finish a synchronisation (message "*** FINISHED GEOCODING PROCESS ***)  in the main window then click "View in Google Earth"
-
-- select a folder you've synchronized with the button "Pictures Folder" then click "View in Google Earth"
-(the folder must contains a doc.kml file) 
-
-Note that you can always look at your geolocalized pictures from Picassa then Google Earth (in Picassa: "Tools">"Geolocalize">"Display in Google Earth").
-For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/group/gpicsync \n
----
-""")
+            text=_("To visualize the results in Google Earth you  must either:")+"\n\n"\
+            +_("- finish a synchronisation")+"\n"\
+            +("- select a folder you've already synchronized or double-click on the kml file in his folder'")
             wx.CallAfter(self.consolePrint,text)
         try:
             if sys.platform == 'win32':
@@ -229,7 +219,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                 start_new_thread(goGELinux,())
                 
         except:
-            wx.CallAfter(self.consolePrint,"\n"+_("Couldn't find or launch Google Earth\n"))
+            wx.CallAfter(self.consolePrint,"\n"+_("Couldn't find or launch Google Earth")+"\n")
 
     def exitApp(self,evt):
         """Quit properly the app"""
@@ -265,7 +255,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         """Sync. pictures with the .gpx file"""
         if self.dirEntry.GetValue()=="" or self.gpxEntry.GetValue=="":
                 #wx.CallAfter(self.consolePrint,"You must first select a pictures folder and a GPX file\n")
-                wx.CallAfter(self.consolePrint,_("You must first select a pictures folder and a GPX file\n"))
+                wx.CallAfter(self.consolePrint,_("You must first select a pictures folder and a GPX file.")+"\n")
         else:
             pass
         self.stop=False
@@ -278,7 +268,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         def sync():
             wx.CallAfter(self.consolePrint,_("\n------\n"+_("Beginning synchronization with "))
             +_("UTC Offset =")+self.utcEntry.GetValue()+
-            _(" hours and maximum time difference = ")+self.timerangeEntry.GetValue() +_(" seconds.\n"))
+            _(" hours and maximum time difference = ")+self.timerangeEntry.GetValue() +_(" seconds"+"\n"))
             
             geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
             UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),
@@ -289,7 +279,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                 localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir))
             
             if self.gmCheck.GetValue()==True:
-                wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Map file (doc-web.kml) in the picture folder ... \n"))
+                wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Map file (doc-web.kml) in the picture folder")+" ... \n")
                 webKml=KML(self.picDir+"/doc-web",os.path.basename(self.picDir),url=self.urlEntry.GetValue())
                 webKml.path(self.gpxFile)
                 webKml.writeInKml("\n<Folder>\n<name>Photos</name>")
@@ -353,30 +343,30 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                             geotag="geotagged"
                             geotagLat="geo:lat="+str(decimal.Decimal(result[1]).quantize(decimal.Decimal('0.000001'))) 
                             geotagLon="geo:lon="+str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
-                            wx.CallAfter(self.consolePrint,gnSummary+" (writting geonames and geotags to keywords tag in picture EXIF).\n")
+                            wx.CallAfter(self.consolePrint,gnSummary+_(" (writting geonames and geotagged to keywords tag in picture EXIF")+"\n")
                             os.popen('%s -keywords="%s" -keywords="%s" -keywords="%s" \
                             -keywords="%s"  -overwrite_original -keywords="%s" -keywords="%s" -keywords="%s" "%s" '\
                             % (self.exifcmd,gnPlace,gnCountry,gnSummary,gnRegion,geotag,geotagLat,geotagLon,self.picDir+'/'+fileName))
                         except:
-                            wx.CallAfter(self.consolePrint,_("Couldn't retrieve geonames data...\n"))
+                            wx.CallAfter(self.consolePrint,_("Couldn't retrieve geonames data...")+"\n")
             if self.stop==False:
-                wx.CallAfter(self.consolePrint,"\n*** "+_("FINISHED GEOCODING PROCESS ***\n"))
+                wx.CallAfter(self.consolePrint,"\n*** "+_("FINISHED GEOCODING PROCESS")+" ***\n")
             if self.stop==True:
-                wx.CallAfter(self.consolePrint,"\n *** "+_("PROCESSING STOPPED BY THE USER ***\n"))
+                wx.CallAfter(self.consolePrint,"\n *** "+_("PROCESSING STOPPED BY THE USER)")+" ***\n")
             if self.log==True: f.close()
             
             if self.geCheck.GetValue()==True:
-                wx.CallAfter(self.consolePrint,"\n"+_("Adding the GPS track log to the Google Earth kml file...\n"))
+                wx.CallAfter(self.consolePrint,"\n"+_("Adding the GPS track log to the Google Earth kml file")+"...\n")
                 localKml.path(self.gpxFile)
                 localKml.close()
-                wx.CallAfter(self.consolePrint,"\n"+_("Click on the 'View in Google Earth' button if you want to visualize directly the track log and geocoded photos in Google Earth .\n"))
-                wx.CallAfter(self.consolePrint,_("( A Google Earth doc.kml file has been created in your picture folder. You can also produce a kmz file with 'Tools'->'KMZ Generator' )\n"))
+                wx.CallAfter(self.consolePrint,"\n"+_("Click on the 'View in Google Earth' button if you want to visualize directly the track log and geocoded photos in Google Earth")+" .\n")
+                wx.CallAfter(self.consolePrint,_("( A Google Earth doc.kml file has been created in your picture folder.)")+"\n")
             
             if self.gmCheck.GetValue()==True:
                 #webKml.path(self.gpxFile)
                 webKml.writeInKml("</Folder>\n")
                 webKml.close()
-                wx.CallAfter(self.consolePrint,_("( A Google Maps doc-web.kml file has been created with the given url' )\n"))
+                wx.CallAfter(self.consolePrint,_("( A Google Maps doc-web.kml file has been created with the given url )")+"\n")
                 
         start_new_thread(sync,())
         #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
@@ -452,8 +442,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         if pathPicture !="" or None:
             myPicture=GeoExif(pathPicture)
             def read():
-                wx.CallAfter(self.consolePrint,"\n\n"+_("Selected metada in the EXIF header of the picture : \n"))
-                wx.CallAfter(self.consolePrint,"---------------------------------------------------------------\n")
+                wx.CallAfter(self.consolePrint,"\n\n"+_("Selected metada ")+"\n")
+                wx.CallAfter(self.consolePrint,"-------------------\n")
                 if self.ExifReaderSelected==_("All EXIF metadata"):
                     wx.CallAfter(self.consolePrint,myPicture.readExifAll())
                     
@@ -462,9 +452,9 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
                     datetimeString=dateTime[0]+":"+dateTime[1]
                     if len(datetimeString)>5:
                         wx.CallAfter(self.consolePrint,datetimeString)
-                        wx.CallAfter(self.consolePrint,"    lat./long.="+str(myPicture.readLatLong()))
+                        wx.CallAfter(self.consolePrint,"    "+_("lat./long.")+"="+str(myPicture.readLatLong()))
                     else:
-                        wx.CallAfter(self.consolePrint,"None")
+                        wx.CallAfter(self.consolePrint,_("None"))
             start_new_thread(read,())
             self.winExifReader.Close()
             
@@ -544,7 +534,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         """A frame to generate a KMZ  file"""
         self.winKmzGenerator=wx.Frame(win,size=(280,180),title="KMZ Generator")
         bkg=wx.Panel(self.winKmzGenerator)
-        text=_("\n"+"Create a kmz file to distribute to others")
+        text="\n"+_("Create a kmz file archive")
         introLabel = wx.StaticText(bkg, -1,text)
         readButton=wx.Button(bkg,size=(150,30),label=_("Create KMZ file !"))
         self.Bind(wx.EVT_BUTTON, self.kmzGenerator, readButton)
@@ -554,7 +544,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         bkg.SetSizer(vbox)
         if sys.platform.find("linux")!=-1:
-            wx.CallAfter(self.consolePrint,"\n"+_("Sorry this tool is not yet available for the Linux version \n"))
+            wx.CallAfter(self.consolePrint,"\n"+_("Sorry this tool is not yet available for the Linux version")+" \n")
         else:
             self.winKmzGenerator.Show()
         
@@ -563,7 +553,7 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
         print  "kmz ordered ..."
         self.winKmzGenerator.Close()
         if self.picDir == None or self.picDir !="":
-            wx.CallAfter(self.consolePrint,"\n"+_("Creating a KMZ file in the pictures folder...\n"))
+            wx.CallAfter(self.consolePrint,"\n"+_("Creating a KMZ file in the pictures folder...")+"\n")
             zip = zipfile.ZipFile(self.picDir+'/'+os.path.basename(self.picDir)+".zip", 'w')
             zip.write(self.picDir+'/doc.kml','doc.kml',zipfile.ZIP_DEFLATED)
             wx.CallAfter(self.consolePrint,"\n"+_("Adding doc.kml"))
@@ -574,23 +564,13 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             zip.close()
             try:
                 os.rename(self.picDir+'/'+os.path.basename(self.picDir)+".zip",self.picDir+'/'+os.path.basename(self.picDir)+".kmz")
-                wx.CallAfter(self.consolePrint,_("\n"+"KMZ file (which contains the geolocalized pictures) created in pictures folder\nYou can share this file with friends or put it on a webserver.\n"))
+                wx.CallAfter(self.consolePrint,"\n"+_("KMZ file created in pictures folder")+"\n")
             except WindowsError:
-                wx.CallAfter(self.consolePrint,_("\n"+"Couldn't rename the zip file to kmz\n(Maybe a previous kmz file with the same name already exist, check first and retry)\n"))
+                wx.CallAfter(self.consolePrint,"\n"+_("Couldn't rename the zip file to kmz (Maybe a previous kmz file with the same name already exist")+"\n")
         else:
-            text=_("""
----
-To create a Google Earth kmz file you must either:
-            
-- finish a synchronisation (message "***FINISHED***) in the main window then select "KMZ Generator" in "Tools" menu
-
-- select a folder you've synchronized with the button "Pictures Folder" then select "KMZ Generator" in "Tools" menu
-(the folder must contains a doc.kml file) 
-
-Note that you can always look at your geolocalized pictures from Picassa then Google Earth (in Picassa: "Tools">"Geolocalize">"Display in Google Earth").
-For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/group/gpicsync \n
----
-""")
+            text="\n --- \n"+_("To create a Google Earth kmz file you must either:")+"\n\n"\
+            +_("- finish a synchronisation")+"\n"\
+            +_("- select a folder you've already synchronized then select use the KMZ Generator tool")+"\n --- \n"
             wx.CallAfter(self.consolePrint,text)
                 
         
@@ -623,8 +603,8 @@ For help go to http://code.google.com/p/gpicsync/ or http://groups.google.com/gr
             wx.CallAfter(self.consolePrint,"\n"+_("Select a gpx file first."))
         else:
             myGpx=Gpx(gpxPath).extract()
-            wx.CallAfter(self.consolePrint,"\n"+_("\nLooking at ")+gpxPath+"\n")
-            wx.CallAfter(self.consolePrint,"\n"+_("\nNumber of valid track points found")+" : "+str(len(myGpx))+"\n\n")
+            wx.CallAfter(self.consolePrint,"\n"+_("Looking at ")+gpxPath+"\n")
+            wx.CallAfter(self.consolePrint,"\n"+_("Number of valid track points found")+" : "+str(len(myGpx))+"\n\n")
             def inspect():
                 for trkpt in myGpx:
                     wx.CallAfter(self.consolePrint,_("Date")+": "+trkpt["date"]+"\t"+_("Time")+": "\
