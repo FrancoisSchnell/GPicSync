@@ -178,31 +178,24 @@ class GUI(wx.Frame):
         self.consoleEntry.AppendText(msg)
         
     def languageApp(self,evt):
-        """select a language to display the GUI with"""
-        choices = [ 'English', 'French']
-        dialog=wx.SingleChoiceDialog(self,_("Choose a language:\n(will reload the app.)"),_("languages choice"),choices)
-        dialog.ShowModal()
-        choice=dialog.GetStringSelection()
-        print "choice is ", choice
-        if choice=="French":
-            print "In French"
-            langFr = gettext.translation('gpicsync-GUI', "locale",languages=['fr'])
-            langFr.install()
-        if choice=="English":
-            print "In English"
-            gettext.install("gpicsync-GUI", "None")
-        
-        dialog.Destroy()
-        win.Destroy()
-        
         """
+        select a language to display the GUI with
+        """
+        choices = [ 'English', 'French']
+        dialog=wx.SingleChoiceDialog(self,_("Choose a language (reloads the app.)"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
+            choice=dialog.GetStringSelection()
+            print "choice is : ", choice
+            if choice=="French":
+                langFr = gettext.translation('gpicsync-GUI', "locale",languages=['fr'])
+                langFr.install()
+            if choice=="English":
+                gettext.install("gpicsync-GUI", "None")#a trick to go back to original
             dialog.Destroy()
             win.Destroy()
         else:
-            pass
-        """
-        
+            dialog.Destroy()
+                    
     def aboutApp(self,evt): 
         """An about message dialog"""
         text="GPicSync  0.94 - 2007 \n\n"\
