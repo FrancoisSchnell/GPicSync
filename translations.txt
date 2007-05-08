@@ -1,4 +1,0 @@
-If you want to translate GPicSync in your language the english .pot file is here:
- /locale/fr/LC_MESSAGES/gpicsync-GUI.pot
-
-(I'll probably write some explanations on the wiki of the project).
