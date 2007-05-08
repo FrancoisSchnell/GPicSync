@@ -6,7 +6,7 @@
 #
 #####################################################
 
-GPicSync 0.85 - April 2007
+GPicSync - 2007
 
 
 See the license.txt in the same folder.
@@ -40,12 +40,13 @@ I've tested GPicSync successfully on Linux Ubuntu "Feisty Fawn"
 (Python 2.5 is already installed as a default for this distribution and you can add wxpython and python-imaging from synaptic
 for example). 
 
-In synaptic install exiftool and python-wgtk2.8
+In synaptic install exiftool, python-wgtk2.8 and python-imaging.
 
 To install GoogleEarth on Ubuntu:
 - fetch GoogleEarthLinux.bin on Google Earth website
 - chmod +x GoogleEarthLinux.bin
 - ./GoogleEarthLinux.bin
+
 
 If you prefer the command-line version (or if you can't have the right wxpython for your distro):
 
@@ -59,8 +60,8 @@ As time of writting (14 of april):
 - the kmz tool in tools menu is not fuctionnal yet
 - layout to improve
 
-Still test to carry but main fuctionnalies are threre. 
-Don't hesitate to report any problem you may encounter !
+Still test to carry but main fuctionnalies are there. 
+Don't hesitate to report any problem you may encounter.
 
 
 Thanks and contributions:
