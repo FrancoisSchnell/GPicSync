@@ -36,13 +36,9 @@ from PIL import Image
 from PIL import JpegImagePlugin
 from PIL import GifImagePlugin
 
-#--------- i18n settings --------------------------
-
+# Try to get the OS language if possible and search for a translation 
 localedir= "locale"
 gettext.install("gpicsync-GUI", localedir)
-#gettext.install("gpicsync", localedir)
-
-#--------------------------------------------------
 
 class GUI(wx.Frame):
     """Main Frame of GPicSync"""
@@ -64,6 +60,7 @@ class GUI(wx.Frame):
         menuBar=wx.MenuBar()
         menu1=wx.Menu()
         timeShift=menu1.Append(wx.NewId(),_("Local time correction"))
+        languageChoice=menu1.Append(wx.NewId(),_("Language"))
         menuBar.Append(menu1,_("&Options"))
         menu2=wx.Menu()
         about=menu2.Append(wx.NewId(),_("About..."))
@@ -77,6 +74,7 @@ class GUI(wx.Frame):
         statusBar=self.CreateStatusBar()
         self.Bind(wx.EVT_MENU,self.localtimeFrame,timeShift)
         self.Bind(wx.EVT_MENU,self.aboutApp,about)
+        self.Bind(wx.EVT_MENU,self.languageApp,languageChoice)
         self.Bind(wx.EVT_MENU,self.exifFrame,exifReader)
         self.Bind(wx.EVT_MENU,self.renameFrame,renameToolMenu)
         self.Bind(wx.EVT_MENU,self.gpxInspectorFrame,gpxInspectorMenu)
@@ -179,9 +177,35 @@ class GUI(wx.Frame):
         """
         self.consoleEntry.AppendText(msg)
         
+    def languageApp(self,evt):
+        """select a language to display the GUI with"""
+        choices = [ 'English', 'French']
+        dialog=wx.SingleChoiceDialog(self,_("Choose a language:\n(will reload the app.)"),_("languages choice"),choices)
+        dialog.ShowModal()
+        choice=dialog.GetStringSelection()
+        print "choice is ", choice
+        if choice=="French":
+            print "In French"
+            langFr = gettext.translation('gpicsync-GUI', "locale",languages=['fr'])
+            langFr.install()
+        if choice=="English":
+            print "In English"
+            gettext.install("gpicsync-GUI", "None")
+        
+        dialog.Destroy()
+        win.Destroy()
+        
+        """
+        if dialog.ShowModal() == wx.ID_OK:
+            dialog.Destroy()
+            win.Destroy()
+        else:
+            pass
+        """
+        
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="GPicSync  0.93 - 2007 \n\n"\
+        text="GPicSync  0.94 - 2007 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
@@ -253,7 +277,8 @@ class GUI(wx.Frame):
         else:
             pass
         self.stop=False
-        utcOffset=int(self.utcEntry.GetValue())
+        #utcOffset=int(self.utcEntry.GetValue())
+        utcOffset=float(self.utcEntry.GetValue())#testing float for UTC
         dateProcess=self.dateCheck.GetValue()
         self.log=self.logFile.GetValue()
         self.interpolation=self.interpolationCheck.GetValue()
@@ -609,5 +634,11 @@ class GUI(wx.Frame):
 app=wx.App(redirect=False)
 win=GUI(None,title="GPicSync GUI")
 win.Show()
-
 app.MainLoop()
+
+# Reloads the GUI when language change
+while 1:
+    win=GUI(None,title="GPicSync GUI")
+    win.Show()
+    app.MainLoop()
+

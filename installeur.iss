@@ -5,8 +5,8 @@
 [Setup]
 AppName=GPicSync
 AppId=GPicSync
-AppVerName=GPicSync 0.93
-AppVersion=0.93
+AppVerName=GPicSync 0.94
+AppVersion=0.94
 AppPublisher=francois schnell
 AppPublisherURL=http://francois.schnell.free.fr
 AppSupportURL=http://code.google.com/p/gpicsync/
@@ -17,6 +17,9 @@ OutputDir=Output
 LicenseFile=license.txt
 
 [Dirs]
+Name: {app}\locale
+Name: {app}\locale\fr
+Name: {app}\locale\fr\LC_MESSAGES
 
 [Files]
 ;Source: dist\; DestDir:{app}
@@ -53,6 +56,13 @@ Source: dist\wxmsw28h_adv_vc.dll; DestDir:{app}
 Source: dist\wxmsw28h_core_vc.dll; DestDir:{app}
 Source: dist\wxmsw28h_html_vc.dll; DestDir:{app}
 Source: dist\gpicsync.ico; DestDir:{app}
+
+;TRANSLATIONS
+
+Source: gpicsync-GUI.pot; DestDir:{app}
+Source: locale\fr\LC_MESSAGES\gpicsync-GUI.mo; DestDir:{app}\locale\fr\LC_MESSAGES
+Source: locale\fr\LC_MESSAGES\gpicsync-GUI.po; DestDir:{app}\locale\fr\LC_MESSAGES
+
 ;Source: dist\mfc71.dll; DestDir:{app}
 ;Source: dist\Website; DestDir:{app}
 
