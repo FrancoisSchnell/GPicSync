@@ -136,16 +136,24 @@ class GeoExif(object):
             os.popen('%s -GPSLongitudeRef="W" "%s"' % (self.exifcmd, self.picPath))
         os.popen('%s -GPSLongitude=%s  "%s" '% (self.exifcmd, long,self.picPath))
         
-    def writeLatLong(self,lat,long,latRef,longRef,backup):
+    def writeLatLong(self,lat,long,latRef,longRef,backup,elevation="None"):
         """Write both latitudeRef/latitude and longitudeRef/longitude in EXIF"""
         if float(long)<0:long=str(abs(float(long)))
         if float(lat)<0:lat=str(abs(float(lat)))
         if backup==True:
-            os.popen('%s -n -GPSLongitude=%s -GPSLatitude=%s \
-            -GPSLongitudeRef=%s -GPSLatitudeRef=%s  -GPSAltitude=0.0 -GPSAltitudeRef=0 "%s"'%(self.exifcmd, long,lat,longRef,latRef,self.picPath))
+            if elevation=="None":
+                os.popen('%s -n -GPSLongitude=%s -GPSLatitude=%s \
+                -GPSLongitudeRef=%s -GPSLatitudeRef=%s "%s"'%(self.exifcmd, long,lat,longRef,latRef,self.picPath))
+            else:
+                os.popen('%s -n -GPSLongitude=%s -GPSLatitude=%s -GPSLongitudeRef=%s \
+                -GPSLatitudeRef=%s  -GPSAltitudeRef=0 -GPSAltitude=%s "%s"'%(self.exifcmd, long,lat,longRef,latRef,elevation,self.picPath))
         else:
-            os.popen('%s -overwrite_original -n -GPSLongitude=%s -GPSLatitude=%s \
-            -GPSLongitudeRef=%s -GPSLatitudeRef=%s  "%s"'%(self.exifcmd, long,lat,longRef,latRef,self.picPath))
+            if elevation=="None":
+                os.popen('%s -overwrite_original -n -GPSLongitude=%s -GPSLatitude=%s \
+                -GPSLongitudeRef=%s -GPSLatitudeRef=%s  "%s"'%(self.exifcmd, long,lat,longRef,latRef,self.picPath))
+            else:
+                os.popen('%s -overwrite_original -n -GPSLongitude=%s -GPSLatitude=%s \
+                -GPSLongitudeRef=%s -GPSLatitudeRef=%s -GPSAltitudeRef=0 -GPSAltitude=%s "%s"'%(self.exifcmd, long,lat,longRef,latRef,elevation,self.picPath))
             
 if __name__=="__main__":
     

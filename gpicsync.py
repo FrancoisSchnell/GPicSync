@@ -98,6 +98,7 @@ class GpicSync(object):
                         #print "Nearest point latitude =",rec['lat']
                         longitude=rec['lon']
                         #print "Nearest point longitude =",rec['lon']
+                        elevation=rec['ele']
                         if float(latitude)>0:
                             latRef="N"
                         else: latRef="S"
@@ -142,6 +143,7 @@ class GpicSync(object):
                     longitude=rec['lon']
                     trkptDay=rec['date']
                     #print "longitude =",rec['lon']
+                    elevation=rec['ele']
                     if float(latitude)>0:
                         latRef="N"
                     else: latRef="S"
@@ -181,7 +183,7 @@ class GpicSync(object):
                 #if float(latitude)<0:latitude=str(abs(float(latitude)))
                 print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
-                pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup)
+                pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup,elevation)
                 #return tpic_tgps_l
                 return [ _("taken ")+self.shotDate+"-"+self.shotTime+", "\
                 +_("writting best latitude/longitude match to picture: ")+latRef+\
@@ -203,7 +205,7 @@ class GpicSync(object):
                 #if float(latitude)<0:latitude=str(abs(float(latitude)))
                 print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
-                pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup)
+                pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup,elevation)
                 response= _("writting best latitude/longitude match to picture: ")+latRef+\
                 " "+latitude+" ,"+longRef+" "+longitude+" with"+_(" time difference (s)= ")+str(int(tpic_tgps_l))
                 if self.shotDate != trkptDay:

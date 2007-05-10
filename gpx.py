@@ -17,6 +17,7 @@ It creates a list with a  dictionary per valid gps track point.
         'lat': returns a string latitude like '48.5796761739'
         'lon': returns a string longitude like '7.2847080265'
         'time': returns a string 24h time (hh mm sss) like '15:21:27'
+        'ele': returns the elevation if it exist and "None" otherwise
 """
 
 import xml.etree.ElementTree as ET,re,sys
@@ -55,7 +56,8 @@ class Gpx(object):
             time= re.search('(<time.*?</time>)',line).group()
             try:
                 elevation=re.search('(<ele>.*?</ele>)',line).group()
-            except AttributeError:
+                elevation=elevation.split("</ele>")[0].split("<ele>")[1]
+            except:
                 elevation="None"
             #print elevation
             self.geoData.append({
@@ -63,9 +65,9 @@ class Gpx(object):
             'time':time[17:25],
             'lat':lineTree.attrib["lat"],
             'lon':lineTree.attrib["lon"],
-            'ele':elevation
+            'ele':str(elevation)
             })
-        print self.geoData
+        #print self.geoData
         return self.geoData
     
 if __name__=="__main__":
