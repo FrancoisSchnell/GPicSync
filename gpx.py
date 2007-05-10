@@ -53,13 +53,19 @@ class Gpx(object):
         for line in self.gpx_trkpts:
             lineTree=ET.fromstring(line)
             time= re.search('(<time.*?</time>)',line).group()
+            try:
+                elevation=re.search('(<ele>.*?</ele>)',line).group()
+            except AttributeError:
+                elevation="None"
+            #print elevation
             self.geoData.append({
             'date':time[6:16],
             'time':time[17:25],
             'lat':lineTree.attrib["lat"],
-            'lon':lineTree.attrib["lon"]
+            'lon':lineTree.attrib["lon"],
+            'ele':elevation
             })
-        #print self.geoData
+        print self.geoData
         return self.geoData
     
 if __name__=="__main__":
