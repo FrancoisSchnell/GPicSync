@@ -37,8 +37,9 @@ from PIL import JpegImagePlugin
 from PIL import GifImagePlugin
 
 # Try to get the OS language if possible and search for a translation 
-localedir= "locale"
-gettext.install("gpicsync-GUI", localedir)
+if sys.platform == 'win32':
+    localedir= "locale"
+    gettext.install("gpicsync-GUI", localedir)
 
 class GUI(wx.Frame):
     """Main Frame of GPicSync"""
@@ -60,7 +61,9 @@ class GUI(wx.Frame):
         menuBar=wx.MenuBar()
         menu1=wx.Menu()
         timeShift=menu1.Append(wx.NewId(),_("Local time correction"))
-        languageChoice=menu1.Append(wx.NewId(),_("Language"))
+        if sys.platform == 'win32':
+            languageChoice=menu1.Append(wx.NewId(),_("Language"))
+            self.Bind(wx.EVT_MENU,self.languageApp,languageChoice)
         menuBar.Append(menu1,_("&Options"))
         menu2=wx.Menu()
         about=menu2.Append(wx.NewId(),_("About..."))
@@ -74,7 +77,6 @@ class GUI(wx.Frame):
         statusBar=self.CreateStatusBar()
         self.Bind(wx.EVT_MENU,self.localtimeFrame,timeShift)
         self.Bind(wx.EVT_MENU,self.aboutApp,about)
-        self.Bind(wx.EVT_MENU,self.languageApp,languageChoice)
         self.Bind(wx.EVT_MENU,self.exifFrame,exifReader)
         self.Bind(wx.EVT_MENU,self.renameFrame,renameToolMenu)
         self.Bind(wx.EVT_MENU,self.gpxInspectorFrame,gpxInspectorMenu)
@@ -110,6 +112,7 @@ class GUI(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.stopApp,stopButton) 
         self.Bind(wx.EVT_BUTTON, self.clearConsole,clearButton)
         self.Bind(wx.EVT_BUTTON, self.viewInGE,viewInGEButton)
+        self.Bind(wx.EVT_CLOSE,self.exitApp,self)
         
         self.dirEntry=wx.TextCtrl(bkg)
         self.gpxEntry=wx.TextCtrl(bkg)
@@ -236,7 +239,7 @@ class GUI(wx.Frame):
         """Quit properly the app"""
         print "Exiting the app..."
         self.Close()
-        sys.exit(1)
+        sys.exit()
     
     def stopApp(self,evt):
         """Stop current processing"""
@@ -621,7 +624,9 @@ class GUI(wx.Frame):
             def inspect():
                 for trkpt in myGpx:
                     wx.CallAfter(self.consolePrint,_("Date")+": "+trkpt["date"]+"\t"+_("Time")+": "\
-                    +trkpt["time"]+"\t"+_("Latitude")+": "+trkpt["lat"]+"\t"+_("Longitude")+": "+trkpt["lon"]+"\n")
+                    +trkpt["time"]+"\t"+_("Latitude")+": "+trkpt["lat"]
+                    +"\t"+_("Longitude")+": "+trkpt["lon"]
+                    +"\t"+_("Altitude")+": "+trkpt["ele"]+"\n")
             start_new_thread(inspect,())
             
 app=wx.App(redirect=False)

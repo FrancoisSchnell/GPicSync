@@ -174,7 +174,7 @@ class KML(object):
                 
         for rec in track:
             if i<part:
-                bodyPath=bodyPath+rec['lon']+','+rec['lat']+',0 '
+                bodyPath=bodyPath+rec['lon']+','+rec['lat']+','+rec['ele']+" "
                 i=i+1
             if i==part:
                 self.f.write(makeHeadPath(j))
