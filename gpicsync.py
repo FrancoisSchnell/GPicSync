@@ -63,7 +63,14 @@ class GpicSync(object):
         #print "t2=",t2
         t1sec=int(t1[0:2])*3600+int(t1[3:5])*60+int(t1[6:8])
         t2sec=int(t2[0:2])*3600+int(t2[3:5])*60+int(t2[6:8])
-        delta_t=(t2sec-t1sec)-self.localOffset
+        #delta_t=(t2sec-t1sec)-self.localOffset
+        tphoto_UTC=t1sec+self.localOffset
+        #print "tphoto_UTC", tphoto_UTC 
+        if tphoto_UTC<0:
+            tphoto_UTC=tphoto_UTC+86400
+        if tphoto_UTC>86400:
+            tphoto_UTC=tphoto_UTC-86400
+        delta_t=t2sec-tphoto_UTC
         #print "delta_t =",delta_t
         return delta_t
     
@@ -102,6 +109,7 @@ class GpicSync(object):
                 print "self.shotDate= ",self.shotDate
                 print "Local shotTime year,month,day =",year,month,day
                 print str(datetime.date(year,month,day)+ datetime.timedelta(days=1))
+            
             if self.UTCoffset>0:
                 if shotTimeSec>self.UTCoffset:
                     self.shotDateUTC=self.shotDate
@@ -110,6 +118,7 @@ class GpicSync(object):
                     -datetime.timedelta(days=1))
             
             if self.UTCoffset<0:
+                print "Hello ?"
                 if (86400-shotTimeSec)>abs(self.UTCoffset):
                     self.shotDateUTC=self.shotDate
                 if (86400-shotTimeSec)<abs(self.UTCoffset):

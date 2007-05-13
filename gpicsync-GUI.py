@@ -636,7 +636,7 @@ win.Show()
 app.MainLoop()
 
 # Reloads the GUI when language change
-while 1:
+while 0:
     win=GUI(None,title="GPicSync GUI")
     win.Show()
     app.MainLoop()
