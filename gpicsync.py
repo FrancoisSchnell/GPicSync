@@ -26,7 +26,7 @@ python gpicsync.py -d myfoderWithPictures -g myGpxFile.gpx -o UTCoffset
 For more options type gpicsync.py --help
 
 """
-import gettext
+import gettext,time,datetime
 from geoexif import *
 from gpx import *
 
@@ -87,9 +87,45 @@ class GpicSync(object):
         #print "Picture shotTime was", self.shotTime
         tpic_tgps_l=86400 # maximum seconds interval in a day
         
+        def compareDateUTC():
+            """
+            See issue 6 on the project site
+            """
+            shotTimeSec=int(self.shotTime[0:2])*3600
+            +int(self.shotTime[3:5])*60+int(self.shotTime[6:8])
+            year=int(self.shotDate.split("-")[0])
+            month=int(self.shotDate.split("-")[1])
+            day=int(self.shotDate.split("-")[2])
+            if 1:
+                print "self.UTCoffset= ",self.UTCoffset
+                print "shotTimeSec= ",shotTimeSec
+                print "self.shotDate= ",self.shotDate
+                print "Local shotTime year,month,day =",year,month,day
+                print str(datetime.date(year,month,day)+ datetime.timedelta(days=1))
+            if self.UTCoffset>0:
+                if shotTimeSec>self.UTCoffset:
+                    self.shotDateUTC=self.shotDate
+                if shotTimeSec<self.UTCoffset:
+                    self.shotDateUTC= str(datetime.date(year,month,day)
+                    -datetime.timedelta(days=1))
+            
+            if self.UTCoffset<0:
+                if (86400-shotTimeSec)>abs(self.UTCoffset):
+                    self.shotDateUTC=self.shotDate
+                if (86400-shotTimeSec)<abs(self.UTCoffset):
+                    self.shotDateUTC= str(datetime.date(year,month,day)
+                    + datetime.timedelta(days=1))
+
+            if self.UTCoffset==0:
+                self.shotDateUTC=self.shotDate
+            
+            if 1:
+                print " self.shotDateUTC=",self.shotDateUTC
+                
         if self.dateCheck==True:
+            compareDateUTC()
             for n,rec in enumerate(self.track):
-                if rec['date']==self.shotDate:
+                if rec['date']==self.shotDateUTC:
                     rec["tpic_tgps_l"]= self.compareTime(self.shotTime,rec["time"])
                     if abs(rec["tpic_tgps_l"])<tpic_tgps_l:
                         N=n
@@ -105,7 +141,7 @@ class GpicSync(object):
                         if float(longitude)>0:
                             longRef="E"
                         else: longRef="W"
-            if self.interpolation==True and rec['date']==self.shotDate:
+            if self.interpolation==True and rec['date']==self.shotDateUTC:
                 print "N is= ",N #N (index in the list) is the nearest trackpoint 
                 print "Latitude of N= ", latitude
                 print "Longitude of N =",longitude

@@ -22,7 +22,7 @@ More informations at this URL:
 http://code.google.com/p/gpicsync/
 """
 
-import wx,time,decimal,gettext
+import wx,time, decimal,gettext
 import os,sys,fnmatch,zipfile
 if sys.platform == 'win32':
     import win32com.client
