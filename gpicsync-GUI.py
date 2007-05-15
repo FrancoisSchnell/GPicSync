@@ -22,7 +22,7 @@ More informations at this URL:
 http://code.google.com/p/gpicsync/
 """
 
-import wx,time, decimal,gettext
+import wx,time, decimal,gettext,shutil
 import os,sys,fnmatch,zipfile
 if sys.platform == 'win32':
     import win32com.client
@@ -239,6 +239,7 @@ class GUI(wx.Frame):
         """Quit properly the app"""
         print "Exiting the app..."
         self.Close()
+        #self.Destroy()
         sys.exit()
     
     def stopApp(self,evt):
@@ -289,8 +290,16 @@ class GUI(wx.Frame):
                 pass
             geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
             UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),
-            backup=self.backupCheck.GetValue(),interpolation=self.interpolation)
+            backup=False,interpolation=self.interpolation)
             
+            if self.backupCheck.GetValue()==True:
+                wx.CallAfter(self.consolePrint,"\n"+
+                _("Creating an 'originals-backup' folder.")+"\n")
+                try:
+                    os.mkdir(self.picDir+'/originals-backup')
+                except:
+                    print "Couldn't create the backup folder, it maybe already exist"
+
             if self.geCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Earth file (doc.kml) in the picture folder ...")+" \n")
                 localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir))
@@ -325,11 +334,18 @@ class GUI(wx.Frame):
                 or fnmatch.fnmatch ( fileName, '*.ARW' )\
                 or fnmatch.fnmatch ( fileName, '*.DNG' )\
                 or fnmatch.fnmatch ( fileName, '*.RAF' ):
+                
                     print "\nFound fileName ",fileName," Processing now ..."
                     wx.CallAfter(self.consolePrint,"\n"+_("(Found ")+fileName+" ...")
                     print self.picDir+'/'+fileName
+                    
+                    if self.backupCheck.GetValue()==True:
+                        shutil.copyfile(self.picDir+'/'+fileName,
+                         self.picDir+'/originals-backup/'+fileName)
+                        
                     result=geo.syncPicture(self.picDir+'/'+fileName)
                     wx.CallAfter(self.consolePrint,result[0]+"\n")
+                        
                     if self.log==True:
                         f.write(_("Processed image ")+fileName+" : "+result[0]+"\n")
                         
@@ -636,7 +652,7 @@ win.Show()
 app.MainLoop()
 
 # Reloads the GUI when language change
-while 0:
+while 1:
     win=GUI(None,title="GPicSync GUI")
     win.Show()
     app.MainLoop()

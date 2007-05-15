@@ -31,7 +31,7 @@ class GeoExif(object):
         
     def readExifAll(self):
         """read all exif tags and return a string of the result"""
-        result=os.popen('%s "%s"' % (self.exifcmd, self.picPath)).read()
+        result=os.popen('%s -n "%s"' % (self.exifcmd, self.picPath)).read()
         return result
     
     def readDateTime(self):
