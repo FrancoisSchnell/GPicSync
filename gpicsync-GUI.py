@@ -22,7 +22,7 @@ More informations at this URL:
 http://code.google.com/p/gpicsync/
 """
 
-import wx,time, decimal,gettext,shutil
+import wx,time, decimal,gettext,shutil,ConfigParser
 import os,sys,fnmatch,zipfile
 if sys.platform == 'win32':
     import win32com.client
@@ -53,11 +53,24 @@ class GUI(wx.Frame):
         self.stop=False
         self.interpolation=False
         self.picDir=""
+        self.utcOffset="0"
+        self.backup=True
+        
+        # Search for an eventual gpicsync.conf file
+        try:
+            fconf=open("gpicsync.conf","r")
+            conf= ConfigParser.ConfigParser()
+            conf.readfp(fconf) #parse the config file
+            if conf.has_option("gpicsync","UTCOffset") == True:
+                self.utcOffset=conf.get("gpicsync","UTCOffset")
+            if conf.has_option("gpicsync","backup") == True:
+                self.backup=eval(conf.get("gpicsync","backup"))
                 
+        except:
+            pass
+        
         bkg=wx.Panel(self)
         #bkg.SetBackgroundColour('light blue steel')
-        #toolbar=self.CreateToolBar()
-        #toolbar.Realize()
         menuBar=wx.MenuBar()
         menu1=wx.Menu()
         timeShift=menu1.Append(wx.NewId(),_("Local time correction"))
@@ -101,7 +114,7 @@ class GUI(wx.Frame):
         self.gmCheck=wx.CheckBox(bkg,-1,_("Google Maps export, folder URL="))
         self.urlEntry=wx.TextCtrl(bkg,size=(300,-1))
         self.backupCheck=wx.CheckBox(bkg,-1,_("backup pictures"))
-        self.backupCheck.SetValue(True)
+        self.backupCheck.SetValue(self.backup)
         self.interpolationCheck=wx.CheckBox(bkg,-1,_("interpolation"))
         self.geonamesCheck=wx.CheckBox(bkg,-1,_("add geonames and geotagged"))
         
@@ -117,7 +130,7 @@ class GUI(wx.Frame):
         self.dirEntry=wx.TextCtrl(bkg)
         self.gpxEntry=wx.TextCtrl(bkg)
         self.utcEntry=wx.TextCtrl(bkg,size=(40,-1))
-        self.utcEntry.SetValue("0")
+        self.utcEntry.SetValue(self.utcOffset)
         self.timerangeEntry=wx.TextCtrl(bkg,size=(40,-1))
         self.timerangeEntry.SetValue("120")
         self.consoleEntry=wx.TextCtrl(bkg,style=wx.TE_MULTILINE | wx.HSCROLL)
@@ -275,11 +288,11 @@ class GUI(wx.Frame):
             pass
         self.stop=False
         #utcOffset=int(self.utcEntry.GetValue())
-        utcOffset=float(self.utcEntry.GetValue())#testing float for UTC
+        self.utcOffset=float(self.utcEntry.GetValue())#testing float for UTC
         dateProcess=self.dateCheck.GetValue()
         self.log=self.logFile.GetValue()
         self.interpolation=self.interpolationCheck.GetValue()
-        print "utcOffset= ",utcOffset
+        print "self.utcOffset= ",self.utcOffset
 
         def sync():
             if self.dirEntry.GetValue()!="" and self.gpxEntry.GetValue!="":
@@ -289,7 +302,7 @@ class GUI(wx.Frame):
             else:
                 pass
             geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
-            UTCoffset=utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),
+            UTCoffset=self.utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),
             backup=False,interpolation=self.interpolation)
             
             if self.backupCheck.GetValue()==True:
