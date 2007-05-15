@@ -55,6 +55,7 @@ class GUI(wx.Frame):
         self.picDir=""
         self.utcOffset="0"
         self.backup=True
+        self.picDirDefault=""
         
         # Search for an eventual gpicsync.conf file
         try:
@@ -275,9 +276,13 @@ class GUI(wx.Frame):
     def findPictures(self,evt):
         """Select the folder pictures to use"""
         openDir=wx.DirDialog(self)
+        if self.picDirDefault!="":
+            openDir.SetPath(self.picDirDefault)
         openDir.ShowModal()
         self.picDir=openDir.GetPath()
         self.dirEntry.SetValue(self.picDir)
+        self.picDirDefault=self.picDir
+        
     
     def syncPictures(self,evt):
         """Sync. pictures with the .gpx file"""
