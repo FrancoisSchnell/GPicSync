@@ -56,6 +56,7 @@ Source: dist\wxmsw28h_adv_vc.dll; DestDir:{app}
 Source: dist\wxmsw28h_core_vc.dll; DestDir:{app}
 Source: dist\wxmsw28h_html_vc.dll; DestDir:{app}
 Source: dist\gpicsync.ico; DestDir:{app}
+Source: dist\gpicsync.conf; DestDir:{app}
 
 ;TRANSLATIONS
 

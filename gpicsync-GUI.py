@@ -36,10 +36,13 @@ from PIL import Image
 from PIL import JpegImagePlugin
 from PIL import GifImagePlugin
 
+
 # Try to get the OS language if possible and search for a translation 
+"""
 if sys.platform == 'win32':
     localedir= "locale"
     gettext.install("gpicsync-GUI", localedir)
+"""
 
 class GUI(wx.Frame):
     """Main Frame of GPicSync"""
@@ -61,7 +64,7 @@ class GUI(wx.Frame):
         self.geonamesTags=False
         self.datesMustMatch=True
         self.maxTimeDifference="120"
-        self.language="english"
+        self.language="English"
         
         # Search for an eventual gpicsync.conf file
         try:
@@ -88,16 +91,21 @@ class GUI(wx.Frame):
                 self.utcOffset=conf.get("gpicsync","UTCOffset")
             if conf.has_option("gpicsync","maxTimeDifference") == True:
                 self.maxTimeDifference=conf.get("gpicsync","maxTimeDifference")
+            if conf.has_option("gpicsync","language") == True:
+                self.language=conf.get("gpicsync","language")
             fconf.close()
             
         except:
             wx.CallAfter(self.consolePrint,"\n"
-            +_("Couldn't find or read configuration file.")+"\n")
+            +"Couldn't find or read configuration file."+"\n")
         
         try:
+            print self.language
             if self.language=="French":
                 langFr = gettext.translation('gpicsync-GUI', "locale",languages=['fr'])
                 langFr.install()
+            else:
+                gettext.install("gpicsync-GUI", "None")#a trick to go back to original
         except:
             print "Couldn't load translation."
                 
