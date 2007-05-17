@@ -266,7 +266,7 @@ class GUI(wx.Frame):
                     
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="GPicSync  0.96 - 2007 \n\n"\
+        text="GPicSync  0.97 - 2007 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
@@ -476,11 +476,16 @@ class GUI(wx.Frame):
         
     def localtimeCorrection(self,evt):
             """ Local time correction if GPS and camera wasn't synchronized """
-            self.winOpt.Close()
+            #self.winOpt.Close()
             self.tcam_l=self.camEntry.GetValue()
             self.tgps_l=self.gpsEntry.GetValue()
+            wx.CallAfter(self.consolePrint,"\n"+"A time correction has been set : "+
+            "Time camera= "+self.tcam_l+" Time GPS= "+self.tgps_l+" .\n")
             print "tcam_l =",self.tcam_l
             print "tgps_l =",self.tgps_l
+    
+    def quitLocaltimeCorrection(self,evt):
+            self.winOpt.Close()
             
     def localtimeFrame(self,evt):
         """A frame for local time correction"""
@@ -492,22 +497,29 @@ class GUI(wx.Frame):
         utcLabel = wx.StaticText(bkg, -1,text)
         camLabel = wx.StaticText(bkg, -1,_("Local time displayed now by the camera"))
         self.camEntry=wx.TextCtrl(bkg,size=(100,-1))
-        self.camEntry.SetValue("00:00:00")
+        self.camEntry.SetValue(self.tcam_l)
         gpsLabel = wx.StaticText(bkg, -1,_("Local time displayed now by the GPS"))
         self.gpsEntry=wx.TextCtrl(bkg,size=(100,-1))
-        self.gpsEntry.SetValue("00:00:00")
+        self.gpsEntry.SetValue(self.tgps_l)
         applyButton=wx.Button(bkg,size=(130,30),label=_("Apply correction"))
+        quitButton=wx.Button(bkg,size=(70,30),label=_("Quit"))
         self.Bind(wx.EVT_BUTTON, self.localtimeCorrection, applyButton)
+        self.Bind(wx.EVT_BUTTON, self.quitLocaltimeCorrection, quitButton)
+
+        hbox=wx.BoxSizer()
+        hbox.Add(applyButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        hbox.Add(quitButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(utcLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         vbox.Add(camLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=5)
         vbox.Add(self.camEntry,proportion=0,flag=wx.ALIGN_CENTER,border=5)
         vbox.Add(gpsLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=5)
         vbox.Add(self.gpsEntry,proportion=0,flag=wx.ALIGN_CENTER,border=5)
-        vbox.Add(applyButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,
-        border=5,border=20)
+        vbox.Add(hbox,proportion=0,flag=wx.ALIGN_CENTER,border=5)
         bkg.SetSizer(vbox)
         self.winOpt.Show()
+        
     def exifFrame(self,evt):
         """A frame for the exifReader tool"""
         self.winExifReader=wx.Frame(win,size=(280,220),title=_("EXIF Reader"))
