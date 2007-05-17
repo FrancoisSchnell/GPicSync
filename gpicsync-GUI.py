@@ -60,6 +60,7 @@ class GUI(wx.Frame):
         self.urlGMaps=""
         self.geonamesTags=False
         self.datesMustMatch=True
+        self.maxTimeDifference="120"
         self.language="english"
         
         # Search for an eventual gpicsync.conf file
@@ -83,8 +84,10 @@ class GUI(wx.Frame):
                 self.log=eval(conf.get("gpicsync","log"))
             if conf.has_option("gpicsync","GMaps") == True:
                 self.GMaps=eval(conf.get("gpicsync","GMaps"))
-            if conf.has_option("gpicsync","language") == True:
-                self.language=conf.get("gpicsync","language")
+            if conf.has_option("gpicsync","UTCOffset") == True:
+                self.utcOffset=conf.get("gpicsync","UTCOffset")
+            if conf.has_option("gpicsync","maxTimeDifference") == True:
+                self.maxTimeDifference=conf.get("gpicsync","maxTimeDifference")
             fconf.close()
             
         except:
@@ -165,7 +168,7 @@ class GUI(wx.Frame):
         self.utcEntry=wx.TextCtrl(bkg,size=(40,-1))
         self.utcEntry.SetValue(self.utcOffset)
         self.timerangeEntry=wx.TextCtrl(bkg,size=(40,-1))
-        self.timerangeEntry.SetValue("120")
+        self.timerangeEntry.SetValue(self.maxTimeDifference)
         self.consoleEntry=wx.TextCtrl(bkg,style=wx.TE_MULTILINE | wx.HSCROLL)
         #self.consoleEntry.SetBackgroundColour("light grey")
         
