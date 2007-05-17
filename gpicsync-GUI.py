@@ -60,10 +60,11 @@ class GUI(wx.Frame):
         self.urlGMaps=""
         self.geonamesTags=False
         self.datesMustMatch=True
+        self.language="english"
         
         # Search for an eventual gpicsync.conf file
         try:
-            fconf=open("gpicsync.conf","r")
+            fconf=open("gpicsync.conf","r+")
             conf= ConfigParser.ConfigParser()
             conf.readfp(fconf) #parse the config file
             if conf.has_option("gpicsync","UTCOffset") == True:
@@ -82,10 +83,21 @@ class GUI(wx.Frame):
                 self.log=eval(conf.get("gpicsync","log"))
             if conf.has_option("gpicsync","GMaps") == True:
                 self.GMaps=eval(conf.get("gpicsync","GMaps"))
+            if conf.has_option("gpicsync","language") == True:
+                self.language=conf.get("gpicsync","language")
+            fconf.close()
+            
         except:
             wx.CallAfter(self.consolePrint,"\n"
             +_("Couldn't find or read configuration file.")+"\n")
         
+        try:
+            if self.language=="French":
+                langFr = gettext.translation('gpicsync-GUI', "locale",languages=['fr'])
+                langFr.install()
+        except:
+            print "Couldn't load translation."
+                
         bkg=wx.Panel(self)
         #bkg.SetBackgroundColour('light blue steel')
         menuBar=wx.MenuBar()
@@ -146,7 +158,7 @@ class GUI(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.stopApp,stopButton) 
         self.Bind(wx.EVT_BUTTON, self.clearConsole,clearButton)
         self.Bind(wx.EVT_BUTTON, self.viewInGE,viewInGEButton)
-        self.Bind(wx.EVT_CLOSE,self.exitApp,self)
+        #self.Bind(wx.EVT_CLOSE,self.exitApp,self)
         
         self.dirEntry=wx.TextCtrl(bkg)
         self.gpxEntry=wx.TextCtrl(bkg)
@@ -219,17 +231,33 @@ class GUI(wx.Frame):
         select a language to display the GUI with
         """
         choices = [ 'English', 'French']
-        dialog=wx.SingleChoiceDialog(self,_("Choose a language (reloads the app.)"),_("languages choice"),choices)
+        dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
             choice=dialog.GetStringSelection()
             print "choice is : ", choice
             if choice=="French":
-                langFr = gettext.translation('gpicsync-GUI', "locale",languages=['fr'])
-                langFr.install()
+                fconf=open("gpicsync.conf","r+")
+                conf= ConfigParser.ConfigParser()
+                conf.readfp(fconf)
+                conf.set("gpicsync","language","French")
+                fconf.seek(0)
+                conf.write(fconf)
+                fconf.close()
+                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in French."+"\n")
+                #langFr = gettext.translation('gpicsync-GUI', "locale",languages=['fr'])
+                #langFr.install()
             if choice=="English":
-                gettext.install("gpicsync-GUI", "None")#a trick to go back to original
+                fconf=open("gpicsync.conf","r+")
+                conf= ConfigParser.ConfigParser()
+                conf.readfp(fconf)
+                conf.set("gpicsync","language","English")
+                fconf.seek(0)
+                conf.write(fconf)
+                fconf.close()
+                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in English."+"\n")
+                #gettext.install("gpicsync-GUI", "None")#a trick to go back to original
             dialog.Destroy()
-            win.Destroy()
+            #win.Destroy()
         else:
             dialog.Destroy()
                     
@@ -273,8 +301,8 @@ class GUI(wx.Frame):
         """Quit properly the app"""
         print "Exiting the app..."
         self.Close()
-        #self.Destroy()
-        sys.exit()
+        self.Destroy()
+        sys.exit(1)
     
     def stopApp(self,evt):
         """Stop current processing"""
