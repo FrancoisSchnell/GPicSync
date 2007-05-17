@@ -56,6 +56,10 @@ class GUI(wx.Frame):
         self.utcOffset="0"
         self.backup=True
         self.picDirDefault=""
+        self.GMaps=False
+        self.urlGMaps=""
+        self.geonamesTags=False
+        self.datesMustMatch=True
         
         # Search for an eventual gpicsync.conf file
         try:
@@ -66,9 +70,21 @@ class GUI(wx.Frame):
                 self.utcOffset=conf.get("gpicsync","UTCOffset")
             if conf.has_option("gpicsync","backup") == True:
                 self.backup=eval(conf.get("gpicsync","backup"))
-                
+            if conf.has_option("gpicsync","urlGMaps") == True:
+                self.urlGMaps=conf.get("gpicsync","urlGMaps")
+            if conf.has_option("gpicsync","geonamesTags") == True:
+                self.geonamesTags=eval(conf.get("gpicsync","geonamesTags"))
+            if conf.has_option("gpicsync","interpolation") == True:
+                self.interpolation=eval(conf.get("gpicsync","interpolation"))
+            if conf.has_option("gpicsync","datesMustMatch") == True:
+                self.datesMustMatch=eval(conf.get("gpicsync","datesMustMatch"))
+            if conf.has_option("gpicsync","log") == True:
+                self.log=eval(conf.get("gpicsync","log"))
+            if conf.has_option("gpicsync","GMaps") == True:
+                self.GMaps=eval(conf.get("gpicsync","GMaps"))
         except:
-            pass
+            wx.CallAfter(self.consolePrint,"\n"
+            +_("Couldn't find or read configuration file.")+"\n")
         
         bkg=wx.Panel(self)
         #bkg.SetBackgroundColour('light blue steel')
@@ -107,17 +123,21 @@ class GUI(wx.Frame):
         utcLabel = wx.StaticText(bkg, -1,_("UTC Offset="))
         timerangeLabel=wx.StaticText(bkg, -1,_("Geocode picture only if time difference to nearest track point is below (seconds)="))
         self.logFile=wx.CheckBox(bkg,-1,_("Create a log file in picture folder"))
-        self.logFile.SetValue(True)
+        self.logFile.SetValue(self.log)
         self.dateCheck=wx.CheckBox(bkg,-1,_("Dates must match"))
-        self.dateCheck.SetValue(True)
+        self.dateCheck.SetValue(self.datesMustMatch)
         self.geCheck=wx.CheckBox(bkg,-1,_("Create a Google Earth file"))
         self.geCheck.SetValue(True)
         self.gmCheck=wx.CheckBox(bkg,-1,_("Google Maps export, folder URL="))
+        self.gmCheck.SetValue(self.GMaps)
         self.urlEntry=wx.TextCtrl(bkg,size=(300,-1))
+        self.urlEntry.SetValue(self.urlGMaps)
         self.backupCheck=wx.CheckBox(bkg,-1,_("backup pictures"))
         self.backupCheck.SetValue(self.backup)
         self.interpolationCheck=wx.CheckBox(bkg,-1,_("interpolation"))
+        self.interpolationCheck.SetValue(self.interpolation)
         self.geonamesCheck=wx.CheckBox(bkg,-1,_("add geonames and geotagged"))
+        self.geonamesCheck.SetValue(self.geonamesTags)
         
         self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
         self.Bind(wx.EVT_BUTTON, self.findGpx, gpxButton)
@@ -670,8 +690,9 @@ win.Show()
 app.MainLoop()
 
 # Reloads the GUI when language change
-while 1:
+"""
+while 0:
     win=GUI(None,title="GPicSync GUI")
     win.Show()
     app.MainLoop()
-
+"""
