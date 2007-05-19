@@ -151,31 +151,35 @@ class GpicSync(object):
                             longRef="E"
                         else: longRef="W"
             if self.interpolation==True and rec['date']==self.shotDateUTC:
-                print "N is= ",N #N (index in the list) is the nearest trackpoint 
-                print "Latitude of N= ", latitude
-                print "Longitude of N =",longitude
-                if abs(self.track[N+1]["tpic_tgps_l"])<abs(self.track[N-1]["tpic_tgps_l"]):
-                    M=N+1
-                else:
-                    M=N-1
-                print "M is= ",M # M is the second nearest trackpoint
-                dLonNM=float(self.track[M]['lon'])-float(self.track[N]['lon'])
-                dLatNM=float(self.track[M]['lat'])-float(self.track[N]['lat'])
-                print "dLonNM= ",dLonNM
-                print "dLatNM= ",dLatNM
-                ratio=abs(float(self.track[N]["tpic_tgps_l"]))/\
-                (abs(self.track[N]["tpic_tgps_l"])+abs(self.track[M]["tpic_tgps_l"]))
-                print "ratio= ",ratio
-                latitude=float(latitude)+ratio*dLatNM
-                longitude=float(longitude)+ratio*dLonNM
-                if float(latitude)>0:
-                    latRef="N"
-                else: latRef="S"
-                if float(longitude)>0:
-                    longRef="E"
-                else: longRef="W"
-                latitude=str(latitude)
-                longitude=str(longitude)
+                try:
+                    print "N is= ",N #N (index in the list) is the nearest trackpoint 
+                    print "Latitude of N= ", latitude
+                    print "Longitude of N =",longitude
+                    if abs(self.track[N+1]["tpic_tgps_l"])<abs(self.track[N-1]["tpic_tgps_l"]):
+                        M=N+1
+                    else:
+                        M=N-1
+                    print "M is= ",M # M is the second nearest trackpoint
+                    dLonNM=float(self.track[M]['lon'])-float(self.track[N]['lon'])
+                    dLatNM=float(self.track[M]['lat'])-float(self.track[N]['lat'])
+                    print "dLonNM= ",dLonNM
+                    print "dLatNM= ",dLatNM
+                    ratio=abs(float(self.track[N]["tpic_tgps_l"]))/\
+                    (abs(self.track[N]["tpic_tgps_l"])+abs(self.track[M]["tpic_tgps_l"]))
+                    print "ratio= ",ratio
+                    latitude=float(latitude)+ratio*dLatNM
+                    longitude=float(longitude)+ratio*dLonNM
+                    if float(latitude)>0:
+                        latRef="N"
+                    else: latRef="S"
+                    if float(longitude)>0:
+                        longRef="E"
+                    else: longRef="W"
+                    latitude=str(latitude)
+                    longitude=str(longitude)
+                except:
+                    print "Had a problem with interpolation tuning, probably the time\
+                    of the picture is off the time of the track"
                 
         if self.dateCheck==False:
             for n,rec in enumerate(self.track):
@@ -196,31 +200,35 @@ class GpicSync(object):
                         longRef="E"
                     else: longRef="W"
             if self.interpolation==True:
-                print "N is= ",N
-                print "Latitude of N= ", latitude
-                print "Longitude of N =",longitude
-                if abs(self.track[N+1]["tpic_tgps_l"])<abs(self.track[N-1]["tpic_tgps_l"]):
-                    M=N+1
-                else:
-                    M=N-1
-                print "M is= ",M
-                dLonNM=float(self.track[M]['lon'])-float(self.track[N]['lon'])
-                dLatNM=float(self.track[M]['lat'])-float(self.track[N]['lat'])
-                print "dLonNM= ",dLonNM
-                print "dLatNM= ",dLatNM
-                ratio=abs(float(self.track[N]["tpic_tgps_l"]))/\
-                (abs(self.track[N]["tpic_tgps_l"])+abs(self.track[M]["tpic_tgps_l"]))
-                print "ratio= ",ratio
-                latitude=float(latitude)+ratio*dLatNM
-                longitude=float(longitude)+ratio*dLonNM
-                if float(latitude)>0:
-                    latRef="N"
-                else: latRef="S"
-                if float(longitude)>0:
-                    longRef="E"
-                else: longRef="W"
-                latitude=str(latitude)
-                longitude=str(longitude)
+                try:
+                    print "N is= ",N
+                    print "Latitude of N= ", latitude
+                    print "Longitude of N =",longitude
+                    if abs(self.track[N+1]["tpic_tgps_l"])<abs(self.track[N-1]["tpic_tgps_l"]):
+                        M=N+1
+                    else:
+                        M=N-1
+                    print "M is= ",M
+                    dLonNM=float(self.track[M]['lon'])-float(self.track[N]['lon'])
+                    dLatNM=float(self.track[M]['lat'])-float(self.track[N]['lat'])
+                    print "dLonNM= ",dLonNM
+                    print "dLatNM= ",dLatNM
+                    ratio=abs(float(self.track[N]["tpic_tgps_l"]))/\
+                    (abs(self.track[N]["tpic_tgps_l"])+abs(self.track[M]["tpic_tgps_l"]))
+                    print "ratio= ",ratio
+                    latitude=float(latitude)+ratio*dLatNM
+                    longitude=float(longitude)+ratio*dLonNM
+                    if float(latitude)>0:
+                        latRef="N"
+                    else: latRef="S"
+                    if float(longitude)>0:
+                        longRef="E"
+                    else: longRef="W"
+                    latitude=str(latitude)
+                    longitude=str(longitude)
+                except:
+                    print "Had a problem with interpolation tuning, probably the time\
+                    of the picture is off the time of the track"
                 
         if self.dateCheck==True:
             if latitude != "" and longitude !="" and (tpic_tgps_l< self.timerange):
