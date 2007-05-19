@@ -78,8 +78,8 @@ class Geonames(object):
         return self.regionName
     
 if __name__=="__main__":
-    nearby=Geonames(picName="test.jpg")
-    #nearby=Geonames(lat="48.57",long="7.84")
+    #nearby=Geonames(picName="test.jpg")
+    nearby=Geonames(lat="53.358066",long="-1.38019")
     nearby.findNearbyPlace()
     nearby.findDistance()
     nearby.findCountry()

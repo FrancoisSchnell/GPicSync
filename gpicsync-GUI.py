@@ -446,11 +446,27 @@ class GUI(wx.Frame):
                     if self.geonamesCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         try:
                             nearby=Geonames(lat=result[1],long=result[2])
+                        except:
+                            wx.CallAfter(self.consolePrint,_("Couldn't retrieve geonames data...")+"\n")
+                        try:
                             gnPlace=nearby.findNearbyPlace()
+                        except:
+                            gnPlace=""
+                        try:
                             gnDistance=nearby.findDistance()
+                        except:
+                            gnDistance=""
+                        try:
                             gnRegion=nearby.findRegion()
+                        except:
+                            gnRegion=" "
+                            print "hello ?"
+                        try:
                             gnCountry=nearby.findCountry()
-                            gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnRegion+", "+gnCountry
+                        except:
+                            gnCountry=""
+                        try:
+                            gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnRegion+" "+gnCountry
                             geotag="geotagged"
                             geotagLat="geo:lat="+str(decimal.Decimal(result[1]).quantize(decimal.Decimal('0.000001'))) 
                             geotagLon="geo:lon="+str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
@@ -459,7 +475,8 @@ class GUI(wx.Frame):
                             -keywords="%s"  -overwrite_original -keywords="%s" -keywords="%s" -keywords="%s" "%s" '\
                             % (self.exifcmd,gnPlace,gnCountry,gnSummary,gnRegion,geotag,geotagLat,geotagLon,self.picDir+'/'+fileName))
                         except:
-                            wx.CallAfter(self.consolePrint,_("Couldn't retrieve geonames data...")+"\n")
+                            pass
+                            
             if self.stop==False:
                 wx.CallAfter(self.consolePrint,"\n*** "+_("FINISHED GEOCODING PROCESS")+" ***\n")
             if self.stop==True:
