@@ -173,6 +173,7 @@ class KML(object):
         track=myGpx.extract()
                 
         for rec in track:
+            if rec['ele']=="None": rec['ele']="0"
             if i<part:
                 bodyPath=bodyPath+rec['lon']+','+rec['lat']+','+rec['ele']+" "
                 i=i+1
