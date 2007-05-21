@@ -49,16 +49,16 @@ class GpicSync(object):
         tgps_l=int(tgps_l[0:2])*3600+int(tgps_l[3:5])*60+int(tgps_l[6:8])
         self.timerange=timerange
         #self.localOffset=tcam_l-(tgps_l+self.UTCoffset)
-        self.localOffset=tgps_l-(tcam_l+self.UTCoffset) # To test before next release !
+        #self.localOffset=tgps_l-(tcam_l+self.UTCoffset) # To test before next release !
+        self.localOffset=tcam_l - tgps_l + self.UTCoffset
         self.backup=backup
         self.interpolation=interpolation
         print "local UTC Offset (seconds)= ", self.localOffset
         #print self.track
         
-    def compareTime(self,t1,t2):
-        """
-        Compute and return the duration (int) in seconds  between two times
-        """
+    """
+    def compareTimeBU(self,t1,t2):
+        "Compute and return the duration (int) in seconds  between two times"
         #print "t1=",t1
         #print "t2=",t2
         t1sec=int(t1[0:2])*3600+int(t1[3:5])*60+int(t1[6:8])
@@ -71,6 +71,28 @@ class GpicSync(object):
         if tphoto_UTC>86400:
             tphoto_UTC=tphoto_UTC-86400
         delta_t=t2sec-tphoto_UTC
+        #print "delta_t =",delta_t
+        return delta_t
+    """
+
+    def compareTime(self,t1,t2):
+        """
+        Compute and return the duration (int) in seconds  between two times
+        """
+        print "t1(photo)=",t1,"t2(gps UTC)=",t2,
+        t1sec=int(t1[0:2])*3600+int(t1[3:5])*60+int(t1[6:8])
+        t2sec=int(t2[0:2])*3600+int(t2[3:5])*60+int(t2[6:8])
+        #delta_t=(t2sec-t1sec)-self.localOffset
+        tphotoUTC=t1sec-self.localOffset
+        if tphotoUTC<0:
+            #print "tphotoUTC<0"
+            tphotoUTC=tphotoUTC+86400
+        if tphotoUTC>86400:
+            #print "tphotoUTC>86400"
+            tphotoUTC=tphotoUTC-86400
+        tgps=t2sec
+        #print "localOffest",self.localOffset,"tphotoUTC", tphotoUTC,"tgps", tgps
+        delta_t=tgps-tphotoUTC
         #print "delta_t =",delta_t
         return delta_t
     
@@ -94,6 +116,7 @@ class GpicSync(object):
         #print "Picture shotTime was", self.shotTime
         tpic_tgps_l=86400 # maximum seconds interval in a day
         
+            
         def compareDateUTC():
             """
             See issue 6 on the project site
@@ -118,22 +141,25 @@ class GpicSync(object):
                     -datetime.timedelta(days=1))
             
             if self.UTCoffset<0:
-                print "Hello ?"
                 if (86400-shotTimeSec)>abs(self.UTCoffset):
+                    #print "############### self.UTCoffset<0 ################"
                     self.shotDateUTC=self.shotDate
-                if (86400-shotTimeSec)<abs(self.UTCoffset):
+                #if (86400-shotTimeSec)<abs(self.UTCoffset):
+                else:
+                    #print "############## else ###############"
                     self.shotDateUTC= str(datetime.date(year,month,day)
                     + datetime.timedelta(days=1))
 
             if self.UTCoffset==0:
                 self.shotDateUTC=self.shotDate
             
-            if 1:
+            if 0:
                 print " self.shotDateUTC=",self.shotDateUTC
                 
         if self.dateCheck==True:
             compareDateUTC()
             for n,rec in enumerate(self.track):
+                # correction of rec[date) to have a local time ref ?
                 if rec['date']==self.shotDateUTC:
                     rec["tpic_tgps_l"]= self.compareTime(self.shotTime,rec["time"])
                     if abs(rec["tpic_tgps_l"])<tpic_tgps_l:
