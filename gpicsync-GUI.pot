@@ -15,6 +15,15 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
+
+### Added recently
+
+#: gpicsync-GUI.py:397
+msgid "Creating an 'originals-backup' folder."
+msgstr ""
+
+###
+
 #: ..\..\..\gpicsync-GUI.py:66
 msgid "Local time correction"
 msgstr ""

@@ -106,6 +106,9 @@ class GUI(wx.Frame):
             elif self.language=="Italian":
                 langIt = gettext.translation('gpicsync-GUI', "locale",languages=['it'])
                 langIt.install()
+            elif self.language=="German":
+                langIt = gettext.translation('gpicsync-GUI', "locale",languages=['gr'])
+                langIt.install()
             else:
                 gettext.install("gpicsync-GUI", "None")#a trick to go back to original
         except:
@@ -243,7 +246,7 @@ class GUI(wx.Frame):
         """
         select a language to display the GUI with
         """
-        choices = [ 'English', 'French','Italian']
+        choices = [ 'English', 'French','Italian','German']
         dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
             choice=dialog.GetStringSelection()
@@ -259,6 +262,15 @@ class GUI(wx.Frame):
                 wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in French."+"\n")
                 #langFr = gettext.translation('gpicsync-GUI', "locale",languages=['fr'])
                 #langFr.install()
+            if choice=="German":
+                fconf=open("gpicsync.conf","r+")
+                conf= ConfigParser.ConfigParser()
+                conf.readfp(fconf)
+                conf.set("gpicsync","language","German")
+                fconf.seek(0)
+                conf.write(fconf)
+                fconf.close()
+                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in German."+"\n")
             if choice=="Italian":
                 fconf=open("gpicsync.conf","r+")
                 conf= ConfigParser.ConfigParser()
@@ -268,8 +280,6 @@ class GUI(wx.Frame):
                 conf.write(fconf)
                 fconf.close()
                 wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in Italian."+"\n")
-                #langFr = gettext.translation('gpicsync-GUI', "locale",languages=['fr'])
-                #langFr.install()
             if choice=="English":
                 fconf=open("gpicsync.conf","r+")
                 conf= ConfigParser.ConfigParser()
@@ -613,7 +623,7 @@ class GUI(wx.Frame):
             
     def renameFrame(self,evt):
         """A frame for the rename tool"""
-        self.winRenameTool=wx.Frame(win,size=(280,220),title=_("Renaming tool"))
+        self.winRenameTool=wx.Frame(win,size=(300,220),title=_("Renaming tool"))
         bkg=wx.Panel(self.winRenameTool)
         #bkg.SetBackgroundColour('White')
         text=_("This tool renames your pictures with the ")+"\n"+_("original time/date and lat./long.(if present)")
