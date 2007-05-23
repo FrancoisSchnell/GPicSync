@@ -67,6 +67,42 @@ class KML(object):
         """
         self.f.write(text)
 
+    def footerPlacemark(self,picName,type="GE"):
+        """
+        Returning a footer to the description of a placemark
+        """
+
+        pmDescriptionFooter=""
+        mediaFile=picName.split(".")[0]
+        
+        for ext in [".mp3",".wma",".ogg",".wav"]:
+            if os.path.exists(mediaFile+ext):
+                print "Found mediaFile= ",mediaFile+ext
+                if type=="GE":
+                    pmDescriptionFooter="<br><br><a href='"+\
+                    mediaFile+ext+"'>Play Audio</a>"
+                elif type=="GM":
+                    pmDescriptionFooter="<br><br><a href='"+\
+                    self.url+os.path.basename(picName.split(".")[0])+ext+"'>Play Audio</a>"
+                
+        for ext in [".wmv",".mov",".avi"]:
+            if os.path.exists(mediaFile+ext):
+                print "Found mediaFile= ",mediaFile+ext
+                if type=="GE":
+                    pmDescriptionFooter="<br><br><a href='"+\
+                    mediaFile+ext+"'>Play Video</a>"
+                elif type=="GM":
+                    pmDescriptionFooter="<br><br><a href='"+\
+                    self.url+os.path.basename(picName.split(".")[0])+ext+"'>Play Video</a>"
+                    
+        if os.path.exists(mediaFile+".txt"):
+            print "Found .txt file to add= ",mediaFile+".txt"
+            fileHandle = open (mediaFile+".txt")
+            pmDescriptionFooter=pmDescriptionFooter+"<br><br>"+fileHandle.read()
+            fileHandle.close() 
+        
+        return pmDescriptionFooter
+            
     def placemark(self,picName="",lat="",long="",width="800",height="600"):
         """
         Creates a placemark tag for the given picture in the kml file.
@@ -107,22 +143,7 @@ class KML(object):
         "</coordinates>\n</Point>\n"
         
         #Adding a footer to the description
-        pmDescriptionFooter="<br><br>"
-        #Searching for an audio file in the picture directory and having
-        # the same name as the picture (search for .mp3, wma, ogg, wav)
-        audioFile=picName.split(".")[0]
-        if os.path.exists(audioFile+".mp3"):
-            print "Found audioFile= ",audioFile
-            pmDescriptionFooter="<a href='"+audioFile+"'>Play Audio</a>"
-        if os.path.exists(audioFile+".wma"):
-            print "Found audioFile= ",audioFile
-            pmDescriptionFooter="<a href='"+audioFile+"'>Play Audio</a>"
-        if os.path.exists(audioFile+".ogg"):
-            print "Found audioFile= ",audioFile
-            pmDescriptionFooter="<br><a href='"+audioFile+"'>Play Audio</a>"
-        if os.path.exists(audioFile+".wav"):
-            print "Found audioFile= ",audioFile
-            pmDescriptionFooter="<br><a href='"+audioFile+"'>Play Audio</a>"
+        pmDescriptionFooter=self.footerPlacemark(picName,type="GE")
         
         pmDescription="<description><![CDATA["+\
         "<img src='"+self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>"+\
@@ -164,9 +185,14 @@ class KML(object):
             long=mypicture.readLongitude()
         pmHead="\n\n<Placemark>\n<name>"+\
         os.path.basename(picName)+"</name>\n"
+        
+        #Adding a footer to the description
+        pmDescriptionFooter=self.footerPlacemark(picName,type="GM")        
         pmDescription="<description><![CDATA["+\
         "<a href='"+self.url+os.path.basename(picName)+"' target='_blank'> <img src='"+\
-        self.url+"thumbs/thumb_"+os.path.basename(picName)+"'/></a>]]>"+\
+        self.url+"thumbs/thumb_"+os.path.basename(picName)+"'/></a>"+\
+        pmDescriptionFooter+\
+        "]]>"+\
         "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
         "</coordinates>\n</Point>\n"
