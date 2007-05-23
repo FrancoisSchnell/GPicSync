@@ -79,7 +79,7 @@ class GpicSync(object):
         """
         Compute and return the duration (int) in seconds  between two times
         """
-        print "t1(photo)=",t1,"t2(gps UTC)=",t2,
+        #print "t1(photo)=",t1,"t2(gps UTC)=",t2,
         t1sec=int(t1[0:2])*3600+int(t1[3:5])*60+int(t1[6:8])
         t2sec=int(t2[0:2])*3600+int(t2[3:5])*60+int(t2[6:8])
         #delta_t=(t2sec-t1sec)-self.localOffset

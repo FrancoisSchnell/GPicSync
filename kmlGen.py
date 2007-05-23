@@ -75,13 +75,10 @@ class KML(object):
         It's also possible to give the values in argument
         (a string representing decimal degress, - sign ok)
         """
-        #print "placemark!"
-        #print "lat =",lat
-        #print "long =",long
 
         w=float(width)
         h=float(height)
-        
+                
         if width>height:
             print "width > height"
             width=(800./w)*w
@@ -102,11 +99,39 @@ class KML(object):
         
         pmHead="\n\n<Placemark>\n<name>"+\
         os.path.basename(picName)+"</name>\n"
-        pmDescription="<description><![CDATA["+\
+        
+        pmDescriptionBU="<description><![CDATA["+\
         "<img src='"+self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>]]>"+\
         "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
         "</coordinates>\n</Point>\n"
+        
+        #Adding a footer to the description
+        pmDescriptionFooter="<br><br>"
+        #Searching for an audio file in the picture directory and having
+        # the same name as the picture (search for .mp3, wma, ogg, wav)
+        audioFile=picName.split(".")[0]
+        if os.path.exists(audioFile+".mp3"):
+            print "Found audioFile= ",audioFile
+            pmDescriptionFooter="<a href='"+audioFile+"'>Play Audio</a>"
+        if os.path.exists(audioFile+".wma"):
+            print "Found audioFile= ",audioFile
+            pmDescriptionFooter="<a href='"+audioFile+"'>Play Audio</a>"
+        if os.path.exists(audioFile+".ogg"):
+            print "Found audioFile= ",audioFile
+            pmDescriptionFooter="<br><a href='"+audioFile+"'>Play Audio</a>"
+        if os.path.exists(audioFile+".wav"):
+            print "Found audioFile= ",audioFile
+            pmDescriptionFooter="<br><a href='"+audioFile+"'>Play Audio</a>"
+        
+        pmDescription="<description><![CDATA["+\
+        "<img src='"+self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>"+\
+        pmDescriptionFooter+\
+        "]]>"+\
+        "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+\
+        "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
+        "</coordinates>\n</Point>\n"
+        
         pmTail="</Placemark>"
         self.f.write(pmHead)
         self.f.write(pmDescription)
