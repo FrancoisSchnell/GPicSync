@@ -14,15 +14,24 @@ msgstr ""
 "Content-Transfer-Encoding: ENCODING\n"
 "Generated-By: pygettext.py 1.5\n"
 
-
-
 ### Added recently
 
-#: gpicsync-GUI.py:397
 msgid "Creating an 'originals-backup' folder."
 msgstr ""
 
-###
+msgid "Language"
+msgstr ""
+
+msgid "languages choice"
+msgstr ""
+
+msgid "Choose a language"
+msgstr ""
+
+msgid "Altitude"
+msgstr ""
+
+##############################
 
 #: ..\..\..\gpicsync-GUI.py:66
 msgid "Local time correction"
