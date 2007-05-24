@@ -117,13 +117,13 @@ class KML(object):
                 
         if width>height:
             print "width > height"
-            width=(800./w)*w
-            height=(800./w)*h
+            width=(600./w)*w
+            height=(600./w)*h
         
         if height>width:
             print "height  > width"
-            height=(600./h)*h
-            width=(600./h)*w
+            height=(400./h)*h
+            width=(400./h)*w
         
         width=str(int(width))
         height=str(int(height))
