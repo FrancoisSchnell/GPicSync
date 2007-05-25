@@ -450,7 +450,8 @@ class GUI(wx.Frame):
                         f.write(_("Processed image ")+fileName+" : "+result[0]+"\n")
                         
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
-                        localKml.placemark(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4])
+                        localKml.placemark(self.picDir+'/'+fileName,lat=result[1],
+                        long=result[2],width=result[3],height=result[4],timeStamp=result[5])
                     
                     if self.gmCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         webKml.placemark4Gmaps(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4])

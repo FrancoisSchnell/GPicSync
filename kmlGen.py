@@ -103,7 +103,7 @@ class KML(object):
         
         return pmDescriptionFooter
             
-    def placemark(self,picName="",lat="",long="",width="800",height="600"):
+    def placemark(self,picName="",lat="",long="",width="800",height="600",timeStamp=""):
         """
         Creates a placemark tag for the given picture in the kml file.
         If only a picture path is given in argument, latitude and longitude will
@@ -111,7 +111,8 @@ class KML(object):
         It's also possible to give the values in argument
         (a string representing decimal degress, - sign ok)
         """
-
+        timeStamp=timeStamp
+        print "timeStamp=",timeStamp
         w=float(width)
         h=float(height)
                 
@@ -136,12 +137,6 @@ class KML(object):
         pmHead="\n\n<Placemark>\n<name>"+\
         os.path.basename(picName)+"</name>\n"
         
-        pmDescriptionBU="<description><![CDATA["+\
-        "<img src='"+self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>]]>"+\
-        "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+\
-        "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
-        "</coordinates>\n</Point>\n"
-        
         #Adding a footer to the description
         pmDescriptionFooter=self.footerPlacemark(picName,type="GE")
         
@@ -151,7 +146,8 @@ class KML(object):
         "]]>"+\
         "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
-        "</coordinates>\n</Point>\n"
+        "</coordinates>\n</Point>\n"+\
+        "<TimeStamp><when>"+timeStamp+"</when> </TimeStamp>\n"
         
         pmTail="</Placemark>"
         self.f.write(pmHead)
