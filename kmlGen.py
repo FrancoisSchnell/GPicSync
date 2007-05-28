@@ -12,8 +12,7 @@
 
 from geoexif import *
 from gpx import *
-import SimpleHTTPServer,time
-import SocketServer
+import time
 from thread import start_new_thread
         
 class KML(object):
@@ -22,9 +21,10 @@ class KML(object):
     (for live viewing in Google Earth)
     """
     
-    def __init__(self,fileName,name,url=""):
+    def __init__(self,fileName,name,url="",timeStampOrder=False):
         self.f=open(fileName+".kml","w")
         self.url=url
+        self.timeStampOrder=timeStampOrder
         kmlHead="""<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.1">
 <Document>
@@ -52,14 +52,6 @@ class KML(object):
 """
         self.f.write(kmlHead)
         
-    def launchLocalServer(self):
-        """minimal web server.  serves files relative to the current directory"""
-        PORT = 8000
-        Handler = SimpleHTTPServer.SimpleHTTPRequestHandler
-        httpd = SocketServer.TCPServer(("", PORT), Handler)
-        print "serving at port", PORT
-        httpd.serve_forever()
-        #start_new_thread(serverGo,())
     
     def writeInKml(self,text):
         """
@@ -111,7 +103,13 @@ class KML(object):
         It's also possible to give the values in argument
         (a string representing decimal degress, - sign ok)
         """
-        timeStamp=timeStamp
+        if self.timeStampOrder==True:
+            timeStamp1="<TimeStamp><when>"+timeStamp+"</when> </TimeStamp>\n"
+            timeStamp2="<TimeSpan><begin>"+timeStamp+"</begin></TimeSpan>\n"
+            timeStamp=timeStamp1
+        else:
+            timeStamp=""
+        
         print "timeStamp=",timeStamp
         w=float(width)
         h=float(height)
@@ -146,8 +144,7 @@ class KML(object):
         "]]>"+\
         "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
-        "</coordinates>\n</Point>\n"+\
-        "<TimeStamp><when>"+timeStamp+"</when> </TimeStamp>\n"
+        "</coordinates>\n</Point>\n"+timeStamp
         
         pmTail="</Placemark>"
         self.f.write(pmHead)
@@ -254,4 +251,3 @@ if __name__=="__main__":
         if fnmatch.fnmatch (fileName, '*.JPG') or fnmatch.fnmatch (fileName, '*.jpg'):
             myKml.placemark(folder+"/"+fileName)
     myKml.close()
-    #myKml.launchLocalServer()

@@ -154,8 +154,10 @@ class GUI(wx.Frame):
         self.logFile.SetValue(self.log)
         self.dateCheck=wx.CheckBox(bkg,-1,_("Dates must match"))
         self.dateCheck.SetValue(self.datesMustMatch)
-        self.geCheck=wx.CheckBox(bkg,-1,_("Create a Google Earth file"))
+        self.geCheck=wx.CheckBox(bkg,-1,_("Create a Google Earth file")+" (")
         self.geCheck.SetValue(True)
+        self.geTStamps=wx.CheckBox(bkg,-1,_("with TimeStamp")+" )")
+        self.geTStamps.SetValue(False)
         self.gmCheck=wx.CheckBox(bkg,-1,_("Google Maps export, folder URL="))
         self.gmCheck.SetValue(self.GMaps)
         self.urlEntry=wx.TextCtrl(bkg,size=(300,-1))
@@ -186,9 +188,10 @@ class GUI(wx.Frame):
         #self.consoleEntry.SetBackgroundColour("light grey")
         
         mapsbox=wx.BoxSizer()
-        mapsbox.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
-        mapsbox.Add(self.gmCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
-        mapsbox.Add(self.urlEntry,proportion=0,flag=wx.EXPAND| wx.ALL,border=5)
+        mapsbox.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
+        mapsbox.Add(self.geTStamps,proportion=0,flag=wx.EXPAND| wx.ALL,border=0)
+        mapsbox.Add(self.gmCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=20)
+        mapsbox.Add(self.urlEntry,proportion=0,flag=wx.EXPAND| wx.ALL,border=1)
         
         hbox=wx.BoxSizer()
         hbox.Add(dirButton,proportion=0,flag=wx.LEFT,border=5)
@@ -379,6 +382,7 @@ class GUI(wx.Frame):
         dateProcess=self.dateCheck.GetValue()
         self.log=self.logFile.GetValue()
         self.interpolation=self.interpolationCheck.GetValue()
+        timeStampOrder=self.geTStamps.GetValue()
         print "self.utcOffset= ",self.utcOffset
 
         def sync():
@@ -402,7 +406,7 @@ class GUI(wx.Frame):
 
             if self.geCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Earth file (doc.kml) in the picture folder ...")+" \n")
-                localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir))
+                localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir),timeStampOrder=timeStampOrder)
             
             if self.gmCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Map file (doc-web.kml) in the picture folder")+" ... \n")
