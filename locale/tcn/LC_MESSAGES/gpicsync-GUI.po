@@ -16,6 +16,11 @@ msgstr ""
 
 ### Added recently
 
+#: gpicsync-GUI.py:162
+msgid "with TimeStamp"
+msgstr ""
+##########################
+
 msgid "Creating an 'originals-backup' folder."
 msgstr "建立 'originals-backup' 資料夾"
 
@@ -30,8 +35,6 @@ msgstr "選擇語言"
 
 msgid "Altitude"
 msgstr "高度"
-
-##############################
 
 #: ..\..\..\gpicsync-GUI.py:66
 msgid "Local time correction"
