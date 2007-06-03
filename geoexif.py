@@ -138,22 +138,28 @@ class GeoExif(object):
         
     def writeLatLong(self,lat,long,latRef,longRef,backup,elevation="None"):
         """Write both latitudeRef/latitude and longitudeRef/longitude in EXIF"""
+        #option="-DateTimeOriginal>FileModifyDate"
+        option=""
         if float(long)<0:long=str(abs(float(long)))
         if float(lat)<0:lat=str(abs(float(lat)))
         if backup==True:
             if elevation=="None":
                 os.popen('%s -n -GPSLongitude=%s -GPSLatitude=%s \
-                -GPSLongitudeRef=%s -GPSLatitudeRef=%s "%s"'%(self.exifcmd, long,lat,longRef,latRef,self.picPath))
+                -GPSLongitudeRef=%s -GPSLatitudeRef=%s  %s "%s" '\
+                %(self.exifcmd, long,lat,longRef,latRef,option,self.picPath))
             else:
                 os.popen('%s -n -GPSLongitude=%s -GPSLatitude=%s -GPSLongitudeRef=%s \
-                -GPSLatitudeRef=%s  -GPSAltitudeRef=0 -GPSAltitude=%s "%s"'%(self.exifcmd, long,lat,longRef,latRef,elevation,self.picPath))
+                -GPSLatitudeRef=%s  -GPSAltitudeRef=0 -GPSAltitude=%s %s "%s" '\
+                %(self.exifcmd, long,lat,longRef,latRef,elevation,option,self.picPath))
         else:
             if elevation=="None":
                 os.popen('%s -overwrite_original -n -GPSLongitude=%s -GPSLatitude=%s \
-                -GPSLongitudeRef=%s -GPSLatitudeRef=%s  "%s"'%(self.exifcmd, long,lat,longRef,latRef,self.picPath))
+                -GPSLongitudeRef=%s -GPSLatitudeRef=%s  %s "%s" '\
+                %(self.exifcmd, long,lat,longRef,latRef,option, self.picPath))
             else:
                 os.popen('%s -overwrite_original -n -GPSLongitude=%s -GPSLatitude=%s \
-                -GPSLongitudeRef=%s -GPSLatitudeRef=%s -GPSAltitudeRef=0 -GPSAltitude=%s "%s"'%(self.exifcmd, long,lat,longRef,latRef,elevation,self.picPath))
+                -GPSLongitudeRef=%s -GPSLatitudeRef=%s -GPSAltitudeRef=0 -GPSAltitude=%s %s "%s"'\
+                %(self.exifcmd, long,lat,longRef,latRef,elevation,option,self.picPath))
             
 if __name__=="__main__":
     

@@ -1,454 +1,454 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR ORGANIZATION
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# Paul lu (digital.xy.hk) 2007.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-05-07 22:46+Paris, Madrid\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Last-Translator: Paul lu\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=Big5\n"
+"Content-Type: text/plain; charset=GB2312\n"
 "Content-Transfer-Encoding: ENCODING\n"
 "Generated-By: pygettext.py 1.5\n"
 
 ### Added recently
 
 msgid "Creating an 'originals-backup' folder."
-msgstr "«Ø¥ß 'originals-backup' ¸ê®Æ§¨"
+msgstr "½¨Á¢ 'originals-backup' ×ÊÁÏ¼Ð"
 
 msgid "Language"
-msgstr "»y¨¥"
+msgstr "ÓïÑÔ"
 
 msgid "languages choice"
-msgstr "»y¨¥¿ï¾Ü"
+msgstr "ÓïÑÔÑ¡Ôñ"
 
 msgid "Choose a language"
-msgstr "¿ï¾Ü»y¨¥"
+msgstr "Ñ¡ÔñÓïÑÔ"
 
 msgid "Altitude"
-msgstr "°ª«×"
+msgstr "¸ß¶È"
 
 ##############################
 
 #: ..\..\..\gpicsync-GUI.py:66
 msgid "Local time correction"
-msgstr "­×§ï¥»¦a®É¶¡"
+msgstr "ÐÞ¸Ä±¾µØÊ±¼ä"
 
 #: ..\..\..\gpicsync-GUI.py:67
 msgid "&Options"
-msgstr "&¿ï¶µ"
+msgstr "&Ñ¡Ïî"
 
 #: ..\..\..\gpicsync-GUI.py:69
 msgid "About..."
-msgstr "Ãö©ó..."
+msgstr "¹ØÓÚ..."
 
 #: ..\..\..\gpicsync-GUI.py:71
 msgid "&Tools"
-msgstr "&¤u¨ã"
+msgstr "&¹¤¾ß"
 
 #: ..\..\..\gpicsync-GUI.py:72
 msgid "EXIF reader"
-msgstr "EXIF ¾\Åª¾¹"
+msgstr "EXIF ÔÄ¶ÁÆ÷"
 
 #: ..\..\..\gpicsync-GUI.py:73
 msgid "Geo-Rename pictures"
-msgstr "¨Ï¥Î©w¦ì¸ê®Æ©R¦W¬Û¤ù"
+msgstr "Ê¹ÓÃ¶¨Î»×ÊÁÏÃüÃûÏàÆ¬"
 
 #: ..\..\..\gpicsync-GUI.py:74 ..\..\..\gpicsync-GUI.py:575
 msgid "GPX Inspector"
-msgstr "ÀË¬dGPXÀÉ®×"
+msgstr "¼ì²éGPXµµ°¸"
 
 #: ..\..\..\gpicsync-GUI.py:75
 msgid "KMZ Generator"
-msgstr "»s§@KMZÀÉ®×"
+msgstr "ÖÆ×÷KMZµµ°¸"
 
 #: ..\..\..\gpicsync-GUI.py:76
 msgid "&Help"
-msgstr "&»¡©ú"
+msgstr "&ËµÃ÷"
 
 #: ..\..\..\gpicsync-GUI.py:85
 msgid "Pictures folder"
-msgstr "¬Û¤ù¸ê®Æ§¨"
+msgstr "ÏàÆ¬×ÊÁÏ¼Ð"
 
 #: ..\..\..\gpicsync-GUI.py:86
 msgid "GPS file (.gpx)"
-msgstr "GPSÀÉ®× (.gpx)"
+msgstr "GPSµµ°¸ (.gpx)"
 
 #: ..\..\..\gpicsync-GUI.py:87
 msgid " Synchronise ! "
-msgstr " ¶}©l¦P¨B¡I"
+msgstr " ¿ªÊ¼Í¬²½£¡"
 
 #: ..\..\..\gpicsync-GUI.py:88
 msgid "Quit"
-msgstr "µ²§ô"
+msgstr "½áÊø"
 
 #: ..\..\..\gpicsync-GUI.py:89
 msgid "Stop"
-msgstr "°±¤î"
+msgstr "Í£Ö¹"
 
 #: ..\..\..\gpicsync-GUI.py:90
 msgid "Clear"
-msgstr "²M°£"
+msgstr "Çå³ý"
 
 #: ..\..\..\gpicsync-GUI.py:91
 msgid "View in Google Earth"
-msgstr "©óGoogle EarthÀËµø"
+msgstr "ÓÚGoogle Earth¼ìÊÓ"
 
 #: ..\..\..\gpicsync-GUI.py:93
 msgid "UTC Offset="
-msgstr "UTC ®É®t="
+msgstr "UTC Ê±²î="
 
 #: ..\..\..\gpicsync-GUI.py:94
 msgid "Geocode picture only if time difference to nearest track point is below (seconds)="
-msgstr "¬Û¤ù©w¦ì¥u·|¶i¦æ·í©çÄá®É¶¡»P³Ì±µªñªº©w¦ìÂI¬Û®t¤Ö©ó(¬í)="
+msgstr "ÏàÆ¬¶¨Î»Ö»»á½øÐÐµ±ÅÄÉãÊ±¼äÓë×î½Ó½üµÄ¶¨Î»µãÏà²îÉÙÓÚ(Ãë)="
 
 #: ..\..\..\gpicsync-GUI.py:95
 msgid "Create a log file in picture folder"
-msgstr "©ó¬Û¤ù¸ê®Æ§¨«Ø¥ß°O¿ýÀÉ"
+msgstr "ÓÚÏàÆ¬×ÊÁÏ¼Ð½¨Á¢¼ÇÂ¼µµ"
 
 #: ..\..\..\gpicsync-GUI.py:97
 msgid "Dates must match"
-msgstr "¤é´Á¥²¶·§k¦X"
+msgstr "ÈÕÆÚ±ØÐëÎÇºÏ"
 
 #: ..\..\..\gpicsync-GUI.py:99
 msgid "Create a Google Earth file"
-msgstr "«Ø¥ßGoogle EarthÀÉ"
+msgstr "½¨Á¢Google Earthµµ"
 
 #: ..\..\..\gpicsync-GUI.py:101
 msgid "Google Maps export, folder URL="
-msgstr "¶×¥XGoogle Map¡A¸ê®Æ§¨ URL="
+msgstr "»ã³öGoogle Map£¬×ÊÁÏ¼Ð URL="
 
 #: ..\..\..\gpicsync-GUI.py:103
 msgid "backup pictures"
-msgstr "³Æ¥÷¬Û¤ù"
+msgstr "±¸·ÝÏàÆ¬"
 
 #: ..\..\..\gpicsync-GUI.py:105
 msgid "interpolation"
-msgstr "¨âÂI®t¶Z¹Bºâ"
+msgstr "Á½µã²î¾àÔËËã"
 
 #: ..\..\..\gpicsync-GUI.py:106
 msgid "add geonames and geotagged"
-msgstr "¥[¤J¦a¦W¤Î¦a²z¸ê®Æ"
+msgstr "¼ÓÈëµØÃû¼°µØÀí×ÊÁÏ"
 
 #: ..\..\..\gpicsync-GUI.py:186
 msgid "More informations and help:"
-msgstr "§ó¦h¸ê®Æ¤ÎÀ°§U¡G"
+msgstr "¸ü¶à×ÊÁÏ¼°°ïÖú£º"
 
 #: ..\..\..\gpicsync-GUI.py:203
 msgid "To visualize the results in Google Earth you must either:"
-msgstr "¦p¶·©óGoogle EarthÅã¥Üµ²ªG¡A±z¥²¶·¡G"
+msgstr "ÈçÐëÓÚGoogle EarthÏÔÊ¾½á¹û£¬Äú±ØÐë£º"
 
 #: ..\..\..\gpicsync-GUI.py:204 ..\..\..\gpicsync-GUI.py:568
 msgid "- finish a synchronisation"
-msgstr "- §¹¦¨¤@¦¸¦P¨B"
+msgstr "- Íê³ÉÒ»´ÎÍ¬²½"
 
 #: ..\..\..\gpicsync-GUI.py:216
 msgid "Couldn't find or launch Google Earth"
-msgstr "§ä¤£¨ì©Î¤£¯à±Ò°ÊGoogle Earth"
+msgstr "ÕÒ²»µ½»ò²»ÄÜÆô¶¯Google Earth"
 
 #: ..\..\..\gpicsync-GUI.py:252
 msgid "You must first select a pictures folder and a GPX file."
-msgstr "±z¥²¶·­º¥ý¿ï¾Ü¬Û¤ù¸ê®Æ§¨¤ÎGPXÀÉ®×¡C"
+msgstr "Äú±ØÐëÊ×ÏÈÑ¡ÔñÏàÆ¬×ÊÁÏ¼Ð¼°GPXµµ°¸¡£"
 
 #: ..\..\..\gpicsync-GUI.py:264
 msgid "Beginning synchronization with "
-msgstr "¶}©l¶i¦æ¦P¨B "
+msgstr "¿ªÊ¼½øÐÐÍ¬²½ "
 
 #: ..\..\..\gpicsync-GUI.py:265
 msgid "UTC Offset ="
-msgstr "UTC ®É®t"
+msgstr "UTC Ê±²î"
 
 #: ..\..\..\gpicsync-GUI.py:266
 msgid " hours and maximum time difference = "
-msgstr " ¤p®É¤Î³Ì¤j®É¶¡®t = "
+msgstr " Ð¡Ê±¼°×î´óÊ±¼ä²î = "
 
 #: ..\..\..\gpicsync-GUI.py:274
 msgid "Starting to generate a Google Earth file (doc.kml) in the picture folder ..."
-msgstr "¶}©l²£¥ÍGoogle EarthÀÉ®× (doc.kml) ©ó¬Û¤ù¸ê®Æ§¨¤º ..."
+msgstr "¿ªÊ¼²úÉúGoogle Earthµµ°¸ (doc.kml) ÓÚÏàÆ¬×ÊÁÏ¼ÐÄÚ ..."
 
 #: ..\..\..\gpicsync-GUI.py:278
 msgid "Starting to generate a Google Map file (doc-web.kml) in the picture folder"
-msgstr "¶}©l²£¥ÍGoogle MapÀÉ®× (doc-web.kml) ©ó¬Û¤ù¸ê®Æ§¨¤º ..."
+msgstr "¿ªÊ¼²úÉúGoogle Mapµµ°¸ (doc-web.kml) ÓÚÏàÆ¬×ÊÁÏ¼ÐÄÚ ..."
 
 #: ..\..\..\gpicsync-GUI.py:289
 msgid "Geocoded with UTC Offset= "
-msgstr "¤w©w¦ì¡A®Ú¾ÚUTC®É®t= "
+msgstr "ÒÑ¶¨Î»£¬¸ù¾ÝUTCÊ±²î= "
 
 #: ..\..\..\gpicsync-GUI.py:290
 msgid " and  Maximum time difference = "
-msgstr " ¤Î³Ì¤j®É¶¡®t = "
+msgstr " ¼°×î´óÊ±¼ä²î = "
 
 #: ..\..\..\gpicsync-GUI.py:292
 msgid "Pictures Folder: "
-msgstr "¬Û¤ù¸ê®Æ§¨¡G"
+msgstr "ÏàÆ¬×ÊÁÏ¼Ð£º"
 
 #: ..\..\..\gpicsync-GUI.py:293
 msgid "GPX file: "
-msgstr "GPXÀÉ®×¡G"
+msgstr "GPXµµ°¸£º"
 
 #: ..\..\..\gpicsync-GUI.py:307
 msgid "(Found "
-msgstr "(§ä¨ì "
+msgstr "(ÕÒµ½ "
 
 #: ..\..\..\gpicsync-GUI.py:312
 msgid "Processed image "
-msgstr "¤w³B²z¬Û¤ù "
+msgstr "ÒÑ´¦ÀíÏàÆ¬ "
 
 #: ..\..\..\gpicsync-GUI.py:342
-msgid " (writting geonames and geotagged to keywords tag in picture EXIF)"
-msgstr " (¥¿¦b°O¿ý¦a¦W¤Î¦a²z¸ê®Æ©ó¬Û¤ùªºEXIFÃöÁä¦r¼Ð°O)"
+msgid " (writing geonames and geotagged to keywords tag in picture EXIF)"
+msgstr " (ÕýÔÚ¼ÇÂ¼µØÃû¼°µØÀí×ÊÁÏÓÚÏàÆ¬µÄEXIF¹Ø¼ü×Ö±ê¼Ç)"
 
 #: ..\..\..\gpicsync-GUI.py:347
 msgid "Couldn't retrieve geonames data..."
-msgstr "¤£¯àÅª¨ú¦a¦W¸ê®Æ..."
+msgstr "²»ÄÜ¶ÁÈ¡µØÃû×ÊÁÏ..."
 
 #: ..\..\..\gpicsync-GUI.py:349
 msgid "FINISHED GEOCODING PROCESS"
-msgstr "§¹¦¨¬Û¤ù©w¦ì"
+msgstr "Íê³ÉÏàÆ¬¶¨Î»"
 
 #: ..\..\..\gpicsync-GUI.py:351
 msgid "PROCESSING STOPPED BY THE USER"
-msgstr "³Q¨Ï¥ÎªÌ²×¤î¹B§@"
+msgstr "±»Ê¹ÓÃÕßÖÕÖ¹ÔË×÷"
 
 #: ..\..\..\gpicsync-GUI.py:355
 msgid "Adding the GPS track log to the Google Earth kml file"
-msgstr "©óGoogle Earth kmlÀÉ®×¥[¤JGPS¸ô®|°O¿ý"
+msgstr "ÓÚGoogle Earth kmlµµ°¸¼ÓÈëGPSÂ·¾¶¼ÇÂ¼"
 
 #: ..\..\..\gpicsync-GUI.py:358
 msgid "Click on the 'View in Google Earth' button to visualize the result"
-msgstr "ÂIÀ» '©óGoogle EarthÅã¥Ü' «ö¶s¨ÓÅã¥Üµ²ªG"
+msgstr "µã»÷ 'ÓÚGoogle EarthÏÔÊ¾' °´Å¥À´ÏÔÊ¾½á¹û"
 
 #: ..\..\..\gpicsync-GUI.py:359
 msgid "( A Google Earth doc.kml file has been created in your picture folder.)"
-msgstr "(¤@­ÓGoogle Earth doc.kmlÀÉ®×¤w³Q«Ø¥ß©ó¬Û¤ù¸ê®Æ§¨¤º¡C)"
+msgstr "(Ò»¸öGoogle Earth doc.kmlµµ°¸ÒÑ±»½¨Á¢ÓÚÏàÆ¬×ÊÁÏ¼ÐÄÚ¡£)"
 
 #: ..\..\..\gpicsync-GUI.py:365
 msgid "( A Google Maps doc-web.kml file has been created with the given url )"
-msgstr "(¤@­ÓGoogle Maps doc-web.kmlÀÉ®×¤w³Q«Ø¥ß©ó³]©wªºurl¤º )"
+msgstr "(Ò»¸öGoogle Maps doc-web.kmlµµ°¸ÒÑ±»½¨Á¢ÓÚÉè¶¨µÄurlÄÚ )"
 
 #: ..\..\..\gpicsync-GUI.py:380
 msgid "Local time corrections"
-msgstr "­×¥¿¥»¦a®É¶¡"
+msgstr "ÐÞÕý±¾µØÊ±¼ä"
 
 #: ..\..\..\gpicsync-GUI.py:383
 msgid "Use this option ONLY if your camera local time is wrong."
-msgstr "·í±zªº¬Û¾÷®É¶¡¿ù»~®É¤~¨Ï¥Î³o­Ó¿ï¶µ¡C"
+msgstr "µ±ÄúµÄÏà»úÊ±¼ä´íÎóÊ±²ÅÊ¹ÓÃÕâ¸öÑ¡Ïî¡£"
 
 #: ..\..\..\gpicsync-GUI.py:384
 msgid "Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)"
-msgstr "¦b³o¸Ì¿é¤J¬Û¾÷¤ÎGPS²{®É©ÒÅã¥Üªº®É¶¡ (hh:mm:ss)"
+msgstr "ÔÚÕâÀïÊäÈëÏà»ú¼°GPSÏÖÊ±ËùÏÔÊ¾µÄÊ±¼ä (hh:mm:ss)"
 
 #: ..\..\..\gpicsync-GUI.py:386
 msgid "Local time displayed now by the camera"
-msgstr "¬Û¾÷²{®ÉÅã¥Üªº®É¶¡"
+msgstr "Ïà»úÏÖÊ±ÏÔÊ¾µÄÊ±¼ä"
 
 #: ..\..\..\gpicsync-GUI.py:389
 msgid "Local time displayed now by the GPS"
-msgstr "GPS²{®ÉÅã¥Üªº®É¶¡"
+msgstr "GPSÏÖÊ±ÏÔÊ¾µÄÊ±¼ä"
 
 #: ..\..\..\gpicsync-GUI.py:392
 msgid "Apply correction"
-msgstr "½T©w­×¥¿"
+msgstr "È·¶¨ÐÞÕý"
 
 #: ..\..\..\gpicsync-GUI.py:406
 msgid "EXIF Reader"
-msgstr "EXIFÅª¨ú¾¹"
+msgstr "EXIF¶ÁÈ¡Æ÷"
 
 #: ..\..\..\gpicsync-GUI.py:409
 msgid "Read the EXIF metadata of the selected picture."
-msgstr "±q¤w¿ï¾Üªº¬Û¤ùÅª¨úEXIF¸ê®Æ"
+msgstr "´ÓÒÑÑ¡ÔñµÄÏàÆ¬¶ÁÈ¡EXIF×ÊÁÏ"
 
 #: ..\..\..\gpicsync-GUI.py:411 ..\..\..\gpicsync-GUI.py:412
 #: ..\..\..\gpicsync-GUI.py:443
 msgid "All EXIF metadata"
-msgstr "©Ò¦³EXIF¸ê®Æ"
+msgstr "ËùÓÐEXIF×ÊÁÏ"
 
 #: ..\..\..\gpicsync-GUI.py:413 ..\..\..\gpicsync-GUI.py:446
 msgid "Date/Time/Lat./Long."
-msgstr "¤é´Á/®É¶¡/½n«×/¸g«×"
+msgstr "ÈÕÆÚ/Ê±¼ä/Î³¶È/¾­¶È"
 
 #: ..\..\..\gpicsync-GUI.py:419
 msgid "Select a picture"
-msgstr "¿ï¾Ü¤@±i¬Û¤ù"
+msgstr "Ñ¡ÔñÒ»ÕÅÏàÆ¬"
 
 #: ..\..\..\gpicsync-GUI.py:441
 msgid "Selected metada "
-msgstr "¿ï¾Ü¸ê®Æ "
+msgstr "Ñ¡Ôñ×ÊÁÏ "
 
 #: ..\..\..\gpicsync-GUI.py:451
 msgid "lat./long."
-msgstr "½n«×/¸g«×"
+msgstr "Î³¶È/¾­¶È"
 
 #: ..\..\..\gpicsync-GUI.py:453
 msgid "None"
-msgstr "µL"
+msgstr "ÎÞ"
 
 #: ..\..\..\gpicsync-GUI.py:459
 msgid "Renaming tool"
-msgstr "ÀÉ®×©R¦W¤u¨ã"
+msgstr "µµ°¸ÃüÃû¹¤¾ß"
 
 #: ..\..\..\gpicsync-GUI.py:462
 msgid "This tool renames your pictures with the "
-msgstr "³o­Ó¤u¨ã¬O¥Î¨Ó©R¦W±zªº¬Û¤ù®Ú¾Ú"
+msgstr "Õâ¸ö¹¤¾ßÊÇÓÃÀ´ÃüÃûÄúµÄÏàÆ¬¸ù¾Ý"
 
 #: ..\..\..\gpicsync-GUI.py:462
 msgid "original time/date and lat./long.(if present)"
-msgstr "­ì¨Óªº®É¶¡/¤é´Á¤Î½n«×/¸g«×¡C(¦p¦³)"
+msgstr "Ô­À´µÄÊ±¼ä/ÈÕÆÚ¼°Î³¶È/¾­¶È¡£(ÈçÓÐ)"
 
 #: ..\..\..\gpicsync-GUI.py:464
 msgid "Rename pictures in a folder"
-msgstr "©R¦W¸ê®Æ§¨¤º©Ò¦³¬Û¤ù"
+msgstr "ÃüÃû×ÊÁÏ¼ÐÄÚËùÓÐÏàÆ¬"
 
 #: ..\..\..\gpicsync-GUI.py:465
 msgid "Rename a single picture"
-msgstr "©R¦W¤@±i¬Û¤ù"
+msgstr "ÃüÃûÒ»ÕÅÏàÆ¬"
 
 #: ..\..\..\gpicsync-GUI.py:483 ..\..\..\gpicsync-GUI.py:504
 msgid "Beginning renaming..."
-msgstr "¶}©l©R¦W..."
+msgstr "¿ªÊ¼ÃüÃû..."
 
 #: ..\..\..\gpicsync-GUI.py:491 ..\..\..\gpicsync-GUI.py:518
 msgid "Didn't find Original Time/Date for "
-msgstr "§ä¤£¨ì­ì¨Óªº¤é´Á/®É¶¡©ó "
+msgstr "ÕÒ²»µ½Ô­À´µÄÈÕÆÚ/Ê±¼äÓÚ "
 
 #: ..\..\..\gpicsync-GUI.py:494 ..\..\..\gpicsync-GUI.py:525
 msgid "Renamed "
-msgstr "¤w©R¦W"
+msgstr "ÒÑÃüÃû"
 
 #: ..\..\..\gpicsync-GUI.py:508
 msgid "Interrupted by the user"
-msgstr "³Q¨Ï¥ÎªÌ²×Â_"
+msgstr "±»Ê¹ÓÃÕßÖÕ¶Ï"
 
 #: ..\..\..\gpicsync-GUI.py:526
 msgid "Finished"
-msgstr "§¹¦¨"
+msgstr "Íê³É"
 
 #: ..\..\..\gpicsync-GUI.py:533
 msgid "Create a kmz file archive"
-msgstr "«Ø¥ßkmzÀÉ®×¶°"
+msgstr "½¨Á¢kmzµµ°¸¼¯"
 
 #: ..\..\..\gpicsync-GUI.py:535
 msgid "Create KMZ file !"
-msgstr "«Ø¥ßKMZÀÉ®×¡I"
+msgstr "½¨Á¢KMZµµ°¸£¡"
 
 #: ..\..\..\gpicsync-GUI.py:543
 msgid "Sorry this tool is not yet available for the Linux version"
-msgstr "«Ü©êºp¡I³o­Óµ{¦¡¼È®É¥¼¦³Linuxª©¥»"
+msgstr "ºÜ±§Ç¸£¡Õâ¸ö³ÌÊ½ÔÝÊ±Î´ÓÐLinux°æ±¾"
 
 #: ..\..\..\gpicsync-GUI.py:552
 msgid "Creating a KMZ file in the pictures folder..."
-msgstr "«Ø¥ßKMZÀÉ©ó¬Û¤ù¸ê®Æ§¨¤º..."
+msgstr "½¨Á¢KMZµµÓÚÏàÆ¬×ÊÁÏ¼ÐÄÚ..."
 
 #: ..\..\..\gpicsync-GUI.py:555
 msgid "Adding doc.kml"
-msgstr "¥¿¦b¥[¤Jdoc.kml"
+msgstr "ÕýÔÚ¼ÓÈëdoc.kml"
 
 #: ..\..\..\gpicsync-GUI.py:559
 msgid "Adding "
-msgstr "¥¿¦b¥[¤J"
+msgstr "ÕýÔÚ¼ÓÈë"
 
 #: ..\..\..\gpicsync-GUI.py:563
 msgid "KMZ file created in pictures folder"
-msgstr "KMZÀÉ¤w«Ø¥ß©ó¬Û¤ù¸ê®Æ§¨¤º"
+msgstr "KMZµµÒÑ½¨Á¢ÓÚÏàÆ¬×ÊÁÏ¼ÐÄÚ"
 
 #: ..\..\..\gpicsync-GUI.py:565
 msgid "Couldn't rename the zip file to kmz (maybe a previous file already exist)"
-msgstr "¤£¯à¥ÑzipÀÉ©R¦W¦ÜkmzÀÉ (¥i¯àÀÉ®×¤w¸g¦s¦b)"
+msgstr "²»ÄÜÓÉzipµµÃüÃûÖÁkmzµµ (¿ÉÄÜµµ°¸ÒÑ¾­´æÔÚ)"
 
 #: ..\..\..\gpicsync-GUI.py:567
 msgid "To create a Google Earth kmz file you must either:"
-msgstr "¦p­n«Ø¥ßGoogle Earth kmzÀÉ®×±z¥²¶·¡G"
+msgstr "ÈçÒª½¨Á¢Google Earth kmzµµ°¸Äú±ØÐë£º"
 
 #: ..\..\..\gpicsync-GUI.py:569
 msgid "- select a folder you've already synchronized then select the KMZ Generator tool"
-msgstr "- ¿ï¾Ü¤@­Ó¤w¦P¨Bªº¸ê®Æ§¨¤Î¿ï¾ÜKMZ²£¥Í¾¹¤u¨ã"
+msgstr "- Ñ¡ÔñÒ»¸öÒÑÍ¬²½µÄ×ÊÁÏ¼Ð¼°Ñ¡ÔñKMZ²úÉúÆ÷¹¤¾ß"
 
 
 #: ..\..\..\gpicsync-GUI.py:578
 msgid "Inspect a gpx file and show tracklog data."
-msgstr "ÀË¬dgpxÀÉ®×¤ÎÅã¥Ü­y¸ñ¸ê®Æ¡C"
+msgstr "¼ì²égpxµµ°¸¼°ÏÔÊ¾¹ì¼£×ÊÁÏ¡£"
 
 #: ..\..\..\gpicsync-GUI.py:580
 msgid "Select a gpx file"
-msgstr "¿ï¾Ü¤@­ÓgpxÀÉ®×"
+msgstr "Ñ¡ÔñÒ»¸ögpxµµ°¸"
 
 #: ..\..\..\gpicsync-GUI.py:599
 msgid "Select a gpx file first."
-msgstr "½Ð¥ý¿ï¾Ü¤@­ÓgpxÀÉ®×¡C"
+msgstr "ÇëÏÈÑ¡ÔñÒ»¸ögpxµµ°¸¡£"
 
 #: ..\..\..\gpicsync-GUI.py:602
 msgid "Looking at "
-msgstr "¥¿ÀËµø "
+msgstr "Õý¼ìÊÓ "
 
 #: ..\..\..\gpicsync-GUI.py:603
 msgid "Number of valid track points found"
-msgstr "§ä¨ì¦³®Äªº­y¸ñÀÉ¼Æ¥Ø"
+msgstr "ÕÒµ½ÓÐÐ§µÄ¹ì¼£µµÊýÄ¿"
 
 #: ..\..\..\gpicsync-GUI.py:606
 msgid "Date"
-msgstr "¤é´Á"
+msgstr "ÈÕÆÚ"
 
 #: ..\..\..\gpicsync-GUI.py:606
 msgid "Time"
-msgstr "®É¶¡"
+msgstr "Ê±¼ä"
 
 #: ..\..\..\gpicsync-GUI.py:607
 msgid "Latitude"
-msgstr "½n«×"
+msgstr "Î³¶È"
 
 #: ..\..\..\gpicsync-GUI.py:607
 msgid "Longitude"
-msgstr "¸g«×"
+msgstr "¾­¶È"
 
 #: ..\..\..\gpicsync.py:186
 msgid "taken "
-msgstr "¤w¨ú "
+msgstr "ÒÑ¶ÁÈ¡ "
 
 #: ..\..\..\gpicsync.py:187 ..\..\..\gpicsync.py:207
-msgid "writting best latitude/longitude match to picture: "
-msgstr "¥¿¦b©ó¬Û¤ù°O¿ý³Ì±µªñªº¸g½n¸ê®Æ¡G"
+msgid "writing best latitude/longitude match to picture: "
+msgstr "ÕýÔÚÓÚÏàÆ¬¼ÇÂ¼×î½Ó½üµÄ¾­Î³×ÊÁÏ£º"
 
 #: ..\..\..\gpicsync.py:188 ..\..\..\gpicsync.py:194 ..\..\..\gpicsync.py:208
 #: ..\..\..\gpicsync.py:215
 msgid " time difference (s)= "
-msgstr "®É¶¡®t (¬í)= "
+msgstr "Ê±¼ä²î (Ãë)= "
 
 #: ..\..\..\gpicsync.py:193
 msgid "no track point below the maximum time range "
-msgstr "³Ì¤j½d³ò¤º¨S¦³©w¦ìÂI "
+msgstr "×î´ó·¶Î§ÄÚÃ»ÓÐ¶¨Î»µã "
 
 #: ..\..\..\gpicsync.py:193 ..\..\..\gpicsync.py:197 ..\..\..\gpicsync.py:215
 msgid " : WARNING: DIDN'T GEOCODE, "
-msgstr "ª`·N¡G¨S¦³³Q¥[¤J©w¦ì¸ê®Æ¡A"
+msgstr "×¢Òâ£ºÃ»ÓÐ±»¼ÓÈë¶¨Î»×ÊÁÏ£¬"
 
 #: ..\..\..\gpicsync.py:195
 msgid " long="
-msgstr " ¸g«×="
+msgstr " ¾­¶È="
 
 #: ..\..\..\gpicsync.py:195
 msgid "For information nearest trackpoint was at lat="
-msgstr "³Ì±µªñªº©w¦ìÂI¬O¦ì©ó ½n«×="
+msgstr "×î½Ó½üµÄ¶¨Î»µãÊÇÎ»ÓÚ Î³¶È="
 
 #: ..\..\..\gpicsync.py:197
 msgid "no track point at this picture date "
-msgstr "¬Û¤ù¤é´Á¨S¦³©w¦ìÂI "
+msgstr "ÏàÆ¬ÈÕÆÚÃ»ÓÐ¶¨Î»µã "
 
 #: ..\..\..\gpicsync.py:210
 msgid "Warning: Picture date "
-msgstr "½Ðª`·N¡G¬Û¤ù¤é´Á "
+msgstr "Çë×¢Òâ£ºÏàÆ¬ÈÕÆÚ "
 
 #: ..\..\..\gpicsync.py:211
 msgid " and track point date "
-msgstr " ¤Î©w¦ìÂI¤é´Á "
+msgstr " ¼°¶¨Î»µãÈÕÆÚ "
 
 #: ..\..\..\gpicsync.py:211
 msgid " are different ! "
-msgstr " ¬O¤£¦Pªº¡I"
+msgstr " ÊÇ²»Í¬µÄ£¡"
 
 #: ..\..\..\gpicsync.py:215
 msgid " no suitable track point below maximum time difference, "
-msgstr " ¨S¦³¦P¾Aªº©w¦ìÂI©ó³Ì¤jªº®É¶¡®t¤º¡A"
+msgstr " Ã»ÓÐÍ¬ÊÊµÄ¶¨Î»µãÓÚ×î´óµÄÊ±¼ä²îÄÚ£¬"
 

@@ -261,12 +261,12 @@ class GpicSync(object):
             if latitude != "" and longitude !="" and (tpic_tgps_l< self.timerange):
                 #if float(longitude)<0:longitude=str(abs(float(longitude)))
                 #if float(latitude)<0:latitude=str(abs(float(latitude)))
-                print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
+                print "Writing best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
                 pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup,elevation)
                 #return tpic_tgps_l
                 return [ _("taken ")+self.shotDate+"-"+self.shotTime+", "\
-                +_("writting best latitude/longitude match to picture: ")+latRef+\
+                +_("writing best latitude/longitude match to picture: ")+latRef+\
                 " "+latitude+" ,"+longRef+" "+longitude+" :"+_(" time difference (s)= ")+str(int(tpic_tgps_l)),
                 latitude,longitude,self.picWidth,self.picHeight,self.timeStamp]
             else:
@@ -283,10 +283,10 @@ class GpicSync(object):
             if latitude != "" and longitude !=""and (tpic_tgps_l<self.timerange):
                 #if float(longitude)<0:longitude=str(abs(float(longitude)))
                 #if float(latitude)<0:latitude=str(abs(float(latitude)))
-                print "Writting best lat./long. match to pic. EXIF -->",latitude,latRef,\
+                print "Writing best lat./long. match to pic. EXIF -->",latitude,latRef,\
                 longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
                 pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup,elevation)
-                response= _("writting best latitude/longitude match to picture: ")+latRef+\
+                response= _("writing best latitude/longitude match to picture: ")+latRef+\
                 " "+latitude+" ,"+longRef+" "+longitude+" with"+_(" time difference (s)= ")+str(int(tpic_tgps_l))
                 if self.shotDate != trkptDay:
                     response=response+"\n"+_("Warning: Picture date ")+self.shotDate+\

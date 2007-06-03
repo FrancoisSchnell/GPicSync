@@ -180,7 +180,7 @@ msgid "Processed image "
 msgstr "Foto Processate "
 
 #: ..\..\..\gpicsync-GUI.py:342
-msgid " (writting geonames and geotagged to keywords tag in picture EXIF)"
+msgid " (writing geonames and geotagged to keywords tag in picture EXIF)"
 msgstr "(Sto scrivendo il geonames e geotag nel keywords tag nell'EXIF della Foto)"
 
 #: ..\..\..\gpicsync-GUI.py:347
@@ -390,7 +390,7 @@ msgid "taken "
 msgstr "presi "
 
 #: ..\..\..\gpicsync.py:187 ..\..\..\gpicsync.py:207
-msgid "writting best latitude/longitude match to picture: "
+msgid "writing best latitude/longitude match to picture: "
 msgstr "Scrivo la migliore latitudine/longitudine da abbinare alla foto :"
 
 #: ..\..\..\gpicsync.py:188 ..\..\..\gpicsync.py:194 ..\..\..\gpicsync.py:208

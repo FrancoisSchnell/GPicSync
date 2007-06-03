@@ -1,0 +1,454 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# Paul lu (digital.xy.hk) 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2007-05-07 22:46+Paris, Madrid\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: Paul lu\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=Big5\n"
+"Content-Transfer-Encoding: ENCODING\n"
+"Generated-By: pygettext.py 1.5\n"
+
+### Added recently
+
+msgid "Creating an 'originals-backup' folder."
+msgstr "建立 'originals-backup' 資料夾"
+
+msgid "Language"
+msgstr "語言"
+
+msgid "languages choice"
+msgstr "語言選擇"
+
+msgid "Choose a language"
+msgstr "選擇語言"
+
+msgid "Altitude"
+msgstr "高度"
+
+##############################
+
+#: ..\..\..\gpicsync-GUI.py:66
+msgid "Local time correction"
+msgstr "修改本地時間"
+
+#: ..\..\..\gpicsync-GUI.py:67
+msgid "&Options"
+msgstr "&選項"
+
+#: ..\..\..\gpicsync-GUI.py:69
+msgid "About..."
+msgstr "關於..."
+
+#: ..\..\..\gpicsync-GUI.py:71
+msgid "&Tools"
+msgstr "&工具"
+
+#: ..\..\..\gpicsync-GUI.py:72
+msgid "EXIF reader"
+msgstr "EXIF 閱讀器"
+
+#: ..\..\..\gpicsync-GUI.py:73
+msgid "Geo-Rename pictures"
+msgstr "使用定位資料命名相片"
+
+#: ..\..\..\gpicsync-GUI.py:74 ..\..\..\gpicsync-GUI.py:575
+msgid "GPX Inspector"
+msgstr "檢查GPX檔案"
+
+#: ..\..\..\gpicsync-GUI.py:75
+msgid "KMZ Generator"
+msgstr "製作KMZ檔案"
+
+#: ..\..\..\gpicsync-GUI.py:76
+msgid "&Help"
+msgstr "&說明"
+
+#: ..\..\..\gpicsync-GUI.py:85
+msgid "Pictures folder"
+msgstr "相片資料夾"
+
+#: ..\..\..\gpicsync-GUI.py:86
+msgid "GPS file (.gpx)"
+msgstr "GPS檔案 (.gpx)"
+
+#: ..\..\..\gpicsync-GUI.py:87
+msgid " Synchronise ! "
+msgstr " 開始同步！"
+
+#: ..\..\..\gpicsync-GUI.py:88
+msgid "Quit"
+msgstr "結束"
+
+#: ..\..\..\gpicsync-GUI.py:89
+msgid "Stop"
+msgstr "停止"
+
+#: ..\..\..\gpicsync-GUI.py:90
+msgid "Clear"
+msgstr "清除"
+
+#: ..\..\..\gpicsync-GUI.py:91
+msgid "View in Google Earth"
+msgstr "於Google Earth檢視"
+
+#: ..\..\..\gpicsync-GUI.py:93
+msgid "UTC Offset="
+msgstr "UTC 時差="
+
+#: ..\..\..\gpicsync-GUI.py:94
+msgid "Geocode picture only if time difference to nearest track point is below (seconds)="
+msgstr "相片定位只會進行當拍攝時間與最接近的定位點相差少於(秒)="
+
+#: ..\..\..\gpicsync-GUI.py:95
+msgid "Create a log file in picture folder"
+msgstr "於相片資料夾建立記錄檔"
+
+#: ..\..\..\gpicsync-GUI.py:97
+msgid "Dates must match"
+msgstr "日期必須吻合"
+
+#: ..\..\..\gpicsync-GUI.py:99
+msgid "Create a Google Earth file"
+msgstr "建立Google Earth檔"
+
+#: ..\..\..\gpicsync-GUI.py:101
+msgid "Google Maps export, folder URL="
+msgstr "匯出Google Map，資料夾 URL="
+
+#: ..\..\..\gpicsync-GUI.py:103
+msgid "backup pictures"
+msgstr "備份相片"
+
+#: ..\..\..\gpicsync-GUI.py:105
+msgid "interpolation"
+msgstr "兩點差距運算"
+
+#: ..\..\..\gpicsync-GUI.py:106
+msgid "add geonames and geotagged"
+msgstr "加入地名及地理資料"
+
+#: ..\..\..\gpicsync-GUI.py:186
+msgid "More informations and help:"
+msgstr "更多資料及幫助："
+
+#: ..\..\..\gpicsync-GUI.py:203
+msgid "To visualize the results in Google Earth you must either:"
+msgstr "如須於Google Earth顯示結果，您必須："
+
+#: ..\..\..\gpicsync-GUI.py:204 ..\..\..\gpicsync-GUI.py:568
+msgid "- finish a synchronisation"
+msgstr "- 完成一次同步"
+
+#: ..\..\..\gpicsync-GUI.py:216
+msgid "Couldn't find or launch Google Earth"
+msgstr "找不到或不能啟動Google Earth"
+
+#: ..\..\..\gpicsync-GUI.py:252
+msgid "You must first select a pictures folder and a GPX file."
+msgstr "您必須首先選擇相片資料夾及GPX檔案。"
+
+#: ..\..\..\gpicsync-GUI.py:264
+msgid "Beginning synchronization with "
+msgstr "開始進行同步 "
+
+#: ..\..\..\gpicsync-GUI.py:265
+msgid "UTC Offset ="
+msgstr "UTC 時差"
+
+#: ..\..\..\gpicsync-GUI.py:266
+msgid " hours and maximum time difference = "
+msgstr " 小時及最大時間差 = "
+
+#: ..\..\..\gpicsync-GUI.py:274
+msgid "Starting to generate a Google Earth file (doc.kml) in the picture folder ..."
+msgstr "開始產生Google Earth檔案 (doc.kml) 於相片資料夾內 ..."
+
+#: ..\..\..\gpicsync-GUI.py:278
+msgid "Starting to generate a Google Map file (doc-web.kml) in the picture folder"
+msgstr "開始產生Google Map檔案 (doc-web.kml) 於相片資料夾內 ..."
+
+#: ..\..\..\gpicsync-GUI.py:289
+msgid "Geocoded with UTC Offset= "
+msgstr "已定位，根據UTC時差= "
+
+#: ..\..\..\gpicsync-GUI.py:290
+msgid " and  Maximum time difference = "
+msgstr " 及最大時間差 = "
+
+#: ..\..\..\gpicsync-GUI.py:292
+msgid "Pictures Folder: "
+msgstr "相片資料夾："
+
+#: ..\..\..\gpicsync-GUI.py:293
+msgid "GPX file: "
+msgstr "GPX檔案："
+
+#: ..\..\..\gpicsync-GUI.py:307
+msgid "(Found "
+msgstr "(找到 "
+
+#: ..\..\..\gpicsync-GUI.py:312
+msgid "Processed image "
+msgstr "已處理相片 "
+
+#: ..\..\..\gpicsync-GUI.py:342
+msgid " (writing geonames and geotagged to keywords tag in picture EXIF)"
+msgstr " (正在記錄地名及地理資料於相片的EXIF關鍵字標記)"
+
+#: ..\..\..\gpicsync-GUI.py:347
+msgid "Couldn't retrieve geonames data..."
+msgstr "不能讀取地名資料..."
+
+#: ..\..\..\gpicsync-GUI.py:349
+msgid "FINISHED GEOCODING PROCESS"
+msgstr "完成相片定位"
+
+#: ..\..\..\gpicsync-GUI.py:351
+msgid "PROCESSING STOPPED BY THE USER"
+msgstr "被使用者終止運作"
+
+#: ..\..\..\gpicsync-GUI.py:355
+msgid "Adding the GPS track log to the Google Earth kml file"
+msgstr "於Google Earth kml檔案加入GPS路徑記錄"
+
+#: ..\..\..\gpicsync-GUI.py:358
+msgid "Click on the 'View in Google Earth' button to visualize the result"
+msgstr "點擊 '於Google Earth顯示' 按鈕來顯示結果"
+
+#: ..\..\..\gpicsync-GUI.py:359
+msgid "( A Google Earth doc.kml file has been created in your picture folder.)"
+msgstr "(一個Google Earth doc.kml檔案已被建立於相片資料夾內。)"
+
+#: ..\..\..\gpicsync-GUI.py:365
+msgid "( A Google Maps doc-web.kml file has been created with the given url )"
+msgstr "(一個Google Maps doc-web.kml檔案已被建立於設定的url內 )"
+
+#: ..\..\..\gpicsync-GUI.py:380
+msgid "Local time corrections"
+msgstr "修正本地時間"
+
+#: ..\..\..\gpicsync-GUI.py:383
+msgid "Use this option ONLY if your camera local time is wrong."
+msgstr "當您的相機時間錯誤時才使用這個選項。"
+
+#: ..\..\..\gpicsync-GUI.py:384
+msgid "Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)"
+msgstr "在這裡輸入相機及GPS現時所顯示的時間 (hh:mm:ss)"
+
+#: ..\..\..\gpicsync-GUI.py:386
+msgid "Local time displayed now by the camera"
+msgstr "相機現時顯示的時間"
+
+#: ..\..\..\gpicsync-GUI.py:389
+msgid "Local time displayed now by the GPS"
+msgstr "GPS現時顯示的時間"
+
+#: ..\..\..\gpicsync-GUI.py:392
+msgid "Apply correction"
+msgstr "確定修正"
+
+#: ..\..\..\gpicsync-GUI.py:406
+msgid "EXIF Reader"
+msgstr "EXIF讀取器"
+
+#: ..\..\..\gpicsync-GUI.py:409
+msgid "Read the EXIF metadata of the selected picture."
+msgstr "從已選擇的相片讀取EXIF資料"
+
+#: ..\..\..\gpicsync-GUI.py:411 ..\..\..\gpicsync-GUI.py:412
+#: ..\..\..\gpicsync-GUI.py:443
+msgid "All EXIF metadata"
+msgstr "所有EXIF資料"
+
+#: ..\..\..\gpicsync-GUI.py:413 ..\..\..\gpicsync-GUI.py:446
+msgid "Date/Time/Lat./Long."
+msgstr "日期/時間/緯度/經度"
+
+#: ..\..\..\gpicsync-GUI.py:419
+msgid "Select a picture"
+msgstr "選擇一張相片"
+
+#: ..\..\..\gpicsync-GUI.py:441
+msgid "Selected metada "
+msgstr "選擇資料 "
+
+#: ..\..\..\gpicsync-GUI.py:451
+msgid "lat./long."
+msgstr "緯度/經度"
+
+#: ..\..\..\gpicsync-GUI.py:453
+msgid "None"
+msgstr "無"
+
+#: ..\..\..\gpicsync-GUI.py:459
+msgid "Renaming tool"
+msgstr "檔案命名工具"
+
+#: ..\..\..\gpicsync-GUI.py:462
+msgid "This tool renames your pictures with the "
+msgstr "這個工具是用來命名您的相片根據"
+
+#: ..\..\..\gpicsync-GUI.py:462
+msgid "original time/date and lat./long.(if present)"
+msgstr "原來的時間/日期及緯度/經度。(如有)"
+
+#: ..\..\..\gpicsync-GUI.py:464
+msgid "Rename pictures in a folder"
+msgstr "命名資料夾內所有相片"
+
+#: ..\..\..\gpicsync-GUI.py:465
+msgid "Rename a single picture"
+msgstr "命名一張相片"
+
+#: ..\..\..\gpicsync-GUI.py:483 ..\..\..\gpicsync-GUI.py:504
+msgid "Beginning renaming..."
+msgstr "開始命名..."
+
+#: ..\..\..\gpicsync-GUI.py:491 ..\..\..\gpicsync-GUI.py:518
+msgid "Didn't find Original Time/Date for "
+msgstr "找不到原來的日期/時間於 "
+
+#: ..\..\..\gpicsync-GUI.py:494 ..\..\..\gpicsync-GUI.py:525
+msgid "Renamed "
+msgstr "已命名"
+
+#: ..\..\..\gpicsync-GUI.py:508
+msgid "Interrupted by the user"
+msgstr "被使用者終斷"
+
+#: ..\..\..\gpicsync-GUI.py:526
+msgid "Finished"
+msgstr "完成"
+
+#: ..\..\..\gpicsync-GUI.py:533
+msgid "Create a kmz file archive"
+msgstr "建立kmz檔案集"
+
+#: ..\..\..\gpicsync-GUI.py:535
+msgid "Create KMZ file !"
+msgstr "建立KMZ檔案！"
+
+#: ..\..\..\gpicsync-GUI.py:543
+msgid "Sorry this tool is not yet available for the Linux version"
+msgstr "很抱歉！這個程式暫時未有Linux版本"
+
+#: ..\..\..\gpicsync-GUI.py:552
+msgid "Creating a KMZ file in the pictures folder..."
+msgstr "建立KMZ檔於相片資料夾內..."
+
+#: ..\..\..\gpicsync-GUI.py:555
+msgid "Adding doc.kml"
+msgstr "正在加入doc.kml"
+
+#: ..\..\..\gpicsync-GUI.py:559
+msgid "Adding "
+msgstr "正在加入"
+
+#: ..\..\..\gpicsync-GUI.py:563
+msgid "KMZ file created in pictures folder"
+msgstr "KMZ檔已建立於相片資料夾內"
+
+#: ..\..\..\gpicsync-GUI.py:565
+msgid "Couldn't rename the zip file to kmz (maybe a previous file already exist)"
+msgstr "不能由zip檔命名至kmz檔 (可能檔案已經存在)"
+
+#: ..\..\..\gpicsync-GUI.py:567
+msgid "To create a Google Earth kmz file you must either:"
+msgstr "如要建立Google Earth kmz檔案您必須："
+
+#: ..\..\..\gpicsync-GUI.py:569
+msgid "- select a folder you've already synchronized then select the KMZ Generator tool"
+msgstr "- 選擇一個已同步的資料夾及選擇KMZ產生器工具"
+
+
+#: ..\..\..\gpicsync-GUI.py:578
+msgid "Inspect a gpx file and show tracklog data."
+msgstr "檢查gpx檔案及顯示軌跡資料。"
+
+#: ..\..\..\gpicsync-GUI.py:580
+msgid "Select a gpx file"
+msgstr "選擇一個gpx檔案"
+
+#: ..\..\..\gpicsync-GUI.py:599
+msgid "Select a gpx file first."
+msgstr "請先選擇一個gpx檔案。"
+
+#: ..\..\..\gpicsync-GUI.py:602
+msgid "Looking at "
+msgstr "正檢視 "
+
+#: ..\..\..\gpicsync-GUI.py:603
+msgid "Number of valid track points found"
+msgstr "找到有效的軌跡檔數目"
+
+#: ..\..\..\gpicsync-GUI.py:606
+msgid "Date"
+msgstr "日期"
+
+#: ..\..\..\gpicsync-GUI.py:606
+msgid "Time"
+msgstr "時間"
+
+#: ..\..\..\gpicsync-GUI.py:607
+msgid "Latitude"
+msgstr "緯度"
+
+#: ..\..\..\gpicsync-GUI.py:607
+msgid "Longitude"
+msgstr "經度"
+
+#: ..\..\..\gpicsync.py:186
+msgid "taken "
+msgstr "已讀取 "
+
+#: ..\..\..\gpicsync.py:187 ..\..\..\gpicsync.py:207
+msgid "writing best latitude/longitude match to picture: "
+msgstr "正在於相片記錄最接近的經緯資料："
+
+#: ..\..\..\gpicsync.py:188 ..\..\..\gpicsync.py:194 ..\..\..\gpicsync.py:208
+#: ..\..\..\gpicsync.py:215
+msgid " time difference (s)= "
+msgstr "時間差 (秒)= "
+
+#: ..\..\..\gpicsync.py:193
+msgid "no track point below the maximum time range "
+msgstr "最大範圍內沒有定位點 "
+
+#: ..\..\..\gpicsync.py:193 ..\..\..\gpicsync.py:197 ..\..\..\gpicsync.py:215
+msgid " : WARNING: DIDN'T GEOCODE, "
+msgstr "注意：沒有被加入定位資料，"
+
+#: ..\..\..\gpicsync.py:195
+msgid " long="
+msgstr " 經度="
+
+#: ..\..\..\gpicsync.py:195
+msgid "For information nearest trackpoint was at lat="
+msgstr "最接近的定位點是位於 緯度="
+
+#: ..\..\..\gpicsync.py:197
+msgid "no track point at this picture date "
+msgstr "相片日期沒有定位點 "
+
+#: ..\..\..\gpicsync.py:210
+msgid "Warning: Picture date "
+msgstr "請注意：相片日期 "
+
+#: ..\..\..\gpicsync.py:211
+msgid " and track point date "
+msgstr " 及定位點日期 "
+
+#: ..\..\..\gpicsync.py:211
+msgid " are different ! "
+msgstr " 是不同的！"
+
+#: ..\..\..\gpicsync.py:215
+msgid " no suitable track point below maximum time difference, "
+msgstr " 沒有同適的定位點於最大的時間差內，"
+

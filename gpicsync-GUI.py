@@ -109,8 +109,11 @@ class GUI(wx.Frame):
             elif self.language=="German":
                 langIt = gettext.translation('gpicsync-GUI', "locale",languages=['gr'])
                 langIt.install()
-            elif self.language=="Chinese":
-                langCn = gettext.translation('gpicsync-GUI', "locale",languages=['cn'])
+            elif self.language=="S.Chinese":
+                langCn = gettext.translation('gpicsync-GUI', "locale",languages=['scn'])
+                langCn.install()
+            elif self.language=="T.Chinese":
+                langCn = gettext.translation('gpicsync-GUI', "locale",languages=['tcn'])
                 langCn.install()
             else:
                 gettext.install("gpicsync-GUI", "None")#a trick to go back to original
@@ -252,7 +255,7 @@ class GUI(wx.Frame):
         """
         select a language to display the GUI with
         """
-        choices = [ 'English', 'French','Italian','German','Chinese']
+        choices = [ 'English', 'French','Italian','German','S.Chinese','T.Chinese']
         dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
             choice=dialog.GetStringSelection()
@@ -286,15 +289,24 @@ class GUI(wx.Frame):
                 conf.write(fconf)
                 fconf.close()
                 wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in Italian."+"\n")
-            if choice=="Chinese":
+            if choice=="S.Chinese":
                 fconf=open("gpicsync.conf","r+")
                 conf= ConfigParser.ConfigParser()
                 conf.readfp(fconf)
-                conf.set("gpicsync","language","Chinese")
+                conf.set("gpicsync","language","S.Chinese")
                 fconf.seek(0)
                 conf.write(fconf)
                 fconf.close()
-                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in Chinese."+"\n")
+                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in simplified Chinese."+"\n")
+            if choice=="T.Chinese":
+                fconf=open("gpicsync.conf","r+")
+                conf= ConfigParser.ConfigParser()
+                conf.readfp(fconf)
+                conf.set("gpicsync","language","T.Chinese")
+                fconf.seek(0)
+                conf.write(fconf)
+                fconf.close()
+                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in traditional Chinese."+"\n")
             if choice=="English":
                 fconf=open("gpicsync.conf","r+")
                 conf= ConfigParser.ConfigParser()
@@ -399,9 +411,10 @@ class GUI(wx.Frame):
 
         def sync():
             if self.dirEntry.GetValue()!="" and self.gpxEntry.GetValue!="":
-                wx.CallAfter(self.consolePrint,_("\n------\n"+_("Beginning synchronization with "))
-                +_("UTC Offset =")+self.utcEntry.GetValue()+
-                _(" hours and maximum time difference = ")+self.timerangeEntry.GetValue() +_(" seconds"+"\n"))
+                wx.CallAfter(self.consolePrint,"\n------\n"+_("Beginning synchronization with ")\
+                +_("UTC Offset =")+self.utcEntry.GetValue()+\
+                _(" hours and maximum time difference = ")+self.timerangeEntry.GetValue() +_(" seconds")+"\n")
+                
             else:
                 pass
             geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
@@ -510,7 +523,7 @@ class GUI(wx.Frame):
                             geotag="geotagged"
                             geotagLat="geo:lat="+str(decimal.Decimal(result[1]).quantize(decimal.Decimal('0.000001'))) 
                             geotagLon="geo:lon="+str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
-                            wx.CallAfter(self.consolePrint,gnSummary+_(" (writting geonames and geotagged to keywords tag in picture EXIF)")+"\n")
+                            wx.CallAfter(self.consolePrint,gnSummary+_(" (writing geonames and geotagged to keywords tag in picture EXIF)")+"\n")
                             os.popen('%s -keywords="%s" -keywords="%s" -keywords="%s" \
                             -keywords="%s"  -overwrite_original -keywords="%s" -keywords="%s" -keywords="%s" "%s" '\
                             % (self.exifcmd,gnPlace,gnCountry,gnSummary,gnRegion,geotag,geotagLat,geotagLon,self.picDir+'/'+fileName))
@@ -557,8 +570,8 @@ class GUI(wx.Frame):
         self.winOpt=wx.Frame(win,size=(440,280),title=_("Local time corrections"))
         bkg=wx.Panel(self.winOpt)
         #bkg.SetBackgroundColour('White')
-        text=_("\t"+_("Use this option ONLY if your camera local time is wrong.")\
-        +"\n\n"+_("Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)"))
+        text="\t"+_("Use this option ONLY if your camera local time is wrong.")\
+        +"\n\n"+_("Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)")
         utcLabel = wx.StaticText(bkg, -1,text)
         camLabel = wx.StaticText(bkg, -1,_("Local time displayed now by the camera"))
         self.camEntry=wx.TextCtrl(bkg,size=(100,-1))
