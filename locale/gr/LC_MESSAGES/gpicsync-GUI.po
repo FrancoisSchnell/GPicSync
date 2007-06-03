@@ -16,6 +16,11 @@ msgstr ""
 
 ### Added recently
 
+#: gpicsync-GUI.py:162
+msgid "with TimeStamp"
+msgstr ""
+##########################
+
 #: gpicsync-GUI.py:397
 msgid "Creating an 'originals-backup' folder."
 msgstr "Lege einen Backup Ordner an"
