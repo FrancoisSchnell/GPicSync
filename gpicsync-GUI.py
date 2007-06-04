@@ -324,7 +324,7 @@ class GUI(wx.Frame):
                     
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="GPicSync  1.00 - 2007 \n\n"\
+        text="GPicSync  1.01 - 2007 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
@@ -374,11 +374,25 @@ class GUI(wx.Frame):
         self.consoleEntry.Clear()
         
     def findGpx(self,evt):
-        """Select the .gpx file to use"""
+        """
+        Select the .gpx file to use or create one if necessary through GPSbabel"
+        """
         openGpx=wx.FileDialog(self)
-        openGpx.SetWildcard("*.gpx")
+        openGpx.SetWildcard("GPX Files(*.gpx)|*.gpx|NMEA Files (*.txt)|*.txt")
         openGpx.ShowModal()
         self.gpxFile=openGpx.GetPath()
+        
+        if os.path.basename(self.gpxFile).find(".txt")>0:
+            try:
+                target=self.gpxFile.split(".txt")[0]+".gpx"
+                babelResult=os.popen('gpsbabel -i nmea -f "%s" -o gpx -F "%s"' \
+                % (self.gpxFile,target)).read()
+                #print babelResult
+                self.gpxFile=target
+                wx.CallAfter(self.consolePrint,_("For information a GPX file has been created with GPSBabel in your picture folder."))
+            except:
+                wx.CallAfter(self.consolePrint,_("Couldn't create the necessary GPX file."))
+                
         self.gpxEntry.SetValue(self.gpxFile)
         print self.gpxFile
     

@@ -109,7 +109,7 @@ class GpicSync(object):
         picDateTimeSize=pic.readDateTimeSize()
         self.shotTime=picDateTimeSize[1]
         self.shotDate=picDateTimeSize[0].replace(":","-")
-        self.timeStamp=self.shotDate+"T"+picDateTimeSize[1]+"Z"
+        self.timeStamp=self.shotDate+"T"+picDateTimeSize[1]
         self.picWidth=picDateTimeSize[2]
         self.picHeight=picDateTimeSize[3]
         latitude=""
