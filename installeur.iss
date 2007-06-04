@@ -45,7 +45,7 @@ Source: dist\_win32sysloader.pyd; DestDir:{app}
 Source: dist\_windows_.pyd; DestDir:{app}
 Source: dist\bz2.pyd; DestDir:{app}
 Source: dist\exiftool.exe; DestDir:{app}
-Source: dist\gpsbabel.exe; DestDir:{app}
+Source: gpsbabel.exe; DestDir:{app}
 Source: dist\gpicsync-GUI.exe; DestDir:{app}
 Source: dist\library.zip; DestDir:{app}
 Source: dist\license.txt; DestDir:{app}

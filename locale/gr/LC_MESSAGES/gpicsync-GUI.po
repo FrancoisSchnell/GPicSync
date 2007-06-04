@@ -84,7 +84,7 @@ msgid "Pictures folder"
 msgstr "Bilderordner"
 
 #: ..\..\..\gpicsync-GUI.py:86
-msgid "GPS file (.gpx)"
+msgid "GPS file"
 msgstr "GPS Datei (.gpx)"
 
 #: ..\..\..\gpicsync-GUI.py:87

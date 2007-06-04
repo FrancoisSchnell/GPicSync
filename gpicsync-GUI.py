@@ -63,7 +63,7 @@ class GUI(wx.Frame):
         self.urlGMaps=""
         self.geonamesTags=False
         self.datesMustMatch=True
-        self.maxTimeDifference="120"
+        self.maxTimeDifference="300"
         self.language="English"
         
         # Search for an eventual gpicsync.conf file
@@ -147,7 +147,7 @@ class GUI(wx.Frame):
         self.Bind(wx.EVT_MENU,self.kmzGeneratorFrame,kmzGeneratorMenu)
         
         dirButton=wx.Button(bkg,size=(150,-1),label=_("Pictures folder"))
-        gpxButton=wx.Button(bkg,size=(150,-1),label=_("GPS file (.gpx)"))
+        gpxButton=wx.Button(bkg,size=(150,-1),label=_("GPS file"))
         syncButton=wx.Button(bkg,size=(250,-1),label=_(" Synchronise ! "))
         quitButton=wx.Button(bkg,label=_("Quit"),size=(100,-1))
         stopButton=wx.Button(bkg,label=_("Stop"),size=(100,-1))

@@ -139,7 +139,7 @@ class GeoExif(object):
     def writeLatLong(self,lat,long,latRef,longRef,backup,elevation="None"):
         """Write both latitudeRef/latitude and longitudeRef/longitude in EXIF"""
         #option="-DateTimeOriginal>FileModifyDate"
-        option=""
+        option='"-DateTimeOriginal>FileModifyDate"'
         if float(long)<0:long=str(abs(float(long)))
         if float(lat)<0:lat=str(abs(float(lat)))
         if backup==True:
