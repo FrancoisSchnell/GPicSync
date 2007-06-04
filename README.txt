@@ -1,18 +1,19 @@
 #####################################################
 # WARNING : 
 #
-# - This Free Software comes without any warranty.
+# - This Free GPL Software comes without any warranty.
 # - Always check the results on a map.
 #
 #####################################################
 
 GPicSync - 2007
 
-
 See the license.txt in the same folder.
-
 For help and documentation: http://code.google.com/p/gpicsync/
 
+GPicSync also embed two great free GPL tools (thanks to their authors!):
+- EXIFtool from Phil Harvey
+- GPSBable from Robert Lipe 
 
 WINDOWS:
 --------

@@ -11,7 +11,11 @@ The source code and help is available at:
 - http://code.google.com/p/gpicsync/
 - http://groups.google.com/group/gpicsync
 
-(some dll files in this windows installer are maybe not GPL).
+GPicSync also embed two great free GPL tools (thanks to their authors!):
+- EXIFtool from Phil Harvey
+- GPSBable from Robert Lipe
+
+Warning: some dll files in this windows installer are maybe not GPL.
 
 ----
 
