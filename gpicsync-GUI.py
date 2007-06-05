@@ -68,7 +68,7 @@ class GUI(wx.Frame):
         
         # Search for an eventual gpicsync.conf file
         try:
-            fconf=open("gpicsync.conf","r+")
+            fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
             conf= ConfigParser.ConfigParser()
             conf.readfp(fconf) #parse the config file
             if conf.has_option("gpicsync","UTCOffset") == True:
@@ -261,7 +261,7 @@ class GUI(wx.Frame):
             choice=dialog.GetStringSelection()
             print "choice is : ", choice
             if choice=="French":
-                fconf=open("gpicsync.conf","r+")
+                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
                 conf= ConfigParser.ConfigParser()
                 conf.readfp(fconf)
                 conf.set("gpicsync","language","French")
@@ -272,7 +272,7 @@ class GUI(wx.Frame):
                 #langFr = gettext.translation('gpicsync-GUI', "locale",languages=['fr'])
                 #langFr.install()
             if choice=="German":
-                fconf=open("gpicsync.conf","r+")
+                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
                 conf= ConfigParser.ConfigParser()
                 conf.readfp(fconf)
                 conf.set("gpicsync","language","German")
@@ -281,7 +281,7 @@ class GUI(wx.Frame):
                 fconf.close()
                 wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in German."+"\n")
             if choice=="Italian":
-                fconf=open("gpicsync.conf","r+")
+                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
                 conf= ConfigParser.ConfigParser()
                 conf.readfp(fconf)
                 conf.set("gpicsync","language","Italian")
@@ -290,7 +290,7 @@ class GUI(wx.Frame):
                 fconf.close()
                 wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in Italian."+"\n")
             if choice=="S.Chinese":
-                fconf=open("gpicsync.conf","r+")
+                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
                 conf= ConfigParser.ConfigParser()
                 conf.readfp(fconf)
                 conf.set("gpicsync","language","S.Chinese")
@@ -299,7 +299,7 @@ class GUI(wx.Frame):
                 fconf.close()
                 wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in simplified Chinese."+"\n")
             if choice=="T.Chinese":
-                fconf=open("gpicsync.conf","r+")
+                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
                 conf= ConfigParser.ConfigParser()
                 conf.readfp(fconf)
                 conf.set("gpicsync","language","T.Chinese")
@@ -308,7 +308,7 @@ class GUI(wx.Frame):
                 fconf.close()
                 wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in traditional Chinese."+"\n")
             if choice=="English":
-                fconf=open("gpicsync.conf","r+")
+                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
                 conf= ConfigParser.ConfigParser()
                 conf.readfp(fconf)
                 conf.set("gpicsync","language","English")
@@ -382,16 +382,24 @@ class GUI(wx.Frame):
         openGpx.ShowModal()
         self.gpxFile=openGpx.GetPath()
         
-        if os.path.basename(self.gpxFile).find(".txt")>0:
+        if os.path.basename(self.gpxFile).find(".txt")>0 or\
+        os.path.basename(self.gpxFile).find(".TXT")>0:
             try:
                 target=self.gpxFile.split(".txt")[0]+".gpx"
                 babelResult=os.popen('gpsbabel -i nmea -f "%s" -o gpx -F "%s"' \
                 % (self.gpxFile,target)).read()
                 #print babelResult
                 self.gpxFile=target
-                wx.CallAfter(self.consolePrint,_("For information a GPX file has been created with GPSBabel in your picture folder."))
+                if os.path.isfile(target)==True:
+                    wx.CallAfter(self.consolePrint,\
+                    _("For information, GPX file created with GPSBabel in your picture folder."))
+                else:
+                    wx.CallAfter(self.consolePrint,_("Possible problem with the creation of the gpx file"))
+                        
             except:
                 wx.CallAfter(self.consolePrint,_("Couldn't create the necessary GPX file."))
+                
+                
                 
         self.gpxEntry.SetValue(self.gpxFile)
         print self.gpxFile
@@ -482,7 +490,8 @@ class GUI(wx.Frame):
                     wx.CallAfter(self.consolePrint,"\n"+_("(Found ")+fileName+" ...")
                     print self.picDir+'/'+fileName
                     
-                    if self.backupCheck.GetValue()==True:
+                    if self.backupCheck.GetValue()==True\
+                    and os.path.isfile(self.picDir+'/originals-backup/'+fileName)==False:
                         shutil.copyfile(self.picDir+'/'+fileName,
                          self.picDir+'/originals-backup/'+fileName)
                         
@@ -539,7 +548,7 @@ class GUI(wx.Frame):
                             geotagLon="geo:lon="+str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
                             wx.CallAfter(self.consolePrint,gnSummary+_(" (writing geonames and geotagged to keywords tag in picture EXIF)")+"\n")
                             os.popen('%s -keywords="%s" -keywords="%s" -keywords="%s" \
-                            -keywords="%s"  -overwrite_original -keywords="%s" -keywords="%s" -keywords="%s" "%s" '\
+                            -keywords="%s"  -overwrite_original -keywords="%s" -keywords="%s" -keywords="%s" "-DateTimeOriginal>FileModifyDate" "%s" '\
                             % (self.exifcmd,gnPlace,gnCountry,gnSummary,gnRegion,geotag,geotagLat,geotagLon,self.picDir+'/'+fileName))
                         except:
                             pass
