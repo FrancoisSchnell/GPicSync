@@ -652,11 +652,13 @@ class GUI(wx.Frame):
                 wx.CallAfter(self.consolePrint,"\n\n"+_("Selected metada ")+"\n")
                 wx.CallAfter(self.consolePrint,"-------------------\n")
                 if self.ExifReaderSelected==_("All EXIF metadata"):
+                    wx.CallAfter(self.consolePrint,pathPicture+"\n\n")
                     wx.CallAfter(self.consolePrint,myPicture.readExifAll())
                     
                 if self.ExifReaderSelected==_("Date/Time/Lat./Long."):
                     dateTime=myPicture.readDateTime()
                     datetimeString=dateTime[0]+":"+dateTime[1]
+                    wx.CallAfter(self.consolePrint,pathPicture+"\n\n")
                     if len(datetimeString)>5:
                         wx.CallAfter(self.consolePrint,datetimeString)
                         wx.CallAfter(self.consolePrint,"    "+_("lat./long.")+"="+str(myPicture.readLatLong()))
