@@ -15,11 +15,27 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 ### Added recently
+#: gpicsync-GUI.py:131
+msgid "Configuration file"
+msgstr ""
+
+#: gpicsync-GUI.py:402
+msgid "For information, GPX file created with GPSBabel in your picture folder."
+msgstr ""
+
+#: gpicsync-GUI.py:404
+msgid "Possible problem with the creation of the gpx file"
+msgstr ""
+
+#: gpicsync-GUI.py:407
+msgid "Couldn't create the necessary GPX file."
+msgstr "" 
+
+##########################
 
 #: gpicsync-GUI.py:162
 msgid "with TimeStamp"
-msgstr ""
-##########################
+msgstr "mit Zeitstempel"
 
 #: gpicsync-GUI.py:397
 msgid "Creating an 'originals-backup' folder."
@@ -85,7 +101,7 @@ msgstr "Bilderordner"
 
 #: ..\..\..\gpicsync-GUI.py:86
 msgid "GPS file"
-msgstr "GPS Datei (.gpx)"
+msgstr "GPS Datei "
 
 #: ..\..\..\gpicsync-GUI.py:87
 msgid " Synchronise ! "

@@ -19,6 +19,23 @@ msgstr ""
 #: gpicsync-GUI.py:162
 msgid "with TimeStamp"
 msgstr ""
+
+#: gpicsync-GUI.py:131
+msgid "Configuration file"
+msgstr ""
+
+#: gpicsync-GUI.py:402
+msgid "For information, GPX file created with GPSBabel in your picture folder."
+msgstr ""
+
+#: gpicsync-GUI.py:404
+msgid "Possible problem with the creation of the gpx file"
+msgstr ""
+
+#: gpicsync-GUI.py:407
+msgid "Couldn't create the necessary GPX file."
+msgstr "" 
+
 ##########################
 
 #: ..\..\..\gpicsync-GUI.py:66
@@ -63,7 +80,7 @@ msgstr "Cartella Foto"
 
 #: ..\..\..\gpicsync-GUI.py:86
 msgid "GPS file"
-msgstr "File GPS (.gpx)"
+msgstr "File GPS "
 
 #: ..\..\..\gpicsync-GUI.py:87
 msgid " Synchronise ! "

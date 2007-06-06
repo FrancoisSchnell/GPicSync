@@ -128,6 +128,8 @@ class GUI(wx.Frame):
         if sys.platform == 'win32':
             languageChoice=menu1.Append(wx.NewId(),_("Language"))
             self.Bind(wx.EVT_MENU,self.languageApp,languageChoice)
+            configFile=menu1.Append(wx.NewId(),_("Configuration file"))
+            self.Bind(wx.EVT_MENU,self.showConfig,configFile)
         menuBar.Append(menu1,_("&Options"))
         menu2=wx.Menu()
         about=menu2.Append(wx.NewId(),_("About..."))
@@ -243,6 +245,11 @@ class GUI(wx.Frame):
             self.exifcmd = 'exiftool.exe'
         else:
             self.exifcmd = 'exiftool'
+    
+    def showConfig(self,evt):
+        """open the configuration file in notepad.exe"""
+        os.popen('notepad.exe "%s"'% (os.path.expanduser("~/gpicsync.conf")))
+        wx.CallAfter(self.consolePrint,"\n"+"If you've changed and saved the configuration file you should restart the application to take effect."+"\n")
         
     def consolePrint(self,msg):
         """

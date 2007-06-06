@@ -50,7 +50,7 @@ Source: libexpat.dll; DestDir:{app}
 Source: dist\gpicsync-GUI.exe; DestDir:{app}
 Source: dist\library.zip; DestDir:{app}
 Source: dist\license.txt; DestDir:{app}
-Source: dist\MSVCR71.dll; DestDir:{app}
+;Source: dist\MSVCR71.dll; DestDir:{app}
 Source: dist\pyexpat.pyd; DestDir:{app}
 Source: dist\python25.dll; DestDir:{app}
 Source: dist\pythoncom25.dll; DestDir:{app}
