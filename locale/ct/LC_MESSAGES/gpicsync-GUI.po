@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-06-04 22:56+Paris, Madrid\n"
-"PO-Revision-Date: 2007-06-06 17:00+Paris, Madrid\n"
+"PO-Revision-Date: 2007-06-07 13:30+Paris, Madrid\n"
 "Last-Translator: Oriol Garrote <oriol.garrote@gmail.com>\n"
 "Language-Team: CATALAN\n"
 "MIME-Version: 1.0\n"
@@ -17,19 +17,19 @@ msgstr ""
 ### Added recently
 #: gpicsync-GUI.py:131
 msgid "Configuration file"
-msgstr ""
+msgstr "Arxiu de configuració"
 
 #: gpicsync-GUI.py:402
 msgid "For information, GPX file created with GPSBabel in your picture folder."
-msgstr ""
+msgstr "Per informació, arxiu GPX creat amb GPSBabel a la teva carpeta d'imatges."
 
 #: gpicsync-GUI.py:404
 msgid "Possible problem with the creation of the gpx file"
-msgstr ""
+msgstr "Possible problema amb la creació de l'arxiu GPX."
 
 #: gpicsync-GUI.py:407
 msgid "Couldn't create the necessary GPX file."
-msgstr "" 
+msgstr "No s'ha pogut crear l'arxiu GPX necessari."
 
 ##########################
 
@@ -80,7 +80,7 @@ msgstr "Carpeta d'imatges"
 
 #: gpicsync-GUI.py:150
 msgid "GPS file"
-msgstr "arxiu lo"
+msgstr "Arxiu GPS .gpx"
 
 #: gpicsync-GUI.py:151
 msgid " Synchronise ! "
@@ -108,7 +108,7 @@ msgstr "Compensació UTC="
 
 #: gpicsync-GUI.py:158
 msgid "Geocode picture only if time difference to nearest track point is below (seconds)="
-msgstr "Geocodifica imatge només si diferència de temps amb el punt és inferior a (segons)="
+msgstr "Geocodifica només si la diferència de temps al punt més proper és inferior a (seg.)="
 
 #: gpicsync-GUI.py:159
 msgid "Create a log file in picture folder"
@@ -116,7 +116,7 @@ msgstr "Crea registre a la carpeta d'imatges"
 
 #: gpicsync-GUI.py:161
 msgid "Dates must match"
-msgstr "Dates han de coincidir"
+msgstr "Han de coincidir dates"
 
 #: gpicsync-GUI.py:163
 msgid "Create a Google Earth file"
@@ -132,15 +132,15 @@ msgstr "Exportació Google Maps, carpeta URL="
 
 #: gpicsync-GUI.py:171
 msgid "backup pictures"
-msgstr "backup imatges"
+msgstr "Backup d'imatges"
 
 #: gpicsync-GUI.py:173
 msgid "interpolation"
-msgstr "interpolació"
+msgstr "Interpolació"
 
 #: gpicsync-GUI.py:175
 msgid "add geonames and geotagged"
-msgstr "afegeix geonoms i geoetiquetes"
+msgstr "Afegeix geonoms i geoetiquetes"
 
 #: gpicsync-GUI.py:259
 msgid "Choose a language"
@@ -148,7 +148,7 @@ msgstr "Escull un idioma"
 
 #: gpicsync-GUI.py:259
 msgid "languages choice"
-msgstr "tria d'idiomes"
+msgstr "Tria d'idiomes"
 
 #: gpicsync-GUI.py:329
 msgid "More informations and help:"
@@ -168,7 +168,7 @@ msgstr "No es pot trobar o executar Google Earth"
 
 #: gpicsync-GUI.py:392
 msgid "For information a GPX file has been created with GPSBabel in your picture folder."
-msgstr "Per informació, un arxiu GPX s'ha creat amb GPSBabel a la carpeta d'imatges."
+msgstr "Per informació, s'ha creat un arxiu GPX amb GPSBabel a la carpeta d'imatges."
 
 #: gpicsync-GUI.py:394
 msgid "Couldn't create the necessary GPX file."
@@ -184,7 +184,7 @@ msgstr "Començant sincronització amb "
 
 #: gpicsync-GUI.py:429
 msgid "UTC Offset ="
-msgstr "Correcció UTC="
+msgstr "Compensació UTC="
 
 #: gpicsync-GUI.py:430
 msgid " hours and maximum time difference = "
@@ -196,7 +196,7 @@ msgstr " segons"
 
 #: gpicsync-GUI.py:440
 msgid "Creating an 'originals-backup' folder."
-msgstr "Creant una carpeta 'backup-originals'."
+msgstr "Creant una carpeta 'originals-backup'."
 
 #: gpicsync-GUI.py:447
 msgid "Starting to generate a Google Earth file (doc.kml) in the picture folder ..."
@@ -208,7 +208,7 @@ msgstr "Iniciant generació d'arxiu Google Map (doc-web.kml) a la carpeta d'imatg
 
 #: gpicsync-GUI.py:462
 msgid "Geocoded with UTC Offset= "
-msgstr "Geocodificat amb correcció UTC= "
+msgstr "Geocodificat amb compensació UTC= "
 
 #: gpicsync-GUI.py:463
 msgid " and  Maximum time difference = "
@@ -248,7 +248,7 @@ msgstr "PROCÉS ATURAT PER L'USUARI"
 
 #: gpicsync-GUI.py:554
 msgid "Adding the GPS track log to the Google Earth kml file"
-msgstr "Afegint el recorregut GPS a l'arxiu kml del Google Earth"
+msgstr "Afegint el recorregut GPS a l'arxiu kml de Google Earth"
 
 #: gpicsync-GUI.py:557
 msgid "Click on the 'View in Google Earth' button to visualize the result"
@@ -256,11 +256,11 @@ msgstr "Clica al botó 'Visualitza en Google Earth' per visualitzar el resultat"
 
 #: gpicsync-GUI.py:558
 msgid "( A Google Earth doc.kml file has been created in your picture folder.)"
-msgstr "(Un arxiu Google Earth doc.kml s'ha creat a la teva carpeta d'imatges.)"
+msgstr "(S'ha creat un arxiu Google Earth doc.kml a la teva carpeta d'imatges.)"
 
 #: gpicsync-GUI.py:564
 msgid "( A Google Maps doc-web.kml file has been created with the given url )"
-msgstr "(Un arxiu Google Maps doc-web.kml s'ha creat a la URL donada.)"
+msgstr "(S'ha creat un arxiu Google Maps doc-web.kml a la URL donada.)"
 
 #: gpicsync-GUI.py:584
 msgid "Local time corrections"
@@ -360,7 +360,7 @@ msgstr "Finalitzat"
 
 #: gpicsync-GUI.py:744
 msgid "Create a kmz file archive"
-msgstr "Crear un arxiu d'arxius kmz"
+msgstr "Crear un arxiu kmz"
 
 #: gpicsync-GUI.py:746
 msgid "Create KMZ file !"
@@ -400,7 +400,7 @@ msgstr "- selecciona una carpeta que ja hagis sincronitzat i selecciona el Gener
 
 #: gpicsync-GUI.py:788
 msgid "Inspect a gpx file and show tracklog data."
-msgstr "Inspecciona un arxiu gpx i mostra dades de recorregut."
+msgstr "Inspecciona un arxiu gpx i mostra dades del recorregut."
 
 #: gpicsync-GUI.py:790
 msgid "Select a gpx file"
@@ -412,7 +412,7 @@ msgstr "Primer selecciona un arxiu gpx."
 
 #: gpicsync-GUI.py:812
 msgid "Looking at "
-msgstr "Mirant "
+msgstr "Inspeccionant "
 
 #: gpicsync-GUI.py:813
 msgid "Number of valid track points found"

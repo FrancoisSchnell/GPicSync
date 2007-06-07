@@ -118,6 +118,9 @@ class GUI(wx.Frame):
             elif self.language=="Catalan":
                 langCt = gettext.translation('gpicsync-GUI', "locale",languages=['ct'])
                 langCt.install()
+            elif self.language=="Spanish":
+                langSp = gettext.translation('gpicsync-GUI', "locale",languages=['sp'])
+                langSp.install()
             else:
                 gettext.install("gpicsync-GUI", "None")#a trick to go back to original
         except:
@@ -265,79 +268,23 @@ class GUI(wx.Frame):
         """
         select a language to display the GUI with
         """
-        choices = [ 'Catalan','S.Chinese','T.Chinese','English', 'French','German','Italian']
+        def saveLanguage(language):
+            """ Save selected language in configuration file"""
+            fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
+            conf= ConfigParser.ConfigParser()
+            conf.readfp(fconf)
+            conf.set("gpicsync","language",language)
+            fconf.seek(0)
+            conf.write(fconf)
+            fconf.close()
+            wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in "+language+".\n")
+        choices = [ 'Catalan','S.Chinese','T.Chinese','English', 'French','German','Italian','Spanish']
         dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
             choice=dialog.GetStringSelection()
             print "choice is : ", choice
-            if choice=="French":
-                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
-                conf= ConfigParser.ConfigParser()
-                conf.readfp(fconf)
-                conf.set("gpicsync","language","French")
-                fconf.seek(0)
-                conf.write(fconf)
-                fconf.close()
-                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in French."+"\n")
-                #langFr = gettext.translation('gpicsync-GUI', "locale",languages=['fr'])
-                #langFr.install()
-            if choice=="German":
-                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
-                conf= ConfigParser.ConfigParser()
-                conf.readfp(fconf)
-                conf.set("gpicsync","language","German")
-                fconf.seek(0)
-                conf.write(fconf)
-                fconf.close()
-                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in German."+"\n")
-            if choice=="Italian":
-                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
-                conf= ConfigParser.ConfigParser()
-                conf.readfp(fconf)
-                conf.set("gpicsync","language","Italian")
-                fconf.seek(0)
-                conf.write(fconf)
-                fconf.close()
-                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in Italian."+"\n")
-            if choice=="S.Chinese":
-                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
-                conf= ConfigParser.ConfigParser()
-                conf.readfp(fconf)
-                conf.set("gpicsync","language","S.Chinese")
-                fconf.seek(0)
-                conf.write(fconf)
-                fconf.close()
-                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in simplified Chinese."+"\n")
-            if choice=="T.Chinese":
-                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
-                conf= ConfigParser.ConfigParser()
-                conf.readfp(fconf)
-                conf.set("gpicsync","language","T.Chinese")
-                fconf.seek(0)
-                conf.write(fconf)
-                fconf.close()
-                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in traditional Chinese."+"\n")
-            if choice=="Catalan":
-                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
-                conf= ConfigParser.ConfigParser()
-                conf.readfp(fconf)
-                conf.set("gpicsync","language","Catalan")
-                fconf.seek(0)
-                conf.write(fconf)
-                fconf.close()
-                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in Catalan."+"\n")
-            if choice=="English":
-                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
-                conf= ConfigParser.ConfigParser()
-                conf.readfp(fconf)
-                conf.set("gpicsync","language","English")
-                fconf.seek(0)
-                conf.write(fconf)
-                fconf.close()
-                wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in English."+"\n")
-                #gettext.install("gpicsync-GUI", "None")#a trick to go back to original
+            saveLanguage(language=choice)
             dialog.Destroy()
-            #win.Destroy()
         else:
             dialog.Destroy()
                     

@@ -17,23 +17,23 @@ msgstr ""
 ### Added recently
 #: gpicsync-GUI.py:131
 msgid "Configuration file"
-msgstr ""
+msgstr "設定檔"
 
 #: gpicsync-GUI.py:402
 msgid "For information, GPX file created with GPSBabel in your picture folder."
-msgstr ""
+msgstr "使用GPSBabel 於相片資料夾內建立了GPX檔"
 
 #: gpicsync-GUI.py:404
 msgid "Possible problem with the creation of the gpx file"
-msgstr ""
+msgstr "建立GPX檔時發生問題"
 
 #: gpicsync-GUI.py:407
 msgid "Couldn't create the necessary GPX file."
-msgstr "" 
+msgstr "無法建立GPX檔" 
 
 #: gpicsync-GUI.py:162
 msgid "with TimeStamp"
-msgstr ""
+msgstr "包括時間標記"
 ##########################
 
 msgid "Creating an 'originals-backup' folder."
