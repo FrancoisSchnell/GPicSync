@@ -524,7 +524,7 @@ class GUI(wx.Frame):
                             gnCountry=""
                         try:
                             if self.ifgeonameswriteuserstring !="":
-                                ifgeonameswriteuserstring=ifgeonameswriteuserstring[1:-1]
+                                ifgeonameswriteuserstring=ifgeonameswriteuserstring
                             else: ifgeonameswriteuserstring=""
                         except:
                             ifgeonameswriteuserstring=""
