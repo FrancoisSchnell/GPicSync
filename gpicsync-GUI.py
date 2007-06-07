@@ -93,6 +93,16 @@ class GUI(wx.Frame):
                 self.maxTimeDifference=conf.get("gpicsync","maxTimeDifference")
             if conf.has_option("gpicsync","language") == True:
                 self.language=conf.get("gpicsync","language")
+            if conf.has_option("gpicsync","ifgeonameswritenearbyplace") == True:
+                self.ifgeonameswritenearbyplace=eval(conf.get("gpicsync","ifgeonameswritenearbyplace"))
+            if conf.has_option("gpicsync","ifgeonameswriteregion") == True:
+                self.ifgeonameswriteregion=eval(conf.get("gpicsync","ifgeonameswriteregion"))
+            if conf.has_option("gpicsync","ifgeonameswritecountry") == True:
+                self.ifgeonameswritecountry=eval(conf.get("gpicsync","ifgeonameswritecountry"))
+            if conf.has_option("gpicsync","ifgeonameswritesummary") == True:
+                self.ifgeonameswritesummary=eval(conf.get("gpicsync","ifgeonameswritesummary"))
+            if conf.has_option("gpicsync","ifgeonameswriteuserstring") == True:
+                self.ifgeonameswriteuserstring=conf.get("gpicsync","ifgeonameswriteuserstring")
             fconf.close()
             
         except:
@@ -491,7 +501,9 @@ class GUI(wx.Frame):
                         except:
                             wx.CallAfter(self.consolePrint,_("Couldn't retrieve geonames data...")+"\n")
                         try:
-                            gnPlace=nearby.findNearbyPlace()
+                            if self.ifgeonameswritenearbyplace==True:
+                                gnPlace=nearby.findNearbyPlace()
+                            else: gnPlace=""
                         except:
                             gnPlace=""
                         try:
@@ -499,25 +511,42 @@ class GUI(wx.Frame):
                         except:
                             gnDistance=""
                         try:
-                            gnRegion=nearby.findRegion()
+                            if self.ifgeonameswriteregion==True:
+                                gnRegion=nearby.findRegion()
+                            else: gnRegion=""
                         except:
-                            gnRegion=" "
-                            print "hello ?"
+                            gnRegion=""
                         try:
-                            gnCountry=nearby.findCountry()
+                            if self.ifgeonameswritecountry==True:
+                                gnCountry=nearby.findCountry()
+                            else: gnCountry=""
                         except:
                             gnCountry=""
                         try:
-                            gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnRegion+" "+gnCountry
+                            if self.ifgeonameswriteuserstring !="":
+                                ifgeonameswriteuserstring=ifgeonameswriteuserstring[1:-1]
+                            else: ifgeonameswriteuserstring=""
+                        except:
+                            ifgeonameswriteuserstring=""
+                                
+                        try:
+                            if self.ifgeonameswritesummary==True:
+                                gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnRegion+" "+gnCountry
+                            else:
+                                gnSummary=""
                             geotag="geotagged"
                             geotagLat="geo:lat="+str(decimal.Decimal(result[1]).quantize(decimal.Decimal('0.000001'))) 
                             geotagLon="geo:lon="+str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
                             wx.CallAfter(self.consolePrint,gnSummary+_(" (writing geonames and geotagged to keywords tag in picture EXIF)")+"\n")
-                            os.popen('%s -keywords="%s" -keywords="%s" -keywords="%s" \
-                            -keywords="%s"  -overwrite_original -keywords="%s" -keywords="%s" -keywords="%s" "-DateTimeOriginal>FileModifyDate" "%s" '\
-                            % (self.exifcmd,gnPlace,gnCountry,gnSummary,gnRegion,geotag,geotagLat,geotagLon,self.picDir+'/'+fileName))
+                            geonameKeywords=""
+                            for geoname in [gnPlace,gnCountry,gnSummary,gnRegion,geotag,geotagLat,geotagLon,ifgeonameswriteuserstring]:
+                                if geoname !="":
+                                    geonameKeywords+=' -keywords="%s"' % geoname
+                            print "geonameKeywords=",geonameKeywords
+                            os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))     
+
                         except:
-                            pass
+                            print "Had problem when writting geonaems"
                             
             if self.stop==False:
                 wx.CallAfter(self.consolePrint,"\n*** "+_("FINISHED GEOCODING PROCESS")+" ***\n")
