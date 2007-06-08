@@ -62,52 +62,59 @@ class GUI(wx.Frame):
         self.GMaps=False
         self.urlGMaps=""
         self.geonamesTags=False
+        self.geoname_nearbyplace=True
+        self.geoname_region=True
+        self.geoname_country=True
+        self.geoname_summary=True
         self.datesMustMatch=True
+        self.geoname_userdefine=""
         self.maxTimeDifference="300"
         self.language="English"
         
         # Search for an eventual gpicsync.conf file
-        try:
-            fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
-            conf= ConfigParser.ConfigParser()
-            conf.readfp(fconf) #parse the config file
-            if conf.has_option("gpicsync","UTCOffset") == True:
-                self.utcOffset=conf.get("gpicsync","UTCOffset")
-            if conf.has_option("gpicsync","backup") == True:
-                self.backup=eval(conf.get("gpicsync","backup"))
-            if conf.has_option("gpicsync","urlGMaps") == True:
-                self.urlGMaps=conf.get("gpicsync","urlGMaps")
-            if conf.has_option("gpicsync","geonamesTags") == True:
-                self.geonamesTags=eval(conf.get("gpicsync","geonamesTags"))
-            if conf.has_option("gpicsync","interpolation") == True:
-                self.interpolation=eval(conf.get("gpicsync","interpolation"))
-            if conf.has_option("gpicsync","datesMustMatch") == True:
-                self.datesMustMatch=eval(conf.get("gpicsync","datesMustMatch"))
-            if conf.has_option("gpicsync","log") == True:
-                self.log=eval(conf.get("gpicsync","log"))
-            if conf.has_option("gpicsync","GMaps") == True:
-                self.GMaps=eval(conf.get("gpicsync","GMaps"))
-            if conf.has_option("gpicsync","UTCOffset") == True:
-                self.utcOffset=conf.get("gpicsync","UTCOffset")
-            if conf.has_option("gpicsync","maxTimeDifference") == True:
-                self.maxTimeDifference=conf.get("gpicsync","maxTimeDifference")
-            if conf.has_option("gpicsync","language") == True:
-                self.language=conf.get("gpicsync","language")
-            if conf.has_option("gpicsync","geoname_nearbyplace") == True:
-                self.geoname_nearbyplace=eval(conf.get("gpicsync","geoname_nearbyplace"))
-            if conf.has_option("gpicsync","geoname_region") == True:
-                self.geoname_region=eval(conf.get("gpicsync","geoname_region"))
-            if conf.has_option("gpicsync","geoname_country") == True:
-                self.geoname_country=eval(conf.get("gpicsync","geoname_country"))
-            if conf.has_option("gpicsync","geoname_summary") == True:
-                self.geoname_summary=eval(conf.get("gpicsync","geoname_summary"))
-            if conf.has_option("gpicsync","geoname_userdefine") == True:
-                self.geoname_userdefine=conf.get("gpicsync","geoname_userdefine")
-            fconf.close()
-            
+        #try:
+        fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
+        conf= ConfigParser.ConfigParser()
+        conf.readfp(fconf) #parse the config file
+        if conf.has_option("gpicsync","UTCOffset") == True:
+            self.utcOffset=conf.get("gpicsync","utcoffset")
+            print "was here !!!!!"
+        if conf.has_option("gpicsync","backup") == True:
+            self.backup=eval(conf.get("gpicsync","backup"))
+        if conf.has_option("gpicsync","urlGMaps") == True:
+            self.urlGMaps=conf.get("gpicsync","urlGMaps")
+        if conf.has_option("gpicsync","geonamesTags") == True:
+            self.geonamesTags=eval(conf.get("gpicsync","geonamesTags"))
+        if conf.has_option("gpicsync","interpolation") == True:
+            self.interpolation=eval(conf.get("gpicsync","interpolation"))
+        if conf.has_option("gpicsync","datesMustMatch") == True:
+            self.datesMustMatch=eval(conf.get("gpicsync","datesMustMatch"))
+        if conf.has_option("gpicsync","log") == True:
+            self.log=eval(conf.get("gpicsync","log"))
+        if conf.has_option("gpicsync","GMaps") == True:
+            self.GMaps=eval(conf.get("gpicsync","GMaps"))
+        if conf.has_option("gpicsync","UTCOffset") == True:
+            self.utcOffset=conf.get("gpicsync","UTCOffset")
+        if conf.has_option("gpicsync","maxTimeDifference") == True:
+            self.maxTimeDifference=conf.get("gpicsync","maxTimeDifference")
+        if conf.has_option("gpicsync","language") == True:
+            self.language=conf.get("gpicsync","language")
+        if conf.has_option("gpicsync","geoname_nearbyplace") == True:
+            self.geoname_nearbyplace=eval(conf.get("gpicsync","geoname_nearbyplace"))
+        if conf.has_option("gpicsync","geoname_region") == True:
+            self.geoname_region=eval(conf.get("gpicsync","geoname_region"))
+        if conf.has_option("gpicsync","geoname_country") == True:
+            self.geoname_country=eval(conf.get("gpicsync","geoname_country"))
+        if conf.has_option("gpicsync","geoname_summary") == True:
+            self.geoname_summary=eval(conf.get("gpicsync","geoname_summary"))
+        if conf.has_option("gpicsync","geoname_userdefine") == True:
+            self.geoname_userdefine=conf.get("gpicsync","geoname_userdefine")
+        fconf.close()
+        """    
         except:
             wx.CallAfter(self.consolePrint,"\n"
             +"Couldn't find or read configuration file."+"\n")
+        """
         try:
             print self.language
             if self.language=="French":
@@ -266,8 +273,41 @@ class GUI(wx.Frame):
             self.exifcmd = 'exiftool'
     
     def writeConfFile(self):
-        "Write the whole configuration file"
-        pass
+        """Write the whole configuration file"""
+        fconf=open(os.path.expanduser("~/gpicsync.conf"),"w")
+        header="#This is a configuration file for GPicSync geocoding software\n"+\
+        "#Read the comments below to see what you can set. Boolean value (True or False) and\n"+\
+        "#the default language option must always begin with a Capital Letter\n\n[gpicsync]\n\n"
+        fconf.write(header)
+        fconf.write("#Default language at start-up that you can also change in 'options'>'languages'\n")
+        fconf.write("language="+self.language+"\n\n")
+        fconf.write("#Default UTC Offset\n")
+        fconf.write("utcoffset="+self.utcOffset+"\n\n")
+        fconf.write("#geocode picture only if time difference to nearest trackpoint is below X seconds\n")
+        fconf.write("maxtimedifference="+self.maxTimeDifference+"\n\n")
+        fconf.write("#Backup pictures by default (True or False)\n")
+        fconf.write("backup="+str(self.backup)+"\n\n")
+        fconf.write("#geolocalize pictures by default only if dates match by default (True or False)\n")
+        fconf.write("datesmustmatch="+str(self.datesMustMatch)+"\n\n")
+        fconf.write("#Create a Google Map export (doc-web.kml) by default (True or False)\n")
+        fconf.write("gmaps="+str(self.GMaps)+"\n\n")
+        fconf.write("#Default base URL for Google Maps export\n")
+        fconf.write("urlgmaps="+self.urlGMaps+"\n\n")
+        fconf.write("#Use the interpolation mode by default (True or False)\n")
+        fconf.write("interpolation="+str(self.interpolation)+"\n\n")
+        fconf.write("#Create a log file by default")
+        fconf.write("log="+str(self.log)+"\n\n")
+        fconf.write("#Add geonames and geotagged in EXIF by default (True or False) and select the ones you want\n")
+        fconf.write("geonamestags="+str(self.geonamesTags)+"\n")
+        fconf.write("geoname_nearbyplace="+str(self.geoname_nearbyplace)+"\n")
+        fconf.write("geoname_region="+str(self.geoname_region)+"\n")
+        fconf.write("geoname_country="+str(self.geoname_country)+"\n")
+        fconf.write("geoname_summary="+str(self.geoname_summary)+"\n")
+        fconf.write("geoname_userdefine="+self.geoname_userdefine+"\n")
+        fconf.write("")
+        fconf.write("")
+        fconf.close()
+
     
     def showConfig(self,evt):
         """open the configuration file in notepad.exe"""
@@ -344,6 +384,7 @@ class GUI(wx.Frame):
     def exitApp(self,evt):
         """Quit properly the app"""
         print "Exiting the app..."
+        self.writeConfFile()
         self.Close()
         self.Destroy()
         sys.exit(1)
