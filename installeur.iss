@@ -25,6 +25,7 @@ Name: {app}\locale\scn
 Name: {app}\locale\tcn
 Name: {app}\locale\ct
 Name: {app}\locale\sp
+Name: {app}\locale\pl
 Name: {app}\locale\fr\LC_MESSAGES
 Name: {app}\locale\it\LC_MESSAGES
 Name: {app}\locale\gr\LC_MESSAGES
@@ -32,6 +33,7 @@ Name: {app}\locale\scn\LC_MESSAGES
 Name: {app}\locale\tcn\LC_MESSAGES
 Name: {app}\locale\ct\LC_MESSAGES
 Name: {app}\locale\sp\LC_MESSAGES
+Name: {app}\locale\pl\LC_MESSAGES
 
 [Files]
 ;Source: dist\; DestDir:{app}
@@ -90,6 +92,8 @@ Source: locale\ct\LC_MESSAGES\gpicsync-GUI.mo; DestDir:{app}\locale\ct\LC_MESSAG
 Source: locale\ct\LC_MESSAGES\gpicsync-GUI.po; DestDir:{app}\locale\ct\LC_MESSAGES
 Source: locale\sp\LC_MESSAGES\gpicsync-GUI.mo; DestDir:{app}\locale\sp\LC_MESSAGES
 Source: locale\sp\LC_MESSAGES\gpicsync-GUI.po; DestDir:{app}\locale\sp\LC_MESSAGES
+Source: locale\pl\LC_MESSAGES\gpicsync-GUI.mo; DestDir:{app}\locale\pl\LC_MESSAGES
+Source: locale\pl\LC_MESSAGES\gpicsync-GUI.po; DestDir:{app}\locale\pl\LC_MESSAGES
 
 ;Source: dist\mfc71.dll; DestDir:{app}
 ;Source: dist\Website; DestDir:{app}

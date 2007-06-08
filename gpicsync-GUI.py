@@ -131,6 +131,9 @@ class GUI(wx.Frame):
             elif self.language=="Spanish":
                 langSp = gettext.translation('gpicsync-GUI', "locale",languages=['sp'])
                 langSp.install()
+            elif self.language=="Polish":
+                langPl = gettext.translation('gpicsync-GUI', "locale",languages=['pl'])
+                langPl.install()
             else:
                 gettext.install("gpicsync-GUI", "None")#a trick to go back to original
         except:
@@ -288,7 +291,7 @@ class GUI(wx.Frame):
             conf.write(fconf)
             fconf.close()
             wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in "+language+".\n")
-        choices = [ 'Catalan','S.Chinese','T.Chinese','English', 'French','German','Italian','Spanish']
+        choices = [ 'Catalan','S.Chinese','T.Chinese','English', 'French','German','Italian','Polish','Spanish']
         dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
             choice=dialog.GetStringSelection()
