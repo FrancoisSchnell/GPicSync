@@ -93,16 +93,16 @@ class GUI(wx.Frame):
                 self.maxTimeDifference=conf.get("gpicsync","maxTimeDifference")
             if conf.has_option("gpicsync","language") == True:
                 self.language=conf.get("gpicsync","language")
-            if conf.has_option("gpicsync","ifgeonameswritenearbyplace") == True:
-                self.ifgeonameswritenearbyplace=eval(conf.get("gpicsync","ifgeonameswritenearbyplace"))
-            if conf.has_option("gpicsync","ifgeonameswriteregion") == True:
-                self.ifgeonameswriteregion=eval(conf.get("gpicsync","ifgeonameswriteregion"))
-            if conf.has_option("gpicsync","ifgeonameswritecountry") == True:
-                self.ifgeonameswritecountry=eval(conf.get("gpicsync","ifgeonameswritecountry"))
-            if conf.has_option("gpicsync","ifgeonameswritesummary") == True:
-                self.ifgeonameswritesummary=eval(conf.get("gpicsync","ifgeonameswritesummary"))
-            if conf.has_option("gpicsync","ifgeonameswriteuserstring") == True:
-                self.ifgeonameswriteuserstring=conf.get("gpicsync","ifgeonameswriteuserstring")
+            if conf.has_option("gpicsync","geoname_nearbyplace") == True:
+                self.geoname_nearbyplace=eval(conf.get("gpicsync","geoname_nearbyplace"))
+            if conf.has_option("gpicsync","geoname_region") == True:
+                self.geoname_region=eval(conf.get("gpicsync","geoname_region"))
+            if conf.has_option("gpicsync","geoname_country") == True:
+                self.geoname_country=eval(conf.get("gpicsync","geoname_country"))
+            if conf.has_option("gpicsync","geoname_summary") == True:
+                self.geoname_summary=eval(conf.get("gpicsync","geoname_summary"))
+            if conf.has_option("gpicsync","geoname_userdefine") == True:
+                self.geoname_userdefine=conf.get("gpicsync","geoname_userdefine")
             fconf.close()
             
         except:
@@ -264,6 +264,10 @@ class GUI(wx.Frame):
             self.exifcmd = 'exiftool.exe'
         else:
             self.exifcmd = 'exiftool'
+    
+    def writeConfFile(self):
+        "Write the whole configuration file"
+        pass
     
     def showConfig(self,evt):
         """open the configuration file in notepad.exe"""
@@ -504,7 +508,7 @@ class GUI(wx.Frame):
                         except:
                             wx.CallAfter(self.consolePrint,_("Couldn't retrieve geonames data...")+"\n")
                         try:
-                            if self.ifgeonameswritenearbyplace==True:
+                            if self.geoname_nearbyplace==True:
                                 gnPlace=nearby.findNearbyPlace()
                             else: gnPlace=""
                         except:
@@ -514,26 +518,26 @@ class GUI(wx.Frame):
                         except:
                             gnDistance=""
                         try:
-                            if self.ifgeonameswriteregion==True:
+                            if self.geoname_region==True:
                                 gnRegion=nearby.findRegion()
                             else: gnRegion=""
                         except:
                             gnRegion=""
                         try:
-                            if self.ifgeonameswritecountry==True:
+                            if self.geoname_country==True:
                                 gnCountry=nearby.findCountry()
                             else: gnCountry=""
                         except:
                             gnCountry=""
                         try:
-                            if self.ifgeonameswriteuserstring !="":
-                                ifgeonameswriteuserstring=ifgeonameswriteuserstring
-                            else: ifgeonameswriteuserstring=""
+                            if self.geoname_userdefine !="":
+                                geoname_userdefine=geoname_userdefine
+                            else: geoname_userdefine=""
                         except:
-                            ifgeonameswriteuserstring=""
+                            geoname_userdefine=""
                                 
                         try:
-                            if self.ifgeonameswritesummary==True:
+                            if self.geoname_summary==True:
                                 gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnRegion+" "+gnCountry
                             else:
                                 gnSummary=""
@@ -542,7 +546,7 @@ class GUI(wx.Frame):
                             geotagLon="geo:lon="+str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
                             wx.CallAfter(self.consolePrint,gnSummary+_(" (writing geonames and geotagged to keywords tag in picture EXIF)")+"\n")
                             geonameKeywords=""
-                            for geoname in [gnPlace,gnCountry,gnSummary,gnRegion,geotag,geotagLat,geotagLon,ifgeonameswriteuserstring]:
+                            for geoname in [gnPlace,gnCountry,gnSummary,gnRegion,geotag,geotagLat,geotagLon,geoname_userdefine]:
                                 if geoname !="":
                                     geonameKeywords+=' -keywords="%s"' % geoname
                             print "geonameKeywords=",geonameKeywords
