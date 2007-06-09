@@ -493,6 +493,7 @@ class GUI(wx.Frame):
             if self.geCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Earth file (doc.kml) in the picture folder ...")+" \n")
                 localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir),timeStampOrder=timeStampOrder)
+                localKml.writeInKml("\n<Folder>\n<name>Photos</name>")
             
             if self.gmCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Map file (doc-web.kml) in the picture folder")+" ... \n")
@@ -620,8 +621,9 @@ class GUI(wx.Frame):
             if self.log==True: f.close()
             
             if self.geCheck.GetValue()==True:
+                localKml.writeInKml("</Folder>\n")
                 wx.CallAfter(self.consolePrint,"\n"+_("Adding the GPS track log to the Google Earth kml file")+"...\n")
-                localKml.path(self.gpxFile)
+                localKml.path(self.gpxFile,cut=10000)
                 localKml.close()
                 wx.CallAfter(self.consolePrint,"\n"+_("Click on the 'View in Google Earth' button to visualize the result")+".\n")
                 wx.CallAfter(self.consolePrint,_("( A Google Earth doc.kml file has been created in your picture folder.)")+"\n")

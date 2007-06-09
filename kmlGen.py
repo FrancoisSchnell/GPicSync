@@ -194,11 +194,11 @@ class KML(object):
         self.f.write(pmDescription)
         self.f.write(pmTail)
 
-    def path(self,gpxFile):
+    def path(self,gpxFile,cut=500):
         """ Creates the path of the GPX file in the kml"""
         self.f.write("\n<Folder>\n<name>Track</name>")
         i=1 # an iterator for the gpx file
-        part=500 # cut the gpx file in part (to be sure it displays in GM)
+        part=cut # cut the gpx file in part (to be sure it displays in GM)
         j=1 #Path j (a number for each section) 
         
         def makeHeadPath(j):
