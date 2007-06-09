@@ -315,7 +315,7 @@ class GUI(wx.Frame):
         fconf.write("geoname_country="+str(self.geoname_country)+"\n")
         fconf.write("geoname_summary="+str(self.geoname_summary)+"\n")
         fconf.write("geoname_userdefine="+self.geoname_userdefine+"\n\n")
-        fconf.write("#Set default or last directory used\n")
+        fconf.write("#Set default or last directory automatically used\n")
         fconf.write("Defaultdirectory="+self.picDir)
         fconf.write("")
         fconf.close()
@@ -482,10 +482,11 @@ class GUI(wx.Frame):
             backup=False,interpolation=self.interpolation)
             
             if self.backupCheck.GetValue()==True:
+                backupFolder=self.picDir+'/originals-backup-'+os.path.basename(self.picDir)+'/'
                 wx.CallAfter(self.consolePrint,"\n"+
                 _("Creating an 'originals-backup' folder.")+"\n")
                 try:
-                    os.mkdir(self.picDir+'/originals-backup')
+                    os.mkdir(backupFolder)
                 except:
                     print "Couldn't create the backup folder, it maybe already exist"
 
@@ -528,10 +529,11 @@ class GUI(wx.Frame):
                     wx.CallAfter(self.consolePrint,"\n"+_("(Found ")+fileName+" ...")
                     print self.picDir+'/'+fileName
                     
+                    backupFolder=self.picDir+'/originals-backup-'+os.path.basename(self.picDir)+'/'
+                    
                     if self.backupCheck.GetValue()==True\
-                    and os.path.isfile(self.picDir+'/originals-backup/'+fileName)==False:
-                        shutil.copyfile(self.picDir+'/'+fileName,
-                         self.picDir+'/originals-backup/'+fileName)
+                    and os.path.isfile(backupFolder+fileName)==False:
+                        shutil.copyfile(self.picDir+'/'+fileName,backupFolder+fileName)
                         
                     result=geo.syncPicture(self.picDir+'/'+fileName)
                     wx.CallAfter(self.consolePrint,result[0]+"\n")
