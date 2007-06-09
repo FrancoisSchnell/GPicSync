@@ -7,10 +7,10 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-06-05 23:22+Paris, Madrid\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: DOMINIK WÓJCIK <nicode@gmail.com>\n"
+"Last-Translator: DOMINIK WÓJCIK <nicodempl@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=ISO-8859-2\n"
+"Content-Type: text/plain; charset=Windows 1250\n"
 "Content-Transfer-Encoding: ENCODING\n"
 "Generated-By: pygettext.py 1.5\n"
 
@@ -49,7 +49,7 @@ msgstr "Geo-Zamiana nazw plików"
 
 #: gpicsync-GUI.py:140 gpicsync-GUI.py:804
 msgid "GPX Inspector"
-msgstr "GPX Inspector"
+msgstr "GPX Inspektor"
 
 #: gpicsync-GUI.py:141
 msgid "KMZ Generator"
@@ -73,7 +73,7 @@ msgstr "Synchronizuj!"
 
 #: gpicsync-GUI.py:154 gpicsync-GUI.py:613
 msgid "Quit"
-msgstr "Wyj¶cie"
+msgstr "Wyjœcie"
 
 #: gpicsync-GUI.py:155
 msgid "Stop"
@@ -81,7 +81,7 @@ msgstr "Stop"
 
 #: gpicsync-GUI.py:156
 msgid "Clear"
-msgstr "Wyczy¶æ"
+msgstr "Wyczyœæ"
 
 #: gpicsync-GUI.py:157
 msgid "View in Google Earth"
@@ -89,7 +89,7 @@ msgstr "Obejrzyj w Google Earth"
 
 #: gpicsync-GUI.py:159
 msgid "UTC Offset="
-msgstr "Ofset UTC="
+msgstr "Przesuniêcie UTC="
 
 #: gpicsync-GUI.py:160
 msgid "Geocode picture only if time difference to nearest track point is below (seconds)="
@@ -113,7 +113,7 @@ msgstr "ze znacznikiem czasu"
 
 #: gpicsync-GUI.py:169
 msgid "Google Maps export, folder URL="
-msgstr "Export do Google Maps, link URL="
+msgstr "Eksport do Google Maps, link URL="
 
 #: gpicsync-GUI.py:173
 msgid "backup pictures"
@@ -149,15 +149,15 @@ msgstr "- dokoñczyæ synchronizacjê"
 
 #: gpicsync-GUI.py:366
 msgid "Couldn't find or launch Google Earth"
-msgstr "Brak lub wyst±pi³ b³±d w uruchomieniu Google Earth"
+msgstr "Brak lub wyst¹pi³ b³¹d w uruchomieniu Google Earth"
 
 #: gpicsync-GUI.py:402
 msgid "For information, GPX file created with GPSBabel in your picture folder."
-msgstr "Stworzono plik GPX w katalogu ze zdjêciami za pomoc± GPSBabel"
+msgstr "Stworzono plik GPX w katalogu ze zdjêciami za pomoc¹ GPSBabel"
 
 #: gpicsync-GUI.py:404
 msgid "Possible problem with the creation of the gpx file"
-msgstr "Wyst±pil problem ze stworzeniem pliku GPX"
+msgstr "Wyst¹pil problem ze stworzeniem pliku GPX"
 
 #: gpicsync-GUI.py:407
 msgid "Couldn't create the necessary GPX file."
@@ -173,7 +173,7 @@ msgstr "Zaczynam synchronizacjê z "
 
 #: gpicsync-GUI.py:444
 msgid "UTC Offset ="
-msgstr "Ofset UTC="
+msgstr "Przesuniêcie UTC="
 
 #: gpicsync-GUI.py:445
 msgid " hours and maximum time difference = "
@@ -185,7 +185,7 @@ msgstr " sekund"
 
 #: gpicsync-GUI.py:455
 msgid "Creating an 'originals-backup' folder."
-msgstr "Tworzê katalog z backupem zdjêæ"
+msgstr "Tworzê katalog z kopi¹ zdjêæ"
 
 #: gpicsync-GUI.py:462
 msgid "Starting to generate a Google Earth file (doc.kml) in the picture folder ..."
@@ -197,11 +197,11 @@ msgstr "Zaczynam tworzyæ plik Google Map (doc-web.kml) w katalogu ze zdjêciami"
 
 #: gpicsync-GUI.py:477
 msgid "Geocoded with UTC Offset= "
-msgstr "Zageokodowane z ofsetem UTC= "
+msgstr "Zageokodowane z przesuniêciem UTC= "
 
 #: gpicsync-GUI.py:478
 msgid " and  Maximum time difference = "
-msgstr " i maksymaln± ró¿nic± czasu = "
+msgstr " i maksymaln¹ ró¿nic¹ czasu = "
 
 #: gpicsync-GUI.py:480
 msgid "Pictures Folder: "
@@ -237,7 +237,7 @@ msgstr "PROCES ZATRZYMANY PRZEZ U¯YTKOWNIKA"
 
 #: gpicsync-GUI.py:570
 msgid "Adding the GPS track log to the Google Earth kml file"
-msgstr "Dodajê ¶lad GPS do pliku kml Google Earth"
+msgstr "Dodajê œlad GPS do pliku kml Google Earth"
 
 #: gpicsync-GUI.py:573
 msgid "Click on the 'View in Google Earth' button to visualize the result"
@@ -261,15 +261,15 @@ msgstr "U¿yj tej opcji TYLKO gdy czas w twoim aparacie jest b³êdny."
 
 #: gpicsync-GUI.py:604
 msgid "Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)"
-msgstr "Wpisz tutaj czas wy¶wietlany w aparacie i GPS (gg:mm:ss)"
+msgstr "Wpisz tutaj czas wyœwietlany w aparacie i GPS (gg:mm:ss)"
 
 #: gpicsync-GUI.py:606
 msgid "Local time displayed now by the camera"
-msgstr "Bie¿±cy czas w aparacie"
+msgstr "Bie¿¹cy czas w aparacie"
 
 #: gpicsync-GUI.py:609
 msgid "Local time displayed now by the GPS"
-msgstr "Bie¿±czy czas GPS"
+msgstr "Bie¿¹czy czas GPS"
 
 #: gpicsync-GUI.py:612
 msgid "Apply correction"
@@ -297,7 +297,7 @@ msgstr "Wybierz zdjêcie"
 
 #: gpicsync-GUI.py:668
 msgid "Selected metada "
-msgstr "Wybrana metada"
+msgstr "Wybrane metadane"
 
 #: gpicsync-GUI.py:680
 msgid "lat./long."
@@ -317,7 +317,7 @@ msgstr "To narzêdzie pozwala zmieniæ nazwy zdjêæ "
 
 #: gpicsync-GUI.py:691
 msgid "original time/date and lat./long.(if present)"
-msgstr "oryginalny czas/data i szer./d³. (je¶li istnieje)"
+msgstr "oryginalny czas/data i szer./d³. (jeœli istnieje)"
 
 #: gpicsync-GUI.py:693
 msgid "Rename pictures in a folder"
@@ -349,11 +349,11 @@ msgstr "Koniec"
 
 #: gpicsync-GUI.py:762
 msgid "Create a kmz file archive"
-msgstr "Stwórz plik kmz"
+msgstr "Tworzy plik kmz"
 
 #: gpicsync-GUI.py:764
 msgid "Create KMZ file !"
-msgstr "Tworzê plik KMZ !"
+msgstr "Stwórz plik KMZ !"
 
 #: gpicsync-GUI.py:772
 msgid "Sorry this tool is not yet available for the Linux version"
@@ -389,7 +389,7 @@ msgstr "- wybrac folder z plikami juz zsychnronizowanymi i wybraæ narzêdzie gene
 
 #: gpicsync-GUI.py:806
 msgid "Inspect a gpx file and show tracklog data."
-msgstr "Przejrzeæ plik gpx i pokazaæ dane tracklogu."
+msgstr "Przegl¹da plik gpx i pokazuje dane tracklogu."
 
 #: gpicsync-GUI.py:808
 msgid "Select a gpx file"
@@ -405,7 +405,7 @@ msgstr "Szukam w "
 
 #: gpicsync-GUI.py:831
 msgid "Number of valid track points found"
-msgstr "Liczba poprawnych punktów znaleziona "
+msgstr "Liczba znalezionych poprawnych punktów"
 
 #: gpicsync-GUI.py:834
 msgid "Date"
@@ -417,15 +417,15 @@ msgstr "Czas"
 
 #: gpicsync-GUI.py:835
 msgid "Latitude"
-msgstr "Szeroko¶æ"
+msgstr "Szerokoœæ"
 
 #: gpicsync-GUI.py:836
 msgid "Longitude"
-msgstr "D³ugo¶æ"
+msgstr "D³ugoœæ"
 
 #: gpicsync-GUI.py:837
 msgid "Altitude"
-msgstr "Wysoko¶æ"
+msgstr "Wysokoœæ"
 
 #: gpicsync.py:268
 msgid "taken "
@@ -433,11 +433,11 @@ msgstr "wziête "
 
 #: gpicsync.py:269 gpicsync.py:289
 msgid "writing best latitude/longitude match to picture: "
-msgstr "zapisujê najlepsz± szeroko¶æ/d³ugo¶æ pasij±c± do pliku: "
+msgstr "zapisujê najlepsz¹ szerokoœæ/d³ugoœæ pasuj¹c¹ do pliku: "
 
 #: gpicsync.py:270 gpicsync.py:276 gpicsync.py:290 gpicsync.py:297
 msgid " time difference (s)= "
-msgstr "ró¿nica czasów (s)= "
+msgstr " ró¿nica czasów (s)= "
 
 #: gpicsync.py:275
 msgid "no track point below the maximum time range "
@@ -449,7 +449,7 @@ msgstr " : UWAGA: NIE ZGEOKODOWANO, "
 
 #: gpicsync.py:277
 msgid " long="
-msgstr " d³ugo¶æ="
+msgstr " d³ugoœæ="
 
 #: gpicsync.py:277
 msgid "For information nearest trackpoint was at lat="
@@ -469,7 +469,7 @@ msgstr " i data punktu "
 
 #: gpicsync.py:293
 msgid " are different ! "
-msgstr " s± ró¿ne ! "
+msgstr " s¹ ró¿ne ! "
 
 #: gpicsync.py:297
 msgid " no suitable track point below maximum time difference, "

@@ -78,7 +78,6 @@ class GUI(wx.Frame):
         conf.readfp(fconf) #parse the config file
         if conf.has_option("gpicsync","UTCOffset") == True:
             self.utcOffset=conf.get("gpicsync","utcoffset")
-            print "was here !!!!!"
         if conf.has_option("gpicsync","backup") == True:
             self.backup=eval(conf.get("gpicsync","backup"))
         if conf.has_option("gpicsync","urlGMaps") == True:
@@ -109,6 +108,9 @@ class GUI(wx.Frame):
             self.geoname_summary=eval(conf.get("gpicsync","geoname_summary"))
         if conf.has_option("gpicsync","geoname_userdefine") == True:
             self.geoname_userdefine=conf.get("gpicsync","geoname_userdefine")
+        if conf.has_option("gpicsync","defaultdirectory") == True:
+            self.picDir=conf.get("gpicsync","defaultdirectory")
+            print "was here : ", self.picDir
         fconf.close()
         """    
         except:
@@ -177,9 +179,10 @@ class GUI(wx.Frame):
         dirButton=wx.Button(bkg,size=(150,-1),label=_("Pictures folder"))
         gpxButton=wx.Button(bkg,size=(150,-1),label=_("GPS file"))
         syncButton=wx.Button(bkg,size=(250,-1),label=_(" Synchronise ! "))
-        quitButton=wx.Button(bkg,label=_("Quit"),size=(100,-1))
-        stopButton=wx.Button(bkg,label=_("Stop"),size=(100,-1))
-        clearButton=wx.Button(bkg,label=_("Clear"),size=(100,-1))
+        quitButton=wx.Button(bkg,label=_("Quit"),size=(-1,-1))
+        quitAndSaveButton=wx.Button(bkg,label=_("Quit and save settings"),size=(-1,-1))
+        stopButton=wx.Button(bkg,label=_("Stop"),size=(-1,-1))
+        clearButton=wx.Button(bkg,label=_("Clear"),size=(-1,-1))
         viewInGEButton=wx.Button(bkg,label=_("View in Google Earth"),size=(-1,-1))
         
         utcLabel = wx.StaticText(bkg, -1,_("UTC Offset="))
@@ -207,6 +210,7 @@ class GUI(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.findGpx, gpxButton)
         self.Bind(wx.EVT_BUTTON, self.syncPictures, syncButton)
         self.Bind(wx.EVT_BUTTON, self.exitApp,quitButton)
+        self.Bind(wx.EVT_BUTTON, self.exitAppSave,quitAndSaveButton)
         self.Bind(wx.EVT_BUTTON, self.stopApp,stopButton) 
         self.Bind(wx.EVT_BUTTON, self.clearConsole,clearButton)
         self.Bind(wx.EVT_BUTTON, self.viewInGE,viewInGEButton)
@@ -254,6 +258,7 @@ class GUI(wx.Frame):
         hbox4.Add(clearButton,proportion=0,flag=wx.LEFT,border=5)
         hbox4.Add(viewInGEButton,proportion=0,flag=wx.LEFT,border=5)
         hbox4.Add(quitButton,proportion=0,flag=wx.LEFT,border=5)
+        hbox4.Add(quitAndSaveButton,proportion=0,flag=wx.LEFT,border=5)
         
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(hbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
@@ -282,29 +287,30 @@ class GUI(wx.Frame):
         fconf.write("#Default language at start-up that you can also change in 'options'>'languages'\n")
         fconf.write("language="+self.language+"\n\n")
         fconf.write("#Default UTC Offset\n")
-        fconf.write("utcoffset="+self.utcOffset+"\n\n")
+        fconf.write("utcoffset="+self.utcEntry.GetValue()+"\n\n")
         fconf.write("#geocode picture only if time difference to nearest trackpoint is below X seconds\n")
-        fconf.write("maxtimedifference="+self.maxTimeDifference+"\n\n")
+        fconf.write("maxtimedifference="+str(self.timerangeEntry.GetValue())+"\n\n")
         fconf.write("#Backup pictures by default (True or False)\n")
-        fconf.write("backup="+str(self.backup)+"\n\n")
+        fconf.write("backup="+str(self.backupCheck.GetValue())+"\n\n")
         fconf.write("#geolocalize pictures by default only if dates match by default (True or False)\n")
-        fconf.write("datesmustmatch="+str(self.datesMustMatch)+"\n\n")
+        fconf.write("datesmustmatch="+str(self.dateCheck.GetValue())+"\n\n")
         fconf.write("#Create a Google Map export (doc-web.kml) by default (True or False)\n")
-        fconf.write("gmaps="+str(self.GMaps)+"\n\n")
+        fconf.write("gmaps="+str(self.gmCheck.GetValue())+"\n\n")
         fconf.write("#Default base URL for Google Maps export\n")
-        fconf.write("urlgmaps="+self.urlGMaps+"\n\n")
+        fconf.write("urlgmaps="+self.urlEntry.GetValue()+"\n\n")
         fconf.write("#Use the interpolation mode by default (True or False)\n")
-        fconf.write("interpolation="+str(self.interpolation)+"\n\n")
-        fconf.write("#Create a log file by default")
-        fconf.write("log="+str(self.log)+"\n\n")
+        fconf.write("interpolation="+str(self.interpolationCheck.GetValue())+"\n\n")
+        fconf.write("#Create a log file by default\n")
+        fconf.write("log="+str(self.logFile.GetValue())+"\n\n")
         fconf.write("#Add geonames and geotagged in EXIF by default (True or False) and select the ones you want\n")
-        fconf.write("geonamestags="+str(self.geonamesTags)+"\n")
+        fconf.write("geonamestags="+str(self.geonamesCheck.GetValue())+"\n")
         fconf.write("geoname_nearbyplace="+str(self.geoname_nearbyplace)+"\n")
         fconf.write("geoname_region="+str(self.geoname_region)+"\n")
         fconf.write("geoname_country="+str(self.geoname_country)+"\n")
         fconf.write("geoname_summary="+str(self.geoname_summary)+"\n")
-        fconf.write("geoname_userdefine="+self.geoname_userdefine+"\n")
-        fconf.write("")
+        fconf.write("geoname_userdefine="+self.geoname_userdefine+"\n\n")
+        fconf.write("#Set default or last directory used\n")
+        fconf.write("Defaultdirectory="+self.picDir)
         fconf.write("")
         fconf.close()
 
@@ -384,6 +390,14 @@ class GUI(wx.Frame):
     def exitApp(self,evt):
         """Quit properly the app"""
         print "Exiting the app..."
+        #self.writeConfFile()
+        self.Close()
+        self.Destroy()
+        sys.exit(1)
+        
+    def exitAppSave(self,evt):
+        """Quit properly the app and save current settings in configuration file"""
+        print "Exiting the app and save settings..."
         self.writeConfFile()
         self.Close()
         self.Destroy()
@@ -431,12 +445,14 @@ class GUI(wx.Frame):
     def findPictures(self,evt):
         """Select the folder pictures to use"""
         openDir=wx.DirDialog(self)
-        if self.picDirDefault!="":
-            openDir.SetPath(self.picDirDefault)
+        #if self.picDirDefault!="":
+        #   openDir.SetPath(self.picDirDefault)
+        if self.picDir!="":
+            openDir.SetPath(self.picDir)
         openDir.ShowModal()
         self.picDir=openDir.GetPath()
         self.dirEntry.SetValue(self.picDir)
-        self.picDirDefault=self.picDir
+        #self.picDirDefault=self.picDir
         
     
     def syncPictures(self,evt):
@@ -572,10 +588,10 @@ class GUI(wx.Frame):
                             gnCountry=""
                         try:
                             if self.geoname_userdefine !="":
-                                geoname_userdefine=geoname_userdefine
-                            else: geoname_userdefine=""
+                                userdefine=self.geoname_userdefine
+                            else: userdefine=""
                         except:
-                            geoname_userdefine=""
+                            userdefine=""
                                 
                         try:
                             if self.geoname_summary==True:
@@ -587,9 +603,10 @@ class GUI(wx.Frame):
                             geotagLon="geo:lon="+str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
                             wx.CallAfter(self.consolePrint,gnSummary+_(" (writing geonames and geotagged to keywords tag in picture EXIF)")+"\n")
                             geonameKeywords=""
-                            for geoname in [gnPlace,gnCountry,gnSummary,gnRegion,geotag,geotagLat,geotagLon,geoname_userdefine]:
+                            print userdefine
+                            for geoname in [gnPlace,gnRegion,gnCountry,gnSummary,geotag,geotagLat,geotagLon,userdefine]:
                                 if geoname !="":
-                                    geonameKeywords+=' -keywords="%s"' % geoname
+                                    geonameKeywords+=' -keywords="%s" ' % geoname
                             print "geonameKeywords=",geonameKeywords
                             os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))     
 
