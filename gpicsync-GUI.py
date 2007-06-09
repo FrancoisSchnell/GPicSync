@@ -70,6 +70,7 @@ class GUI(wx.Frame):
         self.geoname_userdefine=""
         self.maxTimeDifference="300"
         self.language="English"
+        self.timeStamp=False
         
         # Search for an eventual gpicsync.conf file
         #try:
@@ -110,6 +111,9 @@ class GUI(wx.Frame):
             self.geoname_userdefine=conf.get("gpicsync","geoname_userdefine")
         if conf.has_option("gpicsync","defaultdirectory") == True:
             self.picDir=conf.get("gpicsync","defaultdirectory")
+        if conf.has_option("gpicsync","getimestamp") == True:
+            self.timeStamp=eval(conf.get("gpicsync","getimestamp"))
+            
             print "was here : ", self.picDir
         fconf.close()
         """    
@@ -194,7 +198,7 @@ class GUI(wx.Frame):
         self.geCheck=wx.CheckBox(bkg,-1,_("Create a Google Earth file")+" (")
         self.geCheck.SetValue(True)
         self.geTStamps=wx.CheckBox(bkg,-1,_("with TimeStamp")+" )")
-        self.geTStamps.SetValue(False)
+        self.geTStamps.SetValue(self.timeStamp)
         self.gmCheck=wx.CheckBox(bkg,-1,_("Google Maps export, folder URL="))
         self.gmCheck.SetValue(self.GMaps)
         self.urlEntry=wx.TextCtrl(bkg,size=(300,-1))
@@ -294,6 +298,8 @@ class GUI(wx.Frame):
         fconf.write("backup="+str(self.backupCheck.GetValue())+"\n\n")
         fconf.write("#geolocalize pictures by default only if dates match by default (True or False)\n")
         fconf.write("datesmustmatch="+str(self.dateCheck.GetValue())+"\n\n")
+        fconf.write("#Enable TimeStamp option for the Google Earth doc.kml file (True or False)\n")
+        fconf.write("getimestamp="+str(self.geTStamps.GetValue())+"\n\n")
         fconf.write("#Create a Google Map export (doc-web.kml) by default (True or False)\n")
         fconf.write("gmaps="+str(self.gmCheck.GetValue())+"\n\n")
         fconf.write("#Default base URL for Google Maps export\n")
@@ -331,22 +337,14 @@ class GUI(wx.Frame):
         """
         select a language to display the GUI with
         """
-        def saveLanguage(language):
-            """ Save selected language in configuration file"""
-            fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
-            conf= ConfigParser.ConfigParser()
-            conf.readfp(fconf)
-            conf.set("gpicsync","language",language)
-            fconf.seek(0)
-            conf.write(fconf)
-            fconf.close()
-            wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in "+language+".\n")
         choices = [ 'Catalan','S.Chinese','T.Chinese','English', 'French','German','Italian','Polish','Spanish']
         dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
             choice=dialog.GetStringSelection()
             print "choice is : ", choice
-            saveLanguage(language=choice)
+            self.language=choice
+            wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in "+self.language+".\n")
+            self.writeConfFile()
             dialog.Destroy()
         else:
             dialog.Destroy()
