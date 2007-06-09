@@ -21,10 +21,16 @@ class KML(object):
     (for live viewing in Google Earth)
     """
     
-    def __init__(self,fileName,name,url="",timeStampOrder=False):
+    def __init__(self,fileName,name,url="",timeStampOrder=False,utc="0"):
         self.f=open(fileName+".kml","w")
         self.url=url
         self.timeStampOrder=timeStampOrder
+        #self.utcOffest=utc
+        if int(utc)>=0: sign="+"
+        if int(utc)<0: sign="-"
+        self.utcOffset=sign+str(abs(int(float(utc))))+":00"
+        print "self.utcOffest in kml for time stamps: ", self.utcOffset
+        
         kmlHead="""<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.1">
 <Document>
@@ -104,8 +110,8 @@ class KML(object):
         (a string representing decimal degress, - sign ok)
         """
         if self.timeStampOrder==True:
-            timeStamp1="<TimeStamp><when>"+timeStamp+"</when> </TimeStamp>\n"
-            timeStamp2="<TimeSpan><begin>"+timeStamp+"</begin></TimeSpan>\n"
+            timeStamp1="<TimeStamp><when>"+timeStamp+self.utcOffset+"</when> </TimeStamp>\n"
+            timeStamp2="<TimeSpan><begin>"+timeStamp+self.utcOffset+"</begin></TimeSpan>\n"
             timeStamp=timeStamp1
         else:
             timeStamp=""

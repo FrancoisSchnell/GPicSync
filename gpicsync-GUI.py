@@ -49,7 +49,7 @@ class GUI(wx.Frame):
     def __init__(self,parent, title):
         """Initialize the main frame"""
         
-        wx.Frame.__init__(self, parent, -1, title="GPicSync",size=(900,600))
+        wx.Frame.__init__(self, parent, -1, title="GPicSync",size=(1000,600))
         self.tcam_l="00:00:00"
         self.tgps_l="00:00:00"
         self.log=False
@@ -337,7 +337,7 @@ class GUI(wx.Frame):
         """
         select a language to display the GUI with
         """
-        choices = [ 'Catalan','S.Chinese','T.Chinese','English', 'French','German','Italian','Polish','Spanish']
+        choices = [ 'Catalan','S.Chinese','T.Chinese','English', 'French','German','Italian','Spanish']
         dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
             choice=dialog.GetStringSelection()
@@ -492,12 +492,12 @@ class GUI(wx.Frame):
 
             if self.geCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Earth file (doc.kml) in the picture folder ...")+" \n")
-                localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir),timeStampOrder=timeStampOrder)
+                localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir),timeStampOrder=timeStampOrder,utc=self.utcEntry.GetValue())
                 localKml.writeInKml("\n<Folder>\n<name>Photos</name>")
             
             if self.gmCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Map file (doc-web.kml) in the picture folder")+" ... \n")
-                webKml=KML(self.picDir+"/doc-web",os.path.basename(self.picDir),url=self.urlEntry.GetValue())
+                webKml=KML(self.picDir+"/doc-web",os.path.basename(self.picDir),url=self.urlEntry.GetValue(),utc=self.utcEntry.GetValue())
                 webKml.path(self.gpxFile)
                 webKml.writeInKml("\n<Folder>\n<name>Photos</name>")
                 try:
@@ -599,10 +599,12 @@ class GUI(wx.Frame):
                                 gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnRegion+" "+gnCountry
                             else:
                                 gnSummary=""
+                            gnInfos="Geonames: "+gnPlace+" "+gnRegion+" "+gnCountry
+                            print "gnInfos:",gnInfos
                             geotag="geotagged"
                             geotagLat="geo:lat="+str(decimal.Decimal(result[1]).quantize(decimal.Decimal('0.000001'))) 
                             geotagLon="geo:lon="+str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
-                            wx.CallAfter(self.consolePrint,gnSummary+_(" (writing geonames and geotagged to keywords tag in picture EXIF)")+"\n")
+                            wx.CallAfter(self.consolePrint,gnInfos+_(" (writing geonames and geotagged to keywords tag in picture EXIF)")+"\n")
                             geonameKeywords=""
                             print userdefine
                             for geoname in [gnPlace,gnRegion,gnCountry,gnSummary,geotag,geotagLat,geotagLon,userdefine]:
