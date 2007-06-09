@@ -15,6 +15,13 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 ### Added recently
+
+#: gpicsync-GUI.py:187
+msgid "Quit and save settings"
+msgstr ""
+
+##########################
+
 #: gpicsync-GUI.py:131
 msgid "Configuration file"
 msgstr "設定檔"
@@ -34,7 +41,6 @@ msgstr "無法建立GPX檔"
 #: gpicsync-GUI.py:162
 msgid "with TimeStamp"
 msgstr "包括時間標記"
-##########################
 
 msgid "Creating an 'originals-backup' folder."
 msgstr "建立 'originals-backup' 資料夾"

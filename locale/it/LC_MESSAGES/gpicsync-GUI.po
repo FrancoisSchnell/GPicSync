@@ -16,6 +16,10 @@ msgstr ""
 
 ### Added recently
 
+#: gpicsync-GUI.py:187
+msgid "Quit and save settings"
+msgstr ""
+
 #: gpicsync-GUI.py:162
 msgid "with TimeStamp"
 msgstr ""
