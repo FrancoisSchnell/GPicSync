@@ -16,31 +16,31 @@ msgstr ""
 
 ### Added recently
 
+##########################
+
 #: gpicsync-GUI.py:187
 msgid "Quit and save settings"
-msgstr ""
+msgstr "Quitter et conserver paramètres"
 
 #: gpicsync-GUI.py:162
 msgid "with TimeStamp"
-msgstr ""
+msgstr "avec TimeStamp"
 
 #: gpicsync-GUI.py:131
 msgid "Configuration file"
-msgstr ""
+msgstr "Fichier de configuration"
 
 #: gpicsync-GUI.py:402
 msgid "For information, GPX file created with GPSBabel in your picture folder."
-msgstr ""
+msgstr "Pour information, un fichier GPX a été crée avec GPSBabel dans le dossier photos."
 
 #: gpicsync-GUI.py:404
 msgid "Possible problem with the creation of the gpx file"
-msgstr ""
+msgstr "Possible problème lors de la création du fichier gpx"
 
 #: gpicsync-GUI.py:407
 msgid "Couldn't create the necessary GPX file."
-msgstr "" 
-
-##########################
+msgstr "Problème lors de la création du fichier GPX nécessaire." 
 
 #: ..\..\..\gpicsync-GUI.py:66
 msgid "Local time correction"
@@ -84,7 +84,7 @@ msgstr "Dossier photos"
 
 #: ..\..\..\gpicsync-GUI.py:86
 msgid "GPS file"
-msgstr "Fichier GPS .gpx"
+msgstr "Fichier GPS"
 
 #: ..\..\..\gpicsync-GUI.py:87
 msgid " Synchronise ! "

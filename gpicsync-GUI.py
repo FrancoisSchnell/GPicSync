@@ -73,54 +73,54 @@ class GUI(wx.Frame):
         self.timeStamp=False
         
         # Search for an eventual gpicsync.conf file
-        #try:
-        fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
-        conf= ConfigParser.ConfigParser()
-        conf.readfp(fconf) #parse the config file
-        if conf.has_option("gpicsync","UTCOffset") == True:
-            self.utcOffset=conf.get("gpicsync","utcoffset")
-        if conf.has_option("gpicsync","backup") == True:
-            self.backup=eval(conf.get("gpicsync","backup"))
-        if conf.has_option("gpicsync","urlGMaps") == True:
-            self.urlGMaps=conf.get("gpicsync","urlGMaps")
-        if conf.has_option("gpicsync","geonamesTags") == True:
-            self.geonamesTags=eval(conf.get("gpicsync","geonamesTags"))
-        if conf.has_option("gpicsync","interpolation") == True:
-            self.interpolation=eval(conf.get("gpicsync","interpolation"))
-        if conf.has_option("gpicsync","datesMustMatch") == True:
-            self.datesMustMatch=eval(conf.get("gpicsync","datesMustMatch"))
-        if conf.has_option("gpicsync","log") == True:
-            self.log=eval(conf.get("gpicsync","log"))
-        if conf.has_option("gpicsync","GMaps") == True:
-            self.GMaps=eval(conf.get("gpicsync","GMaps"))
-        if conf.has_option("gpicsync","UTCOffset") == True:
-            self.utcOffset=conf.get("gpicsync","UTCOffset")
-        if conf.has_option("gpicsync","maxTimeDifference") == True:
-            self.maxTimeDifference=conf.get("gpicsync","maxTimeDifference")
-        if conf.has_option("gpicsync","language") == True:
-            self.language=conf.get("gpicsync","language")
-        if conf.has_option("gpicsync","geoname_nearbyplace") == True:
-            self.geoname_nearbyplace=eval(conf.get("gpicsync","geoname_nearbyplace"))
-        if conf.has_option("gpicsync","geoname_region") == True:
-            self.geoname_region=eval(conf.get("gpicsync","geoname_region"))
-        if conf.has_option("gpicsync","geoname_country") == True:
-            self.geoname_country=eval(conf.get("gpicsync","geoname_country"))
-        if conf.has_option("gpicsync","geoname_summary") == True:
-            self.geoname_summary=eval(conf.get("gpicsync","geoname_summary"))
-        if conf.has_option("gpicsync","geoname_userdefine") == True:
-            self.geoname_userdefine=conf.get("gpicsync","geoname_userdefine")
-        if conf.has_option("gpicsync","defaultdirectory") == True:
-            self.picDir=conf.get("gpicsync","defaultdirectory")
-        if conf.has_option("gpicsync","getimestamp") == True:
-            self.timeStamp=eval(conf.get("gpicsync","getimestamp"))
-            
-            print "was here : ", self.picDir
-        fconf.close()
-        """    
+        try:
+            fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
+            conf= ConfigParser.ConfigParser()
+            conf.readfp(fconf) #parse the config file
+            if conf.has_option("gpicsync","UTCOffset") == True:
+                self.utcOffset=conf.get("gpicsync","utcoffset")
+            if conf.has_option("gpicsync","backup") == True:
+                self.backup=eval(conf.get("gpicsync","backup"))
+            if conf.has_option("gpicsync","urlGMaps") == True:
+                self.urlGMaps=conf.get("gpicsync","urlGMaps")
+            if conf.has_option("gpicsync","geonamesTags") == True:
+                self.geonamesTags=eval(conf.get("gpicsync","geonamesTags"))
+            if conf.has_option("gpicsync","interpolation") == True:
+                self.interpolation=eval(conf.get("gpicsync","interpolation"))
+            if conf.has_option("gpicsync","datesMustMatch") == True:
+                self.datesMustMatch=eval(conf.get("gpicsync","datesMustMatch"))
+            if conf.has_option("gpicsync","log") == True:
+                self.log=eval(conf.get("gpicsync","log"))
+            if conf.has_option("gpicsync","GMaps") == True:
+                self.GMaps=eval(conf.get("gpicsync","GMaps"))
+            if conf.has_option("gpicsync","UTCOffset") == True:
+                self.utcOffset=conf.get("gpicsync","UTCOffset")
+            if conf.has_option("gpicsync","maxTimeDifference") == True:
+                self.maxTimeDifference=conf.get("gpicsync","maxTimeDifference")
+            if conf.has_option("gpicsync","language") == True:
+                self.language=conf.get("gpicsync","language")
+            if conf.has_option("gpicsync","geoname_nearbyplace") == True:
+                self.geoname_nearbyplace=eval(conf.get("gpicsync","geoname_nearbyplace"))
+            if conf.has_option("gpicsync","geoname_region") == True:
+                self.geoname_region=eval(conf.get("gpicsync","geoname_region"))
+            if conf.has_option("gpicsync","geoname_country") == True:
+                self.geoname_country=eval(conf.get("gpicsync","geoname_country"))
+            if conf.has_option("gpicsync","geoname_summary") == True:
+                self.geoname_summary=eval(conf.get("gpicsync","geoname_summary"))
+            if conf.has_option("gpicsync","geoname_userdefine") == True:
+                self.geoname_userdefine=conf.get("gpicsync","geoname_userdefine")
+            if conf.has_option("gpicsync","defaultdirectory") == True:
+                self.picDir=conf.get("gpicsync","defaultdirectory")
+            if conf.has_option("gpicsync","getimestamp") == True:
+                self.timeStamp=eval(conf.get("gpicsync","getimestamp"))
+                
+                print "was here : ", self.picDir
+            fconf.close()
+   
         except:
             wx.CallAfter(self.consolePrint,"\n"
             +"Couldn't find or read configuration file."+"\n")
-        """
+
         try:
             print self.language
             if self.language=="French":
@@ -337,7 +337,7 @@ class GUI(wx.Frame):
         """
         select a language to display the GUI with
         """
-        choices = [ 'Catalan','S.Chinese','T.Chinese','English', 'French','German','Italian','Spanish']
+        choices = [ 'Catalan','S.Chinese','T.Chinese','English', 'French','German','Italian','Polish','Spanish']
         dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
             choice=dialog.GetStringSelection()
@@ -351,7 +351,7 @@ class GUI(wx.Frame):
                     
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="GPicSync  1.02 - 2007 \n\n"\
+        text="GPicSync  1.03 - 2007 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
