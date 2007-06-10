@@ -49,6 +49,9 @@ To install GoogleEarth on Ubuntu:
 - chmod +x GoogleEarthLinux.bin
 - ./GoogleEarthLinux.bin
 
+The first time you run the Linux version you won't have a configuration file. 
+To generate one in your home folder quit GPicSync with the "Quit and save settings"
+(this is userful if you want to fine tune Geonames for example)
 
 If you prefer the command-line version (or if you can't have the right wxpython for your distro):
 
