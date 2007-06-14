@@ -46,7 +46,7 @@ class KML(object):
 <IconStyle>
 <color>ffffffff</color>
 <Icon>
-<href>root://icons/palette-4.png</href>
+<href>http://maps.google.com/mapfiles/kml/pal4/icon38.png</href>
 <x>192</x>
 <y>96</y>
 <w>32</w>
@@ -56,6 +56,9 @@ class KML(object):
 </IconStyle>
 </Style>
 """
+#<href>root://icons/palette-4.png</href>
+
+
         self.f.write(kmlHead)
         
     
