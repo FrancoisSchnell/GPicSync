@@ -93,13 +93,20 @@ class GeoExif(object):
         result=os.popen('%s  -n -GPSLatitude -GPSLatitudeRef \
         -GPSLongitude -GPSLongitudeRef   "%s" ' \
         % (self.exifcmd, self.picPath)).read().split("\n")
+        print result
         if len(result)>=4:
             result[0]=result[0].split(":")[1].strip()
-            latDecimal=result[0].split(".")[1][0:6]
+            try:
+                latDecimal=result[0].split(".")[1][0:]
+            except:
+                latDecimal="0"
             result[0]=result[0].split(".")[0]+"."+latDecimal
             result[1]=result[1].split(":")[1].strip()
             result[2]=result[2].split(":")[1].strip()
-            longDecimal=result[2].split(".")[1][0:6]
+            try:
+                longDecimal=result[2].split(".")[1][0:]
+            except:
+                longDecimal="0"
             result[2]=result[2].split(".")[0]+"."+longDecimal
             result[3]=result[3].split(":")[1].strip()
             latlong= result[1]+result[0]+" "+result[3]+result[2]

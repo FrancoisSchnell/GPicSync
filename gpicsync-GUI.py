@@ -71,6 +71,8 @@ class GUI(wx.Frame):
         self.maxTimeDifference="300"
         self.language="English"
         self.timeStamp=False
+        self.defaultLat="0.000000"
+        self.defaultLon="0.000000"
         
         # Search for an eventual gpicsync.conf file
         try:
@@ -374,14 +376,15 @@ class GUI(wx.Frame):
        
     def geoWriterFrame(self,evt):
         """ Frame to manually write latitude/longitude in the EXIF header of the picture"""
-        print "hello  .....????"
-        self.winGeoFrame=wx.Frame(win,size=(440,280),title=_("Manual latitude/longitude EXIF writer"))
+        self.winGeoFrame=wx.Frame(win,size=(300,250),title=_("Manual latitude/longitude EXIF writer"))
         bkg=wx.Panel(self.winGeoFrame)
         instructionLabel = wx.StaticText(bkg, -1,_("Enter coordinates in decimal degrees"))
         latLabel = wx.StaticText(bkg, -1,_("Latitude:"))
         self.latEntry=wx.TextCtrl(bkg,size=(100,-1))
+        self.latEntry.SetValue(str(self.defaultLat))
         lonLabel = wx.StaticText(bkg, -1,_("Longitude:"))
         self.lonEntry=wx.TextCtrl(bkg,size=(100,-1))
+        self.lonEntry.SetValue(str(self.defaultLon))
         selectButton=wx.Button(bkg,size=(130,30),label=_("Select picture(s)"))
         self.Bind(wx.EVT_BUTTON, self.manualGeoWrite, selectButton)
         vbox=wx.BoxSizer(wx.VERTICAL)
@@ -401,8 +404,36 @@ class GUI(wx.Frame):
         """manually write latitude/longitude in the EXIF header of the picture"""
         picture=wx.FileDialog(self,style=wx.FD_MULTIPLE)
         picture.ShowModal()
-        self.pathPicture=picture.GetPaths()
-        print "self.pathPicture=picture.GetPath() = ",self.pathPicture
+        self.winGeoFrame.Hide()
+        latitude=self.latEntry.GetValue()
+        self.defaultLat=latitude
+        longitude=self.lonEntry.GetValue()
+        self.defaultLon=longitude
+        self.pathPictures=picture.GetPaths()
+        #print "###############", self.pathPictures
+        wx.CallAfter(self.consolePrint,_("\n---\n"))
+        def writeEXIF(latitude,longitude,latRef,longRef):
+            if len(self.pathPictures)!=0:
+                for pic in self.pathPictures:
+                    wx.CallAfter(self.consolePrint,_("Writing GPS latitude/longitude ")+\
+                    latRef+latitude+" / "+longRef+longitude+" to "+os.path.basename(pic)+"\n")
+                    os.popen('%s "-DateTimeOriginal>FileModifyDate" \
+                     -GPSLatitude=%s -GPSLongitude=%s \
+                     -GPSLatitudeRef=%s -GPSLongitudeRef=%s  "%s" '\
+                    %(self.exifcmd,latitude,longitude,latRef,longRef,pic))
+                wx.CallAfter(self.consolePrint,_("\n- Finished -\n"))
+        try:
+            if float(latitude)>0:
+                latRef="N"
+            else: latRef="S"
+            if float(longitude)>0:
+                    longRef="E"
+            else: longRef="W"
+            latitude=str(abs(float(latitude)))
+            longitude=str(abs(float(longitude)))
+            start_new_thread(writeEXIF,(latitude,longitude,latRef,longRef))
+        except:
+            wx.CallAfter(self.consolePrint,"\n"+_("Latitude or Longitude fromats are not valid: no geocoding happened.")+"\n")
         self.winGeoFrame.Close()
         
     def viewInGE(self,evt):
