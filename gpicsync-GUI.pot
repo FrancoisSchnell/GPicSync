@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2007-06-17 00:12+Paris, Madrid\n"
+"POT-Creation-Date: 2007-06-17 00:20+Paris, Madrid\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -167,24 +167,16 @@ msgstr ""
 msgid "Select and write in picture(s)"
 msgstr ""
 
-#: gpicsync-gui.py:414
-msgid ""
-"\n"
-"---\n"
-msgstr ""
-
 #: gpicsync-gui.py:418
 msgid "Writing GPS latitude/longitude "
 msgstr ""
 
-#: gpicsync-gui.py:424
-msgid ""
-"\n"
-"- Finished -\n"
+#: gpicsync-gui.py:424 gpicsync-gui.py:888
+msgid "Finished"
 msgstr ""
 
 #: gpicsync-gui.py:436
-msgid "Latitude or Longitude fromats are not valid: no geocoding happened."
+msgid "Latitude or Longitude formats are not valid: no geocoding happened."
 msgstr ""
 
 #: gpicsync-gui.py:449
@@ -389,10 +381,6 @@ msgstr ""
 
 #: gpicsync-gui.py:870
 msgid "Interrupted by the user"
-msgstr ""
-
-#: gpicsync-gui.py:888
-msgid "Finished"
 msgstr ""
 
 #: gpicsync-gui.py:895

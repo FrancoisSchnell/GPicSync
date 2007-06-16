@@ -411,7 +411,7 @@ class GUI(wx.Frame):
         self.defaultLon=longitude
         self.pathPictures=picture.GetPaths()
         #print "###############", self.pathPictures
-        wx.CallAfter(self.consolePrint,_("\n---\n"))
+        wx.CallAfter(self.consolePrint,"\n---\n")
         def writeEXIF(latitude,longitude,latRef,longRef):
             if len(self.pathPictures)!=0:
                 for pic in self.pathPictures:
@@ -421,7 +421,7 @@ class GUI(wx.Frame):
                      -GPSLatitude=%s -GPSLongitude=%s \
                      -GPSLatitudeRef=%s -GPSLongitudeRef=%s  "%s" '\
                     %(self.exifcmd,latitude,longitude,latRef,longRef,pic))
-                wx.CallAfter(self.consolePrint,_("\n- Finished -\n"))
+                wx.CallAfter(self.consolePrint,"\n---"+_("Finished")+"---\n")
         try:
             if float(latitude)>0:
                 latRef="N"
@@ -433,7 +433,7 @@ class GUI(wx.Frame):
             longitude=str(abs(float(longitude)))
             start_new_thread(writeEXIF,(latitude,longitude,latRef,longRef))
         except:
-            wx.CallAfter(self.consolePrint,"\n"+_("Latitude or Longitude fromats are not valid: no geocoding happened.")+"\n")
+            wx.CallAfter(self.consolePrint,"\n"+_("Latitude or Longitude formats are not valid: no geocoding happened.")+"\n")
         self.winGeoFrame.Close()
         
     def viewInGE(self,evt):
