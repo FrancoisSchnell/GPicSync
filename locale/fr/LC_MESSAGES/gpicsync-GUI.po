@@ -16,6 +16,30 @@ msgstr ""
 
 ### Added recently
 
+#: gpicsync-gui.py:181
+msgid "EXIF writer"
+msgstr ""
+
+#: gpicsync-gui.py:379
+msgid "Manual latitude/longitude EXIF writer"
+msgstr ""
+
+#: gpicsync-gui.py:381
+msgid "Enter coordinates in decimal degrees"
+msgstr ""
+
+#: gpicsync-gui.py:388
+msgid "Select and write in picture(s)"
+msgstr ""
+
+#: gpicsync-gui.py:418
+msgid "Writing GPS latitude/longitude "
+msgstr ""
+
+#: gpicsync-gui.py:436
+msgid "Latitude or Longitude formats are not valid: no geocoding happened."
+msgstr ""
+
 ##########################
 
 #: gpicsync-GUI.py:187
