@@ -176,6 +176,7 @@ class GUI(wx.Frame):
         menuTools=wx.Menu()
         menuBar.Append(menuTools,_("&Tools"))
         exifReader=menuTools.Append(wx.NewId(),_("EXIF reader"))
+        exifGeoWriter=menuTools.Append(wx.NewId(),_("EXIF writer"))
         renameToolMenu=menuTools.Append(wx.NewId(),_("Geo-Rename pictures"))
         gpxInspectorMenu=menuTools.Append(wx.NewId(),_("GPX Inspector"))
         kmzGeneratorMenu=menuTools.Append(wx.NewId(),_("KMZ Generator"))
@@ -184,9 +185,11 @@ class GUI(wx.Frame):
         self.Bind(wx.EVT_MENU,self.localtimeFrame,timeShift)
         self.Bind(wx.EVT_MENU,self.aboutApp,about)
         self.Bind(wx.EVT_MENU,self.exifFrame,exifReader)
+        self.Bind(wx.EVT_MENU,self.geoWriterFrame,exifGeoWriter)
         self.Bind(wx.EVT_MENU,self.renameFrame,renameToolMenu)
         self.Bind(wx.EVT_MENU,self.gpxInspectorFrame,gpxInspectorMenu)
         self.Bind(wx.EVT_MENU,self.kmzGeneratorFrame,kmzGeneratorMenu)
+        
         
         dirButton=wx.Button(bkg,size=(150,-1),label=_("Pictures folder"))
         gpxButton=wx.Button(bkg,size=(150,-1),label=_("GPS file"))
@@ -368,6 +371,39 @@ class GUI(wx.Frame):
         dialog=wx.MessageDialog(self,message=text,
         style=wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
         dialog.ShowModal()
+       
+    def geoWriterFrame(self,evt):
+        """ Frame to manually write latitude/longitude in the EXIF header of the picture"""
+        print "hello  .....????"
+        self.winGeoFrame=wx.Frame(win,size=(440,280),title=_("Manual latitude/longitude EXIF writer"))
+        bkg=wx.Panel(self.winGeoFrame)
+        instructionLabel = wx.StaticText(bkg, -1,_("Enter coordinates in decimal degrees"))
+        latLabel = wx.StaticText(bkg, -1,_("Latitude:"))
+        self.latEntry=wx.TextCtrl(bkg,size=(100,-1))
+        lonLabel = wx.StaticText(bkg, -1,_("Longitude:"))
+        self.lonEntry=wx.TextCtrl(bkg,size=(100,-1))
+        selectButton=wx.Button(bkg,size=(130,30),label=_("Select picture(s)"))
+        self.Bind(wx.EVT_BUTTON, self.manualGeoWrite, selectButton)
+        vbox=wx.BoxSizer(wx.VERTICAL)
+        vbox.Add(instructionLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        vbox.Add(latLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=5)
+        vbox.Add(self.latEntry,proportion=0,flag=wx.ALIGN_CENTER,border=5)
+        vbox.Add(lonLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=5)
+        vbox.Add(self.lonEntry,proportion=0,flag=wx.ALIGN_CENTER,border=5)
+        vbox.Add(selectButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
+        bkg.SetSizer(vbox)
+        self.winGeoFrame.Show()
+       
+        #wx.CallAfter(self.consolePrint,
+        #"\n"+_("Enter coordinates in decimal degrees and select one or more pictures to write them in their EXIF header."))
+
+    def manualGeoWrite(self,evt):
+        """manually write latitude/longitude in the EXIF header of the picture"""
+        picture=wx.FileDialog(self,style=wx.FD_MULTIPLE)
+        picture.ShowModal()
+        self.pathPicture=picture.GetPaths()
+        print "self.pathPicture=picture.GetPath() = ",self.pathPicture
+        self.winGeoFrame.Close()
         
     def viewInGE(self,evt):
         """View a local kml file in Google Earth"""
