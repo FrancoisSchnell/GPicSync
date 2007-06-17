@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-06-04 22:56+Paris, Madrid\n"
-"PO-Revision-Date: 2007-06-07 13:30+Paris, Madrid\n"
+"PO-Revision-Date: 2007-06-15 09:34+Paris, Madrid\n"
 "Last-Translator: Oriol Garrote <oriol.garrote@gmail.com>\n"
 "Language-Team: CATALAN\n"
 "MIME-Version: 1.0\n"
@@ -40,11 +40,11 @@ msgstr ""
 msgid "Latitude or Longitude formats are not valid: no geocoding happened."
 msgstr ""
 
+########################################
+
 #: gpicsync-GUI.py:187
 msgid "Quit and save settings"
-msgstr ""
-
-###########################
+msgstr "Sortir i guardar valors"
 
 #: gpicsync-GUI.py:131
 msgid "Configuration file"

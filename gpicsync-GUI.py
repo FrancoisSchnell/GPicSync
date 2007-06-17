@@ -350,7 +350,7 @@ class GUI(wx.Frame):
         """
         select a language to display the GUI with
         """
-        choices = [ 'Catalan','S.Chinese','T.Chinese','Dutch','English', 'French',
+        choices = [ 'Catalan','S.Chinese','T.Chinese','English', 'French',
         'German','Italian','Polish','Spanish']
         dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
@@ -408,6 +408,7 @@ class GUI(wx.Frame):
         latitude=self.latEntry.GetValue()
         self.defaultLat=latitude
         longitude=self.lonEntry.GetValue()
+        self.winGeoFrame.Close()
         self.defaultLon=longitude
         self.pathPictures=picture.GetPaths()
         #print "###############", self.pathPictures
@@ -416,12 +417,12 @@ class GUI(wx.Frame):
             if len(self.pathPictures)!=0:
                 for pic in self.pathPictures:
                     wx.CallAfter(self.consolePrint,_("Writing GPS latitude/longitude ")+\
-                    latRef+latitude+" / "+longRef+longitude+" to "+os.path.basename(pic)+"\n")
+                    latRef+latitude+" / "+longRef+longitude+" ---> "+os.path.basename(pic)+"\n")
                     os.popen('%s "-DateTimeOriginal>FileModifyDate" \
                      -GPSLatitude=%s -GPSLongitude=%s \
                      -GPSLatitudeRef=%s -GPSLongitudeRef=%s  "%s" '\
                     %(self.exifcmd,latitude,longitude,latRef,longRef,pic))
-                wx.CallAfter(self.consolePrint,"\n---"+_("Finished")+"---\n")
+                wx.CallAfter(self.consolePrint,"---"+_("Finished")+"---\n")
         try:
             if float(latitude)>0:
                 latRef="N"
@@ -434,7 +435,7 @@ class GUI(wx.Frame):
             start_new_thread(writeEXIF,(latitude,longitude,latRef,longRef))
         except:
             wx.CallAfter(self.consolePrint,"\n"+_("Latitude or Longitude formats are not valid: no geocoding happened.")+"\n")
-        self.winGeoFrame.Close()
+        
         
     def viewInGE(self,evt):
         """View a local kml file in Google Earth"""
