@@ -14,6 +14,24 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
+#### Added recently
+
+#: gpicsync-GUI.py:343
+msgid "If you've changed and saved the configuration file you should restart the application to take effect."
+msgstr ""
+
+msgid "A time correction has been set"
+msgstr ""
+
+#: gpicsync-GUI.py:728
+msgid " Time GPS= "
+msgstr ""
+
+#: gpicsync-GUI.py:728
+msgid "Time camera= "
+msgstr ""
+
+####
 
 #: gpicsync-gui.py:169
 msgid "Local time correction"

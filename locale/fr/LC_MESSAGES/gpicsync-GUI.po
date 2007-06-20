@@ -16,6 +16,23 @@ msgstr ""
 
 ### Added recently
 
+#: gpicsync-GUI.py:343
+msgid "If you've changed and saved the configuration file you should restart the application to take effect."
+msgstr ""
+
+msgid "A time correction has been set"
+msgstr ""
+
+#: gpicsync-GUI.py:728
+msgid " Time GPS= "
+msgstr ""
+
+#: gpicsync-GUI.py:728
+msgid "Time camera= "
+msgstr ""
+
+##########################
+
 #: gpicsync-gui.py:181
 msgid "EXIF writer"
 msgstr "Ecriture EXIF"
@@ -39,8 +56,6 @@ msgstr "Sauvegarde latitude/longitude "
 #: gpicsync-gui.py:436
 msgid "Latitude or Longitude formats are not valid: no geocoding happened."
 msgstr "Format latitude ou longitude non valide: pas de géocoding."
-
-##########################
 
 #: gpicsync-GUI.py:187
 msgid "Quit and save settings"

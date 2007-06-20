@@ -157,6 +157,9 @@ class GUI(wx.Frame):
             elif self.language=="Dutch":
                 langDu = gettext.translation('gpicsync-GUI', "locale",languages=['du'])
                 langDu.install()
+            elif self.language=="Czech":
+                lang = gettext.translation('gpicsync-GUI', "locale",languages=['cze'])
+                lang.install()
             else:
                 gettext.install("gpicsync-GUI", "None")#a trick to go back to original
         except:
@@ -337,7 +340,7 @@ class GUI(wx.Frame):
     def showConfig(self,evt):
         """open the configuration file in notepad.exe"""
         os.popen('notepad.exe "%s"'% (os.path.expanduser("~/gpicsync.conf")))
-        wx.CallAfter(self.consolePrint,"\n"+"If you've changed and saved the configuration file you should restart the application to take effect."+"\n")
+        wx.CallAfter(self.consolePrint,"\n"+_("If you've changed and saved the configuration file you should restart the application to take effect.")+"\n")
         
     def consolePrint(self,msg):
         """
@@ -350,7 +353,7 @@ class GUI(wx.Frame):
         """
         select a language to display the GUI with
         """
-        choices = [ 'Catalan','S.Chinese','T.Chinese','English', 'French',
+        choices = [ 'Catalan','S.Chinese','T.Chinese','Czech','Dutch','English', 'French',
         'German','Italian','Polish','Spanish']
         dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
@@ -365,7 +368,7 @@ class GUI(wx.Frame):
                     
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="GPicSync  1.04 - 2007 \n\n"\
+        text="GPicSync  1.05 - 2007 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
@@ -721,8 +724,8 @@ class GUI(wx.Frame):
             #self.winOpt.Close()
             self.tcam_l=self.camEntry.GetValue()
             self.tgps_l=self.gpsEntry.GetValue()
-            wx.CallAfter(self.consolePrint,"\n"+"A time correction has been set : "+
-            "Time camera= "+self.tcam_l+" Time GPS= "+self.tgps_l+" .\n")
+            wx.CallAfter(self.consolePrint,"\n"+_("A time correction has been set")+" : "+
+            _("Time camera= ")+self.tcam_l+_(" Time GPS= ")+self.tgps_l+" .\n")
             print "tcam_l =",self.tcam_l
             print "tgps_l =",self.tgps_l
     

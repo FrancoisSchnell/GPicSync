@@ -16,6 +16,21 @@ msgstr ""
 
 ### Added recently
 
+#: gpicsync-GUI.py:343
+msgid "If you've changed and saved the configuration file you should restart the application to take effect."
+msgstr ""
+
+msgid "A time correction has been set"
+msgstr ""
+
+#: gpicsync-GUI.py:728
+msgid " Time GPS= "
+msgstr ""
+
+#: gpicsync-GUI.py:728
+msgid "Time camera= "
+msgstr ""
+
 #: gpicsync-gui.py:181
 msgid "EXIF writer"
 msgstr ""
