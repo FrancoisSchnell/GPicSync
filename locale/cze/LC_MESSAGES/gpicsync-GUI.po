@@ -1,0 +1,505 @@
+# CZECH TRANSLATION FOR GPicSync
+# Copyright (C) 2007 polnjumen
+# polnjumen <polnjumen@gmail.com>, 2007.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2007-06-17 00:20+Paris, Madrid\n"
+"PO-Revision-Date: 2007-06-20 16:00+Paris, Madrid\n"
+"Last-Translator: polnjumen <polnjumen@gmail.com>\n"
+"Language-Team: CZECH <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=windows-1250\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: gpicsync-gui.py:169
+msgid "Local time correction"
+msgstr "Korekce místního èasu"
+
+#: gpicsync-gui.py:171
+msgid "Language"
+msgstr "Jazyk"
+
+#: gpicsync-gui.py:173
+msgid "Configuration file"
+msgstr "Konfiguraèní soubor"
+
+#: gpicsync-gui.py:175
+msgid "&Options"
+msgstr "&Možnosti"
+
+#: gpicsync-gui.py:177
+msgid "About..."
+msgstr "O programu..."
+
+#: gpicsync-gui.py:179
+msgid "&Tools"
+msgstr "&Nástroje"
+
+#: gpicsync-gui.py:180
+msgid "EXIF reader"
+msgstr "Ètení EXIF"
+
+#: gpicsync-gui.py:181
+msgid "EXIF writer"
+msgstr "Zápis EXIF"
+
+#: gpicsync-gui.py:182
+msgid "Geo-Rename pictures"
+msgstr "Geo-pøejmenování"
+
+#: gpicsync-gui.py:183 gpicsync-gui.py:937
+msgid "GPX Inspector"
+msgstr "GPX Inspektor"
+
+#: gpicsync-gui.py:184
+msgid "KMZ Generator"
+msgstr "Generátor KMZ"
+
+#: gpicsync-gui.py:185
+msgid "&Help"
+msgstr "&Pomoc"
+
+#: gpicsync-gui.py:196
+msgid "Pictures folder"
+msgstr "Složka fotografií"
+
+#: gpicsync-gui.py:197
+msgid "GPS file"
+msgstr "Soubor GPS"
+
+#: gpicsync-gui.py:198
+msgid " Synchronise ! "
+msgstr " Synchronizuj ! "
+
+#: gpicsync-gui.py:199 gpicsync-gui.py:746
+msgid "Quit"
+msgstr "Konec"
+
+#: gpicsync-gui.py:200
+msgid "Quit and save settings"
+msgstr "Konec a uložit nastavení"
+
+#: gpicsync-gui.py:201
+msgid "Stop"
+msgstr "Stop"
+
+#: gpicsync-gui.py:202
+msgid "Clear"
+msgstr "Vymazat"
+
+#: gpicsync-gui.py:203
+msgid "View in Google Earth"
+msgstr "Zobraz v Google Earth"
+
+#: gpicsync-gui.py:205
+msgid "UTC Offset="
+msgstr "UTC Offset="
+
+#: gpicsync-gui.py:206
+msgid "Geocode picture only if time difference to nearest track point is below (seconds)="
+msgstr "Geokóduj fotografie jen když èasový rozdíl od nejbližšího bodu je pod (sekund)="
+
+#: gpicsync-gui.py:207
+msgid "Create a log file in picture folder"
+msgstr "Vytvoø log soubor ve složce fotografií"
+
+#: gpicsync-gui.py:209
+msgid "Dates must match"
+msgstr "Data musí souhlasit"
+
+#: gpicsync-gui.py:211
+msgid "Create a Google Earth file"
+msgstr "Vytvoø soubor Google Earth"
+
+#: gpicsync-gui.py:213
+msgid "with TimeStamp"
+msgstr "s èas. razítkem"
+
+#: gpicsync-gui.py:215
+msgid "Google Maps export, folder URL="
+msgstr "Export do Google Maps, URL="
+
+#: gpicsync-gui.py:219
+msgid "backup pictures"
+msgstr "záloha fotografií"
+
+#: gpicsync-gui.py:221
+msgid "interpolation"
+msgstr "interpolace"
+
+#: gpicsync-gui.py:223
+msgid "add geonames and geotagged"
+msgstr "doplò geonázvy a geotagy"
+
+#: gpicsync-gui.py:355
+msgid "Choose a language"
+msgstr "Vyber jazyk"
+
+#: gpicsync-gui.py:355
+msgid "languages choice"
+msgstr "výbìr jazyka"
+
+#: gpicsync-gui.py:370
+msgid "More informations and help:"
+msgstr "Další informace a pomoc:"
+
+#: gpicsync-gui.py:379
+msgid "Manual latitude/longitude EXIF writer"
+msgstr "Ruèní zápis souøadnic do EXIF"
+
+#: gpicsync-gui.py:381
+msgid "Enter coordinates in decimal degrees"
+msgstr "Vlož souøadnice v desetinných stupních"
+
+#: gpicsync-gui.py:382 gpicsync-gui.py:968
+msgid "Latitude"
+msgstr "Šíøka"
+
+#: gpicsync-gui.py:385 gpicsync-gui.py:969
+msgid "Longitude"
+msgstr "Délka"
+
+#: gpicsync-gui.py:388
+msgid "Select and write in picture(s)"
+msgstr "Nastav a zapiš do fotografií"
+
+#: gpicsync-gui.py:418
+msgid "Writing GPS latitude/longitude "
+msgstr "Zápis GPS šíøky/délky "
+
+#: gpicsync-gui.py:424 gpicsync-gui.py:888
+msgid "Finished"
+msgstr "Hotovo"
+
+#: gpicsync-gui.py:436
+msgid "Latitude or Longitude formats are not valid: no geocoding happened."
+msgstr "Formát šíøky nebo délky není platný: geokódování neprobìhlo."
+
+#: gpicsync-gui.py:449
+msgid "To visualize the results in Google Earth you must either:"
+msgstr "Pro zobrazení výsledkù v Google Earth musíte:"
+
+#: gpicsync-gui.py:450 gpicsync-gui.py:930
+msgid "- finish a synchronisation"
+msgstr "- dokonèit synchronizaci"
+
+#: gpicsync-gui.py:462
+msgid "Couldn't find or launch Google Earth"
+msgstr "Nelze najít nebo spustit Google Earth"
+
+#: gpicsync-gui.py:507
+msgid "For information, GPX file created with GPSBabel in your picture folder."
+msgstr "Pro informaci, GPSBabel vytvoøil GPX soubor ve složce fotografií."
+
+#: gpicsync-gui.py:509
+msgid "Possible problem with the creation of the gpx file"
+msgstr "Možný problém pøi vytváøení GPX souboru"
+
+#: gpicsync-gui.py:512
+msgid "Couldn't create the necessary GPX file."
+msgstr "Nelze vytvoøit potøebný GPX soubor."
+
+#: gpicsync-gui.py:536
+msgid "You must first select a pictures folder and a GPX file."
+msgstr "Nejdøíve musíte vybrat složku fotografií a soubor GPX."
+
+#: gpicsync-gui.py:550
+msgid "Beginning synchronization with "
+msgstr "Zaèátek synchronizace s "
+
+#: gpicsync-gui.py:551
+msgid "UTC Offset ="
+msgstr "UTC Offset ="
+
+#: gpicsync-gui.py:552
+msgid " hours and maximum time difference = "
+msgstr " hodin a maximální èasový rozdíl = "
+
+#: gpicsync-gui.py:552
+msgid " seconds"
+msgstr " sekund"
+
+#: gpicsync-gui.py:563
+msgid "Creating an 'originals-backup' folder."
+msgstr "Vytváøí se složka 'originals-backup'."
+
+#: gpicsync-gui.py:570
+msgid "Starting to generate a Google Earth file (doc.kml) in the picture folder ..."
+msgstr "Zaèátek generování souboru Google Earth (doc.kml) ve složce fotografií ..."
+
+#: gpicsync-gui.py:575
+msgid "Starting to generate a Google Map file (doc-web.kml) in the picture folder"
+msgstr "Zaèátek generování souboru Google Map (doc-web.kml) ve složce fotografií"
+
+#: gpicsync-gui.py:586
+msgid "Geocoded with UTC Offset= "
+msgstr "Geokódováno s posunem UTC= "
+
+#: gpicsync-gui.py:587
+msgid " and  Maximum time difference = "
+msgstr " a maximálním rozdílem èasu = "
+
+#: gpicsync-gui.py:589
+msgid "Pictures Folder: "
+msgstr "Složka fotografií: "
+
+#: gpicsync-gui.py:590
+msgid "GPX file: "
+msgstr "GPX soubor: "
+
+#: gpicsync-gui.py:606
+msgid "(Found "
+msgstr "(Nalezeno "
+
+#: gpicsync-gui.py:619
+msgid "Processed image "
+msgstr "Zpracován soubor "
+
+#: gpicsync-gui.py:643
+msgid "Couldn't retrieve geonames data..."
+msgstr "Nelze získat geonázvy..."
+
+#: gpicsync-gui.py:683
+msgid " (writing geonames and geotagged to keywords tag in picture EXIF)"
+msgstr " (zápis geonázvù a geotagù do klíèových slov v EXIF)"
+
+#: gpicsync-gui.py:696
+msgid "FINISHED GEOCODING PROCESS"
+msgstr "UKONÈEN PROCES GEOKÓDOVÁNÍ"
+
+#: gpicsync-gui.py:698
+msgid "PROCESSING STOPPED BY THE USER"
+msgstr "ZPRACOVÁNÍ ZASTAVENO UŽIVATELEM"
+
+#: gpicsync-gui.py:703
+msgid "Adding the GPS track log to the Google Earth kml file"
+msgstr "Pøidání GPS track logu do souboru Google Earth kml"
+
+#: gpicsync-gui.py:706
+msgid "Click on the 'View in Google Earth' button to visualize the result"
+msgstr "Kliknìte na tlaèítko 'Zobrazit v Google Earth' pro zobrazení výsledku"
+
+#: gpicsync-gui.py:707
+msgid "( A Google Earth doc.kml file has been created in your picture folder.)"
+msgstr "( Soubor doc.kml pro Google Earth byl vytvoøen ve složce fotografií.)"
+
+#: gpicsync-gui.py:713
+msgid "( A Google Maps doc-web.kml file has been created with the given url )"
+msgstr "( Soubor doc-web.kml pro Google Maps byl vytvoøen se zadaným url )"
+
+#: gpicsync-gui.py:733
+msgid "Local time corrections"
+msgstr "Korekce místního èasu"
+
+#: gpicsync-gui.py:736
+msgid "Use this option ONLY if your camera local time is wrong."
+msgstr "Použijte POUZE pokud je chybnì nastaven èas fotoaparátu."
+
+#: gpicsync-gui.py:737
+msgid "Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)"
+msgstr "Zde zadejte místní èas právì teï zobrazený fotoaparátem a GPS (hh:mm:ss)"
+
+#: gpicsync-gui.py:739
+msgid "Local time displayed now by the camera"
+msgstr "Místní èas zobrazovaný fotoaparátem"
+
+#: gpicsync-gui.py:742
+msgid "Local time displayed now by the GPS"
+msgstr "Místní èas zobrazovaný GPS"
+
+#: gpicsync-gui.py:745
+msgid "Apply correction"
+msgstr "Proveï korekci"
+
+#: gpicsync-gui.py:766
+msgid "EXIF Reader"
+msgstr "Ètení EXIF"
+
+#: gpicsync-gui.py:769
+msgid "Read the EXIF metadata of the selected picture."
+msgstr "Pøeète EXIF metadata vybrané fotografie"
+
+#: gpicsync-gui.py:771 gpicsync-gui.py:772 gpicsync-gui.py:803
+msgid "All EXIF metadata"
+msgstr "Všechna EXIF metadata"
+
+#: gpicsync-gui.py:773 gpicsync-gui.py:807
+msgid "Date/Time/Lat./Long."
+msgstr "Datum/Èas/Dél./Šíø."
+
+#: gpicsync-gui.py:779
+msgid "Select a picture"
+msgstr "Vyber fotografii"
+
+#: gpicsync-gui.py:801
+msgid "Selected metada "
+msgstr "Vybraná metadata"
+
+#: gpicsync-gui.py:813
+msgid "lat./long."
+msgstr "dél./šíø."
+
+#: gpicsync-gui.py:815
+msgid "None"
+msgstr "Nic"
+
+#: gpicsync-gui.py:821
+msgid "Renaming tool"
+msgstr "Pøejmenování"
+
+#: gpicsync-gui.py:824
+msgid "This tool renames your pictures with the "
+msgstr "Tento nástroj pøejmenuje fotografie podle"
+
+#: gpicsync-gui.py:824
+msgid "original time/date and lat./long.(if present)"
+msgstr "pùvodního èasu/data a šíø./dél. (existuje-li)"
+
+#: gpicsync-gui.py:826
+msgid "Rename pictures in a folder"
+msgstr "Pøejmenuj fotografie ve složce"
+
+#: gpicsync-gui.py:827
+msgid "Rename a single picture"
+msgstr "Pøejmenuj jednu fotografii"
+
+#: gpicsync-gui.py:845 gpicsync-gui.py:866
+msgid "Beginning renaming..."
+msgstr "Zaèátek pøejmenování..."
+
+#: gpicsync-gui.py:853 gpicsync-gui.py:880
+msgid "Didn't find Original Time/Date for "
+msgstr "Pùvodní èas/datum nenalezen pro "
+
+#: gpicsync-gui.py:856 gpicsync-gui.py:887
+msgid "Renamed "
+msgstr "Pøejmenováno "
+
+#: gpicsync-gui.py:870
+msgid "Interrupted by the user"
+msgstr "Pøerušeno uživatelem "
+
+#: gpicsync-gui.py:895
+msgid "Create a kmz file archive"
+msgstr "Vytvoøení archivu kmz"
+
+#: gpicsync-gui.py:897
+msgid "Create KMZ file !"
+msgstr "Vytvoø soubor KMZ !"
+
+#: gpicsync-gui.py:905
+msgid "Sorry this tool is not yet available for the Linux version"
+msgstr "Tento nástroj bohužel zatím není dostupný v Linuxové verzi"
+
+#: gpicsync-gui.py:914
+msgid "Creating a KMZ file in the pictures folder..."
+msgstr "Vytváøení souboru KMZ ve složce fotografií..."
+
+#: gpicsync-gui.py:917
+msgid "Adding doc.kml"
+msgstr "Pøidává doc.kml"
+
+#: gpicsync-gui.py:921
+msgid "Adding "
+msgstr "Pøidává "
+
+#: gpicsync-gui.py:925
+msgid "KMZ file created in pictures folder"
+msgstr "KMZ soubor vytvoøen ve složce fotografií"
+
+#: gpicsync-gui.py:927
+msgid "Couldn't rename the zip file to kmz (maybe a previous file already exist)"
+msgstr "Nelze pøejmenovat zip na kmz (možná už existuje pøedchozí verze souboru)"
+
+#: gpicsync-gui.py:929
+msgid "To create a Google Earth kmz file you must either:"
+msgstr "Pro vytvoøení souboru kmz pro Google Earth musíte:"
+
+#: gpicsync-gui.py:931
+msgid "- select a folder you've already synchronized then select the KMZ Generator tool"
+msgstr "- vybrat synchronizovanou složku a pak zvolit nástroj Generátor KMZ"
+
+#: gpicsync-gui.py:939
+msgid "Inspect a gpx file and show tracklog data."
+msgstr "Kontrola souboru gpx a zobrazení tracklogu."
+
+#: gpicsync-gui.py:941
+msgid "Select a gpx file"
+msgstr "Vyberte soubor gpx"
+
+#: gpicsync-gui.py:960
+msgid "Select a gpx file first."
+msgstr "Nejdøíve vyberte soubor gpx."
+
+#: gpicsync-gui.py:963
+msgid "Looking at "
+msgstr "Prohlíží se "
+
+#: gpicsync-gui.py:964
+msgid "Number of valid track points found"
+msgstr "Poèet nalezených platných trackpointù"
+
+#: gpicsync-gui.py:967
+msgid "Date"
+msgstr "Datum"
+
+#: gpicsync-gui.py:967
+msgid "Time"
+msgstr "Èas"
+
+#: gpicsync-gui.py:970
+msgid "Altitude"
+msgstr "Výška"
+
+#: gpicsync.py:268
+msgid "taken "
+msgstr "vyfoceno "
+
+#: gpicsync.py:269 gpicsync.py:289
+msgid "writing best latitude/longitude match to picture: "
+msgstr "zápis nejlépe odpovídající šíøky/délky do fotografie: "
+
+#: gpicsync.py:270 gpicsync.py:276 gpicsync.py:290 gpicsync.py:297
+msgid " time difference (s)= "
+msgstr " èasový rozdíl (s)= "
+
+#: gpicsync.py:275
+msgid "no track point below the maximum time range "
+msgstr "žádný trackpoint v max. èasovém rozmezí "
+
+#: gpicsync.py:275 gpicsync.py:279 gpicsync.py:297
+msgid " : WARNING: DIDN'T GEOCODE, "
+msgstr " : POZOR: NEBYLO GEOKÓDOVÁNO, "
+
+#: gpicsync.py:277
+msgid " long="
+msgstr " délka="
+
+#: gpicsync.py:277
+msgid "For information nearest trackpoint was at lat="
+msgstr "Pro informaci nejbližší trackpoint byl na šíøce="
+
+#: gpicsync.py:279
+msgid "no track point at this picture date "
+msgstr "žádný trackpoint s tímto datem "
+
+#: gpicsync.py:292
+msgid "Warning: Picture date "
+msgstr "Pozor: datum fotografie "
+
+#: gpicsync.py:293
+msgid " and track point date "
+msgstr " a datum trackpointu "
+
+#: gpicsync.py:293
+msgid " are different ! "
+msgstr " jsou rùzné ! "
+
+#: gpicsync.py:297
+msgid " no suitable track point below maximum time difference, "
+msgstr " žádný vhodný trackpoint v max. èasovém rozsahu, "
+
