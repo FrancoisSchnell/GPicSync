@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-06-17 00:20+Paris, Madrid\n"
-"PO-Revision-Date: 2007-06-20 16:00+Paris, Madrid\n"
+"PO-Revision-Date: 2007-06-21 11:15+Paris, Madrid\n"
 "Last-Translator: polnjumen <polnjumen@gmail.com>\n"
 "Language-Team: CZECH <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -16,22 +16,22 @@ msgstr ""
 
 #### Added recently
 
+####
+
 #: gpicsync-GUI.py:343
 msgid "If you've changed and saved the configuration file you should restart the application to take effect."
-msgstr ""
+msgstr "Pokud byl zmìnìn a uložen konfiguraèní soubor, je nutno restartovat aplikaci, aby se zmìny projevily."
 
 msgid "A time correction has been set"
-msgstr ""
+msgstr "Èasová korekce byla nastavena"
 
 #: gpicsync-GUI.py:728
 msgid " Time GPS= "
-msgstr ""
+msgstr " Èas GPS= "
 
 #: gpicsync-GUI.py:728
 msgid "Time camera= "
-msgstr ""
-
-####
+msgstr "Èas fotoaparátu= "
 
 #: gpicsync-gui.py:169
 msgid "Local time correction"
@@ -299,7 +299,7 @@ msgstr "Pøidání GPS track logu do souboru Google Earth kml"
 
 #: gpicsync-gui.py:706
 msgid "Click on the 'View in Google Earth' button to visualize the result"
-msgstr "Kliknìte na tlaèítko 'Zobrazit v Google Earth' pro zobrazení výsledku"
+msgstr "Kliknìte na tlaèítko 'Zobraz v Google Earth' pro zobrazení výsledku"
 
 #: gpicsync-gui.py:707
 msgid "( A Google Earth doc.kml file has been created in your picture folder.)"
@@ -347,7 +347,7 @@ msgstr "Všechna EXIF metadata"
 
 #: gpicsync-gui.py:773 gpicsync-gui.py:807
 msgid "Date/Time/Lat./Long."
-msgstr "Datum/Èas/Dél./Šíø."
+msgstr "Datum/Èas/Délka/Šíøka"
 
 #: gpicsync-gui.py:779
 msgid "Select a picture"
@@ -359,7 +359,7 @@ msgstr "Vybraná metadata"
 
 #: gpicsync-gui.py:813
 msgid "lat./long."
-msgstr "dél./šíø."
+msgstr "délka/šíøka"
 
 #: gpicsync-gui.py:815
 msgid "None"
