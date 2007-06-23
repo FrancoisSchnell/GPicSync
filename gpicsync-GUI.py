@@ -66,6 +66,7 @@ class GUI(wx.Frame):
         self.geoname_region=True
         self.geoname_country=True
         self.geoname_summary=True
+        self.geoname_caption=True
         self.datesMustMatch=True
         self.geoname_userdefine=""
         self.maxTimeDifference="300"
@@ -117,6 +118,8 @@ class GUI(wx.Frame):
                 self.geoname_summary=eval(conf.get("gpicsync","geoname_summary"))
             if conf.has_option("gpicsync","geoname_userdefine") == True:
                 self.geoname_userdefine=conf.get("gpicsync","geoname_userdefine")
+            if conf.has_option("gpicsync","geoname_caption") == True:
+                self.geoname_caption=eval(conf.get("gpicsync","geoname_caption"))
             if conf.has_option("gpicsync","defaultdirectory") == True:
                 self.picDir=conf.get("gpicsync","defaultdirectory")
             if conf.has_option("gpicsync","getimestamp") == True:
@@ -330,7 +333,8 @@ class GUI(wx.Frame):
         fconf.write("geoname_region="+str(self.geoname_region)+"\n")
         fconf.write("geoname_country="+str(self.geoname_country)+"\n")
         fconf.write("geoname_summary="+str(self.geoname_summary)+"\n")
-        fconf.write("geoname_userdefine="+self.geoname_userdefine+"\n\n")
+        fconf.write("geoname_userdefine="+self.geoname_userdefine+"\n")
+        fconf.write("geoname_caption="+str(self.geoname_caption)+"\n\n")
         fconf.write("#Set default or last directory automatically used\n")
         fconf.write("Defaultdirectory="+self.picDir)
         fconf.write("")
@@ -682,14 +686,21 @@ class GUI(wx.Frame):
                             gnInfos="Geonames: "+gnPlace+" "+gnRegion+" "+gnCountry
                             print "gnInfos:",gnInfos
                             geotag="geotagged"
-                            geotagLat="geo:lat="+str(decimal.Decimal(result[1]).quantize(decimal.Decimal('0.000001'))) 
-                            geotagLon="geo:lon="+str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
+                            tempLat=str(decimal.Decimal(result[1]).quantize(decimal.Decimal('0.000001'))) 
+                            tempLong=str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
+                            geotagLat="geo:lat="+tempLat
+                            geotagLon="geo:lon="+tempLong
                             wx.CallAfter(self.consolePrint,gnInfos+_(" (writing geonames and geotagged to keywords tag in picture EXIF)")+"\n")
                             geonameKeywords=""
                             print userdefine
                             for geoname in [gnPlace,gnRegion,gnCountry,gnSummary,geotag,geotagLat,geotagLon,userdefine]:
                                 if geoname !="":
                                     geonameKeywords+=' -keywords="%s" ' % geoname
+                            if self.geoname_caption==True:
+                                geonameKeywords+=' -iptc:caption-abstract="Latitude/Longitude=('+\
+                                tempLat+' , '+tempLong+' ) <br>Near '+gnInfos+\
+                                ' <a href=\"http://www.geonames.org/maps/google_'+tempLat+'_'+tempLong+'.html\"> (Map link)</a><br>'+userdefine+'"'
+                                
                             print "geonameKeywords=",geonameKeywords
                             os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))     
 
