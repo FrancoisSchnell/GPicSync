@@ -26,7 +26,11 @@ class Gpx(object):
     def __init__(self,gpxFile):
         """ create a list with the trkpts found in the .gpx file """
         self.gpx_trkpts=[]#The valid list of trackpoints
-        gpx_file = open(gpxFile,'r').read()
+        gpx_file=""
+        i=0
+        for f in gpxFile:
+            gpx_file+= open(gpxFile[i],'r').read()
+            i+=1
         #print gpx_file
         regex=re.compile('(<trkpt.*?</trkpt>)',re.S)
         gpx_trkpts_found=regex.findall(gpx_file)

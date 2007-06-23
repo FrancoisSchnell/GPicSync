@@ -497,32 +497,37 @@ class GUI(wx.Frame):
         """
         Select the .gpx file to use or create one if necessary through GPSbabel"
         """
-        openGpx=wx.FileDialog(self)
+        openGpx=wx.FileDialog(self,style=wx.FD_MULTIPLE)
         openGpx.SetWildcard("GPX Files(*.gpx)|*.gpx|NMEA Files (*.txt)|*.txt")
         openGpx.ShowModal()
-        self.gpxFile=openGpx.GetPath()
-        
-        if os.path.basename(self.gpxFile).find(".txt")>0 or\
-        os.path.basename(self.gpxFile).find(".TXT")>0:
-            try:
-                target=self.gpxFile.split(".txt")[0]+".gpx"
-                babelResult=os.popen('gpsbabel -i nmea -f "%s" -o gpx -F "%s"' \
-                % (self.gpxFile,target)).read()
-                #print babelResult
-                self.gpxFile=target
-                if os.path.isfile(target)==True:
-                    wx.CallAfter(self.consolePrint,\
-                    _("For information, GPX file created with GPSBabel in your picture folder."))
-                else:
-                    wx.CallAfter(self.consolePrint,_("Possible problem with the creation of the gpx file"))
-                        
-            except:
-                wx.CallAfter(self.consolePrint,_("Couldn't create the necessary GPX file."))
+        self.gpxFile=openGpx.GetPaths()
+        j=0
+        for track in self.gpxFile:
+            if os.path.basename(self.gpxFile[j]).find(".txt")>0 or\
+            os.path.basename(self.gpxFile[j]).find(".TXT")>0:
+                try:
+                    target=self.gpxFile[j].split(".txt")[0]+".gpx"
+                    babelResult=os.popen('gpsbabel -i nmea -f "%s" -o gpx -F "%s"' \
+                    % (self.gpxFile[j],target)).read()
+                    #print babelResult
+                    self.gpxFile[j]=target
+                    j+=1
+                    if os.path.isfile(target)==True:
+                        wx.CallAfter(self.consolePrint,\
+                        _("For information, GPX file created with GPSBabel in your picture folder."))
+                    else:
+                        wx.CallAfter(self.consolePrint,_("Possible problem with the creation of the gpx file"))
+                            
+                except:
+                    wx.CallAfter(self.consolePrint,_("Couldn't create the necessary GPX file."))
                 
-                
-                
-        self.gpxEntry.SetValue(self.gpxFile)
-        print self.gpxFile
+        gpxPaths=""   
+        i=0     
+        for path in self.gpxFile:
+            gpxPaths+=self.gpxFile[i]+" "
+            i+=1
+        self.gpxEntry.SetValue(gpxPaths)
+        print "################################################", self.gpxFile
     
     def findPictures(self,evt):
         """Select the folder pictures to use"""
@@ -699,7 +704,7 @@ class GUI(wx.Frame):
                             if self.geoname_caption==True:
                                 geonameKeywords+=' -iptc:caption-abstract="Latitude/Longitude=('+\
                                 tempLat+' , '+tempLong+' ) <br>Near '+gnInfos+\
-                                ' <a href=\"http://www.geonames.org/maps/google_'+tempLat+'_'+tempLong+'.html\"> (Map link)</a><br>'+userdefine+'"'
+                                ' <a href=\"http://www.geonames.org/maps/google_'+tempLat+'_'+tempLong+'.html\"> (Map link)</a><br><br>'+userdefine+'"'
                                 
                             print "geonameKeywords=",geonameKeywords
                             os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))     
