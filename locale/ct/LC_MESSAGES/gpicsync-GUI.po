@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-06-04 22:56+Paris, Madrid\n"
-"PO-Revision-Date: 2007-06-15 09:34+Paris, Madrid\n"
+"PO-Revision-Date: 2007-06-26 11:34+Paris, Madrid\n"
 "Last-Translator: Oriol Garrote <oriol.garrote@gmail.com>\n"
 "Language-Team: CATALAN\n"
 "MIME-Version: 1.0\n"
@@ -16,46 +16,46 @@ msgstr ""
 
 ### Added recently
 
+########################################
+
 #: gpicsync-GUI.py:343
 msgid "If you've changed and saved the configuration file you should restart the application to take effect."
-msgstr ""
+msgstr "Si has canviat i guardat l'arxiu de configuració s'ha de reiniciar l'aplicació per a que tingui efecte."
 
 msgid "A time correction has been set"
-msgstr ""
+msgstr "S'ha establert una correció de temps"
 
 #: gpicsync-GUI.py:728
 msgid " Time GPS= "
-msgstr ""
+msgstr " Hora GPS= "
 
 #: gpicsync-GUI.py:728
 msgid "Time camera= "
-msgstr ""
+msgstr "Hora càmera= "
 
 #: gpicsync-gui.py:181
 msgid "EXIF writer"
-msgstr ""
+msgstr "Editor EXIF"
 
 #: gpicsync-gui.py:379
 msgid "Manual latitude/longitude EXIF writer"
-msgstr ""
+msgstr "Editor manual latitud/longitud d'EXIF"
 
 #: gpicsync-gui.py:381
 msgid "Enter coordinates in decimal degrees"
-msgstr ""
+msgstr "Posar coordenades en graus decimals"
 
 #: gpicsync-gui.py:388
 msgid "Select and write in picture(s)"
-msgstr ""
+msgstr "Selecciona i edita imatge(s)"
 
 #: gpicsync-gui.py:418
 msgid "Writing GPS latitude/longitude "
-msgstr ""
+msgstr "Escrivint latitud/longitud GPS"
 
 #: gpicsync-gui.py:436
 msgid "Latitude or Longitude formats are not valid: no geocoding happened."
-msgstr ""
-
-########################################
+msgstr "Els formats de latitud o longitud no són vàlids: no s'ha geocodificat."
 
 #: gpicsync-GUI.py:187
 msgid "Quit and save settings"

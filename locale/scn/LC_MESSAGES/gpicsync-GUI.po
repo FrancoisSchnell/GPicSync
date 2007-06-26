@@ -16,50 +16,50 @@ msgstr ""
 
 ### Added recently
 
+##########################
+
 #: gpicsync-GUI.py:343
 msgid "If you've changed and saved the configuration file you should restart the application to take effect."
-msgstr ""
+msgstr "如果您更改及储存了设定档，重新启动程式后才会生效。"
 
 msgid "A time correction has been set"
-msgstr ""
+msgstr "时间修正已经设定"
 
 #: gpicsync-GUI.py:728
 msgid " Time GPS= "
-msgstr ""
+msgstr "GPS时间= "
 
 #: gpicsync-GUI.py:728
 msgid "Time camera= "
-msgstr ""
+msgstr "相机时间= "
 
 #: gpicsync-gui.py:181
 msgid "EXIF writer"
-msgstr ""
+msgstr "EXIF 编辑"
 
 #: gpicsync-gui.py:379
 msgid "Manual latitude/longitude EXIF writer"
-msgstr ""
+msgstr "手动EXIF经纬资料编辑"
 
 #: gpicsync-gui.py:381
 msgid "Enter coordinates in decimal degrees"
-msgstr ""
+msgstr "点数格式输入座标"
 
 #: gpicsync-gui.py:388
 msgid "Select and write in picture(s)"
-msgstr ""
+msgstr "选取将被写入的相片"
 
 #: gpicsync-gui.py:418
 msgid "Writing GPS latitude/longitude "
-msgstr ""
+msgstr "写入GPS经纬资料"
 
 #: gpicsync-gui.py:436
 msgid "Latitude or Longitude formats are not valid: no geocoding happened."
-msgstr ""
+msgstr "经纬资料格式不正确，相片没有写入定位资料。"
 
 #: gpicsync-GUI.py:187
 msgid "Quit and save settings"
-msgstr ""
-
-##########################
+msgstr "储存及结束"
 
 #: gpicsync-GUI.py:131
 msgid "Configuration file"
