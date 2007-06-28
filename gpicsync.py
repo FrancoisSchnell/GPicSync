@@ -299,10 +299,13 @@ class GpicSync(object):
 if __name__=="__main__":
     
     ## Commnand-line version
-    import gettext
+    
     import os,sys,fnmatch
     from optparse import OptionParser
-
+    
+    import gettext
+    gettext.install("gpicsync-GUI", "None")
+    
     parser=OptionParser()
     parser.add_option("-d", "--directory",dest="dir",
     help="Directory containing the pictures. Expl. mypictures")
