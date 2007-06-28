@@ -299,6 +299,7 @@ class GpicSync(object):
 if __name__=="__main__":
     
     ## Commnand-line version
+    import gettext
     import os,sys,fnmatch
     from optparse import OptionParser
 
@@ -322,11 +323,11 @@ if __name__=="__main__":
     if options.tcam==None: options.tcam="00:00:00"
     if options.tgps==None: options.tgps="00:00:00"
     if options.offset==None: options.offset=0
-    if options.offset==None: options.dir="."
+    if options.dir==None: options.dir="."
     if options.gpx==None:
         print "I need a .gpx file \nType Python gpicsync.py -h for help."
         sys.exit(1)
-    
+    options.gpx=[options.gpx]
     print "\nEngage processing using the following arguments ...\n" 
     print "-Directory containing the pictures:",options.dir
     print "-Path to the gpx file:",options.gpx
