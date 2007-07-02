@@ -979,8 +979,9 @@ class GUI(wx.Frame):
         if gpxPath =="" or None:
             wx.CallAfter(self.consolePrint,"\n"+_("Select a gpx file first."))
         else:
+            gpxPath=[gpxPath]
             myGpx=Gpx(gpxPath).extract()
-            wx.CallAfter(self.consolePrint,"\n"+_("Looking at ")+gpxPath+"\n")
+            wx.CallAfter(self.consolePrint,"\n"+_("Looking at ")+gpxPath[0]+"\n")
             wx.CallAfter(self.consolePrint,"\n"+_("Number of valid track points found")+" : "+str(len(myGpx))+"\n\n")
             def inspect():
                 for trkpt in myGpx:
