@@ -15,6 +15,11 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 ### Added recently
+
+#: gpicsync-gui.py:395
+msgid "Eventual elevation (meters)"
+msgstr ""
+
 ##########################
 
 #: gpicsync-GUI.py:343

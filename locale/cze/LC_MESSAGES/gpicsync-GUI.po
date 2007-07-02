@@ -16,6 +16,10 @@ msgstr ""
 
 #### Added recently
 
+#: gpicsync-gui.py:395
+msgid "Eventual elevation (meters)"
+msgstr ""
+
 ####
 
 #: gpicsync-GUI.py:343

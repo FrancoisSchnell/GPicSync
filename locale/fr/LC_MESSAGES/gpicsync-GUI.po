@@ -15,23 +15,26 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 ### Added recently
+##########################
+
+#: gpicsync-gui.py:395
+msgid "Eventual elevation (meters)"
+msgstr "Altitude éventuelle (mètres)"
 
 #: gpicsync-GUI.py:343
 msgid "If you've changed and saved the configuration file you should restart the application to take effect."
-msgstr ""
+msgstr "Si vous avez modifié le fichier de configuration les modifications seront appliquées au prochain lancement."
 
 msgid "A time correction has been set"
-msgstr ""
+msgstr "Une correction temporelle a été saisie."
 
 #: gpicsync-GUI.py:728
 msgid " Time GPS= "
-msgstr ""
+msgstr " Temps GPS="
 
 #: gpicsync-GUI.py:728
 msgid "Time camera= "
-msgstr ""
-
-##########################
+msgstr "Temp APN= "
 
 #: gpicsync-gui.py:181
 msgid "EXIF writer"

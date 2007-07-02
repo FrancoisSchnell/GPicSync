@@ -16,46 +16,50 @@ msgstr ""
 
 ### Added recently
 
-#: gpicsync-GUI.py:343
-msgid "If you've changed and saved the configuration file you should restart the application to take effect."
-msgstr ""
-
-msgid "A time correction has been set"
-msgstr ""
-
-#: gpicsync-GUI.py:728
-msgid " Time GPS= "
-msgstr ""
-
-#: gpicsync-GUI.py:728
-msgid "Time camera= "
-msgstr ""
-
-#: gpicsync-gui.py:181
-msgid "EXIF writer"
-msgstr ""
-
-#: gpicsync-gui.py:379
-msgid "Manual latitude/longitude EXIF writer"
-msgstr ""
-
-#: gpicsync-gui.py:381
-msgid "Enter coordinates in decimal degrees"
-msgstr ""
-
-#: gpicsync-gui.py:388
-msgid "Select and write in picture(s)"
-msgstr ""
-
-#: gpicsync-gui.py:418
-msgid "Writing GPS latitude/longitude "
-msgstr ""
-
-#: gpicsync-gui.py:436
-msgid "Latitude or Longitude formats are not valid: no geocoding happened."
+#: gpicsync-gui.py:395
+msgid "Eventual elevation (meters)"
 msgstr ""
 
 ###############################
+
+#: gpicsync-GUI.py:343
+msgid "If you've changed and saved the configuration file you should restart the application to take effect."
+msgstr "Als de configuratie file is aangepast moet je de applicatie opnieuw opstarten voordat de wijzigen worden doorgevoerd."
+
+msgid "A time correction has been set"
+msgstr "Er is een tijdscorrectie ingesteld"
+
+#: gpicsync-GUI.py:728
+msgid " Time GPS= "
+msgstr " Tijd GPS= "
+
+#: gpicsync-GUI.py:728
+msgid "Time camera= "
+msgstr "Tijd camera= "
+
+#: gpicsync-gui.py:181
+msgid "EXIF writer"
+msgstr "EXIF schrijven"
+
+#: gpicsync-gui.py:379
+msgid "Manual latitude/longitude EXIF writer"
+msgstr "Handmatig breedtegr./lengtegr. naar EXIF schrijven"
+
+#: gpicsync-gui.py:381
+msgid "Enter coordinates in decimal degrees"
+msgstr "Coordinaten in decimale graden invoeren"
+
+#: gpicsync-gui.py:388
+msgid "Select and write in picture(s)"
+msgstr "Selecteer foto(s) om naar te schrijven"
+
+#: gpicsync-gui.py:418
+msgid "Writing GPS latitude/longitude "
+msgstr "Bezig met schrijven van GPS breedtegr./lengtegr. "
+
+#: gpicsync-gui.py:436
+msgid "Latitude or Longitude formats are not valid: no geocoding happened."
+msgstr "Formaat van de breedtegr. of lengtegr. is niet correct: geen geocodering toegepast."
 
 #: gpicsync-GUI.py:159
 msgid "Local time correction"
@@ -83,7 +87,7 @@ msgstr "Hulpmiddelen"
 
 #: gpicsync-GUI.py:170
 msgid "EXIF reader"
-msgstr "EXIF lezer"
+msgstr "EXIF lezen"
 
 #: gpicsync-GUI.py:171
 msgid "Geo-Rename pictures"
@@ -163,7 +167,7 @@ msgstr "Google Maps uitvoer, folder URL="
 
 #: gpicsync-GUI.py:206
 msgid "Backup pictures"
-msgstr "backup foto's"
+msgstr "Backup foto's"
 
 #: gpicsync-GUI.py:208
 msgid "interpolation"
@@ -323,7 +327,7 @@ msgstr "Pas correctie toe"
 
 #: gpicsync-GUI.py:690
 msgid "EXIF Reader"
-msgstr "EXIF Lezer"
+msgstr "EXIF Lezen"
 
 #: gpicsync-GUI.py:693
 msgid "Read the EXIF metadata of the selected picture."
