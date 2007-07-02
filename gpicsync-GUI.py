@@ -383,7 +383,7 @@ class GUI(wx.Frame):
        
     def geoWriterFrame(self,evt):
         """ Frame to manually write latitude/longitude in the EXIF header of the picture"""
-        self.winGeoFrame=wx.Frame(win,size=(300,250),title=_("Manual latitude/longitude EXIF writer"))
+        self.winGeoFrame=wx.Frame(win,size=(300,300),title=_("Manual latitude/longitude EXIF writer"))
         bkg=wx.Panel(self.winGeoFrame)
         instructionLabel = wx.StaticText(bkg, -1,_("Enter coordinates in decimal degrees"))
         latLabel = wx.StaticText(bkg, -1,_("Latitude")+":")
@@ -392,6 +392,8 @@ class GUI(wx.Frame):
         lonLabel = wx.StaticText(bkg, -1,_("Longitude")+":")
         self.lonEntry=wx.TextCtrl(bkg,size=(100,-1))
         self.lonEntry.SetValue(str(self.defaultLon))
+        eleLabel = wx.StaticText(bkg, -1,_("Eventual elevation (meters)")+":")
+        self.eleEntry=wx.TextCtrl(bkg,size=(100,-1))
         selectButton=wx.Button(bkg,size=(-1,-1),label=_("Select and write in picture(s)"))
         self.Bind(wx.EVT_BUTTON, self.manualGeoWrite, selectButton)
         vbox=wx.BoxSizer(wx.VERTICAL)
@@ -400,6 +402,8 @@ class GUI(wx.Frame):
         vbox.Add(self.latEntry,proportion=0,flag=wx.ALIGN_CENTER,border=5)
         vbox.Add(lonLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=5)
         vbox.Add(self.lonEntry,proportion=0,flag=wx.ALIGN_CENTER,border=5)
+        vbox.Add(eleLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=5)
+        vbox.Add(self.eleEntry,proportion=0,flag=wx.ALIGN_CENTER,border=5)
         vbox.Add(selectButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         bkg.SetSizer(vbox)
         self.winGeoFrame.Show()
@@ -415,6 +419,7 @@ class GUI(wx.Frame):
         latitude=self.latEntry.GetValue()
         self.defaultLat=latitude
         longitude=self.lonEntry.GetValue()
+        elevation=self.eleEntry.GetValue()
         self.winGeoFrame.Close()
         self.defaultLon=longitude
         self.pathPictures=picture.GetPaths()
@@ -425,10 +430,13 @@ class GUI(wx.Frame):
                 for pic in self.pathPictures:
                     wx.CallAfter(self.consolePrint,_("Writing GPS latitude/longitude ")+\
                     latRef+latitude+" / "+longRef+longitude+" ---> "+os.path.basename(pic)+"\n")
-                    os.popen('%s "-DateTimeOriginal>FileModifyDate" \
-                     -GPSLatitude=%s -GPSLongitude=%s \
-                     -GPSLatitudeRef=%s -GPSLongitudeRef=%s  "%s" '\
-                    %(self.exifcmd,latitude,longitude,latRef,longRef,pic))
+                    if elevation!="":
+                        eleExif= " -GPSAltitude="+elevation+" -GPSAltitudeRef=0 "
+                    else: eleExif=""
+                    os.popen('%s -n "-DateTimeOriginal>FileModifyDate" \
+                     -GPSLatitude=%s -GPSLongitude=%s %s\
+                     -GPSLatitudeRef=%s -GPSLongitudeRef=%s "%s" '\
+                    %(self.exifcmd,latitude,longitude,eleExif, latRef,longRef,pic))
                 wx.CallAfter(self.consolePrint,"---"+_("Finished")+"---\n")
         try:
             if float(latitude)>0:
