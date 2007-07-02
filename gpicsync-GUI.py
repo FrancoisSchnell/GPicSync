@@ -372,7 +372,7 @@ class GUI(wx.Frame):
                     
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="GPicSync  1.05.1 - 2007 \n\n"\
+        text="GPicSync  1.06 - 2007 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\

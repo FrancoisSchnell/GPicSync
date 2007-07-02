@@ -1,12 +1,12 @@
 ; Install file for GPicSync
-; (C)2007 francois schnell
+; 2007 - francois schnell
 ;
 
 [Setup]
 AppName=GPicSync
 AppId=GPicSync
-AppVerName=GPicSync 1.05 .1
-AppVersion=1.05.1
+AppVerName=GPicSync 1.06
+AppVersion=1.06
 AppPublisher=francois schnell
 AppPublisherURL=http://francois.schnell.free.fr
 AppSupportURL=http://code.google.com/p/gpicsync/
