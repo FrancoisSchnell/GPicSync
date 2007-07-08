@@ -208,16 +208,24 @@ class GUI(wx.Frame):
         clearButton=wx.Button(bkg,label=_("Clear"),size=(-1,-1))
         viewInGEButton=wx.Button(bkg,label=_("View in Google Earth"),size=(-1,-1))
         
+        ## Elevation GUI
+        eleLabel=wx.StaticText(bkg, -1," "+_("Elevation")+":")
+        eleList=[_("Clamp to the ground"),
+        _("absolute value (for flights)"),_("absolute value + extrude (for flights)")]
+        self.elevationChoice=wx.Choice(bkg, -1, (-1,-1), choices = eleList)
+        self.elevationChoice.SetSelection(0)
+        
         utcLabel = wx.StaticText(bkg, -1,_("UTC Offset="))
         timerangeLabel=wx.StaticText(bkg, -1,_("Geocode picture only if time difference to nearest track point is below (seconds)="))
         self.logFile=wx.CheckBox(bkg,-1,_("Create a log file in picture folder"))
         self.logFile.SetValue(self.log)
         self.dateCheck=wx.CheckBox(bkg,-1,_("Dates must match"))
         self.dateCheck.SetValue(self.datesMustMatch)
-        self.geCheck=wx.CheckBox(bkg,-1,_("Create a Google Earth file")+" (")
+        self.geCheck=wx.CheckBox(bkg,-1,_("Create a Google Earth file")+": ")
         self.geCheck.SetValue(True)
-        self.geTStamps=wx.CheckBox(bkg,-1,_("with TimeStamp")+" )")
+        self.geTStamps=wx.CheckBox(bkg,-1,_("with TimeStamp"))
         self.geTStamps.SetValue(self.timeStamp)
+        
         self.gmCheck=wx.CheckBox(bkg,-1,_("Google Maps export, folder URL="))
         self.gmCheck.SetValue(self.GMaps)
         self.urlEntry=wx.TextCtrl(bkg,size=(300,-1))
@@ -248,11 +256,17 @@ class GUI(wx.Frame):
         self.consoleEntry=wx.TextCtrl(bkg,style=wx.TE_MULTILINE | wx.HSCROLL)
         #self.consoleEntry.SetBackgroundColour("light grey")
         
-        mapsbox=wx.BoxSizer()
-        mapsbox.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
-        mapsbox.Add(self.geTStamps,proportion=0,flag=wx.EXPAND| wx.ALL,border=0)
-        mapsbox.Add(self.gmCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=20)
-        mapsbox.Add(self.urlEntry,proportion=0,flag=wx.EXPAND| wx.ALL,border=1)
+        gebox=wx.BoxSizer()
+        gebox.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
+        
+        gebox.Add(eleLabel,flag=wx.ALIGN_CENTER_VERTICAL| wx.LEFT, border=10)
+        gebox.Add(self.elevationChoice,proportion=0,flag= wx.ALIGN_CENTER_VERTICAL|wx.ALL,border=10)
+        gebox.Add(self.geTStamps,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
+
+                
+        gmbox=wx.BoxSizer()
+        gmbox.Add(self.gmCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
+        gmbox.Add(self.urlEntry,proportion=0,flag=wx.EXPAND| wx.ALL,border=1)
         
         hbox=wx.BoxSizer()
         hbox.Add(dirButton,proportion=0,flag=wx.LEFT,border=5)
@@ -286,7 +300,8 @@ class GUI(wx.Frame):
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(hbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox2,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        vbox.Add(mapsbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        vbox.Add(gebox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        vbox.Add(gmbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox3,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox1,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox4,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
@@ -372,7 +387,7 @@ class GUI(wx.Frame):
                     
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="GPicSync  1.06 - 2007 \n\n"\
+        text="GPicSync  1.07 - 2007 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
@@ -565,6 +580,7 @@ class GUI(wx.Frame):
         self.interpolation=self.interpolationCheck.GetValue()
         timeStampOrder=self.geTStamps.GetValue()
         print "self.utcOffset= ",self.utcOffset
+        eleMode=self.elevationChoice.GetSelection()
 
         def sync():
             if self.dirEntry.GetValue()!="" and self.gpxEntry.GetValue!="":
@@ -589,7 +605,8 @@ class GUI(wx.Frame):
 
             if self.geCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Earth file (doc.kml) in the picture folder ...")+" \n")
-                localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir),timeStampOrder=timeStampOrder,utc=self.utcEntry.GetValue())
+                localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir),\
+                timeStampOrder=timeStampOrder,utc=self.utcEntry.GetValue(),eleMode=eleMode)
                 localKml.writeInKml("\n<Folder>\n<name>Photos</name>")
             
             if self.gmCheck.GetValue()==True:
@@ -641,10 +658,10 @@ class GUI(wx.Frame):
                         
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],
-                        long=result[2],width=result[3],height=result[4],timeStamp=result[5])
+                        long=result[2],width=result[3],height=result[4],timeStamp=result[5],elevation=result[6])
                     
                     if self.gmCheck.GetValue()==True and result[1] !="" and result[2] !="":
-                        webKml.placemark4Gmaps(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4])
+                        webKml.placemark4Gmaps(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4],elevation=result[6])
                         im=Image.open(self.picDir+'/'+fileName)
                         width=int(result[3])
                         height=int(result[4])

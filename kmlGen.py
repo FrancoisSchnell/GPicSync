@@ -21,10 +21,11 @@ class KML(object):
     (for live viewing in Google Earth)
     """
     
-    def __init__(self,fileName,name,url="",timeStampOrder=False,utc="0"):
+    def __init__(self,fileName,name,url="",timeStampOrder=False,utc="0",eleMode=0):
         self.f=open(fileName+".kml","w")
         self.url=url
         self.timeStampOrder=timeStampOrder
+        self.eleMode=eleMode # Elevation mode
         #self.utcOffest=utc
         if int(utc)>=0: sign="+"
         if int(utc)<0: sign="-"
@@ -104,7 +105,7 @@ class KML(object):
         
         return pmDescriptionFooter
             
-    def placemark(self,picName="",lat="",long="",width="800",height="600",timeStamp=""):
+    def placemark(self,picName="",lat="",long="",ele="",width="800",height="600",timeStamp="",elevation=""):
         """
         Creates a placemark tag for the given picture in the kml file.
         If only a picture path is given in argument, latitude and longitude will
@@ -112,6 +113,7 @@ class KML(object):
         It's also possible to give the values in argument
         (a string representing decimal degress, - sign ok)
         """
+        if elevation=="" or elevation=="None": elevation="0"
         if self.timeStampOrder==True:
             timeStamp1="<TimeStamp><when>"+timeStamp+self.utcOffset+"</when> </TimeStamp>\n"
             timeStamp2="<TimeSpan><begin>"+timeStamp+self.utcOffset+"</begin></TimeSpan>\n"
@@ -144,6 +146,11 @@ class KML(object):
         pmHead="\n\n<Placemark>\n<name>"+\
         os.path.basename(picName)+"</name>\n"
         
+        if self.eleMode==1 or self.eleMode==2:
+            eleAdd="\n<altitudeMode>absolute</altitudeMode>"
+        else: eleAdd=""
+            
+        
         #Adding a footer to the description
         pmDescriptionFooter=self.footerPlacemark(picName,type="GE")
         
@@ -151,8 +158,8 @@ class KML(object):
         "<img src='"+self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>"+\
         pmDescriptionFooter+\
         "]]>"+\
-        "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+\
-        "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
+        "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+eleAdd+\
+        "\n<coordinates>"+str(long)+","+str(lat)+","+elevation+\
         "</coordinates>\n</Point>\n"+timeStamp
         
         pmTail="</Placemark>"
@@ -160,7 +167,7 @@ class KML(object):
         self.f.write(pmDescription)
         self.f.write(pmTail)
         
-    def placemark4Gmaps(self,picName="",lat="",long="",width="400",height="300"):
+    def placemark4Gmaps(self,picName="",lat="",long="",width="400",height="300",elevation=""):
         """
         The same as placemark but with special values and features for G maps.
         Creates a placemark tag for the given picture in the kml file.
@@ -196,7 +203,7 @@ class KML(object):
         pmDescriptionFooter+\
         "]]>"+\
         "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+\
-        "\n<coordinates>"+str(long)+","+str(lat)+",0"+\
+        "\n<coordinates>"+str(long)+","+str(lat)+","+elevation+\
         "</coordinates>\n</Point>\n"
         pmTail="</Placemark>"
         self.f.write(pmHead)
@@ -210,14 +217,16 @@ class KML(object):
         part=cut # cut the gpx file in part (to be sure it displays in GM)
         j=1 #Path j (a number for each section) 
         
+        if self.eleMode==1:
+            pathAdd="\n<altitudeMode>absolute</altitudeMode>"
+        elif self.eleMode==2:
+            pathAdd="\n<altitudeMode>absolute</altitudeMode>\n<extrude>1</extrude>"
+        else: pathAdd=""
+        
         def makeHeadPath(j):
-            headPath="""
-\n<Placemark>
-<name>Path """+str(j)+ """</name>
-<styleUrl>#lineStyle</styleUrl>
-<LineString>
-<tessellate>1</tessellate>
-<coordinates>\n"""
+            headPath="\n<Placemark>\n<name>Path "+str(j)+"</name>\n"\
+            +"<styleUrl>#lineStyle</styleUrl>\n<LineString>\n<tessellate>1</tessellate>"\
+            +pathAdd+"\n<coordinates>\n"
             return headPath
         
         endPath="\n</coordinates>\n</LineString>\n</Placemark>\n\n"
