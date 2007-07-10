@@ -208,12 +208,22 @@ class GUI(wx.Frame):
         clearButton=wx.Button(bkg,label=_("Clear"),size=(-1,-1))
         viewInGEButton=wx.Button(bkg,label=_("View in Google Earth"),size=(-1,-1))
         
-        ## Elevation GUI
+        # Elevation options
         eleLabel=wx.StaticText(bkg, -1," "+_("Elevation")+":")
         eleList=[_("Clamp to the ground"),
         _("absolute value (for flights)"),_("absolute value + extrude (for flights)")]
         self.elevationChoice=wx.Choice(bkg, -1, (-1,-1), choices = eleList)
         self.elevationChoice.SetSelection(0)
+        
+        # Geonames option
+        gnOptList=[_("Geonames in EXIF keywords + HTML sumarize in IPTC caption"),
+        _("Geonames in EXIF keywords"),_("Geonames in specific IPTC fields"),_("Geonames in XMP format")]
+        self.gnOptChoice=wx.Choice(bkg, -1, (-1,-1), choices = gnOptList)
+        self.gnOptChoice.SetSelection(0)
+        
+        ## Image preview
+        imgPreview = wx.Image('preview/test.jpg', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        
         
         utcLabel = wx.StaticText(bkg, -1,_("UTC Offset="))
         timerangeLabel=wx.StaticText(bkg, -1,_("Geocode picture only if time difference to nearest track point is below (seconds)="))
@@ -271,17 +281,23 @@ class GUI(wx.Frame):
         hbox=wx.BoxSizer()
         hbox.Add(dirButton,proportion=0,flag=wx.LEFT,border=5)
         hbox.Add(self.dirEntry,proportion=1,flag=wx.EXPAND)
-    
         hbox2=wx.BoxSizer()
         hbox2.Add(gpxButton,proportion=0,flag=wx.LEFT,border=5)
         hbox2.Add(self.gpxEntry,proportion=1,flag=wx.EXPAND)
         
-        hbox3=wx.BoxSizer()
-        hbox3.Add(self.logFile,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
-        hbox3.Add(self.dateCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
-        hbox3.Add(self.interpolationCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
-        hbox3.Add(self.backupCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
-        hbox3.Add(self.geonamesCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
+        settingsbox=wx.BoxSizer()
+        settingsbox.Add(self.logFile,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
+        settingsbox.Add(self.dateCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
+        settingsbox.Add(self.interpolationCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
+        settingsbox.Add(self.backupCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
+        
+        ## test
+        #previewbox=wx.BoxSizer()
+        #previewbox.Add(wx.StaticBitmap(bkg, -1, imgPreview, (5, 5)), 0, flag=wx.RIGHT, border=10)
+        
+        gnhbox=wx.BoxSizer()
+        gnhbox.Add(self.geonamesCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
+        gnhbox.Add(self.gnOptChoice,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         
         hbox1=wx.BoxSizer()
         hbox1.Add(utcLabel,proportion=0,flag=wx.LEFT,border=10)
@@ -297,17 +313,45 @@ class GUI(wx.Frame):
         hbox4.Add(quitButton,proportion=0,flag=wx.LEFT,border=5)
         hbox4.Add(quitAndSaveButton,proportion=0,flag=wx.LEFT,border=5)
         
+        """
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(hbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox2,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        #vbox.Add(previewbox,proportion=1,flag=wx.RIGHT,border=5)
+        
         vbox.Add(gebox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(gmbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        vbox.Add(hbox3,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        vbox.Add(settingsbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        vbox.Add(gnhbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox1,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(hbox4,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         vbox.Add(self.consoleEntry,proportion=1,flag=wx.EXPAND | wx.LEFT, border=5)
+        """
         
-        bkg.SetSizer(vbox)
+        headerbox=wx.BoxSizer(wx.VERTICAL)
+        headerbox.Add(hbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        headerbox.Add(hbox2,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        
+        optionbox=wx.BoxSizer(wx.VERTICAL)
+        optionbox.Add(gebox)
+        optionbox.Add(gmbox)
+        optionbox.Add(settingsbox)
+        optionbox.Add(gnhbox)
+        
+        footerbox=wx.BoxSizer(wx.VERTICAL)
+        footerbox.Add(hbox1,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        footerbox.Add(hbox4,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        footerbox.Add(self.consoleEntry,proportion=1,flag=wx.EXPAND | wx.LEFT, border=5)
+                
+        
+        allBox= wx.BoxSizer(wx.VERTICAL)
+        allBox.Add(headerbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        allBox.Add(optionbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        allBox.Add(footerbox,proportion=1,flag=wx.EXPAND | wx.ALL,border=5)
+                
+        #bkg.SetSizer(vbox)
+        bkg.SetSizer(allBox)
+        
         self.SetMenuBar(menuBar)
         
         if sys.platform == 'win32':
@@ -728,8 +772,8 @@ class GUI(wx.Frame):
                                     geonameKeywords+=' -keywords="%s" ' % geoname
                             if self.geoname_caption==True:
                                 geonameKeywords+=' -iptc:caption-abstract="Latitude/Longitude=('+\
-                                tempLat+' , '+tempLong+' ) <br>Near '+gnInfos+\
-                                ' <a href=\"http://www.geonames.org/maps/google_'+tempLat+'_'+tempLong+'.html\"> (Map link)</a><br><br>'+userdefine+'"'
+                                tempLat+' , '+tempLong+' )<br>Near '+gnInfos+\
+                                ' <a href=\"http://www.geonames.org/maps/google_'+tempLat+'_'+tempLong+'.html\"> (Map link)</a><br>'+userdefine+'"'
                                 
                             print "geonameKeywords=",geonameKeywords
                             os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))     
