@@ -252,7 +252,6 @@ class GUI(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.stopApp,stopButton) 
         self.Bind(wx.EVT_BUTTON, self.clearConsole,clearButton)
         self.Bind(wx.EVT_BUTTON, self.viewInGE,viewInGEButton)
-        #self.Bind(wx.EVT_CLOSE,self.exitApp,self)
         
         self.dirEntry=wx.TextCtrl(bkg)
         self.gpxEntry=wx.TextCtrl(bkg)
@@ -261,7 +260,6 @@ class GUI(wx.Frame):
         self.timerangeEntry=wx.TextCtrl(bkg,size=(40,-1))
         self.timerangeEntry.SetValue(self.maxTimeDifference)
         self.consoleEntry=wx.TextCtrl(bkg,style=wx.TE_MULTILINE | wx.HSCROLL)
-        #self.consoleEntry.SetBackgroundColour("light grey")
         
         gebox=wx.BoxSizer()
         gebox.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
@@ -287,15 +285,10 @@ class GUI(wx.Frame):
         settingsbox.Add(self.interpolationCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
         settingsbox.Add(self.backupCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         
-        ## test
         ## Image preview
-        #imgPreview = wx.Image('preview/test.jpg', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        #self.imgPrev=wx.StaticBitmap(bkg, -1, imgPreview, (5, 5))
         self.imgWhite=wx.Image('default.jpg', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        #self.imgPrev=wx.StaticBitmap(bkg,bitmap=wx.EmptyBitmap(160,160,True))
         self.imgPrev=wx.StaticBitmap(bkg,-1,self.imgWhite,(5,5))
-        prebox=wx.StaticBox(bkg, -1, "Preview picture:")
-        #previewbox=wx.BoxSizer()
+        prebox=wx.StaticBox(bkg, -1, _("Image preview:"))
         previewbox=wx.StaticBoxSizer(prebox, wx.VERTICAL)
         previewbox.Add(self.imgPrev, 1, flag= wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL,border=0)
         
@@ -336,7 +329,7 @@ class GUI(wx.Frame):
         headerbox.Add(hbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         headerbox.Add(hbox2,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         
-        optionPrebox=wx.StaticBox(bkg, -1, "Options:")
+        optionPrebox=wx.StaticBox(bkg, -1, _("Main options:"))
         #optionbox=wx.BoxSizer(wx.VERTICAL)
         optionbox=wx.StaticBoxSizer(optionPrebox, wx.VERTICAL)
         optionbox.Add(gebox)
@@ -425,10 +418,7 @@ class GUI(wx.Frame):
     def imagePreview(self,prevPath=""):
         """ GUI Image preview"""
         Img=wx.Image(prevPath,wx.BITMAP_TYPE_JPEG)
-        #self.imgPrev=wx.StaticBitmap(bkg,bitmap=wx.EmptyBitmap(160,160,True))
-        #self.imgPrev.SetBitmap(wx.EmptyBitmap(160,160,True))
         self.imgPrev.SetBitmap(self.imgWhite)
-        #self.imgPrev=wx.StaticBitmap(bkg,-1,self.imgWhite,(5,5))
         self.imgPrev.SetBitmap(wx.BitmapFromImage(Img))
 
     def languageApp(self,evt):
@@ -577,7 +567,9 @@ class GUI(wx.Frame):
         
     def clearConsole(self,evt):
         """clear the output console"""
+        self.imgPrev.SetBitmap(self.imgWhite)
         self.consoleEntry.Clear()
+        self.imgPrev.SetBitmap(self.imgWhite)
         
     def findGpx(self,evt):
         """
@@ -634,6 +626,7 @@ class GUI(wx.Frame):
                 wx.CallAfter(self.consolePrint,_("You must first select a pictures folder and a GPX file.")+"\n")
         else:
             pass
+        self.geCheck.SetValue(True) # Oblige the cration of a GE file anyway
         self.stop=False
         #utcOffset=int(self.utcEntry.GetValue())
         self.utcOffset=float(self.utcEntry.GetValue())#testing float for UTC
@@ -711,6 +704,24 @@ class GUI(wx.Frame):
                     if self.backupCheck.GetValue()==True\
                     and os.path.isfile(backupFolder+fileName)==False:
                         shutil.copyfile(self.picDir+'/'+fileName,backupFolder+fileName)
+                    
+                    if 1: #Create thumb and make a preview
+                        try:
+                            im=Image.open(self.picDir+'/'+fileName)
+                            #width=int(result[3])
+                            #height=int(result[4])
+                            width=int(im.size[0])
+                            height=int(im.size[1])
+                            if width>height:
+                                max=width
+                            else:
+                                max=height
+                            zoom=float(160.0/max)
+                            im.thumbnail((int(width*zoom),int(height*zoom)))
+                            im.save(self.picDir+"/thumbs/"+"thumb_"+fileName)
+                            self.imagePreview(prevPath=self.picDir+"/thumbs/"+"thumb_"+fileName)
+                        except:
+                            print "Warning: didn't create thumbnail, no JPG file ?"
                         
                     result=geo.syncPicture(self.picDir+'/'+fileName)
                     wx.CallAfter(self.consolePrint,result[0]+"\n")
@@ -721,18 +732,7 @@ class GUI(wx.Frame):
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],
                         long=result[2],width=result[3],height=result[4],timeStamp=result[5],elevation=result[6])
-                        im=Image.open(self.picDir+'/'+fileName)
-                        width=int(result[3])
-                        height=int(result[4])
-                        if width>height:
-                            max=width
-                        else:
-                            max=height
-                        zoom=float(160.0/max)
-                        im.thumbnail((int(width*zoom),int(height*zoom)))
-                        im.save(self.picDir+"/thumbs/"+"thumb_"+fileName)
-                        self.imagePreview(prevPath=self.picDir+"/thumbs/"+"thumb_"+fileName)
-                    
+                            
                     if self.gmCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         webKml.placemark4Gmaps(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4],elevation=result[6])
                         
@@ -895,15 +895,30 @@ class GUI(wx.Frame):
         self.winExifReader.Show()
         
     def readEXIF(self,evt):
-        """read the selected EXIF informations"""
+        """read the selected EXIF informations and eventually crate a thumb"""
         print "Selected ",self.ExifReaderSelected
-        #self.winExifReader.Close()
         picture=wx.FileDialog(self)
-        #picture.SetWildcard("*.JPG")
         picture.ShowModal()
         pathPicture=picture.GetPath()
         if pathPicture !="" or None:
             myPicture=GeoExif(pathPicture)
+            try:
+                pathThumb=str(os.path.dirname(pathPicture))+"/thumbs/thumb_"+str(os.path.basename(pathPicture))
+                print "Thumb path",pathThumb
+                if os.path.isfile(pathThumb)==False:
+                    if os.path.isdir(os.path.dirname(pathThumb))==False:
+                        os.mkdir(os.path.dirname(pathThumb))
+                    im=Image.open(pathPicture)
+                    width=im.size[0]
+                    height=im.size[1]
+                    if width>height:max=width
+                    else: max=height
+                    zoom=float(160.0/max)
+                    im.thumbnail((int(im.size[0]*zoom),int(im.size[1])*zoom))
+                    im.save(pathThumb)
+                self.imagePreview(prevPath=pathThumb)
+            except:
+                print "Coudln't create a thumnail, probably not a JPG file"
             def read():
                 wx.CallAfter(self.consolePrint,"\n\n"+_("Selected metada ")+"\n")
                 wx.CallAfter(self.consolePrint,"-------------------\n")
