@@ -235,7 +235,7 @@ class GUI(wx.Frame):
         
         self.gmCheck=wx.CheckBox(bkg,-1,_("Google Maps export, folder URL="))
         self.gmCheck.SetValue(self.GMaps)
-        self.urlEntry=wx.TextCtrl(bkg,size=(300,-1))
+        self.urlEntry=wx.TextCtrl(bkg,size=(330,-1))
         self.urlEntry.SetValue(self.urlGMaps)
         self.backupCheck=wx.CheckBox(bkg,-1,_("backup pictures"))
         self.backupCheck.SetValue(self.backup)
@@ -291,7 +291,9 @@ class GUI(wx.Frame):
         ## Image preview
         #imgPreview = wx.Image('preview/test.jpg', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         #self.imgPrev=wx.StaticBitmap(bkg, -1, imgPreview, (5, 5))
-        self.imgPrev=wx.StaticBitmap(bkg,bitmap=wx.EmptyBitmap(100,100))
+        self.imgWhite=wx.Image('default.jpg', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        #self.imgPrev=wx.StaticBitmap(bkg,bitmap=wx.EmptyBitmap(160,160,True))
+        self.imgPrev=wx.StaticBitmap(bkg,-1,self.imgWhite,(5,5))
         prebox=wx.StaticBox(bkg, -1, "Preview picture:")
         #previewbox=wx.BoxSizer()
         previewbox=wx.StaticBoxSizer(prebox, wx.VERTICAL)
@@ -423,6 +425,10 @@ class GUI(wx.Frame):
     def imagePreview(self,prevPath=""):
         """ GUI Image preview"""
         Img=wx.Image(prevPath,wx.BITMAP_TYPE_JPEG)
+        #self.imgPrev=wx.StaticBitmap(bkg,bitmap=wx.EmptyBitmap(160,160,True))
+        #self.imgPrev.SetBitmap(wx.EmptyBitmap(160,160,True))
+        self.imgPrev.SetBitmap(self.imgWhite)
+        #self.imgPrev=wx.StaticBitmap(bkg,-1,self.imgWhite,(5,5))
         self.imgPrev.SetBitmap(wx.BitmapFromImage(Img))
 
     def languageApp(self,evt):
@@ -607,7 +613,6 @@ class GUI(wx.Frame):
             gpxPaths+=self.gpxFile[i]+" "
             i+=1
         self.gpxEntry.SetValue(gpxPaths)
-        print "################################################", self.gpxFile
     
     def findPictures(self,evt):
         """Select the folder pictures to use"""

@@ -76,6 +76,7 @@ Source: dist\wxmsw28h_adv_vc.dll; DestDir:{app}
 Source: dist\wxmsw28h_core_vc.dll; DestDir:{app}
 Source: dist\wxmsw28h_html_vc.dll; DestDir:{app}
 Source: dist\gpicsync.ico; DestDir:{app}
+Source: default.jpg; DestDir:{app}
 ;Source: dist\gpicsync.conf; DestDir:{app}
 Source: gpicsync.conf; DestDir:{%USERPROFILE}
 
