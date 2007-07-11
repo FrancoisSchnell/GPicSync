@@ -48,6 +48,7 @@ class GUI(wx.Frame):
     """Main Frame of GPicSync"""
     def __init__(self,parent, title):
         """Initialize the main frame"""
+        global bkg
         
         wx.Frame.__init__(self, parent, -1, title="GPicSync",size=(1000,600))
         self.tcam_l="00:00:00"
@@ -221,10 +222,6 @@ class GUI(wx.Frame):
         self.gnOptChoice=wx.Choice(bkg, -1, (-1,-1), choices = gnOptList)
         self.gnOptChoice.SetSelection(0)
         
-        ## Image preview
-        imgPreview = wx.Image('preview/test.jpg', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        
-        
         utcLabel = wx.StaticText(bkg, -1,_("UTC Offset="))
         timerangeLabel=wx.StaticText(bkg, -1,_("Geocode picture only if time difference to nearest track point is below (seconds)="))
         self.logFile=wx.CheckBox(bkg,-1,_("Create a log file in picture folder"))
@@ -273,7 +270,6 @@ class GUI(wx.Frame):
         gebox.Add(self.elevationChoice,proportion=0,flag= wx.ALIGN_CENTER_VERTICAL|wx.ALL,border=10)
         gebox.Add(self.geTStamps,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
 
-                
         gmbox=wx.BoxSizer()
         gmbox.Add(self.gmCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
         gmbox.Add(self.urlEntry,proportion=0,flag=wx.EXPAND| wx.ALL,border=1)
@@ -292,8 +288,14 @@ class GUI(wx.Frame):
         settingsbox.Add(self.backupCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         
         ## test
+        ## Image preview
+        #imgPreview = wx.Image('preview/test.jpg', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        #self.imgPrev=wx.StaticBitmap(bkg, -1, imgPreview, (5, 5))
+        self.imgPrev=wx.StaticBitmap(bkg,bitmap=wx.EmptyBitmap(100,100))
+        prebox=wx.StaticBox(bkg, -1, "Preview picture:")
         #previewbox=wx.BoxSizer()
-        #previewbox.Add(wx.StaticBitmap(bkg, -1, imgPreview, (5, 5)), 0, flag=wx.RIGHT, border=10)
+        previewbox=wx.StaticBoxSizer(prebox, wx.VERTICAL)
+        previewbox.Add(self.imgPrev, 1, flag= wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL,border=0)
         
         gnhbox=wx.BoxSizer()
         gnhbox.Add(self.geonamesCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
@@ -332,21 +334,26 @@ class GUI(wx.Frame):
         headerbox.Add(hbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         headerbox.Add(hbox2,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         
-        optionbox=wx.BoxSizer(wx.VERTICAL)
+        optionPrebox=wx.StaticBox(bkg, -1, "Options:")
+        #optionbox=wx.BoxSizer(wx.VERTICAL)
+        optionbox=wx.StaticBoxSizer(optionPrebox, wx.VERTICAL)
         optionbox.Add(gebox)
         optionbox.Add(gmbox)
         optionbox.Add(settingsbox)
         optionbox.Add(gnhbox)
         
+        middlebox=wx.BoxSizer()
+        middlebox.Add(optionbox)
+        middlebox.Add(previewbox,proportion=1,flag=wx.EXPAND|wx.LEFT|wx.RIGHT,border=40)
+        
         footerbox=wx.BoxSizer(wx.VERTICAL)
         footerbox.Add(hbox1,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         footerbox.Add(hbox4,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         footerbox.Add(self.consoleEntry,proportion=1,flag=wx.EXPAND | wx.LEFT, border=5)
-                
         
         allBox= wx.BoxSizer(wx.VERTICAL)
         allBox.Add(headerbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        allBox.Add(optionbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        allBox.Add(middlebox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         allBox.Add(footerbox,proportion=1,flag=wx.EXPAND | wx.ALL,border=5)
                 
         #bkg.SetSizer(vbox)
@@ -411,7 +418,13 @@ class GUI(wx.Frame):
         (GUI safe to call with a CallAfter in threads to avoid refresh problems)
         """
         self.consoleEntry.AppendText(msg)
-        
+    
+    ## GUI Image preview
+    def imagePreview(self,prevPath=""):
+        """ GUI Image preview"""
+        Img=wx.Image(prevPath,wx.BITMAP_TYPE_JPEG)
+        self.imgPrev.SetBitmap(wx.BitmapFromImage(Img))
+
     def languageApp(self,evt):
         """
         select a language to display the GUI with
@@ -652,16 +665,16 @@ class GUI(wx.Frame):
                 localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir),\
                 timeStampOrder=timeStampOrder,utc=self.utcEntry.GetValue(),eleMode=eleMode)
                 localKml.writeInKml("\n<Folder>\n<name>Photos</name>")
-            
+                try:
+                    os.mkdir(self.picDir+'/thumbs')
+                except:
+                    print "Couldn't create the thumbs folder, it maybe already exist"
+
             if self.gmCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Map file (doc-web.kml) in the picture folder")+" ... \n")
                 webKml=KML(self.picDir+"/doc-web",os.path.basename(self.picDir),url=self.urlEntry.GetValue(),utc=self.utcEntry.GetValue())
                 webKml.path(self.gpxFile)
                 webKml.writeInKml("\n<Folder>\n<name>Photos</name>")
-                try:
-                    os.mkdir(self.picDir+'/thumbs')
-                except:
-                    print "Couldn't create the thumbs folder, it maybe already exist"
                 
             if self.log==True:
                 f=open(self.picDir+'/gpicsync.log','w')
@@ -703,9 +716,6 @@ class GUI(wx.Frame):
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],
                         long=result[2],width=result[3],height=result[4],timeStamp=result[5],elevation=result[6])
-                    
-                    if self.gmCheck.GetValue()==True and result[1] !="" and result[2] !="":
-                        webKml.placemark4Gmaps(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4],elevation=result[6])
                         im=Image.open(self.picDir+'/'+fileName)
                         width=int(result[3])
                         height=int(result[4])
@@ -716,7 +726,10 @@ class GUI(wx.Frame):
                         zoom=float(160.0/max)
                         im.thumbnail((int(width*zoom),int(height*zoom)))
                         im.save(self.picDir+"/thumbs/"+"thumb_"+fileName)
-                        
+                        self.imagePreview(prevPath=self.picDir+"/thumbs/"+"thumb_"+fileName)
+                    
+                    if self.gmCheck.GetValue()==True and result[1] !="" and result[2] !="":
+                        webKml.placemark4Gmaps(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4],elevation=result[6])
                         
                     if self.geonamesCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         try:
