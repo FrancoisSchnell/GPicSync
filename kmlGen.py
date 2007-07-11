@@ -37,6 +37,9 @@ class KML(object):
 <Document>
 <name>"""+name+"""</name>
 <Style id="lineStyle">
+<PolyStyle>
+<color>3feeee17</color>
+</PolyStyle>
 <LineStyle>
 <color>99eeee17</color>
 <width>6</width>

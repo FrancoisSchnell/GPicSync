@@ -217,8 +217,10 @@ class GUI(wx.Frame):
         self.elevationChoice.SetSelection(0)
         
         # Geonames option
+        tmp1=_("Geonames in specific IPTC fields")
+        tmp2=_("Geonames in XMP format")
         gnOptList=[_("Geonames in EXIF keywords + HTML sumarize in IPTC caption"),
-        _("Geonames in EXIF keywords"),_("Geonames in specific IPTC fields"),_("Geonames in XMP format")]
+        _("Geonames in EXIF keywords")]
         self.gnOptChoice=wx.Choice(bkg, -1, (-1,-1), choices = gnOptList)
         self.gnOptChoice.SetSelection(0)
         
@@ -785,10 +787,13 @@ class GUI(wx.Frame):
                             wx.CallAfter(self.consolePrint,gnInfos+_(" (writing geonames and geotagged to keywords tag in picture EXIF)")+"\n")
                             geonameKeywords=""
                             print userdefine
-                            for geoname in [gnPlace,gnRegion,gnCountry,gnSummary,geotag,geotagLat,geotagLon,userdefine]:
-                                if geoname !="":
-                                    geonameKeywords+=' -keywords="%s" ' % geoname
-                            if self.geoname_caption==True:
+                            #print "#####gnOptChoice.GetSelection()",gnOptChoice.GetSelection()
+                            if (self.gnOptChoice.GetSelection()==0) or (self.gnOptChoice.GetSelection()==1):
+                                for geoname in [gnPlace,gnRegion,gnCountry,gnSummary,geotag,geotagLat,geotagLon,userdefine]:
+                                    if geoname !="":
+                                        geonameKeywords+=' -keywords="%s" ' % geoname
+                            
+                            if self.geoname_caption==True and self.gnOptChoice.GetSelection()==0:
                                 geonameKeywords+=' -iptc:caption-abstract="Latitude/Longitude=('+\
                                 tempLat+' , '+tempLong+' )<br>Near '+gnInfos+\
                                 ' <a href=\"http://www.geonames.org/maps/google_'+tempLat+'_'+tempLong+'.html\"> (Map link)</a><br>'+userdefine+'"'
