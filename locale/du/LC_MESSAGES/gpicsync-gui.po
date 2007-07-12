@@ -167,7 +167,7 @@ msgstr "Google Maps uitvoer, folder URL="
 
 #: gpicsync-GUI.py:206
 msgid "Backup pictures"
-msgstr "Backup foto's"
+msgstr "Backup fotos"
 
 #: gpicsync-GUI.py:208
 msgid "interpolation"

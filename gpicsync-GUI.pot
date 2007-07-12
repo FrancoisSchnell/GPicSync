@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2007-07-08 19:37+Paris, Madrid\n"
+"POT-Creation-Date: 2007-07-12 20:48+Paris, Madrid\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,479 +15,503 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 
-#: gpicsync-GUI.py:175
+#: gpicsync-gui.py:176
 msgid "Local time correction"
 msgstr ""
 
-#: gpicsync-GUI.py:177
+#: gpicsync-gui.py:178
 msgid "Language"
 msgstr ""
 
-#: gpicsync-GUI.py:179
+#: gpicsync-gui.py:180
 msgid "Configuration file"
 msgstr ""
 
-#: gpicsync-GUI.py:181
+#: gpicsync-gui.py:182
 msgid "&Options"
 msgstr ""
 
-#: gpicsync-GUI.py:183
+#: gpicsync-gui.py:184
 msgid "About..."
 msgstr ""
 
-#: gpicsync-GUI.py:185
+#: gpicsync-gui.py:186
 msgid "&Tools"
 msgstr ""
 
-#: gpicsync-GUI.py:186
+#: gpicsync-gui.py:187
 msgid "EXIF reader"
 msgstr ""
 
-#: gpicsync-GUI.py:187
+#: gpicsync-gui.py:188
 msgid "EXIF writer"
 msgstr ""
 
-#: gpicsync-GUI.py:188
+#: gpicsync-gui.py:189
 msgid "Geo-Rename pictures"
 msgstr ""
 
-#: gpicsync-GUI.py:189 gpicsync-GUI.py:982
+#: gpicsync-gui.py:190 gpicsync-gui.py:1046
 msgid "GPX Inspector"
 msgstr ""
 
-#: gpicsync-GUI.py:190
+#: gpicsync-gui.py:191
 msgid "KMZ Generator"
 msgstr ""
 
-#: gpicsync-GUI.py:191
+#: gpicsync-gui.py:192
 msgid "&Help"
 msgstr ""
 
-#: gpicsync-GUI.py:202
+#: gpicsync-gui.py:203
 msgid "Pictures folder"
 msgstr ""
 
-#: gpicsync-GUI.py:203
+#: gpicsync-gui.py:204
 msgid "GPS file"
 msgstr ""
 
-#: gpicsync-GUI.py:204
+#: gpicsync-gui.py:205
 msgid " Synchronise ! "
 msgstr ""
 
-#: gpicsync-GUI.py:205 gpicsync-GUI.py:791
+#: gpicsync-gui.py:206 gpicsync-gui.py:840
 msgid "Quit"
 msgstr ""
 
-#: gpicsync-GUI.py:206
+#: gpicsync-gui.py:207
 msgid "Quit and save settings"
 msgstr ""
 
-#: gpicsync-GUI.py:207
+#: gpicsync-gui.py:208
 msgid "Stop"
 msgstr ""
 
-#: gpicsync-GUI.py:208
+#: gpicsync-gui.py:209
 msgid "Clear"
 msgstr ""
 
-#: gpicsync-GUI.py:209
+#: gpicsync-gui.py:210
 msgid "View in Google Earth"
 msgstr ""
 
-#: gpicsync-GUI.py:212
+#: gpicsync-gui.py:213
 msgid "Elevation"
 msgstr ""
 
-#: gpicsync-GUI.py:213
+#: gpicsync-gui.py:214
 msgid "Clamp to the ground"
 msgstr ""
 
-#: gpicsync-GUI.py:214
+#: gpicsync-gui.py:215
 msgid "absolute value (for flights)"
 msgstr ""
 
-#: gpicsync-GUI.py:214
+#: gpicsync-gui.py:215
 msgid "absolute value + extrude (for flights)"
 msgstr ""
 
-#: gpicsync-GUI.py:218
+#: gpicsync-gui.py:220
+msgid "Geonames in specific IPTC fields"
+msgstr ""
+
+#: gpicsync-gui.py:221
+msgid "Geonames in XMP format"
+msgstr ""
+
+#: gpicsync-gui.py:222
+msgid "Geonames in EXIF keywords + HTML sumarize in IPTC caption"
+msgstr ""
+
+#: gpicsync-gui.py:223
+msgid "Geonames in EXIF keywords"
+msgstr ""
+
+#: gpicsync-gui.py:227
 msgid "UTC Offset="
 msgstr ""
 
-#: gpicsync-GUI.py:219
+#: gpicsync-gui.py:228
 msgid "Geocode picture only if time difference to nearest track point is below (seconds)="
 msgstr ""
 
-#: gpicsync-GUI.py:220
+#: gpicsync-gui.py:229
 msgid "Create a log file in picture folder"
 msgstr ""
 
-#: gpicsync-GUI.py:222
+#: gpicsync-gui.py:231
 msgid "Dates must match"
 msgstr ""
 
-#: gpicsync-GUI.py:224
+#: gpicsync-gui.py:233
 msgid "Create a Google Earth file"
 msgstr ""
 
-#: gpicsync-GUI.py:226
+#: gpicsync-gui.py:235
 msgid "with TimeStamp"
 msgstr ""
 
-#: gpicsync-GUI.py:229
+#: gpicsync-gui.py:238
 msgid "Google Maps export, folder URL="
 msgstr ""
 
-#: gpicsync-GUI.py:233
+#: gpicsync-gui.py:242
 msgid "backup pictures"
 msgstr ""
 
-#: gpicsync-GUI.py:235
+#: gpicsync-gui.py:244
 msgid "interpolation"
 msgstr ""
 
-#: gpicsync-GUI.py:237
+#: gpicsync-gui.py:246
 msgid "add geonames and geotagged"
 msgstr ""
 
-#: gpicsync-GUI.py:362
+#: gpicsync-gui.py:291
+msgid "Image preview:"
+msgstr ""
+
+#: gpicsync-gui.py:319
+msgid "Options:"
+msgstr ""
+
+#: gpicsync-gui.py:395
 msgid "If you've changed and saved the configuration file you should restart the application to take effect."
 msgstr ""
 
-#: gpicsync-GUI.py:377
+#: gpicsync-gui.py:418
 msgid "Choose a language"
 msgstr ""
 
-#: gpicsync-GUI.py:377
+#: gpicsync-gui.py:418
 msgid "languages choice"
 msgstr ""
 
-#: gpicsync-GUI.py:392
+#: gpicsync-gui.py:433
 msgid "More informations and help:"
 msgstr ""
 
-#: gpicsync-GUI.py:401
+#: gpicsync-gui.py:442
 msgid "Manual latitude/longitude EXIF writer"
 msgstr ""
 
-#: gpicsync-GUI.py:403
+#: gpicsync-gui.py:444
 msgid "Enter coordinates in decimal degrees"
 msgstr ""
 
-#: gpicsync-GUI.py:404 gpicsync-GUI.py:1014
+#: gpicsync-gui.py:445 gpicsync-gui.py:1078
 msgid "Latitude"
 msgstr ""
 
-#: gpicsync-GUI.py:407 gpicsync-GUI.py:1015
+#: gpicsync-gui.py:448 gpicsync-gui.py:1079
 msgid "Longitude"
 msgstr ""
 
-#: gpicsync-GUI.py:410
+#: gpicsync-gui.py:451
 msgid "Eventual elevation (meters)"
 msgstr ""
 
-#: gpicsync-GUI.py:412
+#: gpicsync-gui.py:453
 msgid "Select and write in picture(s)"
 msgstr ""
 
-#: gpicsync-GUI.py:446
+#: gpicsync-gui.py:487
 msgid "Writing GPS latitude/longitude "
 msgstr ""
 
-#: gpicsync-GUI.py:455 gpicsync-GUI.py:933
+#: gpicsync-gui.py:496 gpicsync-gui.py:997
 msgid "Finished"
 msgstr ""
 
-#: gpicsync-GUI.py:467
+#: gpicsync-gui.py:508
 msgid "Latitude or Longitude formats are not valid: no geocoding happened."
 msgstr ""
 
-#: gpicsync-GUI.py:480
+#: gpicsync-gui.py:521
 msgid "To visualize the results in Google Earth you must either:"
 msgstr ""
 
-#: gpicsync-GUI.py:481 gpicsync-GUI.py:975
+#: gpicsync-gui.py:522 gpicsync-gui.py:1039
 msgid "- finish a synchronisation"
 msgstr ""
 
-#: gpicsync-GUI.py:493
+#: gpicsync-gui.py:534
 msgid "Couldn't find or launch Google Earth"
 msgstr ""
 
-#: gpicsync-GUI.py:540
+#: gpicsync-gui.py:583
 msgid "For information, GPX file created with GPSBabel in your picture folder."
 msgstr ""
 
-#: gpicsync-GUI.py:542
+#: gpicsync-gui.py:585
 msgid "Possible problem with the creation of the gpx file"
 msgstr ""
 
-#: gpicsync-GUI.py:545
+#: gpicsync-gui.py:588
 msgid "Couldn't create the necessary GPX file."
 msgstr ""
 
-#: gpicsync-GUI.py:572
+#: gpicsync-gui.py:614
 msgid "You must first select a pictures folder and a GPX file."
 msgstr ""
 
-#: gpicsync-GUI.py:587
+#: gpicsync-gui.py:630
 msgid "Beginning synchronization with "
 msgstr ""
 
-#: gpicsync-GUI.py:588
+#: gpicsync-gui.py:631
 msgid "UTC Offset ="
 msgstr ""
 
-#: gpicsync-GUI.py:589
+#: gpicsync-gui.py:632
 msgid " hours and maximum time difference = "
 msgstr ""
 
-#: gpicsync-GUI.py:589
+#: gpicsync-gui.py:632
 msgid " seconds"
 msgstr ""
 
-#: gpicsync-GUI.py:600
+#: gpicsync-gui.py:643
 msgid "Creating an 'originals-backup' folder."
 msgstr ""
 
-#: gpicsync-GUI.py:607
+#: gpicsync-gui.py:650
 msgid "Starting to generate a Google Earth file (doc.kml) in the picture folder ..."
 msgstr ""
 
-#: gpicsync-GUI.py:613
+#: gpicsync-gui.py:660
 msgid "Starting to generate a Google Map file (doc-web.kml) in the picture folder"
 msgstr ""
 
-#: gpicsync-GUI.py:624
+#: gpicsync-gui.py:667
 msgid "Geocoded with UTC Offset= "
 msgstr ""
 
-#: gpicsync-GUI.py:625
+#: gpicsync-gui.py:668
 msgid " and  Maximum time difference = "
 msgstr ""
 
-#: gpicsync-GUI.py:627
+#: gpicsync-gui.py:670
 msgid "Pictures Folder: "
 msgstr ""
 
-#: gpicsync-GUI.py:628
+#: gpicsync-gui.py:671
 msgid "GPX file: "
 msgstr ""
 
-#: gpicsync-GUI.py:644
+#: gpicsync-gui.py:687
 msgid "(Found "
 msgstr ""
 
-#: gpicsync-GUI.py:657
+#: gpicsync-gui.py:716
 msgid "Processed image "
 msgstr ""
 
-#: gpicsync-GUI.py:681
+#: gpicsync-gui.py:729
 msgid "Couldn't retrieve geonames data..."
 msgstr ""
 
-#: gpicsync-GUI.py:723
+#: gpicsync-gui.py:771
 msgid " (writing geonames and geotagged to keywords tag in picture EXIF)"
 msgstr ""
 
-#: gpicsync-GUI.py:741
+#: gpicsync-gui.py:791
 msgid "FINISHED GEOCODING PROCESS"
 msgstr ""
 
-#: gpicsync-GUI.py:743
+#: gpicsync-gui.py:793
 msgid "PROCESSING STOPPED BY THE USER"
 msgstr ""
 
-#: gpicsync-GUI.py:748
+#: gpicsync-gui.py:798
 msgid "Adding the GPS track log to the Google Earth kml file"
 msgstr ""
 
-#: gpicsync-GUI.py:751
+#: gpicsync-gui.py:801
 msgid "Click on the 'View in Google Earth' button to visualize the result"
 msgstr ""
 
-#: gpicsync-GUI.py:752
+#: gpicsync-gui.py:802
 msgid "( A Google Earth doc.kml file has been created in your picture folder.)"
 msgstr ""
 
-#: gpicsync-GUI.py:758
+#: gpicsync-gui.py:808
 msgid "( A Google Maps doc-web.kml file has been created with the given url )"
 msgstr ""
 
-#: gpicsync-GUI.py:768
+#: gpicsync-gui.py:817
 msgid "A time correction has been set"
 msgstr ""
 
-#: gpicsync-GUI.py:769
+#: gpicsync-gui.py:818
 msgid " Time GPS= "
 msgstr ""
 
-#: gpicsync-GUI.py:769
+#: gpicsync-gui.py:818
 msgid "Time camera= "
 msgstr ""
 
-#: gpicsync-GUI.py:778
+#: gpicsync-gui.py:827
 msgid "Local time corrections"
 msgstr ""
 
-#: gpicsync-GUI.py:781
+#: gpicsync-gui.py:830
 msgid "Use this option ONLY if your camera local time is wrong."
 msgstr ""
 
-#: gpicsync-GUI.py:782
+#: gpicsync-gui.py:831
 msgid "Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)"
 msgstr ""
 
-#: gpicsync-GUI.py:784
+#: gpicsync-gui.py:833
 msgid "Local time displayed now by the camera"
 msgstr ""
 
-#: gpicsync-GUI.py:787
+#: gpicsync-gui.py:836
 msgid "Local time displayed now by the GPS"
 msgstr ""
 
-#: gpicsync-GUI.py:790
+#: gpicsync-gui.py:839
 msgid "Apply correction"
 msgstr ""
 
-#: gpicsync-GUI.py:811
+#: gpicsync-gui.py:860
 msgid "EXIF Reader"
 msgstr ""
 
-#: gpicsync-GUI.py:814
+#: gpicsync-gui.py:863
 msgid "Read the EXIF metadata of the selected picture."
 msgstr ""
 
-#: gpicsync-GUI.py:816 gpicsync-GUI.py:817 gpicsync-GUI.py:848
+#: gpicsync-gui.py:865 gpicsync-gui.py:866 gpicsync-gui.py:912
 msgid "All EXIF metadata"
 msgstr ""
 
-#: gpicsync-GUI.py:818 gpicsync-GUI.py:852
+#: gpicsync-gui.py:867 gpicsync-gui.py:916
 msgid "Date/Time/Lat./Long."
 msgstr ""
 
-#: gpicsync-GUI.py:824
+#: gpicsync-gui.py:873
 msgid "Select a picture"
 msgstr ""
 
-#: gpicsync-GUI.py:846
+#: gpicsync-gui.py:910
 msgid "Selected metada "
 msgstr ""
 
-#: gpicsync-GUI.py:858
+#: gpicsync-gui.py:922
 msgid "lat./long."
 msgstr ""
 
-#: gpicsync-GUI.py:860
+#: gpicsync-gui.py:924
 msgid "None"
 msgstr ""
 
-#: gpicsync-GUI.py:866
+#: gpicsync-gui.py:930
 msgid "Renaming tool"
 msgstr ""
 
-#: gpicsync-GUI.py:869
+#: gpicsync-gui.py:933
 msgid "This tool renames your pictures with the "
 msgstr ""
 
-#: gpicsync-GUI.py:869
+#: gpicsync-gui.py:933
 msgid "original time/date and lat./long.(if present)"
 msgstr ""
 
-#: gpicsync-GUI.py:871
+#: gpicsync-gui.py:935
 msgid "Rename pictures in a folder"
 msgstr ""
 
-#: gpicsync-GUI.py:872
+#: gpicsync-gui.py:936
 msgid "Rename a single picture"
 msgstr ""
 
-#: gpicsync-GUI.py:890 gpicsync-GUI.py:911
+#: gpicsync-gui.py:954 gpicsync-gui.py:975
 msgid "Beginning renaming..."
 msgstr ""
 
-#: gpicsync-GUI.py:898 gpicsync-GUI.py:925
+#: gpicsync-gui.py:962 gpicsync-gui.py:989
 msgid "Didn't find Original Time/Date for "
 msgstr ""
 
-#: gpicsync-GUI.py:901 gpicsync-GUI.py:932
+#: gpicsync-gui.py:965 gpicsync-gui.py:996
 msgid "Renamed "
 msgstr ""
 
-#: gpicsync-GUI.py:915
+#: gpicsync-gui.py:979
 msgid "Interrupted by the user"
 msgstr ""
 
-#: gpicsync-GUI.py:940
+#: gpicsync-gui.py:1004
 msgid "Create a kmz file archive"
 msgstr ""
 
-#: gpicsync-GUI.py:942
+#: gpicsync-gui.py:1006
 msgid "Create KMZ file !"
 msgstr ""
 
-#: gpicsync-GUI.py:950
+#: gpicsync-gui.py:1014
 msgid "Sorry this tool is not yet available for the Linux version"
 msgstr ""
 
-#: gpicsync-GUI.py:959
+#: gpicsync-gui.py:1023
 msgid "Creating a KMZ file in the pictures folder..."
 msgstr ""
 
-#: gpicsync-GUI.py:962
+#: gpicsync-gui.py:1026
 msgid "Adding doc.kml"
 msgstr ""
 
-#: gpicsync-GUI.py:966
+#: gpicsync-gui.py:1030
 msgid "Adding "
 msgstr ""
 
-#: gpicsync-GUI.py:970
+#: gpicsync-gui.py:1034
 msgid "KMZ file created in pictures folder"
 msgstr ""
 
-#: gpicsync-GUI.py:972
+#: gpicsync-gui.py:1036
 msgid "Couldn't rename the zip file to kmz (maybe a previous file already exist)"
 msgstr ""
 
-#: gpicsync-GUI.py:974
+#: gpicsync-gui.py:1038
 msgid "To create a Google Earth kmz file you must either:"
 msgstr ""
 
-#: gpicsync-GUI.py:976
+#: gpicsync-gui.py:1040
 msgid "- select a folder you've already synchronized then select the KMZ Generator tool"
 msgstr ""
 
-#: gpicsync-GUI.py:984
+#: gpicsync-gui.py:1048
 msgid "Inspect a gpx file and show tracklog data."
 msgstr ""
 
-#: gpicsync-GUI.py:986
+#: gpicsync-gui.py:1050
 msgid "Select a gpx file"
 msgstr ""
 
-#: gpicsync-GUI.py:1005
+#: gpicsync-gui.py:1069
 msgid "Select a gpx file first."
 msgstr ""
 
-#: gpicsync-GUI.py:1009
+#: gpicsync-gui.py:1073
 msgid "Looking at "
 msgstr ""
 
-#: gpicsync-GUI.py:1010
+#: gpicsync-gui.py:1074
 msgid "Number of valid track points found"
 msgstr ""
 
-#: gpicsync-GUI.py:1013
+#: gpicsync-gui.py:1077
 msgid "Date"
 msgstr ""
 
-#: gpicsync-GUI.py:1013
+#: gpicsync-gui.py:1077
 msgid "Time"
 msgstr ""
 
-#: gpicsync-GUI.py:1016
+#: gpicsync-gui.py:1080
 msgid "Altitude"
 msgstr ""
 

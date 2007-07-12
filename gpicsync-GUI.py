@@ -295,8 +295,8 @@ class GUI(wx.Frame):
         previewbox.Add(self.imgPrev, 0, flag= wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL,border=10)
         
         gnhbox=wx.BoxSizer()
-        gnhbox.Add(self.geonamesCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
-        gnhbox.Add(self.gnOptChoice,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
+        gnhbox.Add(self.geonamesCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
+        gnhbox.Add(self.gnOptChoice,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
         
         hbox1=wx.BoxSizer()
         hbox1.Add(utcLabel,proportion=0,flag=wx.LEFT,border=10)
@@ -311,33 +311,18 @@ class GUI(wx.Frame):
         hbox4.Add(viewInGEButton,proportion=0,flag=wx.LEFT,border=5)
         hbox4.Add(quitButton,proportion=0,flag=wx.LEFT,border=5)
         hbox4.Add(quitAndSaveButton,proportion=0,flag=wx.LEFT,border=5)
-        
-        """
-        vbox=wx.BoxSizer(wx.VERTICAL)
-        vbox.Add(hbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        vbox.Add(hbox2,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        #vbox.Add(previewbox,proportion=1,flag=wx.RIGHT,border=5)
-        
-        vbox.Add(gebox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        vbox.Add(gmbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        vbox.Add(settingsbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        vbox.Add(gnhbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        vbox.Add(hbox1,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        vbox.Add(hbox4,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        vbox.Add(self.consoleEntry,proportion=1,flag=wx.EXPAND | wx.LEFT, border=5)
-        """
-        
+    
         headerbox=wx.BoxSizer(wx.VERTICAL)
         headerbox.Add(hbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         headerbox.Add(hbox2,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         
-        optionPrebox=wx.StaticBox(bkg, -1, _("Main options:"))
+        optionPrebox=wx.StaticBox(bkg, -1, _("Options:"))
         #optionbox=wx.BoxSizer(wx.VERTICAL)
         optionbox=wx.StaticBoxSizer(optionPrebox, wx.VERTICAL)
-        optionbox.Add(gebox)
-        optionbox.Add(gmbox)
-        optionbox.Add(settingsbox)
-        optionbox.Add(gnhbox)
+        optionbox.Add(gebox,proportion=0,flag=wx.LEFT,border=5)
+        optionbox.Add(gmbox,proportion=0,flag=wx.LEFT,border=5)
+        optionbox.Add(settingsbox,proportion=0,flag=wx.LEFT,border=5)
+        optionbox.Add(gnhbox,proportion=0,flag=wx.LEFT,border=5)
         
         middlebox=wx.BoxSizer()
         middlebox.Add(optionbox)
@@ -711,8 +696,6 @@ class GUI(wx.Frame):
                     if 1: #Create thumb and make a preview
                         try:
                             im=Image.open(self.picDir+'/'+fileName)
-                            #width=int(result[3])
-                            #height=int(result[4])
                             width=int(im.size[0])
                             height=int(im.size[1])
                             if width>height:
@@ -722,7 +705,6 @@ class GUI(wx.Frame):
                             zoom=float(160.0/max)
                             im.thumbnail((int(width*zoom),int(height*zoom)))
                             im.save(self.picDir+"/thumbs/"+"thumb_"+fileName)
-                            #self.imagePreview(prevPath=self.picDir+"/thumbs/"+"thumb_"+fileName)
                             wx.CallAfter(self.imagePreview,self.picDir+"/thumbs/"+"thumb_"+fileName)
                         except:
                             print "Warning: didn't create thumbnail, no JPG file ?"
@@ -789,7 +771,6 @@ class GUI(wx.Frame):
                             wx.CallAfter(self.consolePrint,gnInfos+_(" (writing geonames and geotagged to keywords tag in picture EXIF)")+"\n")
                             geonameKeywords=""
                             print userdefine
-                            #print "#####gnOptChoice.GetSelection()",gnOptChoice.GetSelection()
                             if (self.gnOptChoice.GetSelection()==0) or (self.gnOptChoice.GetSelection()==1):
                                 for geoname in [gnPlace,gnRegion,gnCountry,gnSummary,geotag,geotagLat,geotagLon,userdefine]:
                                     if geoname !="":
@@ -827,7 +808,6 @@ class GUI(wx.Frame):
                 wx.CallAfter(self.consolePrint,_("( A Google Maps doc-web.kml file has been created with the given url )")+"\n")
                 
         start_new_thread(sync,())
-        #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         
     def localtimeCorrection(self,evt):
             """ Local time correction if GPS and camera wasn't synchronized """
