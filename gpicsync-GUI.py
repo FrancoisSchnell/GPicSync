@@ -287,12 +287,12 @@ class GUI(wx.Frame):
         settingsbox.Add(self.interpolationCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
         settingsbox.Add(self.backupCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         
-        ## Image preview
-        self.imgWhite=wx.Image('default.jpg', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
-        self.imgPrev=wx.StaticBitmap(bkg,-1,self.imgWhite,(5,5))
+        # Image preview box
         prebox=wx.StaticBox(bkg, -1, _("Image preview:"))
         previewbox=wx.StaticBoxSizer(prebox, wx.VERTICAL)
-        previewbox.Add(self.imgPrev, 1, flag= wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL,border=0)
+        self.imgWhite=wx.Image('default.jpg', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
+        self.imgPrev=wx.StaticBitmap(bkg,-1,self.imgWhite,size=(160,160))#style=wx.SIMPLE_BORDER
+        previewbox.Add(self.imgPrev, 0, flag= wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL,border=10)
         
         gnhbox=wx.BoxSizer()
         gnhbox.Add(self.geonamesCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
@@ -416,10 +416,11 @@ class GUI(wx.Frame):
         """
         self.consoleEntry.AppendText(msg)
     
-    ## GUI Image preview
     def imagePreview(self,prevPath=""):
         """ GUI Image preview"""
         Img=wx.Image(prevPath,wx.BITMAP_TYPE_JPEG)
+        Img.Scale(width=160,height=160)
+        Img.SetRGB(0,0, 235,233,237)
         self.imgPrev.SetBitmap(self.imgWhite)
         self.imgPrev.SetBitmap(wx.BitmapFromImage(Img))
 
@@ -721,7 +722,8 @@ class GUI(wx.Frame):
                             zoom=float(160.0/max)
                             im.thumbnail((int(width*zoom),int(height*zoom)))
                             im.save(self.picDir+"/thumbs/"+"thumb_"+fileName)
-                            self.imagePreview(prevPath=self.picDir+"/thumbs/"+"thumb_"+fileName)
+                            #self.imagePreview(prevPath=self.picDir+"/thumbs/"+"thumb_"+fileName)
+                            wx.CallAfter(self.imagePreview,self.picDir+"/thumbs/"+"thumb_"+fileName)
                         except:
                             print "Warning: didn't create thumbnail, no JPG file ?"
                         
