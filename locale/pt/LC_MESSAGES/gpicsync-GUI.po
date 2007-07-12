@@ -1,0 +1,541 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR ORGANIZATION
+# Manuel Antunes and review from Ricardo Silva  <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"POT-Creation-Date: 2007-07-08 19:37+Paris, Madrid\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=iso-8859-1\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Generated-By: pygettext.py 1.5\n"
+
+
+#: gpicsync-GUI.py:175
+msgid "Local time correction"
+msgstr "Correcção hora local"
+
+#: gpicsync-GUI.py:177
+msgid "Language"
+msgstr "Linguagem"
+
+#: gpicsync-GUI.py:179
+msgid "Configuration file"
+msgstr "Fich. configuração"
+
+#: gpicsync-GUI.py:181
+msgid "&Options"
+msgstr "&Opções"
+
+#: gpicsync-GUI.py:183
+msgid "About..."
+msgstr "Acerca.."
+
+#: gpicsync-GUI.py:185
+msgid "&Tools"
+msgstr "&Ferr."
+
+#: gpicsync-GUI.py:186
+msgid "EXIF reader"
+msgstr "Leitor EXIF"
+
+#: gpicsync-GUI.py:187
+msgid "EXIF writer"
+msgstr "Gravad.EXIF"
+
+#: gpicsync-GUI.py:188
+msgid "Geo-Rename pictures"
+msgstr "Geo-Renomear fotos"
+
+#: gpicsync-GUI.py:189 gpicsync-GUI.py:982
+msgid "GPX Inspector"
+msgstr "Analista GPX"
+
+#: gpicsync-GUI.py:190
+msgid "KMZ Generator"
+msgstr "Gerador KMZ"
+
+#: gpicsync-GUI.py:191
+msgid "&Help"
+msgstr "&Ajuda"
+
+#: gpicsync-GUI.py:202
+msgid "Pictures folder"
+msgstr "Pasta Imagens"
+
+#: gpicsync-GUI.py:203
+msgid "GPS file"
+msgstr "Fich.GPS"
+
+#: gpicsync-GUI.py:204
+msgid " Synchronise ! "
+msgstr " Sincronizar ! "
+
+#: gpicsync-GUI.py:205 gpicsync-GUI.py:791
+msgid "Quit"
+msgstr "Sair"
+
+#: gpicsync-GUI.py:206
+msgid "Quit and save settings"
+msgstr "Sair e salvar prefer."
+
+#: gpicsync-GUI.py:207
+msgid "Stop"
+msgstr "Parar"
+
+#: gpicsync-GUI.py:208
+msgid "Clear"
+msgstr "Limpa"
+
+#: gpicsync-GUI.py:209
+msgid "View in Google Earth"
+msgstr "Ver no Google Earth"
+
+#: gpicsync-GUI.py:212
+msgid "Elevation"
+msgstr "Elevação"
+
+#: gpicsync-GUI.py:213
+msgid "Clamp to the ground"
+msgstr "Projectar no solo"
+
+#: gpicsync-GUI.py:214
+msgid "absolute value (for flights)"
+msgstr "Valor absoluto (p/vôos)"
+
+#: gpicsync-GUI.py:214
+msgid "absolute value + extrude (for flights)"
+msgstr "Valor absoluto + perfil alt (p/vôos)"
+
+#: gpicsync-GUI.py:218
+msgid "UTC Offset="
+msgstr "Desvio UTC"
+
+#: gpicsync-GUI.py:219
+msgid "Geocode picture only if time difference to nearest track point is below (seconds)="
+msgstr "Georeferenciar apenas se dif. horar. para ponto mais proximo for menor que (seg.)="
+
+#: gpicsync-GUI.py:220
+msgid "Create a log file in picture folder"
+msgstr "Criar relatório na pasta de imagens"
+
+#: gpicsync-GUI.py:222
+msgid "Dates must match"
+msgstr "Datas iguais"
+
+#: gpicsync-GUI.py:224
+msgid "Create a Google Earth file"
+msgstr "Criar fich. Google Earth"
+
+#: gpicsync-GUI.py:226
+msgid "with TimeStamp"
+msgstr "com data/hora"
+
+#: gpicsync-GUI.py:229
+msgid "Google Maps export, folder URL="
+msgstr "Endereço para exportar p/GMaps"
+
+#: gpicsync-GUI.py:233
+msgid "backup pictures"
+msgstr "salvar imagens"
+
+#: gpicsync-GUI.py:235
+msgid "interpolation"
+msgstr "interpolação"
+
+#: gpicsync-GUI.py:237
+msgid "add geonames and geotagged"
+msgstr "adic. geonomes e geomarcas"
+
+#: gpicsync-GUI.py:362
+msgid "If you've changed and saved the configuration file you should restart the application to take effect."
+msgstr "Se alterar e salvar fich. configuração deverá reiniciar aplicação para as alterações serem activadas."
+
+#: gpicsync-GUI.py:377
+msgid "Choose a language"
+msgstr "Escolha linguagem"
+
+#: gpicsync-GUI.py:377
+msgid "languages choice"
+msgstr "linguagens disp."
+
+#: gpicsync-GUI.py:392
+msgid "More informations and help:"
+msgstr "Mais informações e ajuda:"
+
+#: gpicsync-GUI.py:401
+msgid "Manual latitude/longitude EXIF writer"
+msgstr "Registo manual lat/lon no EXIF"
+
+#: gpicsync-GUI.py:403
+msgid "Enter coordinates in decimal degrees"
+msgstr "Introd. coordenadas em graus decimal"
+
+#: gpicsync-GUI.py:404 gpicsync-GUI.py:1014
+msgid "Latitude"
+msgstr "Latitude"
+
+#: gpicsync-GUI.py:407 gpicsync-GUI.py:1015
+msgid "Longitude"
+msgstr "Longitude"
+
+#: gpicsync-GUI.py:410
+msgid "Eventual elevation (meters)"
+msgstr "Elevação eventual (metros)"
+
+#: gpicsync-GUI.py:412
+msgid "Select and write in picture(s)"
+msgstr "Selec. e grave imagem(s)"
+
+#: gpicsync-GUI.py:446
+msgid "Writing GPS latitude/longitude "
+msgstr "A gravar lat/lon do GPS"
+
+#: gpicsync-GUI.py:455 gpicsync-GUI.py:933
+msgid "Finished"
+msgstr "Finaliz."
+
+#: gpicsync-GUI.py:467
+msgid "Latitude or Longitude formats are not valid: no geocoding happened."
+msgstr "Formato de coords. lat/lon inválido: georeferenciação não ocorreu."
+
+#: gpicsync-GUI.py:480
+msgid "To visualize the results in Google Earth you must either:"
+msgstr "Para visualizar resultados no Google Earth deve:"
+
+#: gpicsync-GUI.py:481 gpicsync-GUI.py:975
+msgid "- finish a synchronisation"
+msgstr "- finalizar sincronização"
+
+#: gpicsync-GUI.py:493
+msgid "Couldn't find or launch Google Earth"
+msgstr "Não se pode encontrar ou iniciar GE"
+
+#: gpicsync-GUI.py:540
+msgid "For information, GPX file created with GPSBabel in your picture folder."
+msgstr "Para informação, Fich. GPX criado pelo GPSBabel na sua pasta de imagens"
+
+#: gpicsync-GUI.py:542
+msgid "Possible problem with the creation of the gpx file"
+msgstr "Possível problema na criação do ficheiro GPX."
+
+#: gpicsync-GUI.py:545
+msgid "Couldn't create the necessary GPX file."
+msgstr "Não foi possível criar o ficheiro GPX."
+
+#: gpicsync-GUI.py:572
+msgid "You must first select a pictures folder and a GPX file."
+msgstr "Primeiro deve seleccionar pasta de imagens e fich. GPX"
+
+#: gpicsync-GUI.py:587
+msgid "Beginning synchronization with "
+msgstr "Iniciando sincronização com "
+
+#: gpicsync-GUI.py:588
+msgid "UTC Offset ="
+msgstr "Desvio UTC ="
+
+#: gpicsync-GUI.py:589
+msgid " hours and maximum time difference = "
+msgstr " horas e máxima diferença horária = "
+
+#: gpicsync-GUI.py:589
+msgid " seconds"
+msgstr " segs."
+
+#: gpicsync-GUI.py:600
+msgid "Creating an 'originals-backup' folder."
+msgstr "Criando uma pasta 'originals-backup'."
+
+#: gpicsync-GUI.py:607
+msgid "Starting to generate a Google Earth file (doc.kml) in the picture folder ..."
+msgstr "Iniciando a geração do Google Earth (doc.kml) na pasta de imagens ..."
+
+#: gpicsync-GUI.py:613
+msgid "Starting to generate a Google Map file (doc-web.kml) in the picture folder"
+msgstr "Iniciando a geração do Google Earth (doc-web.kml) na pasta de imagens."
+
+#: gpicsync-GUI.py:624
+msgid "Geocoded with UTC Offset= "
+msgstr "Georeferen. c/desvio UTC= "
+
+#: gpicsync-GUI.py:625
+msgid " and  Maximum time difference = "
+msgstr " e máxima diferença horária = "
+
+#: gpicsync-GUI.py:627
+msgid "Pictures Folder: "
+msgstr "Pasta Imagens: "
+
+#: gpicsync-GUI.py:628
+msgid "GPX file: "
+msgstr "Fich.GPX: "
+
+#: gpicsync-GUI.py:644
+msgid "(Found "
+msgstr "(Enctr "
+
+#: gpicsync-GUI.py:657
+msgid "Processed image "
+msgstr "Imagem process. "
+
+#: gpicsync-GUI.py:681
+msgid "Couldn't retrieve geonames data..."
+msgstr "Geonomes não encontrados..."
+
+#: gpicsync-GUI.py:723
+msgid " (writing geonames and geotagged to keywords tag in picture EXIF)"
+msgstr " (registando geonomes e geomarcas nas etiquetas EXIF da imagem)"
+
+#: gpicsync-GUI.py:741
+msgid "FINISHED GEOCODING PROCESS"
+msgstr "PROCESSO GEOREF FINALIZADO"
+
+#: gpicsync-GUI.py:743
+msgid "PROCESSING STOPPED BY THE USER"
+msgstr "PROCESSO PARADO PELO UTILIZAD."
+
+#: gpicsync-GUI.py:748
+msgid "Adding the GPS track log to the Google Earth kml file"
+msgstr "Adicionando rota GPS ao ficheiro kml do Google Earth"
+
+#: gpicsync-GUI.py:751
+msgid "Click on the 'View in Google Earth' button to visualize the result"
+msgstr "Clique no botão 'Ver no Google Earth' para visualizar resultado"
+
+#: gpicsync-GUI.py:752
+msgid "( A Google Earth doc.kml file has been created in your picture folder.)"
+msgstr "( O ficheiro Google Earth doc.kml foi criado na sua pasta de imagens.)"
+
+#: gpicsync-GUI.py:758
+msgid "( A Google Maps doc-web.kml file has been created with the given url )"
+msgstr "( O fich. Google Earth doc-web.kml foi criado c/ endereço introduz. )"
+
+#: gpicsync-GUI.py:768
+msgid "A time correction has been set"
+msgstr "Correcção horária aplicada"
+
+#: gpicsync-GUI.py:769
+msgid " Time GPS= "
+msgstr " Hora GPS= "
+
+#: gpicsync-GUI.py:769
+msgid "Time camera= "
+msgstr "Hora câmera= "
+
+#: gpicsync-GUI.py:778
+msgid "Local time corrections"
+msgstr "Correcções hora local"
+
+#: gpicsync-GUI.py:781
+msgid "Use this option ONLY if your camera local time is wrong."
+msgstr "Use esta opção APENAS se hora local na câmera for errada"
+
+#: gpicsync-GUI.py:782
+msgid "Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)"
+msgstr "Indique aqui hora local agora mostrada pela sua câmera e GPS (hh:mm:ss)"
+
+#: gpicsync-GUI.py:784
+msgid "Local time displayed now by the camera"
+msgstr "Hora loca agora mostrada pela câmera"
+
+#: gpicsync-GUI.py:787
+msgid "Local time displayed now by the GPS"
+msgstr "Hora local agora mostrada pelo GPS"
+
+#: gpicsync-GUI.py:790
+msgid "Apply correction"
+msgstr "Aplicar correcç."
+
+#: gpicsync-GUI.py:811
+msgid "EXIF Reader"
+msgstr "Leitor EXIF"
+
+#: gpicsync-GUI.py:814
+msgid "Read the EXIF metadata of the selected picture."
+msgstr "Ler meta-dados EXIF da imagem seleccionada."
+
+#: gpicsync-GUI.py:816 gpicsync-GUI.py:817 gpicsync-GUI.py:848
+msgid "All EXIF metadata"
+msgstr "Todos dados EXIF"
+
+#: gpicsync-GUI.py:818 gpicsync-GUI.py:852
+msgid "Date/Time/Lat./Long."
+msgstr "Data/Hora/Lat./Long."
+
+#: gpicsync-GUI.py:824
+msgid "Select a picture"
+msgstr "Seleccione imag."
+
+#: gpicsync-GUI.py:846
+msgid "Selected metada "
+msgstr "Metadados selec "
+
+#: gpicsync-GUI.py:858
+msgid "lat./long."
+msgstr "lat./long."
+
+#: gpicsync-GUI.py:860
+msgid "None"
+msgstr "Nada"
+
+#: gpicsync-GUI.py:866
+msgid "Renaming tool"
+msgstr "Ferr.Renomear"
+
+#: gpicsync-GUI.py:869
+msgid "This tool renames your pictures with the "
+msgstr "Esta ferramenta renomeia imagens com o "
+
+#: gpicsync-GUI.py:869
+msgid "original time/date and lat./long.(if present)"
+msgstr "hora/data e lat./long. original (se presente)"
+
+#: gpicsync-GUI.py:871
+msgid "Rename pictures in a folder"
+msgstr "Renomeie imagens numa pasta"
+
+#: gpicsync-GUI.py:872
+msgid "Rename a single picture"
+msgstr "Renomeie só uma imagem"
+
+#: gpicsync-GUI.py:890 gpicsync-GUI.py:911
+msgid "Beginning renaming..."
+msgstr "Começando a renomear."
+
+#: gpicsync-GUI.py:898 gpicsync-GUI.py:925
+msgid "Didn't find Original Time/Date for "
+msgstr "Não encontrou Hora/Data original "
+
+#: gpicsync-GUI.py:901 gpicsync-GUI.py:932
+msgid "Renamed "
+msgstr "Renomeado "
+
+#: gpicsync-GUI.py:915
+msgid "Interrupted by the user"
+msgstr "Interrompido pelo util."
+
+#: gpicsync-GUI.py:940
+msgid "Create a kmz file archive"
+msgstr "Criar um arquivo kmz"
+
+#: gpicsync-GUI.py:942
+msgid "Create KMZ file !"
+msgstr "Criar fich. KMZ !"
+
+#: gpicsync-GUI.py:950
+msgid "Sorry this tool is not yet available for the Linux version"
+msgstr "Desculpe esta ferramenta ainda não está disponível p/Linux"
+
+#: gpicsync-GUI.py:959
+msgid "Creating a KMZ file in the pictures folder..."
+msgstr "Criando um fich. KMZ na pasta de imagens..."
+
+#: gpicsync-GUI.py:962
+msgid "Adding doc.kml"
+msgstr "Adic. doc.kml"
+
+#: gpicsync-GUI.py:966
+msgid "Adding "
+msgstr "Adic. "
+
+#: gpicsync-GUI.py:970
+msgid "KMZ file created in pictures folder"
+msgstr "Fich.KMZ criado na pasta de imagens"
+
+#: gpicsync-GUI.py:972
+msgid "Couldn't rename the zip file to kmz (maybe a previous file already exist)"
+msgstr "Fich. não renomeado de zip para kmz (talvez já exista um fich. anterior)"
+
+#: gpicsync-GUI.py:974
+msgid "To create a Google Earth kmz file you must either:"
+msgstr "Para criar um ficheiro Google Earth você deve:"
+
+#: gpicsync-GUI.py:976
+msgid "- select a folder you've already synchronized then select the KMZ Generator tool"
+msgstr "- seleccione pasta que já tenha sincronizado e depois seleccione o Gerador KMZ"
+
+#: gpicsync-GUI.py:984
+msgid "Inspect a gpx file and show tracklog data."
+msgstr "Verificar fich. gpx e mostrar dados rota"
+
+#: gpicsync-GUI.py:986
+msgid "Select a gpx file"
+msgstr "Selecc. fich. gpx"
+
+#: gpicsync-GUI.py:1005
+msgid "Select a gpx file first."
+msgstr "Primeiro selec fich. gpx"
+
+#: gpicsync-GUI.py:1009
+msgid "Looking at "
+msgstr "A verif. em"
+
+#: gpicsync-GUI.py:1010
+msgid "Number of valid track points found"
+msgstr "Número de pontos rota encontrados"
+
+#: gpicsync-GUI.py:1013
+msgid "Date"
+msgstr "Data"
+
+#: gpicsync-GUI.py:1013
+msgid "Time"
+msgstr "Hora"
+
+#: gpicsync-GUI.py:1016
+msgid "Altitude"
+msgstr "Altitude"
+
+#: gpicsync.py:268
+msgid "taken "
+msgstr "obtd. "
+
+#: gpicsync.py:269 gpicsync.py:289
+msgid "writing best latitude/longitude match to picture: "
+msgstr "a gravar melhor lat/long aplicável à imagem: "
+
+#: gpicsync.py:270 gpicsync.py:276 gpicsync.py:290 gpicsync.py:297
+msgid " time difference (s)= "
+msgstr " dif. horária (s)="
+
+#: gpicsync.py:275
+msgid "no track point below the maximum time range "
+msgstr "nenhum ponto rota abaixo tempo max consid."
+
+#: gpicsync.py:275 gpicsync.py:279 gpicsync.py:297
+msgid " : WARNING: DIDN'T GEOCODE, "
+msgstr " : AVISO: NÃO GEOREFERENC., "
+
+#: gpicsync.py:277
+msgid " long="
+msgstr " long="
+
+#: gpicsync.py:277
+msgid "For information nearest trackpoint was at lat="
+msgstr "Para informação: ponto rota mais próx. na lat="
+
+#: gpicsync.py:279
+msgid "no track point at this picture date "
+msgstr "nenhum ponto rota na data da imagem "
+
+#: gpicsync.py:292
+msgid "Warning: Picture date "
+msgstr "Aviso: Data da imagem "
+
+#: gpicsync.py:293
+msgid " and track point date "
+msgstr " e data do ponto rota "
+
+#: gpicsync.py:293
+msgid " are different ! "
+msgstr " são diferentes! "
+
+#: gpicsync.py:297
+msgid " no suitable track point below maximum time difference, "
+msgstr " nenhum ponto rota aplicável abaixo da dif. hora. max. "
+

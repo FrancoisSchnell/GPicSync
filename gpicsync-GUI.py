@@ -161,6 +161,9 @@ class GUI(wx.Frame):
             elif self.language=="Dutch":
                 langDu = gettext.translation('gpicsync-GUI', "locale",languages=['du'])
                 langDu.install()
+            elif self.language=="Portuguese":
+                langPt = gettext.translation('gpicsync-GUI', "locale",languages=['pt'])
+                langPt.install()
             elif self.language=="Czech":
                 lang = gettext.translation('gpicsync-GUI', "locale",languages=['cze'])
                 lang.install()
@@ -414,7 +417,7 @@ class GUI(wx.Frame):
         select a language to display the GUI with
         """
         choices = [ 'Catalan','S.Chinese','T.Chinese','Czech','Dutch','English', 'French',
-        'German','Italian','Polish','Spanish']
+        'German','Italian','Polish','Portuguese','Spanish']
         dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
             choice=dialog.GetStringSelection()
