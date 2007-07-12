@@ -14,6 +14,33 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Generated-By: pygettext.py 1.5\n"
 
+### Added recently
+
+#: gpicsync-gui.py:220
+msgid "Geonames in specific IPTC fields"
+msgstr ""
+
+#: gpicsync-gui.py:221
+msgid "Geonames in XMP format"
+msgstr ""
+
+#: gpicsync-gui.py:222
+msgid "Geonames in EXIF keywords + HTML sumarize in IPTC caption"
+msgstr ""
+
+#: gpicsync-gui.py:223
+msgid "Geonames in EXIF keywords"
+msgstr ""
+
+#: gpicsync-gui.py:291
+msgid "Image preview:"
+msgstr ""
+
+#: gpicsync-gui.py:319
+msgid "Options:"
+msgstr ""
+
+##########################
 
 #: gpicsync-GUI.py:175
 msgid "Local time correction"

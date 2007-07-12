@@ -17,11 +17,51 @@ msgstr ""
 
 ### Added recently
 
-#: gpicsync-gui.py:395
-msgid "Eventual elevation (meters)"
+#: gpicsync-gui.py:213
+msgid "Elevation"
+msgstr ""
+
+#: gpicsync-gui.py:214
+msgid "Clamp to the ground"
+msgstr ""
+
+#: gpicsync-gui.py:215
+msgid "absolute value (for flights)"
+msgstr ""
+
+#: gpicsync-gui.py:215
+msgid "absolute value + extrude (for flights)"
+msgstr ""
+
+#: gpicsync-gui.py:220
+msgid "Geonames in specific IPTC fields"
+msgstr ""
+
+#: gpicsync-gui.py:221
+msgid "Geonames in XMP format"
+msgstr ""
+
+#: gpicsync-gui.py:222
+msgid "Geonames in EXIF keywords + HTML sumarize in IPTC caption"
+msgstr ""
+
+#: gpicsync-gui.py:223
+msgid "Geonames in EXIF keywords"
+msgstr ""
+
+#: gpicsync-gui.py:291
+msgid "Image preview:"
+msgstr ""
+
+#: gpicsync-gui.py:319
+msgid "Options:"
 msgstr ""
 
 ##########################
+
+#: gpicsync-gui.py:395
+msgid "Eventual elevation (meters)"
+msgstr "Höhe in m (nur bei Bedarf)"
 
 #: gpicsync-GUI.py:343
 msgid "If you've changed and saved the configuration file you should restart the application to take effect."

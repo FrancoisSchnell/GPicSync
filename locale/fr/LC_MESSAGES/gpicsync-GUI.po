@@ -17,6 +17,46 @@ msgstr ""
 ### Added recently
 ##########################
 
+#: gpicsync-gui.py:213
+msgid "Elevation"
+msgstr "Altitude"
+
+#: gpicsync-gui.py:214
+msgid "Clamp to the ground"
+msgstr "Fixé au sol"
+
+#: gpicsync-gui.py:215
+msgid "absolute value (for flights)"
+msgstr "valeur absolue (aérien)"
+
+#: gpicsync-gui.py:215
+msgid "absolute value + extrude (for flights)"
+msgstr "valeur absolue + extrusion (aérien)"
+
+#: gpicsync-gui.py:220
+msgid "Geonames in specific IPTC fields"
+msgstr "Geonames dans champs IPTC spécifiques"
+
+#: gpicsync-gui.py:221
+msgid "Geonames in XMP format"
+msgstr "Geonames au format XMP"
+
+#: gpicsync-gui.py:222
+msgid "Geonames in EXIF keywords + HTML sumarize in IPTC caption"
+msgstr "Geonames dans EXIF keywords + résumé HTML dans IPTC caption"
+
+#: gpicsync-gui.py:223
+msgid "Geonames in EXIF keywords"
+msgstr "Geonames dans EXIF keywords"
+
+#: gpicsync-gui.py:291
+msgid "Image preview:"
+msgstr "Aperçu image:"
+
+#: gpicsync-gui.py:319
+msgid "Options:"
+msgstr "Options:"
+
 #: gpicsync-gui.py:395
 msgid "Eventual elevation (meters)"
 msgstr "Altitude éventuelle (mètres)"
