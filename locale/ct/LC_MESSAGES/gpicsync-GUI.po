@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-06-04 22:56+Paris, Madrid\n"
-"PO-Revision-Date: 2007-06-26 11:34+Paris, Madrid\n"
+"PO-Revision-Date: 2007-07-13 13:10+Paris, Madrid\n"
 "Last-Translator: Oriol Garrote <oriol.garrote@gmail.com>\n"
 "Language-Team: CATALAN\n"
 "MIME-Version: 1.0\n"
@@ -15,52 +15,51 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 ### Added recently
+########################################
 
 #: gpicsync-gui.py:395
 msgid "Eventual elevation (meters)"
-msgstr ""
+msgstr "Elevació eventual (metres)"
 
 #: gpicsync-gui.py:213
 msgid "Elevation"
-msgstr ""
+msgstr "Elevació"
 
 #: gpicsync-gui.py:214
 msgid "Clamp to the ground"
-msgstr ""
+msgstr "Enganxar al terra"
 
 #: gpicsync-gui.py:215
 msgid "absolute value (for flights)"
-msgstr ""
+msgstr "valor absolut (per vols)"
 
 #: gpicsync-gui.py:215
 msgid "absolute value + extrude (for flights)"
-msgstr ""
+msgstr "valor absolut + extrusió (per vols)"
 
 #: gpicsync-gui.py:220
 msgid "Geonames in specific IPTC fields"
-msgstr ""
+msgstr "Geonoms en camps IPTC específics"
 
 #: gpicsync-gui.py:221
 msgid "Geonames in XMP format"
-msgstr ""
+msgstr "Geonoms en format XMP"
 
 #: gpicsync-gui.py:222
 msgid "Geonames in EXIF keywords + HTML sumarize in IPTC caption"
-msgstr ""
+msgstr "Geonoms a paraules clau EXIF + resum HTML a comentari IPTC"
 
 #: gpicsync-gui.py:223
 msgid "Geonames in EXIF keywords"
-msgstr ""
+msgstr "Geonoms a paraules claus EXIF"
 
 #: gpicsync-gui.py:291
 msgid "Image preview:"
-msgstr ""
+msgstr "Previsualització d'imatge:"
 
 #: gpicsync-gui.py:319
 msgid "Options:"
-msgstr ""
-
-########################################
+msgstr "Opcions:"
 
 #: gpicsync-GUI.py:343
 msgid "If you've changed and saved the configuration file you should restart the application to take effect."

@@ -67,8 +67,8 @@ class Gpx(object):
             self.geoData.append({
             'date':time[6:16],
             'time':time[17:25],
-            'lat':lineTree.attrib["lat"],
-            'lon':lineTree.attrib["lon"],
+            'lat':lineTree.attrib["lat"].strip(),
+            'lon':lineTree.attrib["lon"].strip(),
             'ele':str(elevation)
             })
         #print self.geoData

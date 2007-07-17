@@ -4,9 +4,9 @@
 #
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: GPicSync 1.07\n"
 "POT-Creation-Date: 2007-06-17 00:20+Paris, Madrid\n"
-"PO-Revision-Date: 2007-06-21 11:15+Paris, Madrid\n"
+"PO-Revision-Date: 2007-07-13 16:04+0100\n"
 "Last-Translator: polnjumen <polnjumen@gmail.com>\n"
 "Language-Team: CZECH <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -15,52 +15,51 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 #### Added recently
+####
 
 #: gpicsync-gui.py:395
 msgid "Eventual elevation (meters)"
-msgstr ""
+msgstr "Nadmoøská výška (metry)"
 
 #: gpicsync-gui.py:213
 msgid "Elevation"
-msgstr ""
+msgstr "Nadmoøská výška"
 
 #: gpicsync-gui.py:214
 msgid "Clamp to the ground"
-msgstr ""
+msgstr "pøipevnìno k zemi"
 
 #: gpicsync-gui.py:215
 msgid "absolute value (for flights)"
-msgstr ""
+msgstr "absolutní hodnota (pro létání)"
 
 #: gpicsync-gui.py:215
 msgid "absolute value + extrude (for flights)"
-msgstr ""
+msgstr "absolutní hodnota + prodloužit (pro létání)"
 
 #: gpicsync-gui.py:220
 msgid "Geonames in specific IPTC fields"
-msgstr ""
+msgstr "Geonázvy v IPTC polích"
 
 #: gpicsync-gui.py:221
 msgid "Geonames in XMP format"
-msgstr ""
+msgstr "Geonázvy v XMP formátu"
 
 #: gpicsync-gui.py:222
 msgid "Geonames in EXIF keywords + HTML sumarize in IPTC caption"
-msgstr ""
+msgstr "Geonázvy v EXIF klíè. slovech + HTML souhrn v IPTC popisu"
 
 #: gpicsync-gui.py:223
 msgid "Geonames in EXIF keywords"
-msgstr ""
+msgstr "Geonázvy v EXIF klíè. slovech"
 
 #: gpicsync-gui.py:291
 msgid "Image preview:"
-msgstr ""
+msgstr "Náhled fotografie:"
 
 #: gpicsync-gui.py:319
 msgid "Options:"
-msgstr ""
-
-####
+msgstr "Možnosti:"
 
 #: gpicsync-GUI.py:343
 msgid "If you've changed and saved the configuration file you should restart the application to take effect."
@@ -113,7 +112,8 @@ msgstr "Zápis EXIF"
 msgid "Geo-Rename pictures"
 msgstr "Geo-pøejmenování"
 
-#: gpicsync-gui.py:183 gpicsync-gui.py:937
+#: gpicsync-gui.py:183
+#: gpicsync-gui.py:937
 msgid "GPX Inspector"
 msgstr "GPX Inspektor"
 
@@ -137,7 +137,8 @@ msgstr "Soubor GPS"
 msgid " Synchronise ! "
 msgstr " Synchronizuj ! "
 
-#: gpicsync-gui.py:199 gpicsync-gui.py:746
+#: gpicsync-gui.py:199
+#: gpicsync-gui.py:746
 msgid "Quit"
 msgstr "Konec"
 
@@ -217,11 +218,13 @@ msgstr "Ruèní zápis souøadnic do EXIF"
 msgid "Enter coordinates in decimal degrees"
 msgstr "Vlož souøadnice v desetinných stupních"
 
-#: gpicsync-gui.py:382 gpicsync-gui.py:968
+#: gpicsync-gui.py:382
+#: gpicsync-gui.py:968
 msgid "Latitude"
 msgstr "Šíøka"
 
-#: gpicsync-gui.py:385 gpicsync-gui.py:969
+#: gpicsync-gui.py:385
+#: gpicsync-gui.py:969
 msgid "Longitude"
 msgstr "Délka"
 
@@ -233,7 +236,8 @@ msgstr "Nastav a zapiš do fotografií"
 msgid "Writing GPS latitude/longitude "
 msgstr "Zápis GPS šíøky/délky "
 
-#: gpicsync-gui.py:424 gpicsync-gui.py:888
+#: gpicsync-gui.py:424
+#: gpicsync-gui.py:888
 msgid "Finished"
 msgstr "Hotovo"
 
@@ -245,7 +249,8 @@ msgstr "Formát šíøky nebo délky není platný: geokódování neprobìhlo."
 msgid "To visualize the results in Google Earth you must either:"
 msgstr "Pro zobrazení výsledkù v Google Earth musíte:"
 
-#: gpicsync-gui.py:450 gpicsync-gui.py:930
+#: gpicsync-gui.py:450
+#: gpicsync-gui.py:930
 msgid "- finish a synchronisation"
 msgstr "- dokonèit synchronizaci"
 
@@ -385,11 +390,14 @@ msgstr "Ètení EXIF"
 msgid "Read the EXIF metadata of the selected picture."
 msgstr "Pøeète EXIF metadata vybrané fotografie"
 
-#: gpicsync-gui.py:771 gpicsync-gui.py:772 gpicsync-gui.py:803
+#: gpicsync-gui.py:771
+#: gpicsync-gui.py:772
+#: gpicsync-gui.py:803
 msgid "All EXIF metadata"
 msgstr "Všechna EXIF metadata"
 
-#: gpicsync-gui.py:773 gpicsync-gui.py:807
+#: gpicsync-gui.py:773
+#: gpicsync-gui.py:807
 msgid "Date/Time/Lat./Long."
 msgstr "Datum/Èas/Délka/Šíøka"
 
@@ -429,15 +437,18 @@ msgstr "Pøejmenuj fotografie ve složce"
 msgid "Rename a single picture"
 msgstr "Pøejmenuj jednu fotografii"
 
-#: gpicsync-gui.py:845 gpicsync-gui.py:866
+#: gpicsync-gui.py:845
+#: gpicsync-gui.py:866
 msgid "Beginning renaming..."
 msgstr "Zaèátek pøejmenování..."
 
-#: gpicsync-gui.py:853 gpicsync-gui.py:880
+#: gpicsync-gui.py:853
+#: gpicsync-gui.py:880
 msgid "Didn't find Original Time/Date for "
 msgstr "Pùvodní èas/datum nenalezen pro "
 
-#: gpicsync-gui.py:856 gpicsync-gui.py:887
+#: gpicsync-gui.py:856
+#: gpicsync-gui.py:887
 msgid "Renamed "
 msgstr "Pøejmenováno "
 
@@ -521,11 +532,15 @@ msgstr "Výška"
 msgid "taken "
 msgstr "vyfoceno "
 
-#: gpicsync.py:269 gpicsync.py:289
+#: gpicsync.py:269
+#: gpicsync.py:289
 msgid "writing best latitude/longitude match to picture: "
 msgstr "zápis nejlépe odpovídající šíøky/délky do fotografie: "
 
-#: gpicsync.py:270 gpicsync.py:276 gpicsync.py:290 gpicsync.py:297
+#: gpicsync.py:270
+#: gpicsync.py:276
+#: gpicsync.py:290
+#: gpicsync.py:297
 msgid " time difference (s)= "
 msgstr " èasový rozdíl (s)= "
 
@@ -533,7 +548,9 @@ msgstr " èasový rozdíl (s)= "
 msgid "no track point below the maximum time range "
 msgstr "žádný trackpoint v max. èasovém rozmezí "
 
-#: gpicsync.py:275 gpicsync.py:279 gpicsync.py:297
+#: gpicsync.py:275
+#: gpicsync.py:279
+#: gpicsync.py:297
 msgid " : WARNING: DIDN'T GEOCODE, "
 msgstr " : POZOR: NEBYLO GEOKÓDOVÁNO, "
 

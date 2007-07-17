@@ -5,8 +5,8 @@
 [Setup]
 AppName=GPicSync
 AppId=GPicSync
-AppVerName=GPicSync 1.07
-AppVersion=1.07
+AppVerName=GPicSync 1.08
+AppVersion=1.08
 AppPublisher=francois schnell
 AppPublisherURL=http://francois.schnell.free.fr
 AppSupportURL=http://code.google.com/p/gpicsync/
@@ -28,6 +28,7 @@ Name: {app}\locale\sp
 Name: {app}\locale\pl
 Name: {app}\locale\du
 Name: {app}\locale\cze
+Name: {app}\locale\pt
 Name: {app}\locale\fr\LC_MESSAGES
 Name: {app}\locale\it\LC_MESSAGES
 Name: {app}\locale\gr\LC_MESSAGES
@@ -38,6 +39,7 @@ Name: {app}\locale\sp\LC_MESSAGES
 Name: {app}\locale\pl\LC_MESSAGES
 Name: {app}\locale\du\LC_MESSAGES
 Name: {app}\locale\cze\LC_MESSAGES
+Name: {app}\locale\pt\LC_MESSAGES
 
 [Files]
 ;Source: dist\; DestDir:{app}
@@ -103,6 +105,8 @@ Source: locale\du\LC_MESSAGES\gpicsync-GUI.mo; DestDir:{app}\locale\du\LC_MESSAG
 Source: locale\du\LC_MESSAGES\gpicsync-GUI.po; DestDir:{app}\locale\du\LC_MESSAGES
 Source: locale\cze\LC_MESSAGES\gpicsync-GUI.mo; DestDir:{app}\locale\cze\LC_MESSAGES
 Source: locale\cze\LC_MESSAGES\gpicsync-GUI.po; DestDir:{app}\locale\cze\LC_MESSAGES
+Source: locale\pt\LC_MESSAGES\gpicsync-GUI.mo; DestDir:{app}\locale\pt\LC_MESSAGES
+Source: locale\pt\LC_MESSAGES\gpicsync-GUI.po; DestDir:{app}\locale\pt\LC_MESSAGES
 
 ;Source: dist\mfc71.dll; DestDir:{app}
 ;Source: dist\Website; DestDir:{app}
