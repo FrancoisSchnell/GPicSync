@@ -1,14 +1,14 @@
-# SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR ORGANIZATION
-# ANWI  an-winkler AT gmx.de, 2007.
-# konus bauckmeier AT google.de
+# German language file
+# für GPicSyn version 1.08
+# Copyright (C) 2007 francois schnell
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "POT-Creation-Date: 2007-05-07 22:46+Paris, Madrid\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: konus <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2007-18-07\n"
+"First-Translator: ANWI <an-winkler AT gmx.de>\n"
+"Last-Translator: konus <konus bauckmeier AT google.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=iso-8859-1\n"
@@ -16,48 +16,47 @@ msgstr ""
 "Generated-By: pygettext.py 1.5\n"
 
 ### Added recently
+##########################
 
 #: gpicsync-gui.py:213
 msgid "Elevation"
-msgstr ""
+msgstr "Höhenbehandlung"
 
 #: gpicsync-gui.py:214
 msgid "Clamp to the ground"
-msgstr ""
+msgstr "auf Grund projizieren (Standard)"
 
 #: gpicsync-gui.py:215
 msgid "absolute value (for flights)"
-msgstr ""
+msgstr "absoluter Wert (für Flüge)"
 
 #: gpicsync-gui.py:215
 msgid "absolute value + extrude (for flights)"
-msgstr ""
+msgstr "absoluter Wert+ Stützungen (für Flüge)"
 
 #: gpicsync-gui.py:220
 msgid "Geonames in specific IPTC fields"
-msgstr ""
+msgstr "in IPTC Felder"
 
 #: gpicsync-gui.py:221
 msgid "Geonames in XMP format"
-msgstr ""
+msgstr "in XMP-Datei (Adobe-format)"
 
 #: gpicsync-gui.py:222
 msgid "Geonames in EXIF keywords + HTML sumarize in IPTC caption"
-msgstr ""
+msgstr "in EXIF Stichwörter + HTML Text in IPTC Überschrift (Flikr)"
 
 #: gpicsync-gui.py:223
 msgid "Geonames in EXIF keywords"
-msgstr ""
+msgstr "in EXIF Stichwörter"
 
 #: gpicsync-gui.py:291
 msgid "Image preview:"
-msgstr ""
+msgstr "Bildvorschau:"
 
 #: gpicsync-gui.py:319
 msgid "Options:"
-msgstr ""
-
-##########################
+msgstr "Optionen:"
 
 #: gpicsync-gui.py:395
 msgid "Eventual elevation (meters)"
@@ -92,7 +91,7 @@ msgstr "Koordinaten in Dezimalgrad eingeben"
 
 #: gpicsync-gui.py:388
 msgid "Select and write in picture(s)"
-msgstr "Bilder zum beschreiben wählen"
+msgstr "Bilder auswählen"
 
 #: gpicsync-gui.py:418
 msgid "Writing GPS latitude/longitude "
@@ -355,7 +354,7 @@ msgstr "Benutzen Sie diese Funktion NUR, wenn Ihre Digital-"
 
 #: ..\..\..\gpicsync-GUI.py:384
 msgid "Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)"
-msgstr "kamera bei der Aufnahme eine andere Zeit anzeigte als der GPS Empfänger"
+msgstr "kamera bei der Aufnahme eine andere Zeit anzeigte, als der GPS Empfänger"
 
 #: ..\..\..\gpicsync-GUI.py:386
 msgid "Local time displayed now by the camera"

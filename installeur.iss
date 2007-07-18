@@ -5,8 +5,8 @@
 [Setup]
 AppName=GPicSync
 AppId=GPicSync
-AppVerName=GPicSync 1.08
-AppVersion=1.08
+AppVerName=GPicSync 1.09
+AppVersion=1.09
 AppPublisher=francois schnell
 AppPublisherURL=http://francois.schnell.free.fr
 AppSupportURL=http://code.google.com/p/gpicsync/
