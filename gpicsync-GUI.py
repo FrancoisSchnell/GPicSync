@@ -575,10 +575,16 @@ class GUI(wx.Frame):
         """
         Select the .gpx file to use or create one if necessary through GPSbabel"
         """
-        openGpx=wx.FileDialog(self,style=wx.FD_MULTIPLE)
+        if sys.platform == 'win32':
+            openGpx=wx.FileDialog(self,style=wx.FD_MULTIPLE)
+        if sys.platform.find("linux")!=-1:
+            openGpx=wx.FileDialog(self)
         openGpx.SetWildcard("GPX Files(*.gpx)|*.gpx|NMEA Files (*.txt)|*.txt")
         openGpx.ShowModal()
-        self.gpxFile=openGpx.GetPaths()
+        if sys.platform == 'win32':
+            self.gpxFile=openGpx.GetPaths()
+        if sys.platform.find("linux")!=-1:
+            self.gpxFile=[openGpx.GetPath()]
         j=0
         for track in self.gpxFile:
             if os.path.basename(self.gpxFile[j]).find(".txt")>0 or\
