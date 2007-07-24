@@ -114,10 +114,14 @@ class GpicSync(object):
         self.picHeight=picDateTimeSize[3]
         latitude=""
         longitude=""
+        elevation=""
         #print "Picture shotTime was", self.shotTime
         tpic_tgps_l=86400 # maximum seconds interval in a day
         
-            
+        if len(self.track)==0:
+            return [_(" : WARNING: DIDN'T GEOCODE, ")+_("no track points found - ")\
+                     +self.shotDate+"-"+self.shotTime,"","",self.picWidth,self.picHeight,elevation]
+        
         def compareDateUTC():
             """
             See issue 6 on the project site
