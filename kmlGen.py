@@ -27,8 +27,8 @@ class KML(object):
         self.timeStampOrder=timeStampOrder
         self.eleMode=eleMode # Elevation mode
         #self.utcOffest=utc
-        if int(utc)>=0: sign="+"
-        if int(utc)<0: sign="-"
+        if float(utc)>=0: sign="+"
+        if float(utc)<0: sign="-"
         self.utcOffset=sign+str(abs(int(float(utc))))+":00"
         print "self.utcOffest in kml for time stamps: ", self.utcOffset
         
