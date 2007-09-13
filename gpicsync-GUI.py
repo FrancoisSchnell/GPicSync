@@ -79,10 +79,12 @@ class GUI(wx.Frame):
         # Search for an eventual gpicsync.conf file
         try:
             try:
-                fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
+                #fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
+                fconf=open(os.environ["USERPROFILE"]+"/gpicsync.conf","r+")
             except:
                 try:
-                    fconf=open(os.environ["USERPROFILE"]+"/gpicsync.conf","r+")
+                    #fconf=open(os.environ["USERPROFILE"]+"/gpicsync.conf","r+")
+                    fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
                 except:
                     pass
             conf= ConfigParser.ConfigParser()
@@ -353,7 +355,13 @@ class GUI(wx.Frame):
     
     def writeConfFile(self):
         """Write the whole configuration file"""
-        fconf=open(os.path.expanduser("~/gpicsync.conf"),"w")
+        #fconf=open(os.path.expanduser("~/gpicsync.conf"),"w")
+        try:
+            #fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
+            fconf=open(os.environ["USERPROFILE"]+"/gpicsync.conf","r+")
+        except:
+            #fconf=open(os.environ["USERPROFILE"]+"/gpicsync.conf","r+")
+            fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
         header="#This is a configuration file for GPicSync geocoding software\n"+\
         "#Read the comments below to see what you can set. Boolean value (True or False) and\n"+\
         "#the default language option must always begin with a Capital Letter\n\n[gpicsync]\n\n"
@@ -394,7 +402,8 @@ class GUI(wx.Frame):
     
     def showConfig(self,evt):
         """open the configuration file in notepad.exe"""
-        os.popen('notepad.exe "%s"'% (os.path.expanduser("~/gpicsync.conf")))
+        #os.popen('notepad.exe "%s"'% (os.path.expanduser("~/gpicsync.conf")))
+        os.popen('notepad.exe "%s"'% (os.environ["USERPROFILE"]+"/gpicsync.conf"))
         wx.CallAfter(self.consolePrint,"\n"+_("If you've changed and saved the configuration file you should restart the application to take effect.")+"\n")
         
     def consolePrint(self,msg):
