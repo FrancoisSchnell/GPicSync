@@ -235,6 +235,7 @@ class GUI(wx.Frame):
         self.logFile.SetValue(self.log)
         self.dateCheck=wx.CheckBox(bkg,-1,_("Dates must match"))
         self.dateCheck.SetValue(self.datesMustMatch)
+        self.dateCheck.Hide()
         self.geCheck=wx.CheckBox(bkg,-1,_("Create a Google Earth file")+": ")
         self.geCheck.SetValue(True)
         self.geTStamps=wx.CheckBox(bkg,-1,_("with TimeStamp"))
@@ -288,7 +289,7 @@ class GUI(wx.Frame):
         
         settingsbox=wx.BoxSizer()
         settingsbox.Add(self.logFile,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
-        settingsbox.Add(self.dateCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
+        #settingsbox.Add(self.dateCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
         settingsbox.Add(self.interpolationCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
         settingsbox.Add(self.backupCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         
@@ -440,7 +441,7 @@ class GUI(wx.Frame):
                     
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="GPicSync  1.11 - 2007 \n\n"\
+        text="GPicSync  1.20 - 2007 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\

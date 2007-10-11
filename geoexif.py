@@ -53,7 +53,7 @@ class GeoExif(object):
         like  ['2007:02:12', '16:09:10','800','600']
         """
         answer=os.popen('%s -DateTimeOriginal -ImageSize "%s"' % (self.exifcmd, self.picPath)).read()
-        print answer
+        print "readDateTimeSize answer", answer
         date=answer[34:44]
         time=answer[45:53]
         #timeDate= [answer[34:44],answer[45:53]]

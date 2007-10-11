@@ -20,7 +20,7 @@ It creates a list with a  dictionary per valid gps track point.
         'ele': returns the elevation if it exist and "None" otherwise
 """
 
-import xml.etree.ElementTree as ET,re,sys
+import xml.etree.ElementTree as ET,re,sys,datetime
 
 class Gpx(object):
     def __init__(self,gpxFile):
@@ -64,12 +64,23 @@ class Gpx(object):
             except:
                 elevation="None"
             #print elevation
+            gpst=((time[6:16].replace("-",":"))+":"+time[17:25]).split(":")
+            #print ">>> gpst:",gpst
+            gps_datetimeUTC=datetime.datetime(
+                                            int(gpst[0]),
+                                            int(gpst[1]),
+                                            int(gpst[2]),
+                                            int(gpst[3]),
+                                            int(gpst[4]),
+                                            int(gpst[5]))
+            #print ">>>self.gps_datetimeUTC:",gps_datetimeUTC
             self.geoData.append({
             'date':time[6:16],
             'time':time[17:25],
             'lat':lineTree.attrib["lat"].strip(),
             'lon':lineTree.attrib["lon"].strip(),
-            'ele':str(elevation)
+            'ele':str(elevation),
+            'datetime':gps_datetimeUTC,
             })
         #print self.geoData
         return self.geoData

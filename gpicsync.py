@@ -56,24 +56,6 @@ class GpicSync(object):
         print "local UTC Offset (seconds)= ", self.localOffset
         #print self.track
         
-    """
-    def compareTimeBU(self,t1,t2):
-        "Compute and return the duration (int) in seconds  between two times"
-        #print "t1=",t1
-        #print "t2=",t2
-        t1sec=int(t1[0:2])*3600+int(t1[3:5])*60+int(t1[6:8])
-        t2sec=int(t2[0:2])*3600+int(t2[3:5])*60+int(t2[6:8])
-        #delta_t=(t2sec-t1sec)-self.localOffset
-        tphoto_UTC=t1sec+self.localOffset
-        #print "tphoto_UTC", tphoto_UTC 
-        if tphoto_UTC<0:
-            tphoto_UTC=tphoto_UTC+86400
-        if tphoto_UTC>86400:
-            tphoto_UTC=tphoto_UTC-86400
-        delta_t=t2sec-tphoto_UTC
-        #print "delta_t =",delta_t
-        return delta_t
-    """
 
     def compareTime(self,t1,t2):
         """
@@ -84,12 +66,17 @@ class GpicSync(object):
         t2sec=int(t2[0:2])*3600+int(t2[3:5])*60+int(t2[6:8])
         #delta_t=(t2sec-t1sec)-self.localOffset
         tphotoUTC=t1sec-self.localOffset
+        #print ">>>tphotoUTC:",tphotoUTC
         if tphotoUTC<0:
-            #print "tphotoUTC<0"
+            print "tphotoUTC<0 : ",tphotoUTC
             tphotoUTC=tphotoUTC+86400
-        if tphotoUTC>86400:
-            #print "tphotoUTC>86400"
-            tphotoUTC=tphotoUTC-86400
+            
+        #if tphotoUTC>86400:#just commented that
+        elif tphotoUTC>86400:
+            print "tphotoUTC>86400 : ",tphotoUTC
+            tphotoUTC=tphotoUTC-86400 #just commented that
+            #tphotoUTC=86400-tphotoUTC
+            
         tgps=t2sec
         #print "localOffest",self.localOffset,"tphotoUTC", tphotoUTC,"tgps", tgps
         delta_t=tgps-tphotoUTC
@@ -107,6 +94,21 @@ class GpicSync(object):
         interpolation=True # To use or not an interpolation mode(instead of nearest point)
         pic=GeoExif(picture)
         picDateTimeSize=pic.readDateTimeSize()
+        
+        # create a proper datetime object (self.shot_datetime)
+        pict=(picDateTimeSize[0]+":"+picDateTimeSize[1]).split(":")
+        print ">>>pict:",pict
+        self.pic_datetime=datetime.datetime(
+                                            int(pict[0]),
+                                            int(pict[1]),
+                                            int(pict[2]),
+                                            int(pict[3]),
+                                            int(pict[4]),
+                                            int(pict[5]))
+        print ">>>self.pic_datetime:",self.pic_datetime
+        self.pic_datetimeUTC=self.pic_datetime-datetime.timedelta(seconds=self.localOffset)
+        print ">>>self.pic_datetimeUTC:",self.pic_datetimeUTC
+
         self.shotTime=picDateTimeSize[1]
         self.shotDate=picDateTimeSize[0].replace(":","-")
         self.timeStamp=self.shotDate+"T"+picDateTimeSize[1]
@@ -123,183 +125,66 @@ class GpicSync(object):
                      +self.shotDate+"-"+self.shotTime,"","",self.picWidth,self.picHeight,elevation]
         
         def compareDateUTC():
-            """
-            See issue 6 on the project site
-            """
-            shotTimeSec=int(self.shotTime[0:2])*3600
-            +int(self.shotTime[3:5])*60+int(self.shotTime[6:8])
-            year=int(self.shotDate.split("-")[0])
-            month=int(self.shotDate.split("-")[1])
-            day=int(self.shotDate.split("-")[2])
-            if 1:
-                print "self.UTCoffset= ",self.UTCoffset
-                print "shotTimeSec= ",shotTimeSec
-                print "self.shotDate= ",self.shotDate
-                print "Local shotTime year,month,day =",year,month,day
-                print str(datetime.date(year,month,day)+ datetime.timedelta(days=1))
-            
-            if self.UTCoffset>0:
-                if shotTimeSec>self.UTCoffset:
-                    self.shotDateUTC=self.shotDate
-                if shotTimeSec<self.UTCoffset:
-                    self.shotDateUTC= str(datetime.date(year,month,day)
-                    -datetime.timedelta(days=1))
-            
-            if self.UTCoffset<0:
-                if (86400-shotTimeSec)>abs(self.UTCoffset):
-                    #print "############### self.UTCoffset<0 ################"
-                    self.shotDateUTC=self.shotDate
-                #if (86400-shotTimeSec)<abs(self.UTCoffset):
-                else:
-                    #print "############## else ###############"
-                    self.shotDateUTC= str(datetime.date(year,month,day)
-                    + datetime.timedelta(days=1))
-
-            if self.UTCoffset==0:
-                self.shotDateUTC=self.shotDate
-            
-            if 0:
-                print " self.shotDateUTC=",self.shotDateUTC
-                
-        if self.dateCheck==True:
-            compareDateUTC()
-            for n,rec in enumerate(self.track):
-                # correction of rec[date) to have a local time ref ?
-                if rec['date']==self.shotDateUTC:
-                    rec["tpic_tgps_l"]= self.compareTime(self.shotTime,rec["time"])
-                    if abs(rec["tpic_tgps_l"])<tpic_tgps_l:
-                        N=n
-                        tpic_tgps_l=abs(rec["tpic_tgps_l"])
-                        latitude=rec['lat']
-                        #print "Nearest point latitude =",rec['lat']
-                        longitude=rec['lon']
-                        #print "Nearest point longitude =",rec['lon']
-                        elevation=rec['ele']
-                        if float(latitude)>0:
-                            latRef="N"
-                        else: latRef="S"
-                        if float(longitude)>0:
-                            longRef="E"
-                        else: longRef="W"
-            if self.interpolation==True and rec['date']==self.shotDateUTC:
-                try:
-                    print "N is= ",N #N (index in the list) is the nearest trackpoint 
-                    print "Latitude of N= ", latitude
-                    print "Longitude of N =",longitude
-                    if abs(self.track[N+1]["tpic_tgps_l"])<abs(self.track[N-1]["tpic_tgps_l"]):
-                        M=N+1
-                    else:
-                        M=N-1
-                    print "M is= ",M # M is the second nearest trackpoint
-                    dLonNM=float(self.track[M]['lon'])-float(self.track[N]['lon'])
-                    dLatNM=float(self.track[M]['lat'])-float(self.track[N]['lat'])
-                    print "dLonNM= ",dLonNM
-                    print "dLatNM= ",dLatNM
-                    ratio=abs(float(self.track[N]["tpic_tgps_l"]))/\
-                    (abs(self.track[N]["tpic_tgps_l"])+abs(self.track[M]["tpic_tgps_l"]))
-                    print "ratio= ",ratio
-                    latitude=float(latitude)+ratio*dLatNM
-                    longitude=float(longitude)+ratio*dLonNM
-                    if float(latitude)>0:
-                        latRef="N"
-                    else: latRef="S"
-                    if float(longitude)>0:
-                        longRef="E"
-                    else: longRef="W"
-                    latitude=str(latitude)
-                    longitude=str(longitude)
-                except:
-                    print "Had a problem with interpolation tuning, probably the time\
-                    of the picture is off the time of the track"
-                
-        if self.dateCheck==False:
-            for n,rec in enumerate(self.track):
-                rec["tpic_tgps_l"]= self.compareTime(self.shotTime,rec["time"])
-                if abs(rec["tpic_tgps_l"])<tpic_tgps_l:
-                    N=n
-                    tpic_tgps_l=abs(rec["tpic_tgps_l"])
-                    latitude=rec['lat']
-                    #print "latitude =",rec['lat']
-                    longitude=rec['lon']
-                    trkptDay=rec['date']
-                    #print "longitude =",rec['lon']
-                    elevation=rec['ele']
-                    if float(latitude)>0:
-                        latRef="N"
-                    else: latRef="S"
-                    if float(longitude)>0:
-                        longRef="E"
-                    else: longRef="W"
-            if self.interpolation==True:
-                try:
-                    print "N is= ",N
-                    print "Latitude of N= ", latitude
-                    print "Longitude of N =",longitude
-                    if abs(self.track[N+1]["tpic_tgps_l"])<abs(self.track[N-1]["tpic_tgps_l"]):
-                        M=N+1
-                    else:
-                        M=N-1
-                    print "M is= ",M
-                    dLonNM=float(self.track[M]['lon'])-float(self.track[N]['lon'])
-                    dLatNM=float(self.track[M]['lat'])-float(self.track[N]['lat'])
-                    print "dLonNM= ",dLonNM
-                    print "dLatNM= ",dLatNM
-                    ratio=abs(float(self.track[N]["tpic_tgps_l"]))/\
-                    (abs(self.track[N]["tpic_tgps_l"])+abs(self.track[M]["tpic_tgps_l"]))
-                    print "ratio= ",ratio
-                    latitude=float(latitude)+ratio*dLatNM
-                    longitude=float(longitude)+ratio*dLonNM
-                    if float(latitude)>0:
-                        latRef="N"
-                    else: latRef="S"
-                    if float(longitude)>0:
-                        longRef="E"
-                    else: longRef="W"
-                    latitude=str(latitude)
-                    longitude=str(longitude)
-                except:
-                    print "Had a problem with interpolation tuning, probably the time\
-                    of the picture is off the time of the track"
-                
-        if self.dateCheck==True:
-            if latitude != "" and longitude !="" and (tpic_tgps_l< self.timerange):
-                #if float(longitude)<0:longitude=str(abs(float(longitude)))
-                #if float(latitude)<0:latitude=str(abs(float(latitude)))
-                print "Writing best lat./long. match to pic. EXIF -->",latitude,latRef,\
-                longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
-                pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup,elevation)
-                #return tpic_tgps_l
-                return [ _("taken ")+self.shotDate+"-"+self.shotTime+", "\
-                +_("writing best latitude/longitude match to picture: ")+latRef+\
-                " "+latitude+" ,"+longRef+" "+longitude+" :"+_(" time difference (s)= ")+str(int(tpic_tgps_l)),
-                latitude,longitude,self.picWidth,self.picHeight,self.timeStamp,elevation]
-            else:
-                print "Didn't find any picture for this day or timerange"
-                if tpic_tgps_l !=86400:
-                    return [_(" : WARNING: DIDN'T GEOCODE, ")+_("no track point below the maximum time range ")\
-                    +"( "+str(self.timerange)+" s) : " +self.shotDate+"-"+self.shotTime+_(" time difference (s)= ")+str(int(tpic_tgps_l))\
-                    +"\n"+_("For information nearest trackpoint was at lat=")+latitude+_(" long=")+longitude,"","",self.picWidth,self.picHeight,elevation]
-                else:
-                    return [_(" : WARNING: DIDN'T GEOCODE, ")+_("no track point at this picture date ")\
-                     +self.shotDate+"-"+self.shotTime,"","",self.picWidth,self.picHeight,elevation]
+            pass
         
-        if self.dateCheck==False:
-            if latitude != "" and longitude !=""and (tpic_tgps_l<self.timerange):
-                #if float(longitude)<0:longitude=str(abs(float(longitude)))
-                #if float(latitude)<0:latitude=str(abs(float(latitude)))
-                print "Writing best lat./long. match to pic. EXIF -->",latitude,latRef,\
-                longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
-                pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup,elevation)
-                response= _("writing best latitude/longitude match to picture: ")+latRef+\
-                " "+latitude+" ,"+longRef+" "+longitude+" with"+_(" time difference (s)= ")+str(int(tpic_tgps_l))
-                if self.shotDate != trkptDay:
-                    response=response+"\n"+_("Warning: Picture date ")+self.shotDate+\
-                   _(" and track point date ")+trkptDay+_(" are different ! ") 
-                return [response,latitude,longitude,self.picWidth,self.picHeight,self.timeStamp,elevation]
+
+        tpic_tgps_l=86400 # maximum seconds interval in a day
+        for n,rec in enumerate(self.track):
+            rec["tpic_tgps_l"]=(self.pic_datetimeUTC-rec["datetime"]).seconds
+            if abs(rec["tpic_tgps_l"])<tpic_tgps_l:
+                N=n
+                tpic_tgps_l=abs(rec["tpic_tgps_l"])
+                latitude,longitude,elevation=rec['lat'],rec['lon'],rec['ele']
+                if float(latitude)>0:latRef="N"
+                else: latRef="S"
+                if float(longitude)>0:longRef="E"
+                else: longRef="W"
+                
+        if self.interpolation==True:
+            try:
+                print "N (nearest trackpoint) is= ",N 
+                print "Latitude of N= ", latitude,"Longitude of N =",longitude
+                if abs(self.track[N+1]["tpic_tgps_l"])<abs(self.track[N-1]["tpic_tgps_l"]):
+                    M=N+1
+                else:
+                    M=N-1
+                print "M (second nearest trackpoint) is= ",M
+                dLonNM=float(self.track[M]['lon'])-float(self.track[N]['lon'])
+                dLatNM=float(self.track[M]['lat'])-float(self.track[N]['lat'])
+                print "dLonNM= ",dLonNM,"dLatNM= ",dLatNM
+                ratio=abs(float(self.track[N]["tpic_tgps_l"]))/\
+                (abs(self.track[N]["tpic_tgps_l"])+abs(self.track[M]["tpic_tgps_l"]))
+                print "ratio= ",ratio
+                latitude=float(latitude)+ratio*dLatNM
+                longitude=float(longitude)+ratio*dLonNM
+                if float(latitude)>0:latRef="N"
+                else: latRef="S"
+                if float(longitude)>0:longRef="E"
+                else: longRef="W"
+                latitude=str(latitude)
+                longitude=str(longitude)
+            except:
+                print "Had a problem with interpolation tuning, probably the time\
+                of the picture is off the time of the track"
+
+        if latitude != "" and longitude !="" and (tpic_tgps_l< self.timerange):
+            print "Writing best lat./long. match to pic. EXIF -->",latitude,latRef,\
+            longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
+            pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup,elevation)
+            return [ _("taken ")+self.shotDate+"-"+self.shotTime+", "\
+            +_("writing best latitude/longitude match to picture: ")+latRef+\
+            " "+latitude+" ,"+longRef+" "+longitude+" :"+_(" time difference (s)= ")+str(int(tpic_tgps_l)),
+            latitude,longitude,self.picWidth,self.picHeight,self.timeStamp,elevation]
+        else:
+            print "Didn't find any picture for this day or timerange"
+            if tpic_tgps_l !=86400:
+                return [_(" : WARNING: DIDN'T GEOCODE, ")+_("no track point below the maximum time range ")\
+                +"( "+str(self.timerange)+" s) : " +self.shotDate+"-"+self.shotTime+_(" time difference (s)= ")+str(int(tpic_tgps_l))\
+                +"\n"+_("For information nearest trackpoint was at lat=")+latitude+_(" long=")+longitude,"","",self.picWidth,self.picHeight,elevation]
             else:
-                print " WARNING: DIDN'T GEOCODE, no suitable track point below maximum time difference (seconds)= ",self.timerange
-                return [_(" : WARNING: DIDN'T GEOCODE, ")+_(" no suitable track point below maximum time difference, ")+_(" time difference (s)= ")+str(int(tpic_tgps_l)),"","",self.picWidth,self.picHeight,elevation]
-            
+                return [_(" : WARNING: DIDN'T GEOCODE, ")+_("no track point at this picture date ")\
+                 +self.shotDate+"-"+self.shotTime,"","",self.picWidth,self.picHeight,elevation]
+        
 if __name__=="__main__":
     
     ## Commnand-line version
