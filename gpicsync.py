@@ -55,33 +55,6 @@ class GpicSync(object):
         self.interpolation=interpolation
         print "local UTC Offset (seconds)= ", self.localOffset
         #print self.track
-        
-
-    def compareTime(self,t1,t2):
-        """
-        Compute and return the duration (int) in seconds  between two times
-        """
-        #print "t1(photo)=",t1,"t2(gps UTC)=",t2,
-        t1sec=int(t1[0:2])*3600+int(t1[3:5])*60+int(t1[6:8])
-        t2sec=int(t2[0:2])*3600+int(t2[3:5])*60+int(t2[6:8])
-        #delta_t=(t2sec-t1sec)-self.localOffset
-        tphotoUTC=t1sec-self.localOffset
-        #print ">>>tphotoUTC:",tphotoUTC
-        if tphotoUTC<0:
-            print "tphotoUTC<0 : ",tphotoUTC
-            tphotoUTC=tphotoUTC+86400
-            
-        #if tphotoUTC>86400:#just commented that
-        elif tphotoUTC>86400:
-            print "tphotoUTC>86400 : ",tphotoUTC
-            tphotoUTC=tphotoUTC-86400 #just commented that
-            #tphotoUTC=86400-tphotoUTC
-            
-        tgps=t2sec
-        #print "localOffest",self.localOffset,"tphotoUTC", tphotoUTC,"tgps", tgps
-        delta_t=tgps-tphotoUTC
-        #print "delta_t =",delta_t
-        return delta_t
     
     def syncPicture(self,picture):
         """ 
@@ -94,6 +67,9 @@ class GpicSync(object):
         interpolation=True # To use or not an interpolation mode(instead of nearest point)
         pic=GeoExif(picture)
         picDateTimeSize=pic.readDateTimeSize()
+        if picDateTimeSize[0]=="nodate":
+            return [" : WARNING: DIDN'T GEOCODE, no Date/Time Original in this picture.",
+            ""]
         
         # create a proper datetime object (self.shot_datetime)
         pict=(picDateTimeSize[0]+":"+picDateTimeSize[1]).split(":")
@@ -108,6 +84,7 @@ class GpicSync(object):
         print ">>>self.pic_datetime:",self.pic_datetime
         self.pic_datetimeUTC=self.pic_datetime-datetime.timedelta(seconds=self.localOffset)
         print ">>>self.pic_datetimeUTC:",self.pic_datetimeUTC
+        
 
         self.shotTime=picDateTimeSize[1]
         self.shotDate=picDateTimeSize[0].replace(":","-")
@@ -124,10 +101,6 @@ class GpicSync(object):
             return [_(" : WARNING: DIDN'T GEOCODE, ")+_("no track points found - ")\
                      +self.shotDate+"-"+self.shotTime,"","",self.picWidth,self.picHeight,elevation]
         
-        def compareDateUTC():
-            pass
-        
-
         tpic_tgps_l=86400 # maximum seconds interval in a day
         for n,rec in enumerate(self.track):
             rec["tpic_tgps_l"]=(self.pic_datetimeUTC-rec["datetime"]).seconds

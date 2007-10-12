@@ -56,7 +56,7 @@ class Gpx(object):
         print "Extracting data from valids track points ..."
         self.geoData=[]
         for line in self.gpx_trkpts:
-            lineTree=ET.fromstring(line)
+            #lineTree=ET.fromstring(line)
             time= re.search('(<time.*?</time>)',line).group()
             try:
                 elevation=re.search('(<ele>.*?</ele>)',line).group()
@@ -77,8 +77,10 @@ class Gpx(object):
             self.geoData.append({
             'date':time[6:16],
             'time':time[17:25],
-            'lat':lineTree.attrib["lat"].strip(),
-            'lon':lineTree.attrib["lon"].strip(),
+            'lat':re.search('lat=".*?"',line).group().split('"')[1],
+            'lon':re.search('lon=".*?"',line).group().split('"')[1],
+            #'lat':lineTree.attrib["lat"].strip(),
+            #'lon':lineTree.attrib["lon"].strip(),
             'ele':str(elevation),
             'datetime':gps_datetimeUTC,
             })

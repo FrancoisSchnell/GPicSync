@@ -742,6 +742,10 @@ class GUI(wx.Frame):
                         
                     result=geo.syncPicture(self.picDir+'/'+fileName)
                     wx.CallAfter(self.consolePrint,result[0]+"\n")
+                    
+                    #Check if the picture have Date/Time infos, otherwise go to next pic.
+                    if result[0]==" : WARNING: DIDN'T GEOCODE, no Date/Time Original in this picture.":
+                        continue
                         
                     if self.log==True:
                         f.write(_("Processed image ")+fileName+" : "+result[0]+"\n")

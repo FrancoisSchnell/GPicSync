@@ -54,8 +54,11 @@ class GeoExif(object):
         """
         answer=os.popen('%s -DateTimeOriginal -ImageSize "%s"' % (self.exifcmd, self.picPath)).read()
         print "readDateTimeSize answer", answer
-        date=answer[34:44]
-        time=answer[45:53]
+        if "Date" in answer:
+            date=answer[34:44]
+            time=answer[45:53]
+        else:
+            date,time="nodate","notime"
         #timeDate= [answer[34:44],answer[45:53]]
         try:
             size=answer.split("Image Size")[1].split(":")[1].strip().split("x")
