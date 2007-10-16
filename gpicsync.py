@@ -95,15 +95,15 @@ class GpicSync(object):
         longitude=""
         elevation=""
         #print "Picture shotTime was", self.shotTime
-        tpic_tgps_l=86400 # maximum seconds interval in a day
+        tpic_tgps_l=864000 # will try  match a pic within 864000 seconds (10 days)
         
         if len(self.track)==0:
             return [_(" : WARNING: DIDN'T GEOCODE, ")+_("no track points found - ")\
                      +self.shotDate+"-"+self.shotTime,"","",self.picWidth,self.picHeight,elevation]
         
-        tpic_tgps_l=86400 # maximum seconds interval in a day
         for n,rec in enumerate(self.track):
-            rec["tpic_tgps_l"]=(self.pic_datetimeUTC-rec["datetime"]).seconds
+            delta_datetime=self.pic_datetimeUTC-rec["datetime"]
+            rec["tpic_tgps_l"]=delta_datetime.days*86400 +delta_datetime.seconds
             if abs(rec["tpic_tgps_l"])<tpic_tgps_l:
                 N=n
                 tpic_tgps_l=abs(rec["tpic_tgps_l"])
