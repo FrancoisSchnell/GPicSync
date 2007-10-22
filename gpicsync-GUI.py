@@ -169,6 +169,9 @@ class GUI(wx.Frame):
             elif self.language=="Czech":
                 lang = gettext.translation('gpicsync-GUI', "locale",languages=['cze'])
                 lang.install()
+            elif self.language=="Russian":
+                lang = gettext.translation('gpicsync-GUI', "locale",languages=['ru'])
+                lang.install()
             else:
                 gettext.install("gpicsync-GUI", "None")#a trick to go back to original
         except:
@@ -427,7 +430,7 @@ class GUI(wx.Frame):
         select a language to display the GUI with
         """
         choices = [ 'Catalan','S.Chinese','T.Chinese','Czech','Dutch','English', 'French',
-        'German','Italian','Polish','Portuguese','Spanish']
+        'German','Italian','Polish','Portuguese','Russian','Spanish']
         dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
         if dialog.ShowModal() == wx.ID_OK:
             choice=dialog.GetStringSelection()
@@ -441,7 +444,7 @@ class GUI(wx.Frame):
                     
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="GPicSync  1.21 - 2007 \n\n"\
+        text="GPicSync  1.22 - 2007 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
