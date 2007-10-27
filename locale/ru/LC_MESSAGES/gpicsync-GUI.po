@@ -55,7 +55,7 @@ msgstr "Геоимена в EXIF тегах"
 
 #: gpicsync-gui.py:291
 msgid "Image preview:"
-msgstr "Просмотр изображения:"
+msgstr "Предварительный просмотр:"
 
 #: gpicsync-gui.py:319
 msgid "Options:"
@@ -110,7 +110,7 @@ msgstr "Запись EXIF"
 
 #: gpicsync-gui.py:182
 msgid "Geo-Rename pictures"
-msgstr "Геопереименовать изображения"
+msgstr "Перезаписать геоимена"
 
 #: gpicsync-gui.py:183
 #: gpicsync-gui.py:937
@@ -135,7 +135,7 @@ msgstr "Файл GPS"
 
 #: gpicsync-gui.py:198
 msgid " Synchronise ! "
-msgstr "Синхронизирвоать!"
+msgstr "Синхронизировать!"
 
 #: gpicsync-gui.py:199
 #: gpicsync-gui.py:746
@@ -160,15 +160,15 @@ msgstr "Смотреть в Google Earth"
 
 #: gpicsync-gui.py:205
 msgid "UTC Offset="
-msgstr "Сдвиг UTC="
+msgstr "Сдвиг от UTC="
 
 #: gpicsync-gui.py:206
 msgid "Geocode picture only if time difference to nearest track point is below (seconds)="
-msgstr "Геокодировать фото только если отличие по времени от точек трека меньше (секунды) ="
+msgstr "Геокодировать фото только если отличие по времени от точек трека меньше (секунд) ="
 
 #: gpicsync-gui.py:207
 msgid "Create a log file in picture folder"
-msgstr "Создавать лог в папке с фотографиями"
+msgstr "Создать лог в папке с фотографиями"
 
 #: gpicsync-gui.py:209
 msgid "Dates must match"
@@ -180,7 +180,7 @@ msgstr "Создать файл Google Earth"
 
 #: gpicsync-gui.py:213
 msgid "with TimeStamp"
-msgstr "с датой"
+msgstr "вставить Дату"
 
 #: gpicsync-gui.py:215
 msgid "Google Maps export, folder URL="
@@ -188,11 +188,11 @@ msgstr "Google Maps экспорт, базовый URL="
 
 #: gpicsync-gui.py:219
 msgid "backup pictures"
-msgstr "Сохранять оригинал"
-
+msgstr "делать резервную копию"
+        
 #: gpicsync-gui.py:221
 msgid "interpolation"
-msgstr "Интерполяция"
+msgstr "интерполяция"
 
 #: gpicsync-gui.py:223
 msgid "add geonames and geotagged"
@@ -276,15 +276,15 @@ msgstr "Вы должны сначала выбрать папку с фото и файл GPX."
 
 #: gpicsync-gui.py:550
 msgid "Beginning synchronization with "
-msgstr "Начинаем синхронизации с "
+msgstr "Начинаем синхронизацию. "
 
 #: gpicsync-gui.py:551
 msgid "UTC Offset ="
-msgstr "Сдвиг UTC ="
+msgstr "Сдвиг от UTC ="
 
 #: gpicsync-gui.py:552
 msgid " hours and maximum time difference = "
-msgstr " часы и максимальное различие во времени = "
+msgstr " часы и максимальное различие по времени = "
 
 #: gpicsync-gui.py:552
 msgid " seconds"
@@ -535,18 +535,18 @@ msgstr "взято "
 #: gpicsync.py:269
 #: gpicsync.py:289
 msgid "writing best latitude/longitude match to picture: "
-msgstr "запись лучших широта/долготы: соответствующих фотографии"
+msgstr "запись лучших широты/долготы соответствующих фотографии: "
 
 #: gpicsync.py:270
 #: gpicsync.py:276
 #: gpicsync.py:290
 #: gpicsync.py:297
 msgid " time difference (s)= "
-msgstr " отличие времени (с)= "
+msgstr " отличие по времени (с)= "
 
 #: gpicsync.py:275
 msgid "no track point below the maximum time range "
-msgstr "нет точек трега GPS ниже максимальной границы времени "
+msgstr "нет точек трека GPS ниже максимальной границы времени "
 
 #: gpicsync.py:275
 #: gpicsync.py:279

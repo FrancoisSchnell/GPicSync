@@ -709,11 +709,12 @@ class GUI(wx.Frame):
                 or fnmatch.fnmatch ( fileName, '*.CRW' )\
                 or fnmatch.fnmatch ( fileName, '*.NEF' )\
                 or fnmatch.fnmatch ( fileName, '*.PEF' )\
-                or fnmatch.fnmatch ( fileName, '*.SR2' )\
-                or fnmatch.fnmatch ( fileName, '*.ARW' )\
+                or fnmatch.fnmatch ( fileName, '*.RAW' )\
+                or fnmatch.fnmatch ( fileName, '*.ORF' )\
                 or fnmatch.fnmatch ( fileName, '*.DNG' )\
                 or fnmatch.fnmatch ( fileName, '*.dng' )\
-                or fnmatch.fnmatch ( fileName, '*.RAF' ):
+                or fnmatch.fnmatch ( fileName, '*.dng' )\
+                or fnmatch.fnmatch ( fileName, '*.MRW' ):
                 
                     print "\nFound fileName ",fileName," Processing now ..."
                     wx.CallAfter(self.consolePrint,"\n"+_("(Found ")+fileName+" ...")
