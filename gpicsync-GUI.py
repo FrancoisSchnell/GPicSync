@@ -400,7 +400,7 @@ class GUI(wx.Frame):
         fconf.write("geoname_country="+str(self.geoname_country)+"\n")
         fconf.write("geoname_summary="+str(self.geoname_summary)+"\n")
         fconf.write("geoname_userdefine="+self.geoname_userdefine+"\n\n")
-        fconf.write("#Add summary in IPTC with the following variables (don't use any double quote in the summary):\n")
+        fconf.write("#Add summary in IPTC with the following variables (if you use quotes escape them: \\\"  ):\n")
         fconf.write("#{LATITUDE} {LONGITUDE} {DISTANCETO} {NEARBYPLACE} {REGION} {COUNTRY}\n")
         fconf.write("geoname_caption="+str(self.geoname_caption)+"\n")
         fconf.write("geoname_IPTCsummary="+str(self.geoname_IPTCsummary)+"\n\n")
