@@ -123,6 +123,9 @@ class GUI(wx.Frame):
                 self.geoname_userdefine=conf.get("gpicsync","geoname_userdefine")
             if conf.has_option("gpicsync","geoname_caption") == True:
                 self.geoname_caption=eval(conf.get("gpicsync","geoname_caption"))
+            if conf.has_option("gpicsync","geoname_IPTCsummary") == True:
+                self.geoname_IPTCsummary=conf.get("gpicsync","geoname_IPTCsummary")
+                print ">>>", self.geoname_IPTCsummary
             if conf.has_option("gpicsync","defaultdirectory") == True:
                 self.picDir=conf.get("gpicsync","defaultdirectory")
             if conf.has_option("gpicsync","getimestamp") == True:
@@ -365,7 +368,7 @@ class GUI(wx.Frame):
             fconf=open(os.environ["USERPROFILE"]+"/gpicsync.conf","r+")
         except:
             #fconf=open(os.environ["USERPROFILE"]+"/gpicsync.conf","r+")
-            fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
+            fconf=open(os.path.expanduser("~/gpicsync.conf"),"w")
         header="#This is a configuration file for GPicSync geocoding software\n"+\
         "#Read the comments below to see what you can set. Boolean value (True or False) and\n"+\
         "#the default language option must always begin with a Capital Letter\n\n[gpicsync]\n\n"
@@ -396,8 +399,11 @@ class GUI(wx.Frame):
         fconf.write("geoname_region="+str(self.geoname_region)+"\n")
         fconf.write("geoname_country="+str(self.geoname_country)+"\n")
         fconf.write("geoname_summary="+str(self.geoname_summary)+"\n")
-        fconf.write("geoname_userdefine="+self.geoname_userdefine+"\n")
-        fconf.write("geoname_caption="+str(self.geoname_caption)+"\n\n")
+        fconf.write("geoname_userdefine="+self.geoname_userdefine+"\n\n")
+        fconf.write("#Add summary in IPTC with the following variables (don't use any double quote in the summary):\n")
+        fconf.write("#{LATITUDE} {LONGITUDE} {DISTANCETO} {NEARBYPLACE} {REGION} {COUNTRY}\n")
+        fconf.write("geoname_caption="+str(self.geoname_caption)+"\n")
+        fconf.write("geoname_IPTCsummary="+str(self.geoname_IPTCsummary)+"\n\n")
         fconf.write("#Set default or last directory automatically used\n")
         fconf.write("Defaultdirectory="+self.picDir)
         fconf.write("")
@@ -813,18 +819,31 @@ class GUI(wx.Frame):
                             if (self.gnOptChoice.GetSelection()==0) or (self.gnOptChoice.GetSelection()==1):
                                 for geoname in [gnPlace,gnRegion,gnCountry,gnSummary,geotag,geotagLat,geotagLon,userdefine]:
                                     if geoname !="":
-                                        geonameKeywords+=' -keywords="%s" ' % geoname
+                                        geonameKeywords+=' -keywords="%s" ' % geoname                            
                             
+                            if self.geoname_caption==True and self.gnOptChoice.GetSelection()==0:
+                                gnIPTCsummary= self.geoname_IPTCsummary
+                                for var in [("{LATITUDE}",tempLat),("{LONGITUDE}",tempLong),
+                                ("{DISTANCETO}",gnDistance),("{NEARBYPLACE}",gnPlace),
+                                ("{REGION}",gnRegion),("{COUNTRY}",gnCountry)]:
+                                    gnIPTCsummary=gnIPTCsummary.replace(var[0],var[1])
+                                geonameKeywords+=' -iptc:caption-abstract="'+gnIPTCsummary+'"'
+                                print "geonameKeywords=",geonameKeywords
+                                os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))  
+                                    
+                            
+                            """
                             if self.geoname_caption==True and self.gnOptChoice.GetSelection()==0:
                                 geonameKeywords+=' -iptc:caption-abstract="Latitude/Longitude=('+\
                                 tempLat+' , '+tempLong+' )<br> Near '+gnInfos+\
                                 ' <a href=\"http://www.geonames.org/maps/google_'+tempLat+'_'+tempLong+'.html\"> (Map link)</a><br>'+userdefine+'"'
                                 
                             print "geonameKeywords=",geonameKeywords
-                            os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))     
+                            os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))  
+                            """   
 
                         except:
-                            print "Had problem when writting geonaems"
+                            print "Had problem when writting geonames"
                             
             if self.stop==False:
                 wx.CallAfter(self.consolePrint,"\n*** "+_("FINISHED GEOCODING PROCESS")+" ***\n")
