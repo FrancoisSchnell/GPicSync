@@ -46,7 +46,7 @@ msgid "Geonames in XMP format"
 msgstr "Geonázvy v XMP formátu"
 
 #: gpicsync-gui.py:222
-msgid "Geonames in EXIF keywords + HTML sumarize in IPTC caption"
+msgid "Geonames in EXIF keywords + HTML summary in IPTC caption"
 msgstr "Geonázvy v EXIF klíè. slovech + HTML souhrn v IPTC popisu"
 
 #: gpicsync-gui.py:223

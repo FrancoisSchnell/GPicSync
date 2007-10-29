@@ -42,7 +42,7 @@ msgid "Geonames in XMP format"
 msgstr "Geonames au format XMP"
 
 #: gpicsync-gui.py:222
-msgid "Geonames in EXIF keywords + HTML sumarize in IPTC caption"
+msgid "Geonames in EXIF keywords + HTML summary in IPTC caption"
 msgstr "Geonames dans EXIF keywords + résumé HTML dans IPTC caption"
 
 #: gpicsync-gui.py:223

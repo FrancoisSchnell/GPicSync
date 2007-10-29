@@ -230,7 +230,7 @@ class GUI(wx.Frame):
         # Geonames option
         tmp1=_("Geonames in specific IPTC fields")
         tmp2=_("Geonames in XMP format")
-        gnOptList=[_("Geonames in EXIF keywords + HTML sumarize in IPTC caption"),
+        gnOptList=[_("Geonames in EXIF keywords + HTML summary in IPTC caption"),
         _("Geonames in EXIF keywords")]
         self.gnOptChoice=wx.Choice(bkg, -1, (-1,-1), choices = gnOptList)
         self.gnOptChoice.SetSelection(0)
@@ -450,7 +450,7 @@ class GUI(wx.Frame):
                     
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="GPicSync  1.22 - 2007 \n\n"\
+        text="GPicSync  1.23 - 2007 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
@@ -829,7 +829,8 @@ class GUI(wx.Frame):
                                     gnIPTCsummary=gnIPTCsummary.replace(var[0],var[1])
                                 geonameKeywords+=' -iptc:caption-abstract="'+gnIPTCsummary+'"'
                                 print "geonameKeywords=",geonameKeywords
-                                os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))  
+                            
+                            os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))  
                                     
                             
                             """
