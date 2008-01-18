@@ -36,6 +36,9 @@ class KML(object):
 <kml xmlns="http://earth.google.com/kml/2.1">
 <Document>
 <name>"""+name+"""</name>
+<Style id="hoverIcon0"><IconStyle><scale>5.0</scale></IconStyle></Style>
+<Style id="defaultIcon0"><LabelStyle><scale>0</scale></LabelStyle><IconStyle><scale>1.0</scale></IconStyle></Style>
+<StyleMap id="defaultStyle1"><Pair><key>normal</key><styleUrl>#defaultIcon0</styleUrl></Pair><Pair><key>highlight</key><styleUrl>#hoverIcon0</styleUrl></Pair></StyleMap>
 <Style id="lineStyle">
 <PolyStyle>
 <color>3feeee17</color>
@@ -161,7 +164,8 @@ class KML(object):
         "<img src='"+self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>"+\
         pmDescriptionFooter+\
         "]]>"+\
-        "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+eleAdd+\
+        "</description>\n<styleUrl>#defaultStyle1</styleUrl><Style><IconStyle><Icon><href>thumbs/thumb_"+\
+        os.path.basename(picName)+"</href></Icon></IconStyle></Style>\n<Point>"+eleAdd+\
         "\n<coordinates>"+str(long)+","+str(lat)+","+elevation+\
         "</coordinates>\n</Point>\n"+timeStamp
         
@@ -205,7 +209,8 @@ class KML(object):
         self.url+"thumbs/thumb_"+os.path.basename(picName)+"'/></a>"+\
         pmDescriptionFooter+\
         "]]>"+\
-        "</description>\n<styleUrl>#camera</styleUrl>\n<Point>"+\
+        "</description>\n<styleUrl>#defaultStyle1</styleUrl><Style><IconStyle><Icon><href>thumbs/thumb_"+\
+        os.path.basename(picName)+"</href></Icon></IconStyle></Style>\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+","+elevation+\
         "</coordinates>\n</Point>\n"
         pmTail="</Placemark>"

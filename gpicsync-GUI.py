@@ -713,6 +713,7 @@ class GUI(wx.Frame):
                 or fnmatch.fnmatch ( fileName, '*.jpg' )\
                 or fnmatch.fnmatch ( fileName, '*.CR2' )\
                 or fnmatch.fnmatch ( fileName, '*.CRW' )\
+                or fnmatch.fnmatch ( fileName, '*.THM' )\
                 or fnmatch.fnmatch ( fileName, '*.NEF' )\
                 or fnmatch.fnmatch ( fileName, '*.PEF' )\
                 or fnmatch.fnmatch ( fileName, '*.RAW' )\
