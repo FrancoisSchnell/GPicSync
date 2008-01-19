@@ -22,7 +22,7 @@ More informations at this URL:
 http://code.google.com/p/gpicsync/
 """
 
-import wx,time, decimal,gettext,shutil,ConfigParser
+import wx,wx.lib.colourdb,time, decimal,gettext,shutil,ConfigParser
 import os,sys,fnmatch,zipfile
 if sys.platform == 'win32':
     import win32com.client
@@ -180,8 +180,10 @@ class GUI(wx.Frame):
         except:
             print "Couldn't load translation."
                 
+        #####   Menus  #####
+        
         bkg=wx.Panel(self)
-        #bkg.SetBackgroundColour('light blue steel')
+        #bkg.SetBackgroundColour((244,180,56))
         menuBar=wx.MenuBar()
         menu1=wx.Menu()
         timeShift=menu1.Append(wx.NewId(),_("Local time correction"))
@@ -210,16 +212,30 @@ class GUI(wx.Frame):
         self.Bind(wx.EVT_MENU,self.gpxInspectorFrame,gpxInspectorMenu)
         self.Bind(wx.EVT_MENU,self.kmzGeneratorFrame,kmzGeneratorMenu)
         
+        #####   Mains panel widgets definitions #####
         
+        # Pictures dir and Gpx search buttons
         dirButton=wx.Button(bkg,size=(150,-1),label=_("Pictures folder"))
         gpxButton=wx.Button(bkg,size=(150,-1),label=_("GPS file"))
+        self.dirEntry=wx.TextCtrl(bkg)
+        self.gpxEntry=wx.TextCtrl(bkg)
+        self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
+        self.Bind(wx.EVT_BUTTON, self.findGpx, gpxButton)
+        
+        # Commands buttons (sync,quit,stop,etc)
         syncButton=wx.Button(bkg,size=(250,-1),label=_(" Synchronise ! "))
         quitButton=wx.Button(bkg,label=_("Quit"),size=(-1,-1))
         quitAndSaveButton=wx.Button(bkg,label=_("Quit and save settings"),size=(-1,-1))
         stopButton=wx.Button(bkg,label=_("Stop"),size=(-1,-1))
         clearButton=wx.Button(bkg,label=_("Clear"),size=(-1,-1))
         viewInGEButton=wx.Button(bkg,label=_("View in Google Earth"),size=(-1,-1))
-        
+        self.Bind(wx.EVT_BUTTON, self.syncPictures, syncButton)
+        self.Bind(wx.EVT_BUTTON, self.exitApp,quitButton)
+        self.Bind(wx.EVT_BUTTON, self.exitAppSave,quitAndSaveButton)
+        self.Bind(wx.EVT_BUTTON, self.stopApp,stopButton) 
+        self.Bind(wx.EVT_BUTTON, self.clearConsole,clearButton)
+        self.Bind(wx.EVT_BUTTON, self.viewInGE,viewInGEButton)
+                
         # Elevation options
         eleLabel=wx.StaticText(bkg, -1," "+_("Elevation")+":")
         eleList=[_("Clamp to the ground"),
@@ -227,7 +243,14 @@ class GUI(wx.Frame):
         self.elevationChoice=wx.Choice(bkg, -1, (-1,-1), choices = eleList)
         self.elevationChoice.SetSelection(0)
         
-        # Geonames option
+        # Google Earth Icons choice
+        iconsLabel=wx.StaticText(bkg, -1," "+_("Icons")+":")
+        iconsList=[_("picture thumb"),
+        _("camera icon")]
+        self.iconsChoice=wx.Choice(bkg, -1, (-1,-1), choices = iconsList)
+        self.iconsChoice.SetSelection(0)        
+        
+        # Geonames options
         tmp1=_("Geonames in specific IPTC fields")
         tmp2=_("Geonames in XMP format")
         gnOptList=[_("Geonames in EXIF keywords + HTML summary in IPTC caption"),
@@ -235,64 +258,77 @@ class GUI(wx.Frame):
         self.gnOptChoice=wx.Choice(bkg, -1, (-1,-1), choices = gnOptList)
         self.gnOptChoice.SetSelection(0)
         
+        # UTC value and time range
         utcLabel = wx.StaticText(bkg, -1,_("UTC Offset="))
         timerangeLabel=wx.StaticText(bkg, -1,_("Geocode picture only if time difference to nearest track point is below (seconds)="))
+        self.utcEntry=wx.TextCtrl(bkg,size=(40,-1))
+        self.utcEntry.SetValue(self.utcOffset)
+        self.timerangeEntry=wx.TextCtrl(bkg,size=(40,-1))
+        self.timerangeEntry.SetValue(self.maxTimeDifference)
+        
+        # Log file,  dateCheck (deprecated)
         self.logFile=wx.CheckBox(bkg,-1,_("Create a log file in picture folder"))
         self.logFile.SetValue(self.log)
         self.dateCheck=wx.CheckBox(bkg,-1,_("Dates must match"))
         self.dateCheck.SetValue(self.datesMustMatch)
         self.dateCheck.Hide()
+
+        # Google Earth and Google Maps 
         self.geCheck=wx.CheckBox(bkg,-1,_("Create a Google Earth file")+": ")
         self.geCheck.SetValue(True)
+        self.geCheck.Hide()
+        geInfoLabel=wx.StaticText(bkg, -1," "+"[Google Earth]->")
         self.geTStamps=wx.CheckBox(bkg,-1,_("with TimeStamp"))
         self.geTStamps.SetValue(self.timeStamp)
-        
         self.gmCheck=wx.CheckBox(bkg,-1,_("Google Maps export, folder URL="))
         self.gmCheck.SetValue(self.GMaps)
-        self.urlEntry=wx.TextCtrl(bkg,size=(330,-1))
+        self.urlEntry=wx.TextCtrl(bkg,size=(500,-1))
         self.urlEntry.SetValue(self.urlGMaps)
+        
+        # backup, interpolations mod and geonames
         self.backupCheck=wx.CheckBox(bkg,-1,_("backup pictures"))
         self.backupCheck.SetValue(self.backup)
         self.interpolationCheck=wx.CheckBox(bkg,-1,_("interpolation"))
         self.interpolationCheck.SetValue(self.interpolation)
         self.geonamesCheck=wx.CheckBox(bkg,-1,_("add geonames and geotagged"))
         self.geonamesCheck.SetValue(self.geonamesTags)
-        
-        self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
-        self.Bind(wx.EVT_BUTTON, self.findGpx, gpxButton)
-        self.Bind(wx.EVT_BUTTON, self.syncPictures, syncButton)
-        self.Bind(wx.EVT_BUTTON, self.exitApp,quitButton)
-        self.Bind(wx.EVT_BUTTON, self.exitAppSave,quitAndSaveButton)
-        self.Bind(wx.EVT_BUTTON, self.stopApp,stopButton) 
-        self.Bind(wx.EVT_BUTTON, self.clearConsole,clearButton)
-        self.Bind(wx.EVT_BUTTON, self.viewInGE,viewInGEButton)
-        
-        self.dirEntry=wx.TextCtrl(bkg)
-        self.gpxEntry=wx.TextCtrl(bkg)
-        self.utcEntry=wx.TextCtrl(bkg,size=(40,-1))
-        self.utcEntry.SetValue(self.utcOffset)
-        self.timerangeEntry=wx.TextCtrl(bkg,size=(40,-1))
-        self.timerangeEntry.SetValue(self.maxTimeDifference)
+                
+        # Main output text console
         self.consoleEntry=wx.TextCtrl(bkg,style=wx.TE_MULTILINE | wx.HSCROLL)
         
-        gebox=wx.BoxSizer()
-        gebox.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
+        ##### GUI LAYOUT / SIZERS ##### 
         
-        gebox.Add(eleLabel,flag=wx.ALIGN_CENTER_VERTICAL| wx.LEFT, border=10)
-        gebox.Add(self.elevationChoice,proportion=0,flag= wx.ALIGN_CENTER_VERTICAL|wx.ALL,border=10)
-        gebox.Add(self.geTStamps,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
-
+        # directory and GPX choices sizer
+        dirChoiceBox=wx.BoxSizer()
+        dirChoiceBox.Add(dirButton,proportion=0,flag=wx.LEFT,border=5)
+        dirChoiceBox.Add(self.dirEntry,proportion=1,flag=wx.EXPAND)
+        gpxChoiceBox=wx.BoxSizer()
+        gpxChoiceBox.Add(gpxButton,proportion=0,flag=wx.LEFT,border=5)
+        gpxChoiceBox.Add(self.gpxEntry,proportion=1,flag=wx.EXPAND)
+        
+        # Google Earth elevation and time stamp horizontal sizer
+        gebox=wx.BoxSizer()
+        #gebox.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
+        gebox.Add(geInfoLabel,flag=wx.LEFT,border=10)
+        #gebox.Add(eleLabel,flag=wx.ALIGN_CENTER_VERTICAL| wx.LEFT, border=10)
+        #gebox.Add(self.elevationChoice,proportion=0,flag= wx.ALIGN_CENTER_VERTICAL|wx.ALL,border=10)
+        gebox.Add(iconsLabel,flag=wx.LEFT, border=10)
+        gebox.Add(self.iconsChoice,flag=wx.LEFT, border=10)
+        gebox.Add(eleLabel,flag=wx.LEFT, border=10)
+        gebox.Add(self.elevationChoice,flag= wx.LEFT,border=10)        
+        gebox.Add(self.geTStamps,flag= wx.LEFT, border=10)
+        
+        # Google Earth icon choice sizer
+        #iconsbox=wx.BoxSizer()
+        #iconsbox.Add(iconsLabel,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
+        #iconsbox.Add(self.iconsChoice,proportion=0,flag=wx.EXPAND| wx.ALL,border=1 )
+        
+        # Google maps export and associated URL 
         gmbox=wx.BoxSizer()
         gmbox.Add(self.gmCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
         gmbox.Add(self.urlEntry,proportion=0,flag=wx.EXPAND| wx.ALL,border=1)
         
-        hbox=wx.BoxSizer()
-        hbox.Add(dirButton,proportion=0,flag=wx.LEFT,border=5)
-        hbox.Add(self.dirEntry,proportion=1,flag=wx.EXPAND)
-        hbox2=wx.BoxSizer()
-        hbox2.Add(gpxButton,proportion=0,flag=wx.LEFT,border=5)
-        hbox2.Add(self.gpxEntry,proportion=1,flag=wx.EXPAND)
-        
+        # line with log check, interpolation check and backup check
         settingsbox=wx.BoxSizer()
         settingsbox.Add(self.logFile,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
         #settingsbox.Add(self.dateCheck,proportion=0,flag=wx.LEFT| wx.ALL,border=10)
@@ -300,49 +336,59 @@ class GUI(wx.Frame):
         settingsbox.Add(self.backupCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
         
         # Image preview box
-        prebox=wx.StaticBox(bkg, -1, _("Image preview:"))
+        prebox=wx.StaticBox(bkg, -1, _("Image preview:"),size=(200,200))
         previewbox=wx.StaticBoxSizer(prebox, wx.VERTICAL)
         self.imgWhite=wx.Image('default.jpg', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         self.imgPrev=wx.StaticBitmap(bkg,-1,self.imgWhite,size=(160,160))#style=wx.SIMPLE_BORDER
         previewbox.Add(self.imgPrev, 0, flag= wx.ALIGN_CENTER_VERTICAL|wx.ALIGN_CENTER_HORIZONTAL,border=10)
         
+        # Geonames line
         gnhbox=wx.BoxSizer()
         gnhbox.Add(self.geonamesCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
         gnhbox.Add(self.gnOptChoice,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
         
-        hbox1=wx.BoxSizer()
-        hbox1.Add(utcLabel,proportion=0,flag=wx.LEFT,border=10)
-        hbox1.Add(self.utcEntry,proportion=0,flag=wx.LEFT,border=10)
-        hbox1.Add(timerangeLabel,proportion=0,flag=wx.LEFT,border=10)
-        hbox1.Add(self.timerangeEntry,proportion=0,flag=wx.LEFT,border=10)
+        # UTC and timerange line
+        utcBox=wx.BoxSizer()
+        utcBox.Add(utcLabel,proportion=0,flag=wx.LEFT,border=10)
+        utcBox.Add(self.utcEntry,proportion=0,flag=wx.LEFT,border=10)
+        utcBox.Add(timerangeLabel,proportion=0,flag=wx.LEFT,border=10)
+        utcBox.Add(self.timerangeEntry,proportion=0,flag=wx.LEFT,border=10)
         
-        hbox4=wx.BoxSizer()
-        hbox4.Add(syncButton,proportion=0,flag=wx.LEFT,border=5)
-        hbox4.Add(stopButton,proportion=0,flag=wx.LEFT,border=5)
-        hbox4.Add(clearButton,proportion=0,flag=wx.LEFT,border=5)
-        hbox4.Add(viewInGEButton,proportion=0,flag=wx.LEFT,border=5)
-        hbox4.Add(quitButton,proportion=0,flag=wx.LEFT,border=5)
-        hbox4.Add(quitAndSaveButton,proportion=0,flag=wx.LEFT,border=5)
-    
+        # commands line
+        commandsBox=wx.BoxSizer()
+        commandsBox.Add(syncButton,proportion=0,flag=wx.LEFT,border=5)
+        commandsBox.Add(stopButton,proportion=0,flag=wx.LEFT,border=5)
+        commandsBox.Add(clearButton,proportion=0,flag=wx.LEFT,border=5)
+        commandsBox.Add(viewInGEButton,proportion=0,flag=wx.LEFT,border=5)
+        commandsBox.Add(quitButton,proportion=0,flag=wx.LEFT,border=5)
+        commandsBox.Add(quitAndSaveButton,proportion=0,flag=wx.LEFT,border=5)
+        
+        # select picture directory and GPX box
         headerbox=wx.BoxSizer(wx.VERTICAL)
-        headerbox.Add(hbox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        headerbox.Add(hbox2,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        headerbox.Add(dirChoiceBox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        headerbox.Add(gpxChoiceBox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         
+        # Main Options box
         optionPrebox=wx.StaticBox(bkg, -1, _("Options:"))
-        #optionbox=wx.BoxSizer(wx.VERTICAL)
         optionbox=wx.StaticBoxSizer(optionPrebox, wx.VERTICAL)
-        optionbox.Add(gebox,proportion=0,flag=wx.LEFT,border=5)
-        optionbox.Add(gmbox,proportion=0,flag=wx.LEFT,border=5)
-        optionbox.Add(settingsbox,proportion=0,flag=wx.LEFT,border=5)
-        optionbox.Add(gnhbox,proportion=0,flag=wx.LEFT,border=5)
+        optionbox.Add(gebox,proportion=0,flag=wx.ALL,border=7)
+        optionbox.Add(gmbox,proportion=0,flag=wx.ALL,border=7)        
+        optionbox.Add(settingsbox,proportion=0,flag=wx.ALL,border=7)
+        optionbox.Add(gnhbox,proportion=0,flag=wx.ALL,border=7)
+
+        #optionbox.Add(iconsbox,proportion=0,flag=wx.LEFT,border=5)
+
         
+
+        
+        # Options box + picture preview sizer
         middlebox=wx.BoxSizer()
-        middlebox.Add(optionbox)
-        middlebox.Add(previewbox,proportion=1,flag=wx.EXPAND|wx.LEFT|wx.RIGHT,border=40)
+        middlebox.Add(optionbox,proportion=1,flag=wx.LEFT,border=15)
+        middlebox.Add(previewbox,proportion=0,flag=wx.LEFT,border=20)
         
         footerbox=wx.BoxSizer(wx.VERTICAL)
-        footerbox.Add(hbox1,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
-        footerbox.Add(hbox4,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        footerbox.Add(utcBox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
+        footerbox.Add(commandsBox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         footerbox.Add(self.consoleEntry,proportion=1,flag=wx.EXPAND | wx.LEFT, border=5)
         
         allBox= wx.BoxSizer(wx.VERTICAL)
@@ -685,8 +731,8 @@ class GUI(wx.Frame):
 
             if self.geCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Earth file (doc.kml) in the picture folder ...")+" \n")
-                localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir),\
-                timeStampOrder=timeStampOrder,utc=self.utcEntry.GetValue(),eleMode=eleMode)
+                localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir),timeStampOrder=timeStampOrder,
+                utc=self.utcEntry.GetValue(),eleMode=eleMode,iconsStyle=self.iconsChoice.GetSelection(),gmaps=False)
                 localKml.writeInKml("\n<Folder>\n<name>Photos</name>")
                 try:
                     os.mkdir(self.picDir+'/thumbs')
@@ -695,7 +741,8 @@ class GUI(wx.Frame):
 
             if self.gmCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Map file (doc-web.kml) in the picture folder")+" ... \n")
-                webKml=KML(self.picDir+"/doc-web",os.path.basename(self.picDir),url=self.urlEntry.GetValue(),utc=self.utcEntry.GetValue())
+                webKml=KML(self.picDir+"/doc-web",os.path.basename(self.picDir),url=self.urlEntry.GetValue(),
+                utc=self.utcEntry.GetValue(),gmaps=True)
                 webKml.path(self.gpxFile)
                 webKml.writeInKml("\n<Folder>\n<name>Photos</name>")
                 
@@ -713,7 +760,6 @@ class GUI(wx.Frame):
                 or fnmatch.fnmatch ( fileName, '*.jpg' )\
                 or fnmatch.fnmatch ( fileName, '*.CR2' )\
                 or fnmatch.fnmatch ( fileName, '*.CRW' )\
-                or fnmatch.fnmatch ( fileName, '*.THM' )\
                 or fnmatch.fnmatch ( fileName, '*.NEF' )\
                 or fnmatch.fnmatch ( fileName, '*.PEF' )\
                 or fnmatch.fnmatch ( fileName, '*.RAW' )\
@@ -764,7 +810,8 @@ class GUI(wx.Frame):
                         
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],
-                        long=result[2],width=result[3],height=result[4],timeStamp=result[5],elevation=result[6])
+                        long=result[2],width=result[3],height=result[4],timeStamp=result[5],
+                        elevation=result[6])
                             
                     if self.gmCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         webKml.placemark4Gmaps(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4],elevation=result[6])
@@ -887,7 +934,7 @@ class GUI(wx.Frame):
         """A frame for local time correction"""
         self.winOpt=wx.Frame(win,size=(440,280),title=_("Local time corrections"))
         bkg=wx.Panel(self.winOpt)
-        #bkg.SetBackgroundColour('White')
+        #bkg.SetBackgroundColour('blue steel')
         text="\t"+_("Use this option ONLY if your camera local time is wrong.")\
         +"\n\n"+_("Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)")
         utcLabel = wx.StaticText(bkg, -1,text)

@@ -21,24 +21,52 @@ class KML(object):
     (for live viewing in Google Earth)
     """
     
-    def __init__(self,fileName,name,url="",timeStampOrder=False,utc="0",eleMode=0):
+    def __init__(self,fileName,name,url="",timeStampOrder=False,utc="0",eleMode=0,iconsStyle=0,gmaps=False):
         self.f=open(fileName+".kml","w")
         self.url=url
         self.timeStampOrder=timeStampOrder
         self.eleMode=eleMode # Elevation mode
+        self.iconsStyle=iconsStyle
+        gmaps=gmaps
         #self.utcOffest=utc
         if float(utc)>=0: sign="+"
         if float(utc)<0: sign="-"
         self.utcOffset=sign+str(abs(int(float(utc))))+":00"
-        print "self.utcOffest in kml for time stamps: ", self.utcOffset
+        print ">>> self.utcOffest in kml for time stamps: ", self.utcOffset
         
-        kmlHead="""<?xml version="1.0" encoding="UTF-8"?>
+        kmlHead_p1="""<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.1">
 <Document>
-<name>"""+name+"""</name>
-<Style id="hoverIcon0"><IconStyle><scale>5.0</scale></IconStyle></Style>
-<Style id="defaultIcon0"><LabelStyle><scale>0</scale></LabelStyle><IconStyle><scale>1.0</scale></IconStyle></Style>
-<StyleMap id="defaultStyle1"><Pair><key>normal</key><styleUrl>#defaultIcon0</styleUrl></Pair><Pair><key>highlight</key><styleUrl>#hoverIcon0</styleUrl></Pair></StyleMap>
+<name>"""+name+"""</name>"""
+
+        if (self.iconsStyle==0) and (gmaps==False):
+            kmlHead_p2="""
+<Style id="hoverIcon0">
+<IconStyle>
+<scale>5.0</scale>
+</IconStyle>
+</Style>
+<Style id="defaultIcon0">
+<LabelStyle>
+<scale>0</scale>
+</LabelStyle>
+<IconStyle>
+<scale>1.0</scale>
+</IconStyle>
+</Style>
+<StyleMap id="defaultStyle1">
+<Pair>
+<key>normal</key>
+<styleUrl>#defaultIcon0</styleUrl>
+</Pair>
+<Pair>
+<key>highlight</key>
+<styleUrl>#hoverIcon0</styleUrl>
+</Pair>
+</StyleMap>"""
+        else: kmlHead_p2=""
+
+        kmlHead_p3="""
 <Style id="lineStyle">
 <PolyStyle>
 <color>3feeee17</color>
@@ -65,10 +93,8 @@ class KML(object):
 """
 #<href>root://icons/palette-4.png</href>
 
-
-        self.f.write(kmlHead)
+        self.f.write(kmlHead_p1+kmlHead_p2+kmlHead_p3)
         
-    
     def writeInKml(self,text):
         """
         Print the given string in the kml file
@@ -111,7 +137,8 @@ class KML(object):
         
         return pmDescriptionFooter
             
-    def placemark(self,picName="",lat="",long="",ele="",width="800",height="600",timeStamp="",elevation=""):
+    def placemark(self,picName="",lat="",long="",ele="",width="800",height="600",
+                  timeStamp="",elevation=""):
         """
         Creates a placemark tag for the given picture in the kml file.
         If only a picture path is given in argument, latitude and longitude will
@@ -119,6 +146,7 @@ class KML(object):
         It's also possible to give the values in argument
         (a string representing decimal degress, - sign ok)
         """
+        
         if elevation=="" or elevation=="None": elevation="0"
         if self.timeStampOrder==True:
             timeStamp1="<TimeStamp><when>"+timeStamp+self.utcOffset+"</when> </TimeStamp>\n"
@@ -156,16 +184,20 @@ class KML(object):
             eleAdd="\n<altitudeMode>absolute</altitudeMode>"
         else: eleAdd=""
             
-        
+        if self.iconsStyle==1:
+            iconLook="<styleUrl>#camera</styleUrl>"
+        elif self.iconsStyle==0: 
+            iconLook="<styleUrl>#defaultStyle1</styleUrl><Style><IconStyle><Icon><href>thumbs/thumb_"+\
+            os.path.basename(picName)+"</href></Icon></IconStyle></Style>"\
+
         #Adding a footer to the description
         pmDescriptionFooter=self.footerPlacemark(picName,type="GE")
         
         pmDescription="<description><![CDATA["+\
         "<img src='"+self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>"+\
         pmDescriptionFooter+\
-        "]]>"+\
-        "</description>\n<styleUrl>#defaultStyle1</styleUrl><Style><IconStyle><Icon><href>thumbs/thumb_"+\
-        os.path.basename(picName)+"</href></Icon></IconStyle></Style>\n<Point>"+eleAdd+\
+        "]]>\n</description>\n"+iconLook+\
+        "\n<Point>"+eleAdd+\
         "\n<coordinates>"+str(long)+","+str(lat)+","+elevation+\
         "</coordinates>\n</Point>\n"+timeStamp
         
@@ -201,6 +233,7 @@ class KML(object):
             long=mypicture.readLongitude()
         pmHead="\n\n<Placemark>\n<name>"+\
         os.path.basename(picName)+"</name>\n"
+        iconLook="<styleUrl>#camera</styleUrl>"
         
         #Adding a footer to the description
         pmDescriptionFooter=self.footerPlacemark(picName,type="GM")        
@@ -209,8 +242,8 @@ class KML(object):
         self.url+"thumbs/thumb_"+os.path.basename(picName)+"'/></a>"+\
         pmDescriptionFooter+\
         "]]>"+\
-        "</description>\n<styleUrl>#defaultStyle1</styleUrl><Style><IconStyle><Icon><href>thumbs/thumb_"+\
-        os.path.basename(picName)+"</href></Icon></IconStyle></Style>\n<Point>"+\
+        "</description>\n"+iconLook+\
+        "\n<Point>"+\
         "\n<coordinates>"+str(long)+","+str(lat)+","+elevation+\
         "</coordinates>\n</Point>\n"
         pmTail="</Placemark>"
@@ -272,7 +305,7 @@ if __name__=="__main__":
     
     import os,sys,fnmatch
     folder="C:/Documents and Settings/franz/Bureau/gpicsync.googlecode.com/trunk/GE-test"
-    myKml=KML(folder+"/test")
+    myKml=KML(folder+"/test") # deprecated see __init__
     for fileName in os.listdir ( folder ):
         if fnmatch.fnmatch (fileName, '*.JPG') or fnmatch.fnmatch (fileName, '*.jpg'):
             myKml.placemark(folder+"/"+fileName)
