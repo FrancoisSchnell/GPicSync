@@ -41,6 +41,7 @@ class GpicSync(object):
         """Extracts data from the gpx file and compute local offset duration"""
         myGpx=Gpx(gpxFile)   
         self.track=myGpx.extract()
+        #print self.track
         self.localOffset=0 #default time offset between camera and GPS
         self.dateCheck=dateProcess
         self.UTCoffset=UTCoffset*3600
@@ -72,7 +73,7 @@ class GpicSync(object):
         
         # create a proper datetime object (self.shot_datetime)
         pict=(picDateTimeSize[0]+":"+picDateTimeSize[1]).split(":")
-        print ">>>pict:",pict
+        #print ">>> picture original date/time from EXIF: ",pict
         self.pic_datetime=datetime.datetime(
                                             int(pict[0]),
                                             int(pict[1]),
@@ -80,11 +81,10 @@ class GpicSync(object):
                                             int(pict[3]),
                                             int(pict[4]),
                                             int(pict[5]))
-        print ">>>self.pic_datetime:",self.pic_datetime
+        print ">>> self.pic_datetime (from picture EXIF): ",self.pic_datetime
         self.pic_datetimeUTC=self.pic_datetime-datetime.timedelta(seconds=self.localOffset)
-        print ">>>self.pic_datetimeUTC:",self.pic_datetimeUTC
-        
-
+        print ">>> self.pic_datetimeUTC (time corrected if offset):",self.pic_datetimeUTC
+    
         self.shotTime=picDateTimeSize[1]
         self.shotDate=picDateTimeSize[0].replace(":","-")
         self.timeStamp=self.shotDate+"T"+picDateTimeSize[1]
@@ -112,21 +112,24 @@ class GpicSync(object):
                 if float(longitude)>0:longRef="E"
                 else: longRef="W"
                 
-        if self.interpolation==True:
+        if (self.interpolation==True) and (self.track[N]!=0):
             try:
-                print "N (nearest trackpoint) is= ",N 
-                print "Latitude of N= ", latitude,"Longitude of N =",longitude
-                if abs(self.track[N+1]["tpic_tgps_l"])<abs(self.track[N-1]["tpic_tgps_l"]):
+                print ">>> N (nearest trackpoint) in GPX list is index = ",N 
+                print ">>> Trackpoint N Latitude= ", latitude," Longitude= ",longitude
+
+                if (self.track[N]["tpic_tgps_l"]*self.track[N+1]["tpic_tgps_l"])<=0: 
                     M=N+1
-                else:
+                    print ">>> Chose point M=N+1 as second nearest valid trackpoint for interpolation" 
+                elif (self.track[N]["tpic_tgps_l"]*self.track[N+1]["tpic_tgps_l"])>0: 
                     M=N-1
-                print "M (second nearest trackpoint) is= ",M
+                    print ">>> Chose point M=N-1 as second nearest valid trackpoint for interpolation" 
+                    
                 dLonNM=float(self.track[M]['lon'])-float(self.track[N]['lon'])
                 dLatNM=float(self.track[M]['lat'])-float(self.track[N]['lat'])
-                print "dLonNM= ",dLonNM,"dLatNM= ",dLatNM
-                ratio=abs(float(self.track[N]["tpic_tgps_l"]))/\
-                (abs(self.track[N]["tpic_tgps_l"])+abs(self.track[M]["tpic_tgps_l"]))
-                print "ratio= ",ratio
+                print ">>> dLonNM= ",dLonNM,"dLatNM= ",dLatNM
+                ratio=abs(float(self.track[N]["tpic_tgps_l"]))\
+                /(abs(self.track[N]["tpic_tgps_l"])+abs(self.track[M]["tpic_tgps_l"]))
+                print ">>> ratio= ",ratio
                 latitude=float(latitude)+ratio*dLatNM
                 longitude=float(longitude)+ratio*dLonNM
                 if float(latitude)>0:latRef="N"
