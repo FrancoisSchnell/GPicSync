@@ -51,6 +51,9 @@ class GUI(wx.Frame):
         global bkg
         
         wx.Frame.__init__(self, parent, -1, title="GPicSync",size=(1000,600))
+        favicon = wx.Icon('gpicsync.ico', wx.BITMAP_TYPE_ICO, 16, 16)
+        wx.Frame.SetIcon(self, favicon)
+        
         self.tcam_l="00:00:00"
         self.tgps_l="00:00:00"
         self.log=False

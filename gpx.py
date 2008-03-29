@@ -77,11 +77,11 @@ class Gpx(object):
             self.geoData.append({
             'date':time[6:16],
             'time':time[17:25],
-            'lat':re.search('lat=".*?"',line).group().split('"')[1],
-            'lon':re.search('lon=".*?"',line).group().split('"')[1],
+            'lat':re.search('lat=".*?"',line).group().split('"')[1].strip(),
+            'lon':re.search('lon=".*?"',line).group().split('"')[1].strip(),
             #'lat':lineTree.attrib["lat"].strip(),
             #'lon':lineTree.attrib["lon"].strip(),
-            'ele':str(elevation),
+            'ele':str(elevation).strip(),
             'datetime':gps_datetimeUTC,
             })
         #print self.geoData

@@ -152,6 +152,15 @@ class GeoExif(object):
         option='"-DateTimeOriginal>FileModifyDate"'
         if float(long)<0:long=str(abs(float(long)))
         if float(lat)<0:lat=str(abs(float(lat)))
+        altRef=0 #"Above Sea Level"
+        
+        if elevation!="None":
+            if float(elevation)<0: 
+                altRef=1 #"Below Sea Level"
+                elevation=str(abs(float(elevation)))
+        print ">>> altRef=",altRef
+        print ">>> elevation ", elevation
+            
         if backup==True:
             if elevation=="None":
                 os.popen('%s -n -GPSLongitude=%s -GPSLatitude=%s \
@@ -159,8 +168,8 @@ class GeoExif(object):
                 %(self.exifcmd, long,lat,longRef,latRef,option,self.picPath))
             else:
                 os.popen('%s -n -GPSLongitude=%s -GPSLatitude=%s -GPSLongitudeRef=%s \
-                -GPSLatitudeRef=%s  -GPSAltitudeRef=0 -GPSAltitude=%s %s "%s" '\
-                %(self.exifcmd, long,lat,longRef,latRef,elevation,option,self.picPath))
+                -GPSLatitudeRef=%s  -GPSAltitudeRef=%s -GPSAltitude=%s %s "%s" '\
+                %(self.exifcmd, long,lat,longRef,latRef,altRef,elevation,option,self.picPath))
         else:
             if elevation=="None":
                 os.popen('%s -overwrite_original -n -GPSLongitude=%s -GPSLatitude=%s \
@@ -168,8 +177,8 @@ class GeoExif(object):
                 %(self.exifcmd, long,lat,longRef,latRef,option, self.picPath))
             else:
                 os.popen('%s -overwrite_original -n -GPSLongitude=%s -GPSLatitude=%s \
-                -GPSLongitudeRef=%s -GPSLatitudeRef=%s -GPSAltitudeRef=0 -GPSAltitude=%s %s "%s"'\
-                %(self.exifcmd, long,lat,longRef,latRef,elevation,option,self.picPath))
+                -GPSLongitudeRef=%s -GPSLatitudeRef=%s -GPSAltitudeRef=%s -GPSAltitude=%s %s "%s"'\
+                %(self.exifcmd, long,lat,longRef,latRef,altRef,elevation,option,self.picPath))
             
 if __name__=="__main__":
     
