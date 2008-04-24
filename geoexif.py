@@ -24,6 +24,11 @@ class GeoExif(object):
     """
     def __init__(self,picture):
         self.picPath=picture
+        if os.path.basename(picture).find(".CRW")>0 or \
+            os.path.basename(picture).find(".CR2")>0:
+            self.sidecarFile = os.path.splitext(picture)[0]+".xmp"
+        else:
+            self.sidecarFile = ''
         if sys.platform == 'win32':
             self.exifcmd = 'exiftool.exe'
         else:
@@ -125,12 +130,14 @@ class GeoExif(object):
         nagative means southest latitudes
         lat can be a float or a string
         """
-         
+        option=''
+        if(self.sidecarFile != ""):
+            option = option + " -o '"+self.sidecarFile+"'"
         #os.popen('exiftool.exe -GPSAltitudeRef=0 -GPSAltitude=100 '+ self.picPath)
         if float(lat) >= 0:
-            os.popen('%s -GPSLatitudeRef="N" "%s" '% (self.exifcmd, self.picPath))
+            os.popen('%s -GPSLatitudeRef="N" %s "%s" '% (self.exifcmd, option, self.picPath))
         else:
-            os.popen('%s -GPSLatitudeRef="S" "%s" '% (self.exifcmd, self.picPath))    
+            os.popen('%s -GPSLatitudeRef="S" %s "%s" '% (self.exifcmd, option, self.picPath))    
         os.popen('%s  -GPSLatitude=%s "%s"'%(self.exifcmd, lat,self.picPath))
         
     def writeLongitude(self,long):
@@ -140,16 +147,21 @@ class GeoExif(object):
         nagative means Western latitudes
         long can be a float or a string
         """
+        option=''
+        if(self.sidecarFile != ""):
+            option = option + " -o '"+self.sidecarFile+"'"
         if float(long) >= 0:
-            os.popen('%s -GPSLongitudeRef="E" "%s"' % (self.exifcmd, self.picPath))
+            os.popen('%s -GPSLongitudeRef="E" %s "%s"' % (self.exifcmd, option, self.picPath))
         else:
-            os.popen('%s -GPSLongitudeRef="W" "%s"' % (self.exifcmd, self.picPath))
+            os.popen('%s -GPSLongitudeRef="W" %s "%s"' % (self.exifcmd, option, self.picPath))
         os.popen('%s -GPSLongitude=%s  "%s" '% (self.exifcmd, long,self.picPath))
         
     def writeLatLong(self,lat,long,latRef,longRef,backup,elevation="None"):
         """Write both latitudeRef/latitude and longitudeRef/longitude in EXIF"""
         #option="-DateTimeOriginal>FileModifyDate"
         option='"-DateTimeOriginal>FileModifyDate"'
+        if(self.sidecarFile != ""):
+            option = option + " -o '"+self.sidecarFile+"'"
         if float(long)<0:long=str(abs(float(long)))
         if float(lat)<0:lat=str(abs(float(lat)))
         altRef=0 #"Above Sea Level"

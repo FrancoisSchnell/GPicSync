@@ -24,6 +24,7 @@ http://code.google.com/p/gpicsync/
 
 import wx,wx.lib.colourdb,time, decimal,gettext,shutil,ConfigParser
 import os,sys,fnmatch,zipfile
+import traceback
 if sys.platform == 'win32':
     import win32com.client
 from geoexif import *
@@ -50,7 +51,7 @@ class GUI(wx.Frame):
         """Initialize the main frame"""
         global bkg
         
-        wx.Frame.__init__(self, parent, -1, title="GPicSync",size=(1000,600))
+        wx.Frame.__init__(self, parent, wx.ID_ANY, title="GPicSync",size=(1000,600))
         favicon = wx.Icon('gpicsync.ico', wx.BITMAP_TYPE_ICO, 16, 16)
         wx.Frame.SetIcon(self, favicon)
         
@@ -78,6 +79,7 @@ class GUI(wx.Frame):
         self.timeStamp=False
         self.defaultLat="0.000000"
         self.defaultLon="0.000000"
+        self.geoname_IPTCsummary=""        
         
         # Search for an eventual gpicsync.conf file
         try:
@@ -128,7 +130,6 @@ class GUI(wx.Frame):
                 self.geoname_caption=eval(conf.get("gpicsync","geoname_caption"))
             if conf.has_option("gpicsync","geoname_IPTCsummary") == True:
                 self.geoname_IPTCsummary=conf.get("gpicsync","geoname_IPTCsummary")
-                print ">>>", self.geoname_IPTCsummary
             if conf.has_option("gpicsync","defaultdirectory") == True:
                 self.picDir=conf.get("gpicsync","defaultdirectory")
             if conf.has_option("gpicsync","getimestamp") == True:
@@ -239,6 +240,10 @@ class GUI(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.clearConsole,clearButton)
         self.Bind(wx.EVT_BUTTON, self.viewInGE,viewInGEButton)
                 
+        # Main Options box
+        optionPrebox=wx.StaticBox(bkg, -1, _("Options:"))
+        optionbox=wx.StaticBoxSizer(optionPrebox, wx.VERTICAL)
+
         # Elevation options
         eleLabel=wx.StaticText(bkg, -1," "+_("Elevation")+":")
         eleList=[_("Clamp to the ground"),
@@ -371,9 +376,6 @@ class GUI(wx.Frame):
         headerbox.Add(dirChoiceBox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         headerbox.Add(gpxChoiceBox,proportion=0,flag=wx.EXPAND | wx.ALL,border=5)
         
-        # Main Options box
-        optionPrebox=wx.StaticBox(bkg, -1, _("Options:"))
-        optionbox=wx.StaticBoxSizer(optionPrebox, wx.VERTICAL)
         optionbox.Add(gebox,proportion=0,flag=wx.ALL,border=7)
         optionbox.Add(gmbox,proportion=0,flag=wx.ALL,border=7)        
         optionbox.Add(settingsbox,proportion=0,flag=wx.ALL,border=7)
@@ -403,7 +405,8 @@ class GUI(wx.Frame):
         bkg.SetSizer(allBox)
         
         self.SetMenuBar(menuBar)
-        
+	self.Show(True)
+
         if sys.platform == 'win32':
             self.exifcmd = 'exiftool.exe'
         else:
@@ -592,8 +595,12 @@ class GUI(wx.Frame):
         """View a local kml file in Google Earth"""
         if sys.platform == 'win32':
             googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
-        if sys.platform.find("linux")!=-1:
-            googleEarth= os.path.expanduser("~/google-earth/googleearth")
+        else:
+            if sys.platform.find("linux")!=-1:
+                googleEarth= os.path.expanduser("~/google-earth/googleearth")
+            else:
+                if sys.platform == 'darwin':
+                     googleEarth= "/Applications/Google\ Earth.app/Contents/MacOS/Google\ Earth"
         try:
             path=self.picDir+'/doc.kml'
             print "path=",path
@@ -605,11 +612,16 @@ class GUI(wx.Frame):
         try:
             if sys.platform == 'win32':
                 googleEarth.OpenKmlFile(path,True)
-            if sys.platform.find("linux")!=-1:
-                def goGELinux():
-                    os.system(googleEarth +" "+path)
-                start_new_thread(goGELinux,())
-                
+            else:
+            	if sys.platform.find("linux")!=-1:
+            	    def goGELinux():
+                    	os.system(googleEarth +" "+path)
+                    start_new_thread(goGELinux,())
+                else:
+                    if sys.platform == 'darwin':
+            	    	def goGEOSX():
+                    		os.system(googleEarth +" "+path)
+                    	start_new_thread(goGEOSX,())        
         except:
             wx.CallAfter(self.consolePrint,"\n"+_("Couldn't find or launch Google Earth")+"\n")
 
@@ -641,18 +653,26 @@ class GUI(wx.Frame):
         
     def findGpx(self,evt):
         """
-        Select the .gpx file to use or create one if necessary through GPSbabel"
+        Select the .gpx file to use or create one if necessary through GPSbabel
         """
         if sys.platform == 'win32':
             openGpx=wx.FileDialog(self,style=wx.FD_MULTIPLE)
-        if sys.platform.find("linux")!=-1:
-            openGpx=wx.FileDialog(self)
+        else:
+            if sys.platform.find("Linux")!=-1:
+            	openGpx=wx.FileDialog(self)
+            else:
+            	if sys.platform == 'darwin':
+                     openGpx=wx.FileDialog(self)            	
         openGpx.SetWildcard("GPX Files(*.gpx)|*.gpx|NMEA Files (*.txt)|*.txt")
         openGpx.ShowModal()
         if sys.platform == 'win32':
             self.gpxFile=openGpx.GetPaths()
-        if sys.platform.find("linux")!=-1:
-            self.gpxFile=[openGpx.GetPath()]
+        else:
+            if sys.platform.find("linux")!=-1:
+            	self.gpxFile=[openGpx.GetPath()]
+            else:
+                if sys.platform == 'darwin':
+                     self.gpxFile=[openGpx.GetPath()]            
         j=0
         for track in self.gpxFile:
             if os.path.basename(self.gpxFile[j]).find(".txt")>0 or\
@@ -897,6 +917,7 @@ class GUI(wx.Frame):
 
                         except:
                             print "Had problem when writting geonames"
+                            traceback.print_exc(file=sys.stdout)
                             
             if self.stop==False:
                 wx.CallAfter(self.consolePrint,"\n*** "+_("FINISHED GEOCODING PROCESS")+" ***\n")
@@ -1124,7 +1145,10 @@ class GUI(wx.Frame):
         if sys.platform.find("linux")!=-1:
             wx.CallAfter(self.consolePrint,"\n"+_("Sorry this tool is not yet available for the Linux version")+" \n")
         else:
-            self.winKmzGenerator.Show()
+            if sys.platform == 'darwin':            
+            	wx.CallAfter(self.consolePrint,"\n"+_("Sorry this tool is not yet available for the MacOS X version")+" \n")
+            else:
+            	self.winKmzGenerator.Show()
         
     def kmzGenerator(self,evt):
         """A tool to create a kmz file containing the geolocalized pictures"""
