@@ -2,10 +2,12 @@
 
 ###############################################################################
 #
-# (c) francois.schnell  francois.schnell@gmail.com
-#                       http://francois.schnell.free.fr  
+# Developer: francois.schnell   francois.schnell@gmail.com
+#                               http://francois.schnell.free.fr  
 #
-# This script is released under the GPL license
+# Contributors, see: http://code.google.com/p/gpicsync/wiki/Contributions
+#
+# This script is released under the GPL license version 2 license
 #
 ###############################################################################
 
@@ -23,16 +25,15 @@ USAGE (command line):
 python gpicsync.py -d myfoderWithPictures -g myGpxFile.gpx -o UTCoffset
 
 For more options type gpicsync.py --help
-
 """
+
 import gettext,time,datetime
+
 from geoexif import *
 from gpx import *
 
 
 class GpicSync(object):
-
-
     """
     A class to manage the geolocalisation from a .gpx file.
     """
@@ -48,8 +49,6 @@ class GpicSync(object):
         tcam_l=int(tcam_l[0:2])*3600+int(tcam_l[3:5])*60+int(tcam_l[6:8])
         tgps_l=int(tgps_l[0:2])*3600+int(tgps_l[3:5])*60+int(tgps_l[6:8])
         self.timerange=timerange
-        #self.localOffset=tcam_l-(tgps_l+self.UTCoffset)
-        #self.localOffset=tgps_l-(tcam_l+self.UTCoffset) # To test before next release !
         self.localOffset=tcam_l - tgps_l + self.UTCoffset
         self.backup=backup
         self.interpolation=interpolation
@@ -162,11 +161,12 @@ class GpicSync(object):
         
 if __name__=="__main__":
     
-    ## Commnand-line version
+    # Minimal commnand-line version (mainly for tests purposes)
+    # The command-line version doesn't have all the feature of the GUI version,
+    # like the KMLs output
     
     import os,sys,fnmatch
     from optparse import OptionParser
-    
     import gettext
     gettext.install("gpicsync-GUI", "None")
     

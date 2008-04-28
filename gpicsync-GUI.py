@@ -2,14 +2,16 @@
 
 ###############################################################################
 #
-# (c) francois.schnell  francois.schnell@gmail.com
-#                       http://francois.schnell.free.fr  
+# Developer: francois.schnell   francois.schnell@gmail.com
+#                               http://francois.schnell.free.fr  
 #
-# This script is released under the GPL license v2
+# Contributors, see: http://code.google.com/p/gpicsync/wiki/Contributions
+#
+# This application is released under the GPL license version 2
 #
 # More informations and help can be found here: http://code.google.com/p/gpicsync/
 #
-###############################################################################
+################################################################################
 
 """
 GUI Part of GPicSync, a Free Software tool to geolocalize informations from:
@@ -22,28 +24,21 @@ More informations at this URL:
 http://code.google.com/p/gpicsync/
 """
 
-import wx,wx.lib.colourdb,time, decimal,gettext,shutil,ConfigParser
+import wx,wx.lib.colourdb,time,decimal,gettext,shutil,ConfigParser
 import os,sys,fnmatch,zipfile
 import traceback
 if sys.platform == 'win32':
     import win32com.client
-from geoexif import *
-from gpx import *
-from gpicsync import *
-from kmlGen import *
-from geonames import *
 from thread import start_new_thread
 from PIL import Image
 from PIL import JpegImagePlugin
 from PIL import GifImagePlugin
 
-
-# Try to get the OS language if possible and search for a translation 
-"""
-if sys.platform == 'win32':
-    localedir= "locale"
-    gettext.install("gpicsync-GUI", localedir)
-"""
+from geoexif import *
+from gpx import *
+from gpicsync import *
+from kmlGen import *
+from geonames import *
 
 class GUI(wx.Frame):
     """Main Frame of GPicSync"""
@@ -316,20 +311,12 @@ class GUI(wx.Frame):
         
         # Google Earth elevation and time stamp horizontal sizer
         gebox=wx.BoxSizer()
-        #gebox.Add(self.geCheck,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
         gebox.Add(geInfoLabel,flag=wx.LEFT,border=10)
-        #gebox.Add(eleLabel,flag=wx.ALIGN_CENTER_VERTICAL| wx.LEFT, border=10)
-        #gebox.Add(self.elevationChoice,proportion=0,flag= wx.ALIGN_CENTER_VERTICAL|wx.ALL,border=10)
         gebox.Add(iconsLabel,flag=wx.LEFT, border=10)
         gebox.Add(self.iconsChoice,flag=wx.LEFT, border=10)
         gebox.Add(eleLabel,flag=wx.LEFT, border=10)
         gebox.Add(self.elevationChoice,flag= wx.LEFT,border=10)        
         gebox.Add(self.geTStamps,flag= wx.LEFT, border=10)
-        
-        # Google Earth icon choice sizer
-        #iconsbox=wx.BoxSizer()
-        #iconsbox.Add(iconsLabel,proportion=0,flag=wx.EXPAND| wx.LEFT,border=10)
-        #iconsbox.Add(self.iconsChoice,proportion=0,flag=wx.EXPAND| wx.ALL,border=1 )
         
         # Google maps export and associated URL 
         gmbox=wx.BoxSizer()
@@ -380,11 +367,6 @@ class GUI(wx.Frame):
         optionbox.Add(gmbox,proportion=0,flag=wx.ALL,border=7)        
         optionbox.Add(settingsbox,proportion=0,flag=wx.ALL,border=7)
         optionbox.Add(gnhbox,proportion=0,flag=wx.ALL,border=7)
-
-        #optionbox.Add(iconsbox,proportion=0,flag=wx.LEFT,border=5)
-
-        
-
         
         # Options box + picture preview sizer
         middlebox=wx.BoxSizer()
@@ -405,7 +387,7 @@ class GUI(wx.Frame):
         bkg.SetSizer(allBox)
         
         self.SetMenuBar(menuBar)
-	self.Show(True)
+        self.Show(True)
 
         if sys.platform == 'win32':
             self.exifcmd = 'exiftool.exe'
@@ -414,12 +396,9 @@ class GUI(wx.Frame):
     
     def writeConfFile(self):
         """Write the whole configuration file"""
-        #fconf=open(os.path.expanduser("~/gpicsync.conf"),"w")
         try:
-            #fconf=open(os.path.expanduser("~/gpicsync.conf"),"r+")
             fconf=open(os.environ["USERPROFILE"]+"/gpicsync.conf","r+")
         except:
-            #fconf=open(os.environ["USERPROFILE"]+"/gpicsync.conf","r+")
             fconf=open(os.path.expanduser("~/gpicsync.conf"),"w")
         header="#This is a configuration file for GPicSync geocoding software\n"+\
         "#Read the comments below to see what you can set. Boolean value (True or False) and\n"+\
@@ -460,11 +439,9 @@ class GUI(wx.Frame):
         fconf.write("Defaultdirectory="+self.picDir)
         fconf.write("")
         fconf.close()
-
     
     def showConfig(self,evt):
         """open the configuration file in notepad.exe"""
-        #os.popen('notepad.exe "%s"'% (os.path.expanduser("~/gpicsync.conf")))
         os.popen('notepad.exe "%s"'% (os.environ["USERPROFILE"]+"/gpicsync.conf"))
         wx.CallAfter(self.consolePrint,"\n"+_("If you've changed and saved the configuration file you should restart the application to take effect.")+"\n")
         
@@ -538,9 +515,6 @@ class GUI(wx.Frame):
         bkg.SetSizer(vbox)
         self.winGeoFrame.Show()
        
-        #wx.CallAfter(self.consolePrint,
-        #"\n"+_("Enter coordinates in decimal degrees and select one or more pictures to write them in their EXIF header."))
-
     def manualGeoWrite(self,evt):
         """manually write latitude/longitude in the EXIF header of the picture"""
         picture=wx.FileDialog(self,style=wx.FD_MULTIPLE)
@@ -628,7 +602,6 @@ class GUI(wx.Frame):
     def exitApp(self,evt):
         """Quit properly the app"""
         print "Exiting the app..."
-        #self.writeConfFile()
         self.Close()
         self.Destroy()
         sys.exit(1)
@@ -703,26 +676,21 @@ class GUI(wx.Frame):
     def findPictures(self,evt):
         """Select the folder pictures to use"""
         openDir=wx.DirDialog(self)
-        #if self.picDirDefault!="":
-        #   openDir.SetPath(self.picDirDefault)
+        # openDir.SetPath(self.picDirDefault)
         if self.picDir!="":
             openDir.SetPath(self.picDir)
         openDir.ShowModal()
         self.picDir=openDir.GetPath()
         self.dirEntry.SetValue(self.picDir)
-        #self.picDirDefault=self.picDir
-        
     
     def syncPictures(self,evt):
         """Sync. pictures with the .gpx file"""
         if self.dirEntry.GetValue()=="" or self.gpxEntry.GetValue=="":
-                #wx.CallAfter(self.consolePrint,"You must first select a pictures folder and a GPX file\n")
                 wx.CallAfter(self.consolePrint,_("You must first select a pictures folder and a GPX file.")+"\n")
         else:
             pass
         self.geCheck.SetValue(True) # Oblige the cration of a GE file anyway
         self.stop=False
-        #utcOffset=int(self.utcEntry.GetValue())
         self.utcOffset=float(self.utcEntry.GetValue())#testing float for UTC
         dateProcess=self.dateCheck.GetValue()
         self.log=self.logFile.GetValue()
@@ -903,18 +871,7 @@ class GUI(wx.Frame):
                                 print "geonameKeywords=",geonameKeywords
                             
                             os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))  
-                                    
-                            
-                            """
-                            if self.geoname_caption==True and self.gnOptChoice.GetSelection()==0:
-                                geonameKeywords+=' -iptc:caption-abstract="Latitude/Longitude=('+\
-                                tempLat+' , '+tempLong+' )<br> Near '+gnInfos+\
-                                ' <a href=\"http://www.geonames.org/maps/google_'+tempLat+'_'+tempLong+'.html\"> (Map link)</a><br>'+userdefine+'"'
-                                
-                            print "geonameKeywords=",geonameKeywords
-                            os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))  
-                            """   
-
+                                      
                         except:
                             print "Had problem when writting geonames"
                             traceback.print_exc(file=sys.stdout)
@@ -934,7 +891,6 @@ class GUI(wx.Frame):
                 wx.CallAfter(self.consolePrint,_("( A Google Earth doc.kml file has been created in your picture folder.)")+"\n")
             
             if self.gmCheck.GetValue()==True:
-                #webKml.path(self.gpxFile)
                 webKml.writeInKml("</Folder>\n")
                 webKml.close()
                 wx.CallAfter(self.consolePrint,_("( A Google Maps doc-web.kml file has been created with the given url )")+"\n")
@@ -943,7 +899,6 @@ class GUI(wx.Frame):
         
     def localtimeCorrection(self,evt):
             """ Local time correction if GPS and camera wasn't synchronized """
-            #self.winOpt.Close()
             self.tcam_l=self.camEntry.GetValue()
             self.tgps_l=self.gpsEntry.GetValue()
             wx.CallAfter(self.consolePrint,"\n"+_("A time correction has been set")+" : "+
@@ -1139,7 +1094,6 @@ class GUI(wx.Frame):
         self.Bind(wx.EVT_BUTTON, self.kmzGenerator, readButton)
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
-        #vbox.Add(self.gpxInGECheck,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=10)
         vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         bkg.SetSizer(vbox)
         if sys.platform.find("linux")!=-1:
@@ -1184,10 +1138,8 @@ class GUI(wx.Frame):
         introLabel = wx.StaticText(bkg, -1,text)
         readButton=wx.Button(bkg,size=(150,30),label=_("Select a gpx file"))
         self.Bind(wx.EVT_BUTTON, self.gpxInspector, readButton)
-        #self.gpxInGECheck=wx.CheckBox(bkg,-1,"Show also path in GoogleEarth")
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
-        #vbox.Add(self.gpxInGECheck,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=10)
         vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         bkg.SetSizer(vbox)
         self.winGpxInspector.Show()
@@ -1219,11 +1171,3 @@ app=wx.App(redirect=False)
 win=GUI(None,title="GPicSync GUI")
 win.Show()
 app.MainLoop()
-
-# Reloads the GUI when language change
-"""
-while 0:
-    win=GUI(None,title="GPicSync GUI")
-    win.Show()
-    app.MainLoop()
-"""
