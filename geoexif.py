@@ -7,9 +7,9 @@
 #
 # francois.schnell (http://francois.schnell.free.fr)
 #                        
-# Thanks to Marc Nozell for testing GPicSync on Linux before I had the time to
-# do it and for putting some specific Windows code behind a plateform check 
-#(changing  "exiftool.exe" to  "exiftool" for Linux)
+# Contributors, see: http://code.google.com/p/gpicsync/wiki/Contributions
+#
+# This script is released under the GPL license version 2 license
 #  
 # This script use the GPL exiftool.exe  app. see: 
 # http://www.sno.phy.queensu.ca/%7Ephil/exiftool/
@@ -24,11 +24,14 @@ class GeoExif(object):
     """
     def __init__(self,picture):
         self.picPath=picture
-        if os.path.basename(picture).find(".CRW")>0 or \
-            os.path.basename(picture).find(".CR2")>0:
-            self.sidecarFile = os.path.splitext(picture)[0]+".xmp"
-        else:
-            self.sidecarFile = ''
+        self.xmpOption=False
+        if self.xmpOption==True:
+            if os.path.basename(picture).find(".CRW")>0\
+            or os.path.basename(picture).find(".CR2")>0:
+                self.sidecarFile = os.path.splitext(picture)[0]+".xmp"
+                #print ">>>>> self.sidecarFile",self.sidecarFile
+            else:
+                self.sidecarFile = ''
         if sys.platform == 'win32':
             self.exifcmd = 'exiftool.exe'
         else:
@@ -131,14 +134,15 @@ class GeoExif(object):
         lat can be a float or a string
         """
         option=''
-        if(self.sidecarFile != ""):
-            option = option + " -o '"+self.sidecarFile+"'"
+        if self.xmpOption==True:
+            if(self.sidecarFile != ""):
+                option = option + " -o '"+self.sidecarFile+"'"
         #os.popen('exiftool.exe -GPSAltitudeRef=0 -GPSAltitude=100 '+ self.picPath)
         if float(lat) >= 0:
-            os.popen('%s -GPSLatitudeRef="N" %s "%s" '% (self.exifcmd, option, self.picPath))
+            os.popen('%s -m -GPSLatitudeRef="N" %s "%s" '% (self.exifcmd, option, self.picPath))
         else:
-            os.popen('%s -GPSLatitudeRef="S" %s "%s" '% (self.exifcmd, option, self.picPath))    
-        os.popen('%s  -GPSLatitude=%s "%s"'%(self.exifcmd, lat,self.picPath))
+            os.popen('%s -m -GPSLatitudeRef="S" %s "%s" '% (self.exifcmd, option, self.picPath))    
+        os.popen('%s  -m -GPSLatitude=%s "%s"'%(self.exifcmd, lat,self.picPath))
         
     def writeLongitude(self,long):
         """
@@ -148,20 +152,22 @@ class GeoExif(object):
         long can be a float or a string
         """
         option=''
-        if(self.sidecarFile != ""):
-            option = option + " -o '"+self.sidecarFile+"'"
+        if self.xmpOption==True:
+            if(self.sidecarFile != ""):
+                option = option + " -o '"+self.sidecarFile+"'"
         if float(long) >= 0:
-            os.popen('%s -GPSLongitudeRef="E" %s "%s"' % (self.exifcmd, option, self.picPath))
+            os.popen('%s -m -GPSLongitudeRef="E" %s "%s"' % (self.exifcmd, option, self.picPath))
         else:
-            os.popen('%s -GPSLongitudeRef="W" %s "%s"' % (self.exifcmd, option, self.picPath))
-        os.popen('%s -GPSLongitude=%s  "%s" '% (self.exifcmd, long,self.picPath))
+            os.popen('%s -m -GPSLongitudeRef="W" %s "%s"' % (self.exifcmd, option, self.picPath))
+        os.popen('%s -m -GPSLongitude=%s  "%s" '% (self.exifcmd, long,self.picPath))
         
     def writeLatLong(self,lat,long,latRef,longRef,backup,elevation="None"):
         """Write both latitudeRef/latitude and longitudeRef/longitude in EXIF"""
-        #option="-DateTimeOriginal>FileModifyDate"
         option='"-DateTimeOriginal>FileModifyDate"'
-        if(self.sidecarFile != ""):
-            option = option + " -o '"+self.sidecarFile+"'"
+        if self.xmpOption==True:
+            if(self.sidecarFile != ""):
+                option = option + " -o '"+self.sidecarFile+"'"
+                #print "option: ,option
         if float(long)<0:long=str(abs(float(long)))
         if float(lat)<0:lat=str(abs(float(lat)))
         altRef=0 #"Above Sea Level"
@@ -175,20 +181,20 @@ class GeoExif(object):
             
         if backup==True:
             if elevation=="None":
-                os.popen('%s -n -GPSLongitude=%s -GPSLatitude=%s \
+                os.popen('%s -n -m -GPSLongitude=%s -GPSLatitude=%s \
                 -GPSLongitudeRef=%s -GPSLatitudeRef=%s  %s "%s" '\
                 %(self.exifcmd, long,lat,longRef,latRef,option,self.picPath))
             else:
-                os.popen('%s -n -GPSLongitude=%s -GPSLatitude=%s -GPSLongitudeRef=%s \
+                os.popen('%s -n -m -GPSLongitude=%s -GPSLatitude=%s -GPSLongitudeRef=%s \
                 -GPSLatitudeRef=%s  -GPSAltitudeRef=%s -GPSAltitude=%s %s "%s" '\
                 %(self.exifcmd, long,lat,longRef,latRef,altRef,elevation,option,self.picPath))
         else:
             if elevation=="None":
-                os.popen('%s -overwrite_original -n -GPSLongitude=%s -GPSLatitude=%s \
+                os.popen('%s -m -overwrite_original -n -GPSLongitude=%s -GPSLatitude=%s \
                 -GPSLongitudeRef=%s -GPSLatitudeRef=%s  %s "%s" '\
                 %(self.exifcmd, long,lat,longRef,latRef,option, self.picPath))
             else:
-                os.popen('%s -overwrite_original -n -GPSLongitude=%s -GPSLatitude=%s \
+                os.popen('%s -m -overwrite_original -n -GPSLongitude=%s -GPSLatitude=%s \
                 -GPSLongitudeRef=%s -GPSLatitudeRef=%s -GPSAltitudeRef=%s -GPSAltitude=%s %s "%s"'\
                 %(self.exifcmd, long,lat,longRef,latRef,altRef,elevation,option,self.picPath))
             
