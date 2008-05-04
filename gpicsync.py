@@ -80,9 +80,9 @@ class GpicSync(object):
                                             int(pict[3]),
                                             int(pict[4]),
                                             int(pict[5]))
-        print ">>> self.pic_datetime (from picture EXIF): ",self.pic_datetime
+        #print ">>> self.pic_datetime (from picture EXIF): ",self.pic_datetime
         self.pic_datetimeUTC=self.pic_datetime-datetime.timedelta(seconds=self.localOffset)
-        print ">>> self.pic_datetimeUTC (time corrected if offset):",self.pic_datetimeUTC
+        #print ">>> self.pic_datetimeUTC (time corrected if offset):",self.pic_datetimeUTC
     
         self.shotTime=picDateTimeSize[1]
         self.shotDate=picDateTimeSize[0].replace(":","-")
@@ -113,22 +113,22 @@ class GpicSync(object):
                 
         if (self.interpolation==True) and (self.track[N]!=0):
             try:
-                print ">>> N (nearest trackpoint) in GPX list is index = ",N 
-                print ">>> Trackpoint N Latitude= ", latitude," Longitude= ",longitude
+                #print ">>> N (nearest trackpoint) in GPX list is index = ",N 
+                #print ">>> Trackpoint N Latitude= ", latitude," Longitude= ",longitude
 
                 if (self.track[N]["tpic_tgps_l"]*self.track[N+1]["tpic_tgps_l"])<=0: 
                     M=N+1
-                    print ">>> Chose point M=N+1 as second nearest valid trackpoint for interpolation" 
+                    #print ">>> Chose point M=N+1 as second nearest valid trackpoint for interpolation" 
                 elif (self.track[N]["tpic_tgps_l"]*self.track[N+1]["tpic_tgps_l"])>0: 
                     M=N-1
-                    print ">>> Chose point M=N-1 as second nearest valid trackpoint for interpolation" 
+                    #print ">>> Chose point M=N-1 as second nearest valid trackpoint for interpolation" 
                     
                 dLonNM=float(self.track[M]['lon'])-float(self.track[N]['lon'])
                 dLatNM=float(self.track[M]['lat'])-float(self.track[N]['lat'])
-                print ">>> dLonNM= ",dLonNM,"dLatNM= ",dLatNM
+                #print ">>> dLonNM= ",dLonNM,"dLatNM= ",dLatNM
                 ratio=abs(float(self.track[N]["tpic_tgps_l"]))\
                 /(abs(self.track[N]["tpic_tgps_l"])+abs(self.track[M]["tpic_tgps_l"]))
-                print ">>> ratio= ",ratio
+                #print ">>> ratio= ",ratio
                 latitude=float(latitude)+ratio*dLatNM
                 longitude=float(longitude)+ratio*dLonNM
                 if float(latitude)>0:latRef="N"
@@ -207,8 +207,29 @@ if __name__=="__main__":
     tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=int(options.offset),timerange=3600)
     
     for fileName in os.listdir ( options.dir ):
-        if fnmatch.fnmatch (fileName, '*.JPG') or fnmatch.fnmatch (fileName, '*.jpg'):
+        if fnmatch.fnmatch ( fileName, '*.JPG' )\
+        or fnmatch.fnmatch ( fileName, '*.jpg' )\
+        or fnmatch.fnmatch ( fileName, '*.CR2' )\
+        or fnmatch.fnmatch ( fileName, '*.cr2' )\
+        or fnmatch.fnmatch ( fileName, '*.CRW' )\
+        or fnmatch.fnmatch ( fileName, '*.crw' )\
+        or fnmatch.fnmatch ( fileName, '*.NEF' )\
+        or fnmatch.fnmatch ( fileName, '*.nef' )\
+        or fnmatch.fnmatch ( fileName, '*.PEF' )\
+        or fnmatch.fnmatch ( fileName, '*.pef' )\
+        or fnmatch.fnmatch ( fileName, '*.RAW' )\
+        or fnmatch.fnmatch ( fileName, '*.raw' )\
+        or fnmatch.fnmatch ( fileName, '*.ORF' )\
+        or fnmatch.fnmatch ( fileName, '*.orf' )\
+        or fnmatch.fnmatch ( fileName, '*.DNG' )\
+        or fnmatch.fnmatch ( fileName, '*.dng' )\
+        or fnmatch.fnmatch ( fileName, '*.RAF' )\
+        or fnmatch.fnmatch ( fileName, '*.raf' )\
+        or fnmatch.fnmatch ( fileName, '*.MRW' )\
+        or fnmatch.fnmatch ( fileName, '*.mrw' ):
+            
             print "\nFound fileName ",fileName," Processing now ..."
             geo.syncPicture(options.dir+'/'+fileName)[0]
+    print "Finished"
 
     

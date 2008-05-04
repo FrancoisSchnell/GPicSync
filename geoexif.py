@@ -176,8 +176,8 @@ class GeoExif(object):
             if float(elevation)<0: 
                 altRef=1 #"Below Sea Level"
                 elevation=str(abs(float(elevation)))
-        print ">>> altRef=",altRef
-        print ">>> elevation ", elevation
+        #print ">>> altRef=",altRef
+        #print ">>> elevation ", elevation
             
         if backup==True:
             if elevation=="None":

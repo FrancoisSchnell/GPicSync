@@ -750,16 +750,23 @@ class GUI(wx.Frame):
                 if fnmatch.fnmatch ( fileName, '*.JPG' )\
                 or fnmatch.fnmatch ( fileName, '*.jpg' )\
                 or fnmatch.fnmatch ( fileName, '*.CR2' )\
+                or fnmatch.fnmatch ( fileName, '*.cr2' )\
                 or fnmatch.fnmatch ( fileName, '*.CRW' )\
+                or fnmatch.fnmatch ( fileName, '*.crw' )\
                 or fnmatch.fnmatch ( fileName, '*.NEF' )\
+                or fnmatch.fnmatch ( fileName, '*.nef' )\
                 or fnmatch.fnmatch ( fileName, '*.PEF' )\
+                or fnmatch.fnmatch ( fileName, '*.pef' )\
                 or fnmatch.fnmatch ( fileName, '*.RAW' )\
+                or fnmatch.fnmatch ( fileName, '*.raw' )\
                 or fnmatch.fnmatch ( fileName, '*.ORF' )\
+                or fnmatch.fnmatch ( fileName, '*.orf' )\
                 or fnmatch.fnmatch ( fileName, '*.DNG' )\
                 or fnmatch.fnmatch ( fileName, '*.dng' )\
-                or fnmatch.fnmatch ( fileName, '*.dng' )\
+                or fnmatch.fnmatch ( fileName, '*.RAF' )\
                 or fnmatch.fnmatch ( fileName, '*.raf' )\
-                or fnmatch.fnmatch ( fileName, '*.MRW' ):
+                or fnmatch.fnmatch ( fileName, '*.MRW' )\
+                or fnmatch.fnmatch ( fileName, '*.mrw' ):
                 
                     print "\nFound fileName ",fileName," Processing now ..."
                     wx.CallAfter(self.consolePrint,"\n"+_("(Found ")+fileName+" ...")
