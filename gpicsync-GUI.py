@@ -631,7 +631,7 @@ class GUI(wx.Frame):
         if sys.platform == 'win32':
             openGpx=wx.FileDialog(self,style=wx.FD_MULTIPLE)
         else:
-            if sys.platform.find("Linux")!=-1:
+            if sys.platform.find("linux")!=-1:
             	openGpx=wx.FileDialog(self)
             else:
             	if sys.platform == 'darwin':
