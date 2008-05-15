@@ -41,7 +41,7 @@ class KML(object):
         kmlHead_p1=u"""<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.1">
 <Document>
-<name>"""+name+"""</name>"""
+<name>"""+unicode(name)+"""</name>"""
 
         if (self.iconsStyle==0) and (gmaps==False):
             kmlHead_p2=u"""
