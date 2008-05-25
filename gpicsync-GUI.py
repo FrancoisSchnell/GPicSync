@@ -388,6 +388,8 @@ class GUI(wx.Frame):
         
         self.SetMenuBar(menuBar)
         self.Show(True)
+        if sys.platform == 'darwin':
+            self.SetSize(self.GetSize()+(100,50))
 
         if sys.platform == 'win32':
             self.exifcmd = 'exiftool.exe'
@@ -918,7 +920,10 @@ class GUI(wx.Frame):
             
     def localtimeFrame(self,evt):
         """A frame for local time correction"""
-        self.winOpt=wx.Frame(win,size=(440,280),title=_("Local time corrections"))
+        frameWidth=440
+        if sys.platform == 'darwin':
+            frameWidth=530
+        self.winOpt=wx.Frame(win,size=(frameWidth,280),title=_("Local time corrections"))
         bkg=wx.Panel(self.winOpt)
         #bkg.SetBackgroundColour('blue steel')
         text="\t"+_("Use this option ONLY if your camera local time is wrong.")\
@@ -951,7 +956,10 @@ class GUI(wx.Frame):
         
     def exifFrame(self,evt):
         """A frame for the exifReader tool"""
-        self.winExifReader=wx.Frame(win,size=(280,220),title=_("EXIF Reader"))
+        frameWidth=280
+        if sys.platform == 'darwin':
+            frameWidth=330
+        self.winExifReader=wx.Frame(win,size=(frameWidth,220),title=_("EXIF Reader"))
         bkg=wx.Panel(self.winExifReader)
         #bkg.SetBackgroundColour('White')
         text=_("Read the EXIF metadata of the selected picture.")
