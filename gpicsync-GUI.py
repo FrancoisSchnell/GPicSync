@@ -257,7 +257,7 @@ class GUI(wx.Frame):
         tmp1=_("Geonames in specific IPTC fields")
         tmp2=_("Geonames in XMP format")
         gnOptList=[_("Geonames in EXIF keywords + HTML summary in IPTC caption"),
-        _("Geonames in EXIF keywords")]
+        _("Geonames in EXIF keywords"),_("Geonames in IPTC + HTML summary"),_("Geonames in IPTC")]
         self.gnOptChoice=wx.Choice(bkg, -1, (-1,-1), choices = gnOptList)
         self.gnOptChoice.SetSelection(0)
         
@@ -808,7 +808,7 @@ class GUI(wx.Frame):
                     if self.log==True:
                         f.write(_("Processed image ")+fileName+" : "+result[0]+"\n")
                         
-                    if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
+                    if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="": 
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],
                         long=result[2],width=result[3],height=result[4],timeStamp=result[5],
                         elevation=result[6])
@@ -816,7 +816,7 @@ class GUI(wx.Frame):
                     if self.gmCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         webKml.placemark4Gmaps(self.picDir+'/'+fileName,lat=result[1],long=result[2],width=result[3],height=result[4],elevation=result[6])
                         
-                    if self.geonamesCheck.GetValue()==True and result[1] !="" and result[2] !="":
+                    if self.geonamesCheck.GetValue()==True and result[1] !="" and result[2] !="": # checks if geonames checked and lat/lon exist
                         try:
                             nearby=Geonames(lat=result[1],long=result[2])
                         except:
@@ -850,7 +850,8 @@ class GUI(wx.Frame):
                         except:
                             userdefine=""
                                 
-                        try:
+                        #try:
+                        if 1:
                             if self.geoname_summary==True:
                                 gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnRegion+" "+gnCountry
                             else:
@@ -863,13 +864,15 @@ class GUI(wx.Frame):
                             geotagLat="geo:lat="+tempLat
                             geotagLon="geo:lon="+tempLong
                             wx.CallAfter(self.consolePrint,gnInfos+_(" (writing geonames and geotagged to keywords tag in picture EXIF)")+"\n")
-                            geonameKeywords=""
+                            
+                            geonameKeywords="" # create initial geonames string command 
+                            
                             print userdefine
-                            if (self.gnOptChoice.GetSelection()==0) or (self.gnOptChoice.GetSelection()==1):
+                            if self.gnOptChoice.GetSelection() in [0,1]:
                                 for geoname in [gnPlace,gnRegion,gnCountry,gnSummary,geotag,geotagLat,geotagLon,userdefine]:
                                     if geoname !="":
                                         geonameKeywords+=' -keywords="%s" ' % geoname                            
-                            
+                            """
                             if self.geoname_caption==True and self.gnOptChoice.GetSelection()==0:
                                 gnIPTCsummary= self.geoname_IPTCsummary
                                 for var in [("{LATITUDE}",tempLat),("{LONGITUDE}",tempLong),
@@ -878,10 +881,32 @@ class GUI(wx.Frame):
                                     gnIPTCsummary=gnIPTCsummary.replace(var[0],var[1])
                                 geonameKeywords+=' -iptc:caption-abstract="'+gnIPTCsummary+'"'
                                 print "geonameKeywords=",geonameKeywords
+                            """
+                                
+                            if self.geoname_caption==True:
+                                gnIPTCsummary= self.geoname_IPTCsummary
+                                for var in [("{LATITUDE}",tempLat),("{LONGITUDE}",tempLong),
+                                ("{DISTANCETO}",gnDistance),("{NEARBYPLACE}",gnPlace),
+                                ("{REGION}",gnRegion),("{COUNTRY}",gnCountry)]:
+                                    gnIPTCsummary=gnIPTCsummary.replace(var[0],var[1])
+                                gnIPTCsummary=' -iptc:caption-abstract="'+gnIPTCsummary+'"'
+                                print "=== gnIPTCsummary=== ",gnIPTCsummary, "======"
                             
+                            if self.gnOptChoice.GetSelection() in [2,3]:
+                                if gnPlace !="": geonameKeywords+=' -iptc:city="'+gnPlace+'"'
+                                if gnRegion !="": geonameKeywords+=' -iptc:province-state="'+gnRegion+'"'
+                                if gnCountry !="": geonameKeywords+=' -iptc:Country-PrimaryLocationName="'+gnCountry+'"'
+                                #if gnPlace !="": geonameKeywords+=' -iptc:city="'+gnPlace+'"'
+                    
+                            if self.gnOptChoice.GetSelection() in [0,2]:
+                                geonameKeywords+=gnIPTCsummary
+                                    
+                            print "\n=== geonameKeywords ===\n", geonameKeywords,"\n======" 
+                            # WRITE GEONAMES
                             os.popen('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName))  
                                       
-                        except:
+                        #except:
+                        if 0:
                             print "Had problem when writting geonames"
                             traceback.print_exc(file=sys.stdout)
                             
