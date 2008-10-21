@@ -256,8 +256,8 @@ class GUI(wx.Frame):
         # Geonames options
         tmp1=_("Geonames in specific IPTC fields")
         tmp2=_("Geonames in XMP format")
-        gnOptList=[_("Geonames in EXIF keywords + HTML summary in IPTC caption"),
-        _("Geonames in EXIF keywords"),_("Geonames in IPTC + HTML summary"),_("Geonames in IPTC")]
+        gnOptList=[_("Geonames in IPTC + HTML Summary in IPTC caption"),_("Geonames in IPTC"),
+                   _("Geonames/geotagged in EXIF keywords + HTML summary in IPTC caption"),_("Geonames/geotagged in EXIF keywords")]
         self.gnOptChoice=wx.Choice(bkg, -1, (-1,-1), choices = gnOptList)
         self.gnOptChoice.SetSelection(0)
         
@@ -481,7 +481,7 @@ class GUI(wx.Frame):
                     
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="GPicSync  1.26 - 2008 \n\n"\
+        text="GPicSync  1.27beta - 2008 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
@@ -863,25 +863,15 @@ class GUI(wx.Frame):
                             tempLong=str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001'))) 
                             geotagLat="geo:lat="+tempLat
                             geotagLon="geo:lon="+tempLong
-                            wx.CallAfter(self.consolePrint,gnInfos+_(" (writing geonames and geotagged to keywords tag in picture EXIF)")+"\n")
+                            wx.CallAfter(self.consolePrint,gnInfos+_(", writing geonames)")+"\n")
                             
                             geonameKeywords="" # create initial geonames string command 
                             
                             print userdefine
-                            if self.gnOptChoice.GetSelection() in [0,1]:
+                            if self.gnOptChoice.GetSelection() in [2,3]:
                                 for geoname in [gnPlace,gnRegion,gnCountry,gnSummary,geotag,geotagLat,geotagLon,userdefine]:
                                     if geoname !="":
                                         geonameKeywords+=' -keywords="%s" ' % geoname                            
-                            """
-                            if self.geoname_caption==True and self.gnOptChoice.GetSelection()==0:
-                                gnIPTCsummary= self.geoname_IPTCsummary
-                                for var in [("{LATITUDE}",tempLat),("{LONGITUDE}",tempLong),
-                                ("{DISTANCETO}",gnDistance),("{NEARBYPLACE}",gnPlace),
-                                ("{REGION}",gnRegion),("{COUNTRY}",gnCountry)]:
-                                    gnIPTCsummary=gnIPTCsummary.replace(var[0],var[1])
-                                geonameKeywords+=' -iptc:caption-abstract="'+gnIPTCsummary+'"'
-                                print "geonameKeywords=",geonameKeywords
-                            """
                                 
                             if self.geoname_caption==True:
                                 gnIPTCsummary= self.geoname_IPTCsummary
@@ -892,7 +882,7 @@ class GUI(wx.Frame):
                                 gnIPTCsummary=' -iptc:caption-abstract="'+gnIPTCsummary+'"'
                                 print "=== gnIPTCsummary=== ",gnIPTCsummary, "======"
                             
-                            if self.gnOptChoice.GetSelection() in [2,3]:
+                            if self.gnOptChoice.GetSelection() in [0,1]:
                                 if gnPlace !="": geonameKeywords+=' -iptc:city="'+gnPlace+'"'
                                 if gnRegion !="": geonameKeywords+=' -iptc:province-state="'+gnRegion+'"'
                                 if gnCountry !="": geonameKeywords+=' -iptc:Country-PrimaryLocationName="'+gnCountry+'"'
