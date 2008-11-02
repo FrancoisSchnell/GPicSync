@@ -434,7 +434,7 @@ class GUI(wx.Frame):
         fconf.write("geoname_summary="+str(self.geoname_summary)+"\n")
         fconf.write("geoname_userdefine="+self.geoname_userdefine+"\n\n")
         fconf.write("#Add summary in IPTC with the following variables (if you use quotes escape them: \\\"  ):\n")
-        fconf.write("#{LATITUDE} {LONGITUDE} {DISTANCETO} {NEARBYPLACE} {REGION} {COUNTRY}\n")
+        fconf.write("#{LATITUDE} {LONGITUDE} {DISTANCETO} {NEARBYPLACE} {REGION} {COUNTRY} {ORIENTATION} \n")
         fconf.write("geoname_caption="+str(self.geoname_caption)+"\n")
         fconf.write("geoname_IPTCsummary="+str(self.geoname_IPTCsummary)+"\n\n")
         fconf.write("#Set default or last directory automatically used\n")
@@ -849,14 +849,23 @@ class GUI(wx.Frame):
                             else: userdefine=""
                         except:
                             userdefine=""
-                                
+                        try:
+                            gnCountryCode=nearby.findCountryCode()
+                        except:
+                            gnCountryCode=""
+                            print "!!! Something went wrong while retreiving country code !!!"
+                        try:
+                            gnOrientation=nearby.findOrientation()
+                        except:
+                            gnOrientation=""
+                            print "!!! Something went wrong while retreiving orientation !!!"
                         #try:
                         if 1:
                             if self.geoname_summary==True:
                                 gnSummary=gnDistance+"  Km to "+gnPlace+"  in "+gnRegion+" "+gnCountry
                             else:
                                 gnSummary=""
-                            gnInfos="Geonames: "+gnPlace+" "+gnRegion+" "+gnCountry
+                            gnInfos="Geonames: "+gnDistance+" Km "+gnOrientation +" "+ gnPlace+" "+gnRegion+" "+gnCountry+" "+gnCountryCode
                             print "gnInfos:",gnInfos
                             geotag="geotagged"
                             tempLat=str(decimal.Decimal(result[1]).quantize(decimal.Decimal('0.000001'))) 
@@ -877,7 +886,7 @@ class GUI(wx.Frame):
                                 gnIPTCsummary= self.geoname_IPTCsummary
                                 for var in [("{LATITUDE}",tempLat),("{LONGITUDE}",tempLong),
                                 ("{DISTANCETO}",gnDistance),("{NEARBYPLACE}",gnPlace),
-                                ("{REGION}",gnRegion),("{COUNTRY}",gnCountry)]:
+                                ("{REGION}",gnRegion),("{COUNTRY}",gnCountry),("{ORIENTATION}",gnOrientation)]:
                                     gnIPTCsummary=gnIPTCsummary.replace(var[0],var[1])
                                 gnIPTCsummary=' -iptc:caption-abstract="'+gnIPTCsummary+'"'
                                 print "=== gnIPTCsummary=== ",gnIPTCsummary, "======"
@@ -886,6 +895,10 @@ class GUI(wx.Frame):
                                 if gnPlace !="": geonameKeywords+=' -iptc:city="'+gnPlace+'"'
                                 if gnRegion !="": geonameKeywords+=' -iptc:province-state="'+gnRegion+'"'
                                 if gnCountry !="": geonameKeywords+=' -iptc:Country-PrimaryLocationName="'+gnCountry+'"'
+                                print "*************",gnCountryCode,type(gnCountryCode)
+                                if gnCountryCode !="": geonameKeywords+=' -iptc:Country-PrimaryLocationCode="'+gnCountryCode+'"'
+                                if 1:
+                                    geonameKeywords+=' -iptc:LocalCaption="'+gnDistance+" Km "+gnOrientation+" "+gnPlace+'"'
                                 #if gnPlace !="": geonameKeywords+=' -iptc:city="'+gnPlace+'"'
                     
                             if self.gnOptChoice.GetSelection() in [0,2]:
@@ -897,7 +910,7 @@ class GUI(wx.Frame):
                                       
                         #except:
                         if 0:
-                            print "Had problem when writting geonames"
+                            print "Had problem when writing geonames"
                             traceback.print_exc(file=sys.stdout)
                             
             if self.stop==False:

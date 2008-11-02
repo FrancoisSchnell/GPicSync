@@ -17,6 +17,7 @@
 from geoexif import *
 from urllib2 import urlopen
 import xml.etree.ElementTree as ET, re, decimal
+from math import  *
 
 class Geonames(object):
     
@@ -57,6 +58,50 @@ class Geonames(object):
         print self.nearbyPlace
         return self.nearbyPlace
     
+    def findNearbyPlaceLatLon(self):
+        """ Returns lat/long of the nearby place """
+        self.nearbyPlaceLat=self.searchTag("lat",self.page)
+        self.nearbyPlaceLon=self.searchTag("lng",self.page)
+        return (self.nearbyPlaceLat,self.nearbyPlaceLon)
+    
+    def findOrientation(self):
+        debug=True
+        nearbyPlaceLat=float(self.findNearbyPlaceLatLon()[0])
+        nearbyPlacelon=float(self.findNearbyPlaceLatLon()[1])
+        deltaLat=float(self.lat)-nearbyPlaceLat
+        deltaLon=float(self.long)-nearbyPlacelon
+        situation=""
+        if debug==True:
+            print "nearbyPlaceLat, nearbyPlacelon", nearbyPlaceLat,nearbyPlacelon
+            print "GPS lat,lon",self.lat, self.long
+            print "deltaLat, deltaLon", deltaLat, deltaLon
+            print "(tan(pi/8)*deltaLon)", (tan(pi/8)*deltaLon)
+            print "(tan(3*pi/8)*deltaLon)", (tan(3*pi/8)*deltaLon)
+            print "angle in degrees",atan(deltaLon/deltaLat)*(360/(2*pi))
+            
+        if (deltaLon >0) and (deltaLat >0):
+            if debug==True: print "In (deltaLon >0) and (deltaLat >0)"
+            if deltaLat <= tan(pi/8)*deltaLon: situation="East"
+            if (tan(pi/8)*deltaLon)<deltaLat<(tan(3*pi/8)*deltaLon) : situation="North-East"
+            if (tan(3*pi/8)*deltaLon)<= deltaLat<=(pi/2) : situation="North"
+        if (deltaLon >0) and (deltaLat <0):
+            if debug==True: print "In (deltaLon >0) and (deltaLat <0)"
+            if abs(deltaLat) <= tan(pi/8)*deltaLon: situation="East"
+            if (tan(pi/8)*deltaLon)<abs(deltaLat)<(tan(3*pi/8)*deltaLon) : situation="South-East"
+            if (tan(3*pi/8)*deltaLon)<= abs(deltaLat) <=(pi/2) : situation="South"
+        if (deltaLon <0) and (deltaLat >0):
+            if debug==True: print "In (deltaLon <0) and (deltaLat >0)"
+            if abs(deltaLat) <= abs(tan(pi/8)*deltaLon): situation="West"
+            if abs(tan(pi/8)*deltaLon)<abs(deltaLat)<abs(tan(3*pi/8)*abs(deltaLon)) : situation="North-West"
+            if abs(tan(3*pi/8)*deltaLon)<= abs(deltaLat)<=(pi/2) : situation="North"
+        if (deltaLon <0) and (deltaLat <0):
+            if debug==True: print "In (deltaLon <0) and (deltaLat <0)"
+            if abs(deltaLat) <= abs(tan(pi/8)*deltaLon): situation="West"
+            if abs(tan(pi/8)*deltaLon)<abs(deltaLat)<abs(tan(3*pi/8)*deltaLon) : situation="South-West"
+            if abs(tan(3*pi/8)*deltaLon)<= abs(deltaLat) <=(pi/2) : situation="South"       
+        print situation  
+        return situation  
+          
     def findDistance(self):
         """find distance in km to nearby place"""
         self.distance=self.searchTag("distance",self.page)
@@ -71,6 +116,12 @@ class Geonames(object):
         print self.countryName
         return self.countryName
 
+    def findCountryCode(self):
+        """ find country code, example France= FR"""
+        self.countryCode=self.searchTag("countryCode",self.page)
+        print self.countryCode
+        return self.countryCode
+        
     def findRegion(self):
         """ find region (adminName1) at geonames.org"""
         self.regionName=self.searchTag("adminName1",self.page)
@@ -80,10 +131,13 @@ class Geonames(object):
 if __name__=="__main__":
     #nearby=Geonames(picName="test.jpg")
     nearby=Geonames(lat="48.138236",long="11.559516")
+    #nearby=Geonames(lat="48.338236",long="11.969516")
     nearby.findNearbyPlace()
     nearby.findDistance()
     nearby.findCountry()
     nearby.findRegion()
+    nearby.findOrientation()
+    nearby.findCountryCode()
     
     
 
