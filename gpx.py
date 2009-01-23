@@ -40,6 +40,14 @@ class Gpx(object):
         for trkpt in gpx_trkpts_found:
             if trkpt.find("time")>0: self.gpx_trkpts.append(trkpt)
             i=i+1
+        regex=re.compile('(<wpt.*?</wpt>)',re.S)
+        gpx_wpts_found=regex.findall(gpx_file)
+        for waypoint in gpx_wpts_found:
+            if waypoint.find("time")>0:
+                print "transforming waypoints into trackpoints"
+                waypoint="<trkpt "+waypoint[5:-7]+"\n</trkpt>"
+                print waypoint,"\n"
+                self.gpx_trkpts.append(waypoint)
         if len(self.gpx_trkpts)==0:print "Didn't find any valid trkpt :("
         print "Number of valid track points found: ",len(self.gpx_trkpts)
         #print self.gpx_trkpts

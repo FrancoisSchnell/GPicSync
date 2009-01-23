@@ -898,7 +898,7 @@ class GUI(wx.Frame):
                                 print "*************",gnCountryCode,type(gnCountryCode)
                                 if gnCountryCode !="": geonameKeywords+=' -iptc:Country-PrimaryLocationCode="'+gnCountryCode+'"'
                                 if 1:
-                                    geonameKeywords+=' -iptc:LocalCaption="'+gnDistance+" Km "+gnOrientation+" "+gnPlace+'"'
+                                    geonameKeywords+=' -iptc:Sub-location="'+gnDistance+" Km "+gnOrientation+" "+gnPlace+'"'
                                 #if gnPlace !="": geonameKeywords+=' -iptc:city="'+gnPlace+'"'
                     
                             if self.gnOptChoice.GetSelection() in [0,2]:
