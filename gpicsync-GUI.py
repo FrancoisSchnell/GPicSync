@@ -25,7 +25,7 @@ http://code.google.com/p/gpicsync/
 """
 
 import wx,wx.lib.colourdb,time,decimal,gettext,shutil,ConfigParser
-import os,sys,fnmatch,zipfile
+import os,sys,fnmatch,zipfile,subprocess
 import traceback
 if sys.platform == 'win32':
     import win32com.client
@@ -481,7 +481,7 @@ class GUI(wx.Frame):
                     
     def aboutApp(self,evt): 
         """An about message dialog"""
-        text="GPicSync  1.27beta - 2008 \n\n"\
+        text="GPicSync  1.27 - 2008 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
@@ -573,7 +573,10 @@ class GUI(wx.Frame):
             googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
         else:
             if sys.platform.find("linux")!=-1:
-                googleEarth= os.path.expanduser("~/google-earth/googleearth")
+                p=subprocess.Popen(['which', 'googleearth'], stdout=subprocess.PIPE)
+                googleEarth=p.stdout.read().rstrip('\n')
+                if(googleEarth==""):
+                    googleEarth= os.path.expanduser("~/google-earth/googleearth")
             else:
                 if sys.platform == 'darwin':
                      googleEarth= "/Applications/Google\ Earth.app/Contents/MacOS/Google\ Earth"
@@ -591,7 +594,7 @@ class GUI(wx.Frame):
             else:
             	if sys.platform.find("linux")!=-1:
             	    def goGELinux():
-                    	os.system(googleEarth +" "+path)
+                        os.system(googleEarth +" "+path)
                     start_new_thread(goGELinux,())
                 else:
                     if sys.platform == 'darwin':
@@ -1139,13 +1142,10 @@ class GUI(wx.Frame):
         vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         bkg.SetSizer(vbox)
-        if sys.platform.find("linux")!=-1:
-            wx.CallAfter(self.consolePrint,"\n"+_("Sorry this tool is not yet available for the Linux version")+" \n")
+        if sys.platform == 'darwin':            
+          wx.CallAfter(self.consolePrint,"\n"+_("Sorry this tool is not yet available for the MacOS X version")+" \n")
         else:
-            if sys.platform == 'darwin':            
-            	wx.CallAfter(self.consolePrint,"\n"+_("Sorry this tool is not yet available for the MacOS X version")+" \n")
-            else:
-            	self.winKmzGenerator.Show()
+          self.winKmzGenerator.Show()
         
     def kmzGenerator(self,evt):
         """A tool to create a kmz file containing the geolocalized pictures"""
@@ -1158,8 +1158,13 @@ class GUI(wx.Frame):
             wx.CallAfter(self.consolePrint,"\n"+_("Adding doc.kml"))
             for fileName in os.listdir ( self.picDir ):
                 if fnmatch.fnmatch ( fileName, '*.JPG' )or fnmatch.fnmatch ( fileName, '*.jpg' ):
-                    zip.write(self.picDir+"/"+fileName,fileName,zipfile.ZIP_DEFLATED)
+                    zip.write(self.picDir+"/"+fileName,fileName.encode(),zipfile.ZIP_DEFLATED)
                     wx.CallAfter(self.consolePrint,"\n"+_("Adding ")+fileName)
+            if (self.iconsChoice.GetSelection() == 0):
+              wx.CallAfter(self.consolePrint,"\n"+_("Adding ") + "thumbs")
+              for fileName in os.listdir ( self.picDir+'/thumbs' ):
+                  zip.write(self.picDir+"/thumbs/"+fileName,'thumbs/' + fileName.encode(),zipfile.ZIP_DEFLATED)
+                  wx.CallAfter(self.consolePrint,"\n"+_("Adding ")+fileName) 
             zip.close()
             try:
                 os.rename(self.picDir+'/'+os.path.basename(self.picDir)+".zip",self.picDir+'/'+os.path.basename(self.picDir)+".kmz")
