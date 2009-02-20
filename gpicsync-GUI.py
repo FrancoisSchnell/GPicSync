@@ -138,47 +138,48 @@ class GUI(wx.Frame):
 
         try:
             print self.language
+            locale_dir="locale"
             if self.language=="French":
-                langFr = gettext.translation('gpicsync-GUI', "locale",languages=['fr'])
+                langFr = gettext.translation('gpicsync-GUI', locale_dir,languages=['fr'])
                 langFr.install()
             elif self.language=="Italian":
-                langIt = gettext.translation('gpicsync-GUI', "locale",languages=['it'])
+                langIt = gettext.translation('gpicsync-GUI', locale_dir,languages=['it'])
                 langIt.install()
             elif self.language=="German":
-                langIt = gettext.translation('gpicsync-GUI', "locale",languages=['gr'])
+                langIt = gettext.translation('gpicsync-GUI', locale_dir,languages=['de'])
                 langIt.install()
             elif self.language=="S.Chinese":
-                langCn = gettext.translation('gpicsync-GUI', "locale",languages=['scn'])
+                langCn = gettext.translation('gpicsync-GUI', locale_dir,languages=['zh_CN'])
                 langCn.install()
             elif self.language=="T.Chinese":
-                langCn = gettext.translation('gpicsync-GUI', "locale",languages=['tcn'])
+                langCn = gettext.translation('gpicsync-GUI', locale_dir,languages=['zh_TW'])
                 langCn.install()
             elif self.language=="Catalan":
-                langCt = gettext.translation('gpicsync-GUI', "locale",languages=['ct'])
+                langCt = gettext.translation('gpicsync-GUI', locale_dir,languages=['ca'])
                 langCt.install()
             elif self.language=="Spanish":
-                langSp = gettext.translation('gpicsync-GUI', "locale",languages=['sp'])
+                langSp = gettext.translation('gpicsync-GUI', locale_dir,languages=['es'])
                 langSp.install()
             elif self.language=="Polish":
-                langPl = gettext.translation('gpicsync-GUI', "locale",languages=['pl'])
+                langPl = gettext.translation('gpicsync-GUI', locale_dir,languages=['pl'])
                 langPl.install()
             elif self.language=="Dutch":
-                langDu = gettext.translation('gpicsync-GUI', "locale",languages=['du'])
+                langDu = gettext.translation('gpicsync-GUI', locale_dir,languages=['nl'])
                 langDu.install()
             elif self.language=="Portuguese":
-                langPt = gettext.translation('gpicsync-GUI', "locale",languages=['pt'])
+                langPt = gettext.translation('gpicsync-GUI', locale_dir,languages=['pt'])
                 langPt.install()
             elif self.language=="Czech":
-                lang = gettext.translation('gpicsync-GUI', "locale",languages=['cze'])
+                lang = gettext.translation('gpicsync-GUI', locale_dir,languages=['cs'])
                 lang.install()
             elif self.language=="Russian":
-                lang = gettext.translation('gpicsync-GUI', "locale",languages=['ru'])
+                lang = gettext.translation('gpicsync-GUI', locale_dir,languages=['ru'])
                 lang.install()
             else:
                 gettext.install("gpicsync-GUI", "None")#a trick to go back to original
         except:
             print "Couldn't load translation."
-                
+        del locale_dir        
         #####   Menus  #####
         
         bkg=wx.Panel(self)
