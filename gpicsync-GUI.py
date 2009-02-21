@@ -27,6 +27,7 @@ http://code.google.com/p/gpicsync/
 import wx,wx.lib.colourdb,time,decimal,gettext,shutil,ConfigParser
 import os,sys,fnmatch,zipfile,subprocess
 import traceback
+import string
 if sys.platform == 'win32':
     import win32com.client
 from thread import start_new_thread
@@ -671,14 +672,8 @@ class GUI(wx.Frame):
                             
                 except:
                     wx.CallAfter(self.consolePrint,_("Couldn't create the necessary GPX file."))
-                
-        gpxPaths=""   
-        i=0     
-        for path in self.gpxFile:
-            gpxPaths+=self.gpxFile[i]+" "
-            i+=1
-	#done in setter of gpxPaths:
-        #self.gpxEntry.SetValue(gpxPaths)
+
+        self.gpxPaths=string.join(self.gpxFile, " ")        
     
     def findPictures(self,evt):
         """Select the folder pictures to use"""
