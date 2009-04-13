@@ -27,7 +27,6 @@ http://code.google.com/p/gpicsync/
 import wx,wx.lib.colourdb,time,decimal,gettext,shutil,ConfigParser
 import os,sys,fnmatch,zipfile,subprocess
 import traceback
-import string
 if sys.platform == 'win32':
     import win32com.client
 from thread import start_new_thread
@@ -56,7 +55,7 @@ class GUI(wx.Frame):
         self.log=False
         self.stop=False
         self.interpolation=False
-        #self.picDir="" this value is being accessed via the TextCtrl field
+        self.picDir=""
         self.utcOffset="0"
         self.backup=True
         self.picDirDefault=""
@@ -672,8 +671,13 @@ class GUI(wx.Frame):
                             
                 except:
                     wx.CallAfter(self.consolePrint,_("Couldn't create the necessary GPX file."))
-
-        self.gpxPaths=string.join(self.gpxFile, " ")        
+                
+        gpxPaths=""   
+        i=0     
+        for path in self.gpxFile:
+            gpxPaths+=self.gpxFile[i]+" "
+            i+=1
+        self.gpxEntry.SetValue(gpxPaths)
     
     def findPictures(self,evt):
         """Select the folder pictures to use"""
@@ -683,9 +687,7 @@ class GUI(wx.Frame):
             openDir.SetPath(self.picDir)
         openDir.ShowModal()
         self.picDir=openDir.GetPath()
-
-	#done in setters of picDir:
-        #self.dirEntry.SetValue(self.picDir)
+        self.dirEntry.SetValue(self.picDir)
     
     def syncPictures(self,evt):
         """Sync. pictures with the .gpx file"""
@@ -711,7 +713,7 @@ class GUI(wx.Frame):
                 
             else:
                 pass
-            geo=GpicSync(gpxFile=self.getGpxFile(),tcam_l=self.tcam_l,tgps_l=self.tgps_l,
+            geo=GpicSync(gpxFile=self.gpxFile,tcam_l=self.tcam_l,tgps_l=self.tgps_l,
             UTCoffset=self.utcOffset,dateProcess=dateProcess,timerange=int(self.timerangeEntry.GetValue()),
             backup=False,interpolation=self.interpolation)
             
@@ -732,13 +734,13 @@ class GUI(wx.Frame):
                 try:
                     os.mkdir(self.picDir+'/thumbs')
                 except:
-                    print "Couldn't create the thumbs folder, it may already exist"
+                    print "Couldn't create the thumbs folder, it maybe already exist"
 
             if self.gmCheck.GetValue()==True:
                 wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Map file (doc-web.kml) in the picture folder")+" ... \n")
                 webKml=KML(self.picDir+"/doc-web",os.path.basename(self.picDir),url=self.urlEntry.GetValue(),
                 utc=self.utcEntry.GetValue(),gmaps=True)
-                webKml.path(self.getGpxFile())
+                webKml.path(self.gpxFile)
                 webKml.writeInKml("\n<Folder>\n<name>Photos</name>")
                 
             if self.log==True:
@@ -924,7 +926,7 @@ class GUI(wx.Frame):
             if self.geCheck.GetValue()==True:
                 localKml.writeInKml("</Folder>\n")
                 wx.CallAfter(self.consolePrint,"\n"+_("Adding the GPS track log to the Google Earth kml file")+"...\n")
-                localKml.path(self.getGpxFile(),cut=10000)
+                localKml.path(self.gpxFile,cut=10000)
                 localKml.close()
                 wx.CallAfter(self.consolePrint,"\n"+_("Click on the 'View in Google Earth' button to visualize the result")+".\n")
                 wx.CallAfter(self.consolePrint,_("( A Google Earth doc.kml file has been created in your picture folder.)")+"\n")
@@ -1213,27 +1215,7 @@ class GUI(wx.Frame):
                     +"\t"+_("Longitude")+": "+trkpt["lon"]
                     +"\t"+_("Altitude")+": "+trkpt["ele"]+"\n")
             start_new_thread(inspect,())
-    def setPicDir(self, dir):
-        self.dirEntry.SetValue(dir)
-    def getPicDir(self):
-        picDir = self.dirEntry.GetValue()
-        return os.path.normpath(picDir)
-    picDir=property(getPicDir, setPicDir)
-    
-    def setGpxPaths(self, path):
-        self.gpxEntry.SetValue(path)
-    def getGpxPaths(self):
-        return self.gpxEntry.GetValue()
-    gpxPaths=property(getGpxPaths, setGpxPaths) 
-
-    def getGpxFile(self):
-        if sys.platform == 'win32':
-            self.gpxFile=self.gpxPaths.split(" ", self.gpxPaths)
-        else:
-            self.gpxFile=[self.gpxPaths] 
-        return self.gpxFile
             
-
 app=wx.App(redirect=False)
 win=GUI(None,title="GPicSync GUI")
 win.Show()
