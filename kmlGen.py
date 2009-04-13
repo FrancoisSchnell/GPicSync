@@ -192,8 +192,12 @@ class KML(object):
         #Adding a footer to the description
         pmDescriptionFooter=self.footerPlacemark(picName,type="GE")
         
+        pictureName=os.path.basename(picName)
+        if sys.platform == 'win32':
+            pictureName=os.path.basename(picName).lower()
+        
         pmDescription="<description><![CDATA["+\
-        "<img src='"+self.url+os.path.basename(picName)+"' width='"+width+"' height='"+height+"'/>"+\
+        "<img src='"+self.url+pictureName+"' width='"+width+"' height='"+height+"'/>"+\
         pmDescriptionFooter+\
         "]]>\n</description>\n"+iconLook+\
         "\n<Point>"+eleAdd+\
