@@ -47,6 +47,7 @@ codeset = locale.getdefaultlocale()[1]
 try:
     import pytz
 except ImportError:
+    print "couldn't import pytz"
     timezones = []
 else:
     timezones = pytz.common_timezones
@@ -89,20 +90,35 @@ class GUI(wx.Frame):
         self.geoname_IPTCsummary=""
 
         # Search for an eventual gpicsync.conf file
-        try:
-            try:
-                #fconf=open(os.path.expanduser("~/.gpicsync.conf"),"r+")
+        configFile=False
+        
+        if sys.platform=="win32":
+            confPath=os.environ["USERPROFILE"]+"/gpicsync.conf"
+            print "Searching configuration file "+confPath
+            if os.path.isfile(confPath):
+                configFile=True
                 fconf=open(os.environ["USERPROFILE"]+"/gpicsync.conf","r+")
-            except:
-                try:
-                    #fconf=open(os.environ["USERPROFILE"]+"/gpicsync.conf","r+")
-                    fconf=open(os.path.expanduser("~/.gpicsync.conf"),"r+")
-                except:
-                    pass
+            else: configFile= False
+        if sys.platform==("linux2" or "darwin"):
+            confPath=os.path.expanduser("~/.gpicsync.conf")
+            print "Searching configuration file ~/.gpicsync.conf"
+            if os.path.isfile(confPath):
+                configFile=True
+                fconf=open(os.path.expanduser("~/.gpicsync.conf"),"r+")
+            else: configFile=False
+        if configFile==False:
+            print "Couldn't find the configuration file."
+            wx.CallAfter(self.consolePrint,"\n"+"Couldn't find the configuration file."+"\n")
+            
+        print "Attempting to read the configuration file..."
+        #try: 
+        if 1:   
             conf= ConfigParser.ConfigParser()
             conf.readfp(fconf) #parse the config file
             if conf.has_option("gpicsync","timezone") == True:
                 self.timezone=conf.get("gpicsync","timezone")
+                if self.timezone=="": self.timezone=None
+                print "Timezone is :"+str(self.timezone)
             if conf.has_option("gpicsync","UTCOffset") == True:
                 self.utcOffset=conf.get("gpicsync","utcoffset")
             if conf.has_option("gpicsync","backup") == True:
@@ -143,12 +159,11 @@ class GUI(wx.Frame):
                 self.picDir=conf.get("gpicsync","defaultdirectory")
             if conf.has_option("gpicsync","getimestamp") == True:
                 self.timeStamp=eval(conf.get("gpicsync","getimestamp"))
-
             fconf.close()
-
-        except:
+        #except:
+        if 0:
             wx.CallAfter(self.consolePrint,"\n"
-            +"Couldn't find or read configuration file."+"\n")
+            +"An error happened while reading the configuration file."+"\n")
 
         try:
             #print self.language
@@ -542,11 +557,11 @@ class GUI(wx.Frame):
 
     def aboutApp(self,evt):
         """An about message dialog"""
-        text="GPicSync  1.28 - 2008 \n\n"\
+        text="GPicSync  1.29 - 2011 \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
-        +"2007 - francois.schnell@gmail.com"
+        +"2011 - francois.schnell@gmail.com"
         dialog=wx.MessageDialog(self,message=text,
         style=wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
         dialog.ShowModal()
