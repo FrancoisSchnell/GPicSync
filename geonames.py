@@ -43,7 +43,7 @@ class Geonames(object):
             
         print "latitude= ",self.lat,"  longitude= ",self.long
         
-        url= "http://ws.geonames.org/findNearbyPlaceName?lat="+str(self.lat)+"&lng="+str(self.long)+"&style=full"
+        url= "http://ws.geonames.org/findNearbyPlaceName?lat="+str(self.lat)+"&lng="+str(self.long)+"&style=full"+"&username=gpicsync"
         print "url= ",url
         self.page = codecs.getreader("utf-8")(urlopen(url)).read()
         #print self.page
