@@ -29,6 +29,8 @@ For more options type gpicsync.py --help
 """
 
 import gettext,time,datetime
+#import pytz
+
 try: import pytz
 except ImportError: pass
 
@@ -41,7 +43,7 @@ class GpicSync(object):
     A class to manage the geolocalisation from a .gpx file.
     """
     def __init__(self,gpxFile,tcam_l="00:00:00",tgps_l="00:00:00",UTCoffset=0,timezone=None,
-    dateProcess=True,timerange=3600,backup=True,interpolation=False):
+    dateProcess=True,timerange=3600,backup=True,interpolation=False,qr_time_image=None):
         """Extracts data from the gpx file and compute local offset duration"""
         myGpx=Gpx(gpxFile)
         self.track=myGpx.extract()
@@ -60,8 +62,48 @@ class GpicSync(object):
         self.localOffset=tcam_l - tgps_l + self.UTCoffset
         self.backup=backup
         self.interpolation=interpolation
-        print "local UTC Offset (seconds)= ", self.localOffset
-        #print self.track
+        if qr_time_image is None:
+            print "local UTC Offset (seconds)= ", self.localOffset
+
+    def parseQrTime(self,qr_time_images):
+        import zbar
+        import Image
+        import time
+        import dateutil.parser
+        min_offset = None
+        max_offset = None
+        for fileName, filePath in qr_time_images:
+            pic=GeoExif(filePath)
+            picDateTimeSize=pic.readDateTimeSize()
+            scanner = zbar.ImageScanner()
+            scanner.parse_config('enable')
+            pil = Image.open(filePath).convert('L')
+            width, height = pil.size
+            raw = pil.tostring()
+            image = zbar.Image(width, height, 'Y800', raw)
+            scanner.scan(image)
+            for symbol in image:
+                try:
+                    tgps = dateutil.parser.parse(symbol.data)
+                    tcam = dateutil.parser.parse('%s %s UTC' % tuple(picDateTimeSize[:2]))
+                    offset = tcam - tgps
+                    print "Found QR code in file '%s' with difference %s" % (fileName, offset)
+                    offset = offset.seconds + offset.days * 24 * 3600
+                    if not min_offset or offset < min_offset:
+                        min_offset = offset
+                    if not max_offset or offset > max_offset:
+                        max_offset = offset
+                except:
+                    pass
+        if not min_offset or not max_offset:
+            print "Found no sutable QR codes"
+            sys.exit(1)
+        if max_offset - min_offset > 60:
+            print "Minimum and maximum offsets differ too much"
+            sys.exit(1)
+        self.timezone = None
+        self.localOffset = (max_offset + min_offset) / 2
+        print "Offset calculated by QR codes (seconds) = ", self.localOffset
 
     def syncPicture(self,picture):
         """
@@ -169,6 +211,30 @@ class GpicSync(object):
                 return [_(" : WARNING: DIDN'T GEOCODE, ")+_("no track point at this picture date ")\
                  +self.shotDate+"-"+self.shotTime,"","",self.picWidth,self.picHeight,elevation]
 
+def getFileList(dir):
+    for fileName in sorted(os.listdir ( dir )):
+        if (fnmatch.fnmatch ( fileName, '*.JPG' )
+         or fnmatch.fnmatch ( fileName, '*.jpg' )
+         or fnmatch.fnmatch ( fileName, '*.CR2' )
+         or fnmatch.fnmatch ( fileName, '*.cr2' )
+         or fnmatch.fnmatch ( fileName, '*.CRW' )
+         or fnmatch.fnmatch ( fileName, '*.crw' )
+         or fnmatch.fnmatch ( fileName, '*.NEF' )
+         or fnmatch.fnmatch ( fileName, '*.nef' )
+         or fnmatch.fnmatch ( fileName, '*.PEF' )
+         or fnmatch.fnmatch ( fileName, '*.pef' )
+         or fnmatch.fnmatch ( fileName, '*.RAW' )
+         or fnmatch.fnmatch ( fileName, '*.raw' )
+         or fnmatch.fnmatch ( fileName, '*.ORF' )
+         or fnmatch.fnmatch ( fileName, '*.orf' )
+         or fnmatch.fnmatch ( fileName, '*.DNG' )
+         or fnmatch.fnmatch ( fileName, '*.dng' )
+         or fnmatch.fnmatch ( fileName, '*.RAF' )
+         or fnmatch.fnmatch ( fileName, '*.raf' )
+         or fnmatch.fnmatch ( fileName, '*.MRW' )
+         or fnmatch.fnmatch ( fileName, '*.mrw' )):
+            yield fileName, options.dir+'/'+fileName
+
 if __name__=="__main__":
 
     # Minimal commnand-line version (mainly for tests purposes)
@@ -196,9 +262,17 @@ if __name__=="__main__":
     parser.add_option("--tgps",dest="tgps",
      help="Actual time of the GPS only if it was out of sync with the camera \
     Expl. 10:06:00")
+    parser.add_option("--qr-time-image",dest="qr_time_image",
+     help="Image with QR code with time from GPS phone with same camera to \
+     calculate offset or 'auto' to detect the image automatically")
 
     (options,args)=parser.parse_args()
 
+    if options.qr_time_image is not None and (options.offset is not None 
+        or options.timezone is not None or options.tcam is not None 
+            or options.tgps is not None):
+        print >> sys.stderr, "You cannot specify any time options along with --qr-time-image"
+        sys.exit(1)
     if options.tcam==None: options.tcam="00:00:00"
     if options.tgps==None: options.tgps="00:00:00"
     if options.offset is not None and options.timezone is not None:
@@ -222,32 +296,18 @@ if __name__=="__main__":
     print "\n"
 
     geo=GpicSync(gpxFile=options.gpx,
-    tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=int(options.offset),timerange=3600,timezone=options.timezone)
+    tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=int(options.offset),timerange=3600,timezone=options.timezone,
+    qr_time_image=options.qr_time_image)
 
-    for fileName in os.listdir ( options.dir ):
-        if fnmatch.fnmatch ( fileName, '*.JPG' )\
-        or fnmatch.fnmatch ( fileName, '*.jpg' )\
-        or fnmatch.fnmatch ( fileName, '*.CR2' )\
-        or fnmatch.fnmatch ( fileName, '*.cr2' )\
-        or fnmatch.fnmatch ( fileName, '*.CRW' )\
-        or fnmatch.fnmatch ( fileName, '*.crw' )\
-        or fnmatch.fnmatch ( fileName, '*.NEF' )\
-        or fnmatch.fnmatch ( fileName, '*.nef' )\
-        or fnmatch.fnmatch ( fileName, '*.PEF' )\
-        or fnmatch.fnmatch ( fileName, '*.pef' )\
-        or fnmatch.fnmatch ( fileName, '*.RAW' )\
-        or fnmatch.fnmatch ( fileName, '*.raw' )\
-        or fnmatch.fnmatch ( fileName, '*.ORF' )\
-        or fnmatch.fnmatch ( fileName, '*.orf' )\
-        or fnmatch.fnmatch ( fileName, '*.DNG' )\
-        or fnmatch.fnmatch ( fileName, '*.dng' )\
-        or fnmatch.fnmatch ( fileName, '*.RAF' )\
-        or fnmatch.fnmatch ( fileName, '*.raf' )\
-        or fnmatch.fnmatch ( fileName, '*.MRW' )\
-        or fnmatch.fnmatch ( fileName, '*.mrw' ):
+    files = list(getFileList(options.dir))
 
-            print "\nFound fileName ",fileName," Processing now ..."
-            geo.syncPicture(options.dir+'/'+fileName)[0]
+    if options.qr_time_image is not None:
+        qr_time_images = [(options.qr_time_image,options.qr_time_image)]
+        if options.qr_time_image == 'auto':
+            qr_time_images = files
+        geo.parseQrTime(qr_time_images)
+
+    for fileName, filePath in files:
+        print "\nFound fileName ",fileName," Processing now ..."
+        geo.syncPicture(filePath)[0]
     print "Finished"
-
-
