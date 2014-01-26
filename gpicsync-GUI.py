@@ -99,6 +99,7 @@ class GUI(wx.Frame):
         self.picDirDefault=""
         self.GMaps=False
         self.urlGMaps=""
+        self.geonames_username="gpicsync"
         self.geonamesTags=False
         self.geoname_nearbyplace=True
         self.geoname_region=True
@@ -169,6 +170,12 @@ class GUI(wx.Frame):
                 self.maxTimeDifference=conf.get("gpicsync","maxTimeDifference")
             if conf.has_option("gpicsync","language") == True:
                 self.language=conf.get("gpicsync","language")
+            if conf.has_option("gpicsync","geonames_username") == True:
+                geonames_username_fromConf=conf.get("gpicsync","geonames_username")
+                print "reading from conf file geonames_username", geonames_username_fromConf, type(geonames_username_fromConf)
+                if geonames_username_fromConf not in ["","gpicsync"]: 
+                    self.geonames_username=geonames_username_fromConf
+                print "This unsername for geonames will be used:", self.geonames_username
             if conf.has_option("gpicsync","geoname_nearbyplace") == True:
                 self.geoname_nearbyplace=eval(conf.get("gpicsync","geoname_nearbyplace"))
             if conf.has_option("gpicsync","geoname_region") == True:
@@ -187,7 +194,8 @@ class GUI(wx.Frame):
                 self.picDir=conf.get("gpicsync","defaultdirectory")
             if conf.has_option("gpicsync","getimestamp") == True:
                 self.timeStamp=eval(conf.get("gpicsync","getimestamp"))
-            fconf.close()
+            fconf.close()        
+            print "Finished reading the conf. file"
         #except:
         if 0:
             wx.CallAfter(self.consolePrint,"\n"
@@ -387,6 +395,7 @@ class GUI(wx.Frame):
         self.interpolationCheck.SetValue(self.interpolation)
         self.geonamesCheck=wx.CheckBox(bkg,-1,_("add geonames and geotagged"))
         self.geonamesCheck.SetValue(self.geonamesTags)
+        self.Bind(wx.EVT_CHECKBOX,self.geonamesMessage,self.geonamesCheck)
 
         # Main output text console
         self.consoleEntry=wx.TextCtrl(bkg,style=wx.TE_MULTILINE | wx.HSCROLL)
@@ -494,7 +503,18 @@ class GUI(wx.Frame):
             self.exifcmd = 'exiftool.exe'
         else:
             self.exifcmd = 'exiftool'
-
+        
+        if self.geonamesTags==True:
+                    self.geonamesMessage(None)
+    
+    def geonamesMessage(self,evt):
+        """Message to show in console if the user check the geonames check box """
+        if self.geonames_username in ["","gpicsync"]: 
+            if self.geonamesCheck.GetValue() ==  True:
+                wx.CallAfter(self.consolePrint,_("For better Geonames disponibility it is highly recommended to get your own free username account at http://www.geonames.org")+"\n")
+                wx.CallAfter(self.consolePrint,_("Your username can then be set in Menu option > configuration file > geonames_username=YourUserName. Save in Notepad, then 'quit' gpicsync (not 'quit and save settings') and reload.")+"\n")
+                wx.CallAfter(self.consolePrint,_("More informations for the Geonames webservice can be find at http://www.geonames.org/export/")+"\n")
+            
     def writeConfFile(self):
         """Write the whole configuration file"""
         try:
@@ -530,6 +550,8 @@ class GUI(wx.Frame):
         fconf.write("interpolation="+str(self.interpolationCheck.GetValue())+"\n\n")
         fconf.write("#Create a log file by default\n")
         fconf.write("log="+str(self.logFile.GetValue())+"\n\n")
+        fconf.write("#For better Geonames disponibility (cap usage) consider creating a free username account at http://www.geonames.org/login\n")
+        fconf.write("geonames_username="+self.geonames_username+"\n")
         fconf.write("#Add geonames and geotagged in EXIF by default (True or False) and select the ones you want\n")
         fconf.write("geonamestags="+str(self.geonamesCheck.GetValue())+"\n")
         fconf.write("geoname_nearbyplace="+str(self.geoname_nearbyplace)+"\n")
@@ -586,11 +608,11 @@ class GUI(wx.Frame):
 
     def aboutApp(self,evt):
         """An about message dialog"""
-        text="GPicSync  1.31 - 2012 - \n\n"\
+        text="GPicSync  1.31 - 2014 - \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
-        +"2012 - francois.schnell AT gmail.com"
+        +"2014 - notfrancois AT gmail.com"
         dialog=wx.MessageDialog(self,message=text,
         style=wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
         dialog.ShowModal()
@@ -796,7 +818,7 @@ class GUI(wx.Frame):
         openDir.ShowModal()
         self.picDir=openDir.GetPath()
         self.dirEntry.SetValue(self.picDir)
-
+    
     def syncPictures(self,evt):
         """Sync. pictures with the .gpx file"""
         if self.dirEntry.GetValue()=="" or self.gpxEntry.GetValue=="":
@@ -938,7 +960,7 @@ class GUI(wx.Frame):
 
                     if self.geonamesCheck.GetValue()==True and result[1] !="" and result[2] !="": # checks if geonames checked and lat/lon exist
                         try:
-                            nearby=Geonames(lat=result[1],long=result[2])
+                            nearby=Geonames(lat=result[1],long=result[2],username=self.geonames_username)
                         except:
                             wx.CallAfter(self.consolePrint,_("Couldn't retrieve geonames data...")+"\n")
                         try:

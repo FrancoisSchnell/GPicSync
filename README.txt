@@ -1,26 +1,28 @@
+GPicSync - 2007 - 2014
 
 #####################################################
 # WARNING : 
 #
 # - This Free GPL Software comes without any warranty.
 # - Always check the results on a map.
+# - See the license.txt in the same folder
 #
 #####################################################
 
-GPicSync - 2007
 
-See the license.txt in the same folder.
-For help and documentation: http://code.google.com/p/gpicsync/
+For help and documentation: 
+http://code.google.com/p/gpicsync/
+https://github.com/notfrancois/GPicSync
 
-GPicSync also embed two great free GPL tools (thanks to their authors!):
+GPicSync also embeds two great free free software tools (thanks to their authors):
 - EXIFtool from Phil Harvey
 - GPSBable from Robert Lipe 
 
 WINDOWS:
 --------
 
-Download the last executable at GPicSync website:
-http://code.google.com/p/gpicsync/
+Download the latest executable at GPicSync website:
+http://sourceforge.net/projects/gpicsync/files/
 
 Launch the windows installer gpicsync-xx.exe
 
@@ -32,7 +34,7 @@ $ python gpicsync-GUI.py
 
 GPicSync requires:
 
-- Python2.5
+- Python2.5 or above
 - exiftool
 - wxpython for the GUI (2.8 but it could maybe work with a previous version)
 - python-imaging (from version 0.93 of GPicSync)
@@ -60,27 +62,12 @@ If you prefer the command-line version (or if you can't have the right wxpython 
 $ python gpicsync.py --help
 
 
-Linux version issues:
----------------------
-
-As time of writting (14 of april):
-- the kmz tool in tools menu is not fuctionnal yet
-- layout to improve
-
-Still test to carry but main fuctionnalies are there. 
-Don't hesitate to report any problem you may encounter.
-
 
 Thanks and contributions:
 -------------------------
-
-Thanks to Marc Nozell for testing GPicSync on Linux before I had the time to do it
-and for putting some specific Windows code behind a plateform check 
-(changing  "exiftool.exe" to  "exiftool" for Linux in geoexif.py)
-
-Big Thanks to all the users reporting bugs or asking for feature requests 
-(see contributions page on the wiki project + issues page + dedicated Google Group). 
+https://code.google.com/p/gpicsync/wiki/Contributions
 
 
 --
-francois.schnell@gmail.com
+Contact at :
+notfrancois AT gmail.com

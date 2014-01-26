@@ -25,7 +25,7 @@ import codecs#test
 
 class Geonames(object):
     
-    def __init__(self,picName="",lat="",long=""):
+    def __init__(self,picName="",lat="",long="",username="gpicsync"):
         """
         Either give the path to a geocoded picture or 
         give latitute/longitude strings
@@ -34,6 +34,7 @@ class Geonames(object):
         self.lat=lat
         self.long=long
         self.picName=picName
+        self.username=username
         
         if self.lat == "" and self.long == "":
             mypicture=GeoExif(picName)
@@ -43,8 +44,9 @@ class Geonames(object):
             
         print "latitude= ",self.lat,"  longitude= ",self.long
         
-        url= "http://ws.geonames.org/findNearbyPlaceName?lat="+str(self.lat)+"&lng="+str(self.long)+"&style=full"+"&username=gpicsync"
-        print "url= ",url
+        #url= "http://ws.geonames.org/findNearbyPlaceName?lat="+str(self.lat)+"&lng="+str(self.long)+"&style=full"+"&username="+str(self.username)
+        url= "http://api.geonames.org/findNearbyPlaceName?lat="+str(self.lat)+"&lng="+str(self.long)+"&style=full"+"&username="+str(self.username)
+        print "Geonames url request= ",url
         self.page = codecs.getreader("utf-8")(urlopen(url)).read()
         #print self.page
         #print self.page.encode("utf8")
