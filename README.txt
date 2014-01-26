@@ -14,7 +14,7 @@ For help and documentation:
 http://code.google.com/p/gpicsync/
 https://github.com/notfrancois/GPicSync
 
-GPicSync also embeds two great free free software tools (thanks to their authors):
+GPicSync also embeds two great free software tools (thanks to their authors):
 - EXIFtool from Phil Harvey
 - GPSBable from Robert Lipe 
 
