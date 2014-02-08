@@ -578,7 +578,10 @@ class GUI(wx.Frame):
         Print the given message in the console window
         (GUI safe to call with a CallAfter in threads to avoid refresh problems)
         """
-        self.consoleEntry.AppendText(msg)
+        if 0:
+            self.consoleEntry.AppendText(msg.decode( 'utf-8', 'ignore' ))
+        if 1:
+            self.consoleEntry.AppendText(msg)
 
     def imagePreview(self,prevPath=""):
         """ GUI Image preview"""
@@ -608,7 +611,7 @@ class GUI(wx.Frame):
 
     def aboutApp(self,evt):
         """An about message dialog"""
-        text="GPicSync  1.31 - 2014 - \n\n"\
+        text="GPicSync  1.33 - 2014 - \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
         "http://code.google.com/p/gpicsync/"+"\n\n"\
@@ -948,7 +951,11 @@ class GUI(wx.Frame):
                         continue
 
                     if self.log==True:
-                        f.write(_("Processed image ")+fileName+" : "+result[0]+"\n")
+                        try:
+                            #f.write(_("Processed image ")+fileName+" : "+result[0]+"\n")
+                            f.write("Processed image "+unidecode(fileName)+" : "+result[0]+"\n")
+                        except:
+                            pass
 
                     if self.geCheck.GetValue()==True and result[1] !="" and result[2] !="":
                         localKml.placemark(self.picDir+'/'+fileName,lat=result[1],
@@ -1072,9 +1079,18 @@ class GUI(wx.Frame):
                                 # trying lib unidecode see unicode to ascii (see issue 117 regarding Python 2.x and command line to exiftool containing unicode)
                                 #print geonameKeywords
                                 if sys.platform!=("linux2" or "darwin"): # Usage of unidecode for now on windows due to above problem ( https://code.google.com/p/gpicsync/issues/detail?id=117 )
-                                    os.popen('%s -tagsfromfile @ -iptc:all -codedcharacterset=utf8  %s  -overwrite_original "-DateTimeOriginal>FileModifyDate"  "%s"  '%(self.exifcmd,unidecode(geonameKeywords),self.picDir+'/'+fileName))
+                                    if 0: # in current build 1.32
+                                        os.popen('%s -tagsfromfile @ -iptc:all -codedcharacterset=utf8  %s  -overwrite_original "-DateTimeOriginal>FileModifyDate"  "%s"  '%(self.exifcmd,unidecode(geonameKeywords),self.picDir+'/'+fileName))
+                                    if 1: # experimental
+                                        print "!!!!!!!!!!!!!!!!!!!!! New unicode test !!!!!!!!!!!!!!!!!!!!!!!"
+                                        startupinfo = subprocess.STARTUPINFO()
+                                        startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
+                                        command= '%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName)
+                                        subprocess.call(command.encode("utf-8"),startupinfo=startupinfo, shell=False)
+                                        
                                 else: # following line contributed by hsivonen which may work on OSX / Linux ( https://code.google.com/p/gpicsync/issues/detail?id=91 )
                                     os.popen(('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords.decode("utf-8"),self.picDir+'/'+fileName)).encode("utf-8"))
+                                    
                                 #os.popen('%s -tagsfromfile @ -iptc:all -codedcharacterset=utf8 %s  -overwrite_original "-DateTimeOriginal>FileModifyDate"  "%s"  '%(self.exifcmd,unicode(geonameKeywords).encode("utf-8"),self.picDir+'/'+fileName))
                             
                             if 0:
@@ -1217,7 +1233,7 @@ class GUI(wx.Frame):
                 wx.CallAfter(self.consolePrint,"-------------------\n")
                 if self.ExifReaderSelected==_("All EXIF metadata"):
                     wx.CallAfter(self.consolePrint,pathPicture+"\n\n")
-                    wx.CallAfter(self.consolePrint,myPicture.readExifAll())
+                    wx.CallAfter(self.consolePrint,myPicture.readExifAll().decode("utf-8","ignore"))
 
                 if self.ExifReaderSelected==_("Date/Time/Lat./Long."):
                     dateTime=myPicture.readDateTime()
