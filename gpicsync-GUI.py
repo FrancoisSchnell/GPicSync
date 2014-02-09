@@ -200,51 +200,51 @@ class GUI(wx.Frame):
         if 0:
             wx.CallAfter(self.consolePrint,"\n"
             +"An error happened while reading the configuration file."+"\n")
-
         try:
             #print self.language
             locale_dir="locale"
             if self.language=="system":
 		lang = gettext.translation('gpicsync-GUI', locale_dir, codeset=codeset)
-		lang.install()
+		lang.install(unicode=True)
             elif self.language=="French":
 		lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['fr'], codeset=codeset)
-		lang.install()
+		lang.install(unicode=True)
             elif self.language=="Italian":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['it'], codeset=codeset)
-		lang.install()
+		lang.install(unicode=True)
             elif self.language=="German":
-                lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['de'], codeset=codeset)
-		lang.install()
+                #lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['de'], codeset=codeset)
+                lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['de'])
+		lang.install(unicode=True)
             elif self.language=="S.Chinese":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['zh_CN'], codeset=codeset)
-		lang.install()
+		lang.install(unicode=True)
             elif self.language=="T.Chinese":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['zh_TW'], codeset=codeset)
-		lang.install()
+		lang.install(unicode=True)
             elif self.language=="Catalan":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['ca'], codeset=codeset)
-		lang.install()
+		lang.install(unicode=True)
             elif self.language=="Spanish":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['es'], codeset=codeset)
-		lang.install()
+		lang.install(unicode=True)
             elif self.language=="Polish":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['pl'], codeset=codeset)
-		lang.install()
+		lang.install(unicode=True)
             elif self.language=="Dutch":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['nl'], codeset=codeset)
-		lang.install()
+		lang.install(unicode=True)
             elif self.language=="Portuguese":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['pt'], codeset=codeset)
-		lang.install()
+		lang.install(unicode=True)
             elif self.language=="Czech":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['cs'], codeset=codeset)
-		lang.install()
+		lang.install(unicode=True)
             elif self.language=="Russian":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['ru'], codeset=codeset)
-		lang.install()
+		lang.install(unicode=True)
             else:
-                gettext.install('gpicsync-GUI', "None")
+                gettext.install('gpicsync-GUI', "None",unicode=True)
         except:
             print "Couldn't load translation."
         del locale_dir
@@ -882,12 +882,15 @@ class GUI(wx.Frame):
                 webKml.writeInKml("\n<Folder>\n<name>Photos</name>")
 
             if self.log==True:
-                f=open(self.picDir+'/gpicsync.log','w')
-                f.write(_("Geocoded with UTC Offset= ")+
-                self.utcEntry.GetValue()+_(" and  Maximum time difference = ")\
-                +self.timerangeEntry.GetValue()+"\n")
-                f.write(_("Pictures Folder: ")+self.picDir+"\n")
-                f.write(_("GPX file: ")+self.gpxEntry.GetValue()+"\n\n")
+                try:
+                    f=open(self.picDir+'/gpicsync.log','w')
+                    f.write(_("Geocoded with UTC Offset= ")+
+                    self.utcEntry.GetValue()+_(" and  Maximum time difference = ")\
+                    +self.timerangeEntry.GetValue()+"\n")
+                    f.write(_("Pictures Folder: ")+self.picDir+"\n")
+                    f.write(_("GPX file: ")+self.gpxEntry.GetValue()+"\n\n")
+                except:
+                    pass
 
             for fileName in sorted(os.listdir ( self.picDir )):
                 if self.stop==True: break
