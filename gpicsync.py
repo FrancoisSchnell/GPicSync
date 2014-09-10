@@ -215,6 +215,8 @@ def getFileList(dir):
     for fileName in sorted(os.listdir ( dir )):
         if (fnmatch.fnmatch ( fileName, '*.JPG' )
          or fnmatch.fnmatch ( fileName, '*.jpg' )
+         or (fnmatch.fnmatch ( fileName, '*.TIF' )
+         or fnmatch.fnmatch ( fileName, '*.tif' )
          or fnmatch.fnmatch ( fileName, '*.CR2' )
          or fnmatch.fnmatch ( fileName, '*.cr2' )
          or fnmatch.fnmatch ( fileName, '*.CRW' )
