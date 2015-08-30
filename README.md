@@ -1,6 +1,7 @@
 ![GpicSync screen](http://farm8.staticflickr.com/7039/6972748535_82b222a2d2_o.jpg)
 
 GPicSync, 2007-2015 (GPL Software, comes without any warranty)
+
 Official new Website (since Google code closure):
 https://github.com/notfrancois/GPicSync
 
