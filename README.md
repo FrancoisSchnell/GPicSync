@@ -3,17 +3,17 @@ GPicSync, 2007-2015 (GPL Software, comes without any warranty)
 Official new Website (since Google code closure):
 https://github.com/notfrancois/GPicSync
 
-WINDOWS Binaries:
------------------
+WINDOWS Binaries :
 
 Download the latest executable from:
 https://sourceforge.net/projects/gpicsync/
+
 Older versions:
 http://sourceforge.net/projects/gpicsync/files/
+
 Launch the windows installer gpicsync-xx.exe
 
-LINUX:
-------
+LINUX :
 
 Check distribution if packages exist or from source.
 
