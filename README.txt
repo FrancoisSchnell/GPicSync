@@ -7,6 +7,8 @@ WINDOWS Binaries:
 -----------------
 
 Download the latest executable from:
+https://sourceforge.net/projects/gpicsync/
+Older versions:
 http://sourceforge.net/projects/gpicsync/files/
 Launch the windows installer gpicsync-xx.exe
 
