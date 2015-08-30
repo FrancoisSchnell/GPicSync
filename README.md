@@ -2,11 +2,9 @@
 
 ##### GPicSync, 2007-2015
 
-**Official home** *(since Google code closure)*:
+Official home for GPicSync (https://github.com/notfrancois/GPicSync)
 
-**https://github.com/notfrancois/GPicSync**
-
-#### WINDOWS Binaries :
+##### WINDOWS Binaries :
 
 Download the latest executable from:
 https://sourceforge.net/projects/gpicsync/
