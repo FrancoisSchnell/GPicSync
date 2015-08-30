@@ -39,8 +39,10 @@ print wx.VERSION
 import time,decimal,gettext,shutil,ConfigParser
 import os,sys,fnmatch,zipfile,subprocess
 import traceback
-if sys.platform == 'win32':
-    import win32com.client
+#if sys.platform == 'win32':
+#    import win32com.client
+# win32.com deprecated as Google Earth API too
+# will automatically open kml folder at the end of geocoding?
 from thread import start_new_thread
 from PIL import Image
 from PIL import JpegImagePlugin
@@ -296,13 +298,15 @@ class GUI(wx.Frame):
         quitAndSaveButton=wx.Button(bkg,label=_("Quit and save settings"),size=(-1,-1))
         stopButton=wx.Button(bkg,label=_("Stop"),size=(-1,-1))
         clearButton=wx.Button(bkg,label=_("Clear"),size=(-1,-1))
-        viewInGEButton=wx.Button(bkg,label=_("View in Google Earth"),size=(-1,-1))
+        if sys.platform != 'win32':
+            viewInGEButton=wx.Button(bkg,label=_("View in Google Earth"),size=(-1,-1))
         self.Bind(wx.EVT_BUTTON, self.syncPictures, syncButton)
         self.Bind(wx.EVT_BUTTON, self.exitApp,quitButton)
         self.Bind(wx.EVT_BUTTON, self.exitAppSave,quitAndSaveButton)
         self.Bind(wx.EVT_BUTTON, self.stopApp,stopButton)
         self.Bind(wx.EVT_BUTTON, self.clearConsole,clearButton)
-        self.Bind(wx.EVT_BUTTON, self.viewInGE,viewInGEButton)
+        if sys.platform != 'win32':
+            self.Bind(wx.EVT_BUTTON, self.viewInGE,viewInGEButton)
 
         # Main Options box
         optionPrebox=wx.StaticBox(bkg, -1, _("Options:"))
@@ -461,7 +465,8 @@ class GUI(wx.Frame):
         commandsBox.Add(syncButton,proportion=0,flag=wx.LEFT,border=5)
         commandsBox.Add(stopButton,proportion=0,flag=wx.LEFT,border=5)
         commandsBox.Add(clearButton,proportion=0,flag=wx.LEFT,border=5)
-        commandsBox.Add(viewInGEButton,proportion=0,flag=wx.LEFT,border=5)
+        if sys.platform != 'win32':
+            commandsBox.Add(viewInGEButton,proportion=0,flag=wx.LEFT,border=5)
         commandsBox.Add(quitButton,proportion=0,flag=wx.LEFT,border=5)
         commandsBox.Add(quitAndSaveButton,proportion=0,flag=wx.LEFT,border=5)
 
@@ -700,7 +705,9 @@ class GUI(wx.Frame):
     def viewInGE(self,evt):
         """View a local kml file in Google Earth"""
         if sys.platform == 'win32':
-            googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
+            #googleEarth =win32com.client.Dispatch("GoogleEarth.ApplicationGE")
+            #com interface to Google Earth removed from Google
+            pass
         else:
             if sys.platform.find("linux")!=-1:
                 p=subprocess.Popen(['which', 'googleearth', 'google-earth'], stdout=subprocess.PIPE)
@@ -724,7 +731,8 @@ class GUI(wx.Frame):
             wx.CallAfter(self.consolePrint,text)
         try:
             if sys.platform == 'win32':
-                googleEarth.OpenKmlFile(path,True)
+                #googleEarth.OpenKmlFile(path,True)
+                pass
             else:
             	if sys.platform.find("linux")!=-1:
             	    def goGELinux():
