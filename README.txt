@@ -1,4 +1,4 @@
-GPicSync, 2007-2015 (GPL Software comes without any warranty)
+GPicSync, 2007-2015 (GPL Software, comes without any warranty)
 
 Official new Website (since Google code closure):
 https://github.com/notfrancois/GPicSync
@@ -40,4 +40,4 @@ GPicSync also embeds two great free software tools (thanks to their authors):
 --
 
 Contact at :
-notfrancois AT gmail.com
+notfrancois AT gmail.com or from Github.
