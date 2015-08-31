@@ -24,5 +24,8 @@ GPicSync is a Free Software (see <a href="https://github.com/metadirective/GPicS
 
 GPicSync also use <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/">Exiftools</a> and <a href="http://www.gpsbabel.org/">GPSbabel</a> Free Softwares (embeded in the Windows installer).
 
+Contact : ![Contact] (http://francois.schnell.free.fr/fschnellgmail.png) or via the <a href="https://github.com/metadirective/GPicSync"> Github project</a>.
+
+
 
 
