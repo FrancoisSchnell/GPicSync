@@ -3,7 +3,7 @@
 **GPicSync, 2007-2015** (Official home is now <a href="https://github.com/metadirective/GPicSync">github.com/metadirective/GPicSync</a>)
 <ul>
 <li>
-Windows installer, <a href="https://sourceforge.net/projects/gpicsync/">latest</a> and <a href="http://sourceforge.net/projects/gpicsync/files/">previous</a>
+Windows installer:<a href="https://sourceforge.net/projects/gpicsync/">latest</a> and <a href="http://sourceforge.net/projects/gpicsync/files/">previous</a>
 </li>
 <li>
 <a href="https://github.com/metadirective/GPicSync/wiki/Changelog">Changelog</a> and <a href="https://github.com/metadirective/GPicSync/wiki/Screenshots">Screenshots</a>
@@ -13,6 +13,9 @@ Windows installer, <a href="https://sourceforge.net/projects/gpicsync/">latest</
 </li>
 <li>
 <a href="https://github.com/metadirective/GPicSync/wiki/Trouble-Shooting">Trouble shooting</a>
+</li>
+<li>
+<a href="https://github.com/metadirective/GPicSync/wiki/Linux">Linux</a>, from Source and command-line
 </li>
 
 </ul>
