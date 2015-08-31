@@ -4,6 +4,10 @@
 
 Official home for GPicSync (https://github.com/notfrancois/GPicSync)
 
+<a href="https://github.com/metadirective/GPicSync/wiki/Trouble-Shooting">(Trouble shooting)</a>
+<a href="https://github.com/metadirective/GPicSync/wiki/Changelog">(Changelog)</a>
+<a href="https://github.com/metadirective/GPicSync/wiki/Screenshots">(Screenshots)</a>
+
 ##### WINDOWS Binaries :
 
 Download the latest executable from: https://sourceforge.net/projects/gpicsync/
@@ -12,9 +16,7 @@ Older versions: http://sourceforge.net/projects/gpicsync/files/
 
 Launch the windows installer gpicsync-xx.exe
 
-<a href="https://github.com/metadirective/GPicSync/wiki/Trouble-Shooting"Trouble shooting</a>
-<a href="https://github.com/metadirective/GPicSync/wiki/Changelog"Changelog</a>
-<a href="https://github.com/metadirective/GPicSync/wiki/Screenshots">Screenshots</a>
+
 
 ##### LINUX :
 
