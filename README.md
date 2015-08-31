@@ -1,12 +1,12 @@
 ![GpicSync screen](http://farm8.staticflickr.com/7039/6972748535_82b222a2d2_o.jpg)
 
-##### GPicSync, 2007-2015
+**GPicSync, 2007-2015** (Official home is now <a href="https://github.com/metadirective/GPicSync">github.com/metadirective/GPicSync</a>)
 
-Official home for GPicSync is now <a href="https://github.com/metadirective/GPicSync">github.com/metadirective/GPicSync</a>
 
 <a href="https://github.com/metadirective/GPicSync/wiki/Trouble-Shooting">(Trouble shooting)</a>-
 <a href="https://github.com/metadirective/GPicSync/wiki/Changelog">(Changelog)</a>-
 <a href="https://github.com/metadirective/GPicSync/wiki/Screenshots">(Screenshots)</a>
+
 
 ##### WINDOWS Binaries :
 
