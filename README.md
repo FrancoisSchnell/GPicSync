@@ -1,22 +1,21 @@
 ![GpicSync screen](http://farm8.staticflickr.com/7039/6972748535_82b222a2d2_o.jpg)
 
 **GPicSync, 2007-2015** (Official home is now <a href="https://github.com/metadirective/GPicSync">github.com/metadirective/GPicSync</a>)
+<ul>
+<li>
+Windows installer, <a href="https://sourceforge.net/projects/gpicsync/">latest</a> and <a href="http://sourceforge.net/projects/gpicsync/files/">previous</a>
+</li>
+<li>
+<a href="https://github.com/metadirective/GPicSync/wiki/Changelog">Changelog</a> and <a href="https://github.com/metadirective/GPicSync/wiki/Screenshots">Screenshots</a>
+</li>
+<li>
+<a href="https://github.com/metadirective/GPicSync/wiki/Getting-started">Getting started</a>
+</li>
+<li>
+<a href="https://github.com/metadirective/GPicSync/wiki/Trouble-Shooting">Trouble shooting</a>
+</li>
 
-<a href="https://github.com/metadirective/GPicSync/wiki/Getting-started">(Getting started)</a>-
-<a href="https://github.com/metadirective/GPicSync/wiki/Trouble-Shooting">(Trouble shooting)</a>-
-<a href="https://github.com/metadirective/GPicSync/wiki/Changelog">(Changelog)</a>-
-<a href="https://github.com/metadirective/GPicSync/wiki/Screenshots">(Screenshots)</a>
-
-
-##### WINDOWS Binaries :
-
-Download the latest executable from: https://sourceforge.net/projects/gpicsync/
-
-Older versions: http://sourceforge.net/projects/gpicsync/files/
-
-Launch the windows installer gpicsync-xx.exe
-
-
+</ul>
 
 ##### LINUX :
 
