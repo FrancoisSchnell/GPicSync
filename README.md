@@ -6,13 +6,16 @@ Official home for GPicSync (https://github.com/notfrancois/GPicSync)
 
 ##### WINDOWS Binaries :
 
-Download the latest executable from:
-https://sourceforge.net/projects/gpicsync/
+Download the latest executable from: https://sourceforge.net/projects/gpicsync/
 
-Older versions:
-http://sourceforge.net/projects/gpicsync/files/
+Older versions: http://sourceforge.net/projects/gpicsync/files/
 
 Launch the windows installer gpicsync-xx.exe
+
+![Changelog History](https://github.com/metadirective/GPicSync/wiki/Changelog) and ![Screenshots](https://github.com/metadirective/GPicSync/wiki/Screenshots)
+
+![Trouble Shooting](https://github.com/metadirective/GPicSync/wiki/Trouble-Shooting)
+
 
 ##### LINUX :
 
