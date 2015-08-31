@@ -22,7 +22,7 @@ Windows installer:<a href="https://sourceforge.net/projects/gpicsync/">latest</a
 
 GPicSync is a Free Software (see <a href="https://github.com/metadirective/GPicSync/blob/master/license.txt"> licence.txt</a>) and comes without any warranty. 
 
-GPicSync also use <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/">Exiftools</a> and <a href="http://www.gpsbabel.org/">GPSbabel</a> Free Softwares.
+GPicSync also use <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/">Exiftools</a> and <a href="http://www.gpsbabel.org/">GPSbabel</a> Free Softwares (embeded in the Windows installer).
 
 
 
