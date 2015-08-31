@@ -20,31 +20,9 @@ Windows installer:<a href="https://sourceforge.net/projects/gpicsync/">latest</a
 
 </ul>
 
-##### LINUX :
+GPicSync is a Free Software (see <a href="https://github.com/metadirective/GPicSync/blob/master/license.txt"> licence.txt</a>) and comes without any warranty. 
 
-Check distribution if packages exist or from source.
+GPicSync also use <a href="http://www.sno.phy.queensu.ca/~phil/exiftool/">Exiftools</a> and <a href="http://www.gpsbabel.org/">GPSbabel</a> Free Softwares.
 
-$ python gpicsync-GUI.py
 
-GPicSync requires:
-- Python2.5 or above
-- exiftool
-- wxpython for the GUI (2.8 but it could maybe work with a previous version)
-- python-imaging (from version 0.93 of GPicSync)
-- python-unidecode
-- Google Earth (for Google Earth features). The Google-earth folder must in your home folder.
 
-If you prefer the command-line version (or if you can't have the right wxpython for your distro):
-
-$ python gpicsync.py --help
-
---
-
-GPicSync also embeds two great free software tools (thanks to their authors):
-- EXIFtool from Phil Harvey
-- GPSBable from Robert Lipe 
-
---
-
-Contact at :
-notfrancois AT gmail.com or from Github.
