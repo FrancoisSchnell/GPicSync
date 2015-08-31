@@ -2,7 +2,7 @@
 
 ##### GPicSync, 2007-2015
 
-Official home for GPicSync (https://github.com/notfrancois/GPicSync)
+Official home for GPicSync is now github.com/metadirective/GPicSync
 
 <a href="https://github.com/metadirective/GPicSync/wiki/Trouble-Shooting">(Trouble shooting)</a>
 <a href="https://github.com/metadirective/GPicSync/wiki/Changelog">(Changelog)</a>
