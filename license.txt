@@ -8,8 +8,7 @@ Always check the results with proper maps.
 
 The source code and help is available at:
 
-- http://code.google.com/p/gpicsync/
-- http://groups.google.com/group/gpicsync
+- https://github.com/metadirective/GPicSync
 
 GPicSync also embed two great free GPL tools (thanks to their authors!):
 - EXIFtool from Phil Harvey
