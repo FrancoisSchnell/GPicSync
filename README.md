@@ -12,10 +12,9 @@ Older versions: http://sourceforge.net/projects/gpicsync/files/
 
 Launch the windows installer gpicsync-xx.exe
 
-![Changelog History](https://github.com/metadirective/GPicSync/wiki/Changelog) and ![Screenshots](https://github.com/metadirective/GPicSync/wiki/Screenshots)
-
-![Trouble Shooting](https://github.com/metadirective/GPicSync/wiki/Trouble-Shooting)
-
+<a href="https://github.com/metadirective/GPicSync/wiki/Trouble-Shooting"Trouble shooting</a>
+<a href="https://github.com/metadirective/GPicSync/wiki/Changelog"Changelog</a>
+<a href="https://github.com/metadirective/GPicSync/wiki/Screenshots">Screenshots</a>
 
 ##### LINUX :
 
