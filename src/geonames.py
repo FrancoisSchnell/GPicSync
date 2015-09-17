@@ -12,7 +12,7 @@
 #
 # This script is released under the GPL license v2
 #
-# More informations and help can be found here: http://code.google.com/p/gpicsync/
+# More informations and help can be found here: https://github.com/metadirective/GPicSync
 #
 ###############################################################################
 
