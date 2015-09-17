@@ -6,7 +6,7 @@
 # Developer: francois.schnell   francois.schnell@gmail.com
 #                               http://francois.schnell.free.fr
 #
-# Contributors, see: http://code.google.com/p/gpicsync/wiki/Contributions
+# Contributors, see: https://github.com/metadirective/GPicSync/graphs/contributors
 #
 # This application is released under the GPL license version 2
 #
