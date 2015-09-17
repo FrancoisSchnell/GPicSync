@@ -7,7 +7,7 @@
 #
 # francois.schnell (http://francois.schnell.free.fr)
 #                        
-# Contributors, see: http://code.google.com/p/gpicsync/wiki/Contributions
+# Contributors, see: https://github.com/metadirective/GPicSync/graphs/contributors
 #
 # This script is released under the GPL license version 2 license
 #  

@@ -6,11 +6,11 @@
 # Developer: francois.schnell   francois.schnell@gmail.com
 #                               http://francois.schnell.free.fr
 #
-# Contributors, see: http://code.google.com/p/gpicsync/wiki/Contributions
+# Contributors, see: https://github.com/metadirective/GPicSync/graphs/contributors
 #
 # This application is released under the GPL license version 2
 #
-# More informations and help can be found here: http://code.google.com/p/gpicsync/
+# More informations and help can be found here: https://github.com/metadirective/GPicSync
 #
 ################################################################################
 
@@ -22,7 +22,7 @@ The resulting pictures have latitude/longitude informations in their EXIF
 meta-data and can be used with software or webservice which can read them
 (like Flickr or Google Earth)
 More informations at this URL:
-http://code.google.com/p/gpicsync/
+https://github.com/metadirective/GPicSync
 """
 
 # trying wxpython  2.9.3.1 for unicode geonames problems
@@ -619,7 +619,7 @@ class GUI(wx.Frame):
         text="GPicSync  1.33 - 2014 - \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
         +_("More informations and help:")+"\n\n"+\
-        "http://code.google.com/p/gpicsync/"+"\n\n"\
+        "https://github.com/metadirective/GPicSync"+"\n\n"\
         +"2014 - notfrancois AT gmail.com"
         dialog=wx.MessageDialog(self,message=text,
         style=wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
