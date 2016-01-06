@@ -267,11 +267,15 @@ if __name__=="__main__":
     parser.add_option("--qr-time-image",dest="qr_time_image",
      help="Image with QR code with time from GPS phone with same camera to \
      calculate offset or 'auto' to detect the image automatically")
+    parser.add_option("--time-range",dest="timerange",
+     help="Max time gap in seconds between photo timestamp and a candidate \
+     location's timestamp - by default considers only locations within 1h \
+     (3600s) of the photo timestamp")
 
     (options,args)=parser.parse_args()
 
-    if options.qr_time_image is not None and (options.offset is not None 
-        or options.timezone is not None or options.tcam is not None 
+    if options.qr_time_image is not None and (options.offset is not None
+        or options.timezone is not None or options.tcam is not None
             or options.tgps is not None):
         print >> sys.stderr, "You cannot specify any time options along with --qr-time-image"
         sys.exit(1)
@@ -285,6 +289,7 @@ if __name__=="__main__":
     if options.gpx==None:
         print >> sys.stderr, "I need a .gpx file \nType Python gpicsync.py -h for help."
         sys.exit(1)
+    if options.timerange==None: options.timerange=3600
     options.gpx=[options.gpx]
     print "\nEngage processing using the following arguments ...\n"
     print "-Directory containing the pictures:",options.dir
@@ -298,7 +303,7 @@ if __name__=="__main__":
     print "\n"
 
     geo=GpicSync(gpxFile=options.gpx,
-    tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=int(options.offset),timerange=3600,timezone=options.timezone,
+    tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=int(options.offset),timerange=options.timerange,timezone=options.timezone,
     qr_time_image=options.qr_time_image)
 
     files = list(getFileList(options.dir))
