@@ -303,7 +303,7 @@ if __name__=="__main__":
     print "\n"
 
     geo=GpicSync(gpxFile=options.gpx,
-    tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=int(options.offset),timerange=int(options.timerange),timezone=options.timezone,
+    tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=float(options.offset),timerange=int(options.timerange),timezone=options.timezone,
     qr_time_image=options.qr_time_image)
 
     files = list(getFileList(options.dir))
