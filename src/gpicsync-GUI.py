@@ -1134,6 +1134,7 @@ class GUI(wx.Frame):
                 webKml.writeInKml("</Folder>\n")
                 webKml.close()
                 wx.CallAfter(self.consolePrint,_("( A Google Maps doc-web.kml file has been created with the given url )")+"\n")
+            wx.CallAfter(self.consolePrint,_("If the geocoding process was not satisfactory, consider using the GPX inspector from Tools menu to debug your GPX")+"\n")
 
         start_new_thread(sync,())
 
@@ -1404,9 +1405,16 @@ class GUI(wx.Frame):
             wx.CallAfter(self.consolePrint,"\n"+_("Select a gpx file first."))
         else:
             gpxPath=[gpxPath]
-            myGpx=Gpx(gpxPath).extract()
+            gpxObject = Gpx(gpxPath)
+            myGpx=gpxObject.extract()
             wx.CallAfter(self.consolePrint,"\n"+_("Looking at ")+gpxPath[0]+"\n")
-            wx.CallAfter(self.consolePrint,"\n"+_("Number of valid track points found")+" : "+str(len(myGpx))+"\n\n")
+            points_found_str = _("Number of valid track points found")+" : " + str(len(myGpx))
+            check_console_msg = "\n\n" + _("Check the console logs to get help about the issues with your gpx file") if len(myGpx) == 0 else ""
+            def warn_user():
+                self.consolePrint(gpxObject.errors + points_found_str +"\n")
+                dialog=wx.MessageDialog(self, message=points_found_str + check_console_msg, style=wx.OK | wx.ICON_INFORMATION)
+                dialog.ShowModal()
+
             def inspect():
                 for trkpt in myGpx:
                     wx.CallAfter(self.consolePrint,_("Date")+": "+trkpt["date"]+"\t"+_("Time")+": "\
@@ -1414,6 +1422,7 @@ class GUI(wx.Frame):
                     +"\t"+_("Longitude")+": "+trkpt["lon"]
                     +"\t"+_("Altitude")+": "+trkpt["ele"]+"\n")
             start_new_thread(inspect,())
+            wx.CallAfter(warn_user)
 
     def tzMenuPopup(self, evt):
         """Show timezones menu"""

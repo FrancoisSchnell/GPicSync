@@ -23,7 +23,7 @@ class GeoExif(object):
     usefull for geolalisation scripts.
     """
     def __init__(self,picture):
-        self.picPath=picture
+        self.picPath=picture.encode('utf8')
         self.xmpOption=False
         if self.xmpOption==True:
             if os.path.basename(picture).find(".CRW")>0\
