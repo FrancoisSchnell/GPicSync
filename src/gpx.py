@@ -26,19 +26,27 @@ class Gpx(object):
     def __init__(self,gpxFile):
         """ create a list with the trkpts found in the .gpx file """
         self.gpx_trkpts=[]#The valid list of trackpoints
+        self.errors = ""
         gpx_file=""
         i=0
         for f in gpxFile:
             gpx_file+= open(gpxFile[i],'r').read()
             i+=1
         #print gpx_file
-        regex=re.compile('(<trkpt.*?</trkpt>)',re.S)
-        gpx_trkpts_found=regex.findall(gpx_file)
+        regex=re.compile('(<trkpt.*?</trkpt>)|(<trkpt.*?/>)',re.S)
+        gpx_trkpts_found_tuples=regex.findall(gpx_file)
+        gpx_trkpts_found = [y for x in gpx_trkpts_found_tuples for y in x if y !='']
         #print gpx_trkpts_found
-        print "Number of raw track points found: ",len(gpx_trkpts_found)
+        self.errors += "Number of raw track points found: " + str(len(gpx_trkpts_found)) + "\n"
+        if len(gpx_trkpts_found) == 0: self.errors += "There is no <trkpt> or <trkpt/> tag recognized in this gpx file\n"
         i=1
+        num_points_with_time = 0
         for trkpt in gpx_trkpts_found:
-            if trkpt.find("time")>0: self.gpx_trkpts.append(trkpt)
+            if trkpt.find("time")>0:
+                self.gpx_trkpts.append(trkpt)
+                num_points_with_time += 1
+            else:
+                self.errors += "Ignoring trkpt " + str(i) + " because it has no <time> tag\n"
             i=i+1
         regex=re.compile('(<wpt.*?</wpt>)',re.S)
         gpx_wpts_found=regex.findall(gpx_file)
@@ -48,7 +56,9 @@ class Gpx(object):
                 waypoint="<trkpt "+waypoint[5:-7]+"\n</trkpt>"
                 #print waypoint,"\n"
                 self.gpx_trkpts.append(waypoint)
-        if len(self.gpx_trkpts)==0:print "Didn't find any valid trkpt :("
+        if len(self.gpx_trkpts)==0: self.errors += "Didn't find any valid trkpt :(\n"
+        if num_points_with_time == 0:  self.errors += "None of your points have a <time> tag, please add such tags before processing with GPicSync\n"
+        print(self.errors)
         print "Number of valid track points found: ",len(self.gpx_trkpts)
         #print self.gpx_trkpts
 
