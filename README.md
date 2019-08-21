@@ -1,6 +1,6 @@
 ![GpicSync screen](http://farm8.staticflickr.com/7039/6972748535_82b222a2d2_o.jpg)
 
-**GPicSync, 2007-2015** (Official home is now <a href="https://github.com/metadirective/GPicSync">github.com/metadirective/GPicSync</a>)
+**GPicSync, 2007-2015** 
 <ul>
 <li>
 Windows installer: <a href="https://sourceforge.net/projects/gpicsync/">latest</a> and <a href="http://sourceforge.net/projects/gpicsync/files/">previous</a>
