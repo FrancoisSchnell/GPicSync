@@ -1,4 +1,4 @@
-![GpicSync screen](https://photos.app.goo.gl/tPeaXzWr2H7WvRWr8)
+![GpicSync screen](https://www.dropbox.com/s/nk9l032xju60g06/gpicsyncGithub.jpg?raw=1)
 
 **GPicSync, 2007-2015** 
 <ul>
