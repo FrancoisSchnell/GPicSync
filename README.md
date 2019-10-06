@@ -1,12 +1,12 @@
 ![GpicSync screen](https://www.dropbox.com/s/nk9l032xju60g06/gpicsyncGithub.jpg?raw=1)
 
-**GPicSync, 2007-2015** 
+**GPicSync** 
 <ul>
 <li>
 Windows installer: <a href="https://sourceforge.net/projects/gpicsync/">latest</a> and <a href="http://sourceforge.net/projects/gpicsync/files/">previous</a>
 </li>
 <li>
-<a href="https://github.com/metadirective/GPicSync/wiki/Changelog">Changelog</a> and <a href="https://github.com/metadirective/GPicSync/wiki/Screenshots">Screenshots</a>
+<a href="https://github.com/metadirective/GPicSync/wiki/Changelog">Changelog</a>
 </li>
 <li>
 <a href="https://github.com/metadirective/GPicSync/wiki/Getting-started">Getting started</a>
