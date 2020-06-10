@@ -63,7 +63,7 @@ class GpicSync(object):
         self.backup=backup
         self.interpolation=interpolation
         if qr_time_image is None:
-            print "local UTC Offset (seconds)= ", self.localOffset
+            print ("local UTC Offset (seconds)= ", self.localOffset)
 
     def parseQrTime(self,qr_time_images):
         import zbar
@@ -87,7 +87,7 @@ class GpicSync(object):
                     tgps = dateutil.parser.parse(symbol.data)
                     tcam = dateutil.parser.parse('%s %s UTC' % tuple(picDateTimeSize[:2]))
                     offset = tcam - tgps
-                    print "Found QR code in file '%s' with difference %s" % (fileName, offset)
+                    print ("Found QR code in file '%s' with difference %s" % (fileName, offset))
                     offset = offset.seconds + offset.days * 24 * 3600
                     if not min_offset or offset < min_offset:
                         min_offset = offset
@@ -96,14 +96,14 @@ class GpicSync(object):
                 except:
                     pass
         if not min_offset or not max_offset:
-            print "Found no sutable QR codes"
+            print ("Found no sutable QR codes")
             sys.exit(1)
         if max_offset - min_offset > 60:
-            print "Minimum and maximum offsets differ too much"
+            print ("Minimum and maximum offsets differ too much")
             sys.exit(1)
         self.timezone = None
         self.localOffset = (max_offset + min_offset) / 2
-        print "Offset calculated by QR codes (seconds) = ", self.localOffset
+        print ("Offset calculated by QR codes (seconds) = ", self.localOffset)
 
     def syncPicture(self,picture):
         """
@@ -148,7 +148,7 @@ class GpicSync(object):
         tpic_tgps_l=864000 # will try  match a pic within 864000 seconds (10 days)
 
         if len(self.track)==0:
-            return [_(" : WARNING: DIDN'T GEOCODE, ")+_("no track points found - ")\
+            return [(" : WARNING: DIDN'T GEOCODE, ")+("no track points found - ")\
                      +self.shotDate+"-"+self.shotTime,"","",self.picWidth,self.picHeight,elevation]
 
         for n,rec in enumerate(self.track):
@@ -190,25 +190,25 @@ class GpicSync(object):
                 latitude=str(latitude)
                 longitude=str(longitude)
             except:
-                print "Had a problem with interpolation tuning, probably the time\
-                of the picture is off the time of the track"
+                print ("Had a problem with interpolation tuning, probably the time\
+                of the picture is off the time of the track")
 
         if latitude != "" and longitude !="" and (tpic_tgps_l< self.timerange):
-            print "Writing best lat./long. match to pic. EXIF -->",latitude,latRef,\
-            longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n"
+            print ("Writing best lat./long. match to pic. EXIF -->",latitude,latRef,\
+            longitude,longRef,"with tpic-tgps=",tpic_tgps_l,"seconds\n")
             pic.writeLatLong(latitude,longitude,latRef,longRef,self.backup,elevation)
-            return [ _("taken ")+self.shotDate+"-"+self.shotTime+", "\
-            +_("writing best latitude/longitude match to picture: ")+latRef+\
-            " "+latitude+" ,"+longRef+" "+longitude+" :"+_(" time difference (s)= ")+str(int(tpic_tgps_l)),
+            return [ ("taken ")+self.shotDate+"-"+self.shotTime+", "\
+            +("writing best latitude/longitude match to picture: ")+latRef+\
+            " "+latitude+" ,"+longRef+" "+longitude+" :"+(" time difference (s)= ")+str(int(tpic_tgps_l)),
             latitude,longitude,self.picWidth,self.picHeight,self.timeStamp,elevation]
         else:
-            print "Didn't find any picture for this day or timerange"
+            print ("Didn't find any picture for this day or timerange")
             if tpic_tgps_l !=86400:
-                return [_(" : WARNING: DIDN'T GEOCODE, ")+_("no track point below the maximum time range ")\
-                +"( "+str(self.timerange)+" s) : " +self.shotDate+"-"+self.shotTime+_(" time difference (s)= ")+str(int(tpic_tgps_l))\
-                +"\n"+_("For information nearest trackpoint was at lat=")+latitude+_(" long=")+longitude,"","",self.picWidth,self.picHeight,elevation]
+                return [(" : WARNING: DIDN'T GEOCODE, ")+("no track point below the maximum time range ")\
+                +"( "+str(self.timerange)+" s) : " +self.shotDate+"-"+self.shotTime+(" time difference (s)= ")+str(int(tpic_tgps_l))\
+                +"\n"+("For information nearest trackpoint was at lat=")+latitude+(" long=")+longitude,"","",self.picWidth,self.picHeight,elevation]
             else:
-                return [_(" : WARNING: DIDN'T GEOCODE, ")+_("no track point at this picture date ")\
+                return [(" : WARNING: DIDN'T GEOCODE, ")+("no track point at this picture date ")\
                  +self.shotDate+"-"+self.shotTime,"","",self.picWidth,self.picHeight,elevation]
 
 def getFileList(dir):
@@ -277,30 +277,30 @@ if __name__=="__main__":
     if options.qr_time_image is not None and (options.offset is not None
         or options.timezone is not None or options.tcam is not None
             or options.tgps is not None):
-        print >> sys.stderr, "You cannot specify any time options along with --qr-time-image"
+        #print (>> sys.stderr, "You cannot specify any time options along with --qr-time-image")
         sys.exit(1)
     if options.tcam==None: options.tcam="00:00:00"
     if options.tgps==None: options.tgps="00:00:00"
     if options.offset is not None and options.timezone is not None:
-        print >> sys.stderr, "You cannot specify both timezone and offset. Please choose one."
+        #print (>> sys.stderr, "You cannot specify both timezone and offset. Please choose one.")
         sys.exit(1)
     if options.offset==None: options.offset=0
     if options.dir==None: options.dir="."
     if options.gpx==None:
-        print >> sys.stderr, "I need a .gpx file \nType Python gpicsync.py -h for help."
+        #print (>> sys.stderr, "I need a .gpx file \nType Python gpicsync.py -h for help.")
         sys.exit(1)
     if options.timerange==None: options.timerange=3600
     options.gpx=[options.gpx]
-    print "\nEngage processing using the following arguments ...\n"
-    print "-Directory containing the pictures:",options.dir
-    print "-Path to the gpx file:",options.gpx
+    print ("\nEngage processing using the following arguments ...\n")
+    print ("-Directory containing the pictures:",options.dir)
+    print ("-Path to the gpx file:",options.gpx)
     if options.timezone:
-        print "-Time Zone name:",options.timezone
+        print ("-Time Zone name:",options.timezone)
     else:
-        print "-UTC Offset (hours):",options.offset
-    print "-- Camera local display time:",options.tcam
-    print "-- GPS local display time:",options.tgps
-    print "\n"
+        print ("-UTC Offset (hours):",options.offset)
+    print ("-- Camera local display time:",options.tcam)
+    print ("-- GPS local display time:",options.tgps)
+    print ("\n")
 
     geo=GpicSync(gpxFile=options.gpx,
     tcam_l=options.tcam,tgps_l=options.tgps,UTCoffset=float(options.offset),timerange=int(options.timerange),timezone=options.timezone,
@@ -315,6 +315,6 @@ if __name__=="__main__":
         geo.parseQrTime(qr_time_images)
 
     for fileName, filePath in files:
-        print "\nFound fileName ",fileName," Processing now ..."
+        print ("\nFound fileName ",fileName," Processing now ...")
         geo.syncPicture(filePath)[0]
-    print "Finished"
+    print ("Finished")

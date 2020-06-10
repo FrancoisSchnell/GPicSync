@@ -23,7 +23,7 @@ class GeoExif(object):
     usefull for geolalisation scripts.
     """
     def __init__(self,picture):
-        self.picPath=picture.encode('utf8')
+        self.picPath=picture.encode('utf8').decode('utf-8')
         self.xmpOption=False
         if self.xmpOption==True:
             if os.path.basename(picture).find(".CRW")>0\
@@ -104,7 +104,7 @@ class GeoExif(object):
         result=os.popen('%s  -n -GPSLatitude -GPSLatitudeRef \
         -GPSLongitude -GPSLongitudeRef   "%s" ' \
         % (self.exifcmd, self.picPath)).read().split("\n")
-        print result
+        print (result)
         if len(result)>=4:
             result[0]=result[0].split(":")[1].strip()
             try:
@@ -123,7 +123,7 @@ class GeoExif(object):
             latlong= result[1]+result[0]+" "+result[3]+result[2]
         else:
             latlong=None
-        print latlong
+        print (latlong)
         return latlong
 
     def writeLatitude(self,lat):
@@ -204,7 +204,7 @@ if __name__=="__main__":
 #    exif=mypicture.readExifAll()
 #    mypicture.writeLongitude(7.222333)
 #    mypicture.writeLatitude(48.419973)
-    print  mypicture.readDateTimeSize()
+    print  (mypicture.readDateTimeSize())
     #mypicture.writeLatLong(7.222333,48.419973,"N","E",True)
     #latitude=mypicture.readLatitude()
     #longitude=mypicture.readLongitude()

@@ -17,7 +17,7 @@
 ###############################################################################
 
 from geoexif import *
-from urllib2 import urlopen
+from urllib.request import urlopen
 import xml.etree.ElementTree as ET, re, decimal
 from math import  *
 import unicodedata #test
@@ -40,13 +40,13 @@ class Geonames(object):
             mypicture=GeoExif(picName)
             self.lat=mypicture.readLatitude()
             self.long=mypicture.readLongitude()
-            print self.lat, self.long
+            print (self.lat, self.long)
             
-        print "latitude= ",self.lat,"  longitude= ",self.long
+        print ("latitude= ",self.lat,"  longitude= ",self.long)
         
         #url= "http://ws.geonames.org/findNearbyPlaceName?lat="+str(self.lat)+"&lng="+str(self.long)+"&style=full"+"&username="+str(self.username)
         url= "http://api.geonames.org/findNearbyPlaceName?lat="+str(self.lat)+"&lng="+str(self.long)+"&style=full"+"&username="+str(self.username)
-        print "Geonames url request= ",url
+        print ("Geonames url request= ",url)
         self.page = codecs.getreader("utf-8")(urlopen(url)).read()
         #print self.page
         #print self.page.encode("utf8")
@@ -81,34 +81,34 @@ class Geonames(object):
         deltaLon=float(self.long)-nearbyPlacelon
         situation=""
         if debug==True:
-            print "nearbyPlaceLat, nearbyPlacelon", nearbyPlaceLat,nearbyPlacelon
-            print "GPS lat,lon",self.lat, self.long
-            print "deltaLat, deltaLon", deltaLat, deltaLon
-            print "(tan(pi/8)*deltaLon)", (tan(pi/8)*deltaLon)
-            print "(tan(3*pi/8)*deltaLon)", (tan(3*pi/8)*deltaLon)
-            print "angle in degrees",atan(deltaLon/deltaLat)*(360/(2*pi))
+            print ("nearbyPlaceLat, nearbyPlacelon", nearbyPlaceLat,nearbyPlacelon)
+            print ("GPS lat,lon",self.lat, self.long)
+            print ("deltaLat, deltaLon", deltaLat, deltaLon)
+            print ("(tan(pi/8)*deltaLon)", (tan(pi/8)*deltaLon))
+            print ("(tan(3*pi/8)*deltaLon)", (tan(3*pi/8)*deltaLon))
+            print ("angle in degrees",atan(deltaLon/deltaLat)*(360/(2*pi)))
             
         if (deltaLon >0) and (deltaLat >0):
-            if debug==True: print "In (deltaLon >0) and (deltaLat >0)"
+            if debug==True: print ("In (deltaLon >0) and (deltaLat >0)")
             if deltaLat <= tan(pi/8)*deltaLon: situation="East"
             if (tan(pi/8)*deltaLon)<deltaLat<(tan(3*pi/8)*deltaLon) : situation="North-East"
             if (tan(3*pi/8)*deltaLon)<= deltaLat<=(pi/2) : situation="North"
         if (deltaLon >0) and (deltaLat <0):
-            if debug==True: print "In (deltaLon >0) and (deltaLat <0)"
+            if debug==True: print ("In (deltaLon >0) and (deltaLat <0)")
             if abs(deltaLat) <= tan(pi/8)*deltaLon: situation="East"
             if (tan(pi/8)*deltaLon)<abs(deltaLat)<(tan(3*pi/8)*deltaLon) : situation="South-East"
             if (tan(3*pi/8)*deltaLon)<= abs(deltaLat) <=(pi/2) : situation="South"
         if (deltaLon <0) and (deltaLat >0):
-            if debug==True: print "In (deltaLon <0) and (deltaLat >0)"
+            if debug==True: print ("In (deltaLon <0) and (deltaLat >0)")
             if abs(deltaLat) <= abs(tan(pi/8)*deltaLon): situation="West"
             if abs(tan(pi/8)*deltaLon)<abs(deltaLat)<abs(tan(3*pi/8)*abs(deltaLon)) : situation="North-West"
             if abs(tan(3*pi/8)*deltaLon)<= abs(deltaLat)<=(pi/2) : situation="North"
         if (deltaLon <0) and (deltaLat <0):
-            if debug==True: print "In (deltaLon <0) and (deltaLat <0)"
+            if debug==True: print ("In (deltaLon <0) and (deltaLat <0)")
             if abs(deltaLat) <= abs(tan(pi/8)*deltaLon): situation="West"
             if abs(tan(pi/8)*deltaLon)<abs(deltaLat)<abs(tan(3*pi/8)*deltaLon) : situation="South-West"
             if abs(tan(3*pi/8)*deltaLon)<= abs(deltaLat) <=(pi/2) : situation="South"       
-        print situation  
+        print (situation)
         return situation  
           
     def findDistance(self):
@@ -116,25 +116,25 @@ class Geonames(object):
         self.distance=self.searchTag("distance",self.page)
         self.distance=decimal.Decimal(self.distance)
         self.distance=str(self.distance.quantize(decimal.Decimal('0.01')))
-        print self.distance
+        print (self.distance)
         return self.distance
     
     def findCountry(self):
         """ find country at geonames.org"""
         self.countryName=self.searchTag("countryName",self.page)
-        print self.countryName
+        print (self.countryName)
         return self.countryName
 
     def findCountryCode(self):
         """ find country code, example France= FR"""
         self.countryCode=self.searchTag("countryCode",self.page)
-        print self.countryCode
+        print (self.countryCode)
         return self.countryCode
         
     def findRegion(self):
         """ find region (adminName1) at geonames.org"""
         self.regionName=self.searchTag("adminName1",self.page)
-        print self.regionName
+        print (self.regionName)
         return self.regionName
     
 if __name__=="__main__":

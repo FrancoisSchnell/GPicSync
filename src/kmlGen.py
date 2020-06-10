@@ -13,7 +13,7 @@
 from geoexif import *
 from gpx import *
 import time
-from thread import start_new_thread
+from _thread import start_new_thread
         
 class KML(object):
     """
@@ -31,7 +31,7 @@ class KML(object):
         if float(utc)>=0: sign="+"
         if float(utc)<0: sign="-"
         self.utcOffset=sign+str(abs(int(float(utc))))+":00"
-        print ">>> self.utcOffest in kml for time stamps: ", self.utcOffset
+        #print ">>> self.utcOffest in kml for time stamps: ", self.utcOffset
         
         kmlHead_p1="""<?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://earth.google.com/kml/2.1">
@@ -110,7 +110,7 @@ class KML(object):
         
         for ext in [".mp3",".wma",".ogg",".wav"]:
             if os.path.exists(mediaFile+ext):
-                print "Found mediaFile= ",mediaFile+ext
+                print ("Found mediaFile= ",mediaFile+ext)
                 if type=="GE":
                     pmDescriptionFooter="<br><br><a href='"+\
                     mediaFile+ext+"'>Play Audio</a>"
@@ -120,7 +120,7 @@ class KML(object):
                 
         for ext in [".wmv",".mov",".avi"]:
             if os.path.exists(mediaFile+ext):
-                print "Found mediaFile= ",mediaFile+ext
+                print ("Found mediaFile= ",mediaFile+ext)
                 if type=="GE":
                     pmDescriptionFooter="<br><br><a href='"+\
                     mediaFile+ext+"'>Play Video</a>"
@@ -129,7 +129,7 @@ class KML(object):
                     self.url+os.path.basename(picName.split(".")[0])+ext+"'>Play Video</a>"
                     
         if os.path.exists(mediaFile+".txt"):
-            print "Found .txt file to add= ",mediaFile+".txt"
+            print ("Found .txt file to add= ",mediaFile+".txt")
             fileHandle = open (mediaFile+".txt")
             pmDescriptionFooter=pmDescriptionFooter+"<br><br>"+fileHandle.read()
             fileHandle.close() 
@@ -154,17 +154,17 @@ class KML(object):
         else:
             timeStamp=""
         
-        print "timeStamp=",timeStamp
+        print ("timeStamp=",timeStamp)
         w=float(width)
         h=float(height)
                 
         if width>height:
-            print "width > height"
+            print ("width > height")
             width=(600./w)*w
             height=(600./w)*h
         
         if height>width:
-            print "height  > width"
+            print ("height  > width")
             height=(400./h)*h
             width=(400./h)*w
         
@@ -221,11 +221,11 @@ class KML(object):
         w=float(width)
         h=float(height)
         if width>height:
-            print "width > height"
+            print ("width > height")
             width=(200./w)*w
             height=(200./w)*h
         if height>width:
-            print "height  > width"
+            print ("height  > width")
             height=(200./h)*h
             width=(200./h)*w
         width=str(int(width))
@@ -299,7 +299,7 @@ class KML(object):
 
     def close(self):
         """Ending of the kml file"""
-        print "close kml!"
+        print ("close kml!")
         kmlTail="\n</Document>\n</kml>"
         self.f.write(kmlTail)
         self.f.close()
