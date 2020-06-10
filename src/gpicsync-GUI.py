@@ -34,16 +34,16 @@ if 0:
 
 import wx,wx.lib.colourdb
 
-print wx.VERSION
+print (wx.VERSION)
 
-import time,decimal,gettext,shutil,ConfigParser
+import time,decimal,gettext,shutil,configparser
 import os,sys,fnmatch,zipfile,subprocess
 import traceback
 #if sys.platform == 'win32':
 #    import win32com.client
 # win32.com deprecated as Google Earth API too
 # will automatically open kml folder at the end of geocoding?
-from thread import start_new_thread
+from _thread import start_new_thread
 from PIL import Image
 from PIL import JpegImagePlugin
 from PIL import GifImagePlugin
@@ -59,22 +59,22 @@ codeset = locale.getdefaultlocale()[1]
 
 
 
-if 1: # checking wx version installed (for unicde dev)
-    import wxversion
-    print "wxversion", wxversion.getInstalled()
-    print "Python verion is",(sys.version)
+#if 1: # checking wx version installed (for unicde dev)
+#    import wxversion
+#    print ("wxversion", wxversion.getInstalled())
+#    print ("Python verion is",(sys.version))
 
 try:
     import pytz
 except ImportError:
-    print "couldn't import pytz"
+    print ("couldn't import pytz")
     timezones = []
 else:
     timezones = pytz.common_timezones
 if 0: # tests
     import pytz
     timezones = pytz.common_timezones
-    print timezones
+    print (timezones)
     fzones=open("zones.txt","w")
     fzones.write(str(timezones))
     fzones.close()
@@ -122,34 +122,34 @@ class GUI(wx.Frame):
         
         if sys.platform=="win32":
             confPath=os.environ["ALLUSERSPROFILE"]+"/gpicsync.conf"
-            print "Searching configuration file "+confPath
+            print ("Searching configuration file "+confPath)
             if os.path.isfile(confPath):
                 configFile=True
                 fconf=open(os.environ["ALLUSERSPROFILE"]+"/gpicsync.conf","r+")
             else: configFile= False
-        if sys.platform==("linux2" or "darwin"):
+        if sys.platform==("linux" or "darwin"):
             confPath=os.path.expanduser("~/.gpicsync.conf")
-            print "Searching configuration file ~/.gpicsync.conf"
+            print ("Searching configuration file ~/.gpicsync.conf")
             if os.path.isfile(confPath):
                 configFile=True
                 fconf=open(os.path.expanduser("~/.gpicsync.conf"),"r+")
             else: configFile=False
         if configFile==False:
-            print "Couldn't find the configuration file."
+            print ("Couldn't find the configuration file.")
             dialog=wx.MessageDialog(self,message="Couldn't find the configuration file",
             style=wx.OK|wx.CANCEL|wx.ICON_INFORMATION)
             dialog.ShowModal()
             wx.CallAfter(self.consolePrint,"\n"+"Couldn't find the configuration file."+"\n")
             
-        print "Attempting to read the configuration file..."
+        print ("Attempting to read the configuration file...")
         #try: 
         if configFile!=False:   
-            conf= ConfigParser.ConfigParser()
+            conf= configparser.ConfigParser()
             conf.readfp(fconf) #parse the config file
             if conf.has_option("gpicsync","timezone") == True:
                 self.timezone=conf.get("gpicsync","timezone")
                 if self.timezone=="": self.timezone=None
-                print "Timezone is :"+str(self.timezone)
+                print ("Timezone is :"+str(self.timezone))
             if conf.has_option("gpicsync","UTCOffset") == True:
                 self.utcOffset=conf.get("gpicsync","utcoffset")
             if conf.has_option("gpicsync","backup") == True:
@@ -174,10 +174,10 @@ class GUI(wx.Frame):
                 self.language=conf.get("gpicsync","language")
             if conf.has_option("gpicsync","geonames_username") == True:
                 geonames_username_fromConf=conf.get("gpicsync","geonames_username")
-                print "reading from conf file geonames_username", geonames_username_fromConf, type(geonames_username_fromConf)
+                print ("reading from conf file geonames_username", geonames_username_fromConf, type(geonames_username_fromConf))
                 if geonames_username_fromConf not in ["","gpicsync"]: 
                     self.geonames_username=geonames_username_fromConf
-                print "This unsername for geonames will be used:", self.geonames_username
+                print ("This unsername for geonames will be used:", self.geonames_username)
             if conf.has_option("gpicsync","geoname_nearbyplace") == True:
                 self.geoname_nearbyplace=eval(conf.get("gpicsync","geoname_nearbyplace"))
             if conf.has_option("gpicsync","geoname_region") == True:
@@ -197,7 +197,7 @@ class GUI(wx.Frame):
             if conf.has_option("gpicsync","getimestamp") == True:
                 self.timeStamp=eval(conf.get("gpicsync","getimestamp"))
             fconf.close()        
-            print "Finished reading the conf. file"
+            print ("Finished reading the conf. file")
         #except:
         if 0:
             wx.CallAfter(self.consolePrint,"\n"
@@ -206,49 +206,49 @@ class GUI(wx.Frame):
             #print self.language
             locale_dir="locale"
             if self.language=="system":
-		lang = gettext.translation('gpicsync-GUI', locale_dir, codeset=codeset)
-		lang.install(unicode=True)
+                lang = gettext.translation('gpicsync-GUI', locale_dir, codeset=codeset)
+                lang.install(unicode=True)
             elif self.language=="French":
-		lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['fr'], codeset=codeset)
-		lang.install(unicode=True)
+                lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['fr'], codeset=codeset)
+                lang.install(unicode=True)
             elif self.language=="Italian":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['it'], codeset=codeset)
-		lang.install(unicode=True)
+                lang.install(unicode=True)
             elif self.language=="German":
                 #lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['de'], codeset=codeset)
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['de'])
-		lang.install(unicode=True)
+                lang.install(unicode=True)
             elif self.language=="S.Chinese":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['zh_CN'], codeset=codeset)
-		lang.install(unicode=True)
+                lang.install(unicode=True)
             elif self.language=="T.Chinese":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['zh_TW'], codeset=codeset)
-		lang.install(unicode=True)
+                lang.install(unicode=True)
             elif self.language=="Catalan":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['ca'], codeset=codeset)
-		lang.install(unicode=True)
+                lang.install(unicode=True)
             elif self.language=="Spanish":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['es'], codeset=codeset)
-		lang.install(unicode=True)
+                lang.install(unicode=True)
             elif self.language=="Polish":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['pl'], codeset=codeset)
-		lang.install(unicode=True)
+                lang.install(unicode=True)
             elif self.language=="Dutch":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['nl'], codeset=codeset)
-		lang.install(unicode=True)
+                lang.install(unicode=True)
             elif self.language=="Portuguese":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['pt'], codeset=codeset)
-		lang.install(unicode=True)
+                lang.install(unicode=True)
             elif self.language=="Czech":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['cs'], codeset=codeset)
-		lang.install(unicode=True)
+                lang.install(unicode=True)
             elif self.language=="Russian":
                 lang = gettext.translation('gpicsync-GUI', locale_dir, languages=['ru'], codeset=codeset)
-		lang.install(unicode=True)
+                lang.install(unicode=True)
             else:
                 gettext.install('gpicsync-GUI', "None",unicode=True)
         except:
-            print "Couldn't load translation."
+            print ("Couldn't load translation.")
         del locale_dir
         #####   Menus  #####
 
@@ -256,23 +256,23 @@ class GUI(wx.Frame):
         #bkg.SetBackgroundColour((244,180,56))
         menuBar=wx.MenuBar()
         menu1=wx.Menu()
-        timeShift=menu1.Append(wx.NewId(),_("Local time correction"))
-        languageChoice=menu1.Append(wx.NewId(),_("Language"))
+        timeShift=menu1.Append(wx.NewIdRef(count=1),("Local time correction"))
+        languageChoice=menu1.Append(wx.NewIdRef(count=1),("Language"))
         self.Bind(wx.EVT_MENU,self.languageApp,languageChoice)
         if sys.platform == 'win32':
-            configFile=menu1.Append(wx.NewId(),_("Configuration file"))
+            configFile=menu1.Append(wx.NewIdRef(count=1),("Configuration file"))
             self.Bind(wx.EVT_MENU,self.showConfig,configFile)
-        menuBar.Append(menu1,_("&Options"))
+        menuBar.Append(menu1,("&Options"))
         menu2=wx.Menu()
-        about=menu2.Append(wx.NewId(),_("About..."))
+        about=menu2.Append(wx.NewIdRef(count=1),("About..."))
         menuTools=wx.Menu()
-        menuBar.Append(menuTools,_("&Tools"))
-        exifReader=menuTools.Append(wx.NewId(),_("EXIF reader"))
-        exifGeoWriter=menuTools.Append(wx.NewId(),_("EXIF writer"))
-        renameToolMenu=menuTools.Append(wx.NewId(),_("Geo-Rename pictures"))
-        gpxInspectorMenu=menuTools.Append(wx.NewId(),_("GPX Inspector"))
-        kmzGeneratorMenu=menuTools.Append(wx.NewId(),_("KMZ Generator"))
-        menuBar.Append(menu2,_("&Help"))
+        menuBar.Append(menuTools,("&Tools"))
+        exifReader=menuTools.Append(wx.NewIdRef(count=1),("EXIF reader"))
+        exifGeoWriter=menuTools.Append(wx.NewIdRef(count=1),("EXIF writer"))
+        renameToolMenu=menuTools.Append(wx.NewIdRef(count=1),("Geo-Rename pictures"))
+        gpxInspectorMenu=menuTools.Append(wx.NewIdRef(count=1),("GPX Inspector"))
+        kmzGeneratorMenu=menuTools.Append(wx.NewIdRef(count=1),("KMZ Generator"))
+        menuBar.Append(menu2,("&Help"))
         statusBar=self.CreateStatusBar()
         self.Bind(wx.EVT_MENU,self.localtimeFrame,timeShift)
         self.Bind(wx.EVT_MENU,self.aboutApp,about)
@@ -285,21 +285,21 @@ class GUI(wx.Frame):
         #####   Mains panel widgets definitions #####
 
         # Pictures dir and Gpx search buttons
-        dirButton=wx.Button(bkg,size=(150,-1),label=_("Pictures folder"))
-        gpxButton=wx.Button(bkg,size=(150,-1),label=_("GPS file"))
+        dirButton=wx.Button(bkg,size=(150,-1),label=("Pictures folder"))
+        gpxButton=wx.Button(bkg,size=(150,-1),label=("GPS file"))
         self.dirEntry=wx.TextCtrl(bkg)
         self.gpxEntry=wx.TextCtrl(bkg)
         self.Bind(wx.EVT_BUTTON, self.findPictures, dirButton)
         self.Bind(wx.EVT_BUTTON, self.findGpx, gpxButton)
 
         # Commands buttons (sync,quit,stop,etc)
-        syncButton=wx.Button(bkg,size=(250,-1),label=_(" Synchronise ! "))
-        quitButton=wx.Button(bkg,label=_("Quit"),size=(-1,-1))
-        quitAndSaveButton=wx.Button(bkg,label=_("Quit and save settings"),size=(-1,-1))
-        stopButton=wx.Button(bkg,label=_("Stop"),size=(-1,-1))
-        clearButton=wx.Button(bkg,label=_("Clear"),size=(-1,-1))
+        syncButton=wx.Button(bkg,size=(250,-1),label=(" Synchronise ! "))
+        quitButton=wx.Button(bkg,label=("Quit"),size=(-1,-1))
+        quitAndSaveButton=wx.Button(bkg,label=("Quit and save settings"),size=(-1,-1))
+        stopButton=wx.Button(bkg,label=("Stop"),size=(-1,-1))
+        clearButton=wx.Button(bkg,label=("Clear"),size=(-1,-1))
         if sys.platform != 'win32':
-            viewInGEButton=wx.Button(bkg,label=_("View in Google Earth"),size=(-1,-1))
+            viewInGEButton=wx.Button(bkg,label=("View in Google Earth"),size=(-1,-1))
         self.Bind(wx.EVT_BUTTON, self.syncPictures, syncButton)
         self.Bind(wx.EVT_BUTTON, self.exitApp,quitButton)
         self.Bind(wx.EVT_BUTTON, self.exitAppSave,quitAndSaveButton)
@@ -309,45 +309,45 @@ class GUI(wx.Frame):
             self.Bind(wx.EVT_BUTTON, self.viewInGE,viewInGEButton)
 
         # Main Options box
-        optionPrebox=wx.StaticBox(bkg, -1, _("Options:"))
+        optionPrebox=wx.StaticBox(bkg, -1, ("Options:"))
         optionbox=wx.StaticBoxSizer(optionPrebox, wx.VERTICAL)
 
         # Elevation options
-        eleLabel=wx.StaticText(bkg, -1," "+_("Elevation")+":")
-        eleList=[_("Clamp to the ground"),
-        _("absolute value (for flights)"),_("absolute value + extrude (for flights)")]
+        eleLabel=wx.StaticText(bkg, -1," "+("Elevation")+":")
+        eleList=[("Clamp to the ground"),
+        ("absolute value (for flights)"),("absolute value + extrude (for flights)")]
         self.elevationChoice=wx.Choice(bkg, -1, (-1,-1), choices = eleList)
         self.elevationChoice.SetSelection(0)
 
         # Google Earth Icons choice
-        iconsLabel=wx.StaticText(bkg, -1," "+_("Icons")+":")
-        iconsList=[_("picture thumb"),
-        _("camera icon")]
+        iconsLabel=wx.StaticText(bkg, -1," "+("Icons")+":")
+        iconsList=[("picture thumb"),
+        ("camera icon")]
         self.iconsChoice=wx.Choice(bkg, -1, (-1,-1), choices = iconsList)
         self.iconsChoice.SetSelection(0)
 
         # Geonames options
-        tmp1=_("Geonames in specific IPTC fields")
-        tmp2=_("Geonames in XMP format")
-        gnOptList=[_("Geonames in IPTC + HTML Summary in IPTC caption"),_("Geonames in IPTC"),
-                   _("Geonames/geotagged in EXIF keywords + HTML summary in IPTC caption"),_("Geonames/geotagged in EXIF keywords")]
+        tmp1=("Geonames in specific IPTC fields")
+        tmp2=("Geonames in XMP format")
+        gnOptList=[("Geonames in IPTC + HTML Summary in IPTC caption"),("Geonames in IPTC"),
+                   ("Geonames/geotagged in EXIF keywords + HTML summary in IPTC caption"),("Geonames/geotagged in EXIF keywords")]
         self.gnOptChoice=wx.Choice(bkg, -1, (-1,-1), choices = gnOptList)
         self.gnOptChoice.SetSelection(0)
 
         # UTC value and timezone
-        self.utcLabel = wx.StaticText(bkg, -1,_("UTC Offset="))
+        self.utcLabel = wx.StaticText(bkg, -1,("UTC Offset="))
         self.utcEntry=wx.TextCtrl(bkg,size=(40,-1))
         self.utcEntry.SetValue(self.utcOffset)
         if timezones:
             #if 1:
-            tzLabel = wx.StaticText(bkg, -1,_("Select time zone:"))
-            self.tzButton = wx.Button(bkg, -1, _("Manual UTC offset"), size=(150,-1), style=wx.BU_LEFT)
+            tzLabel = wx.StaticText(bkg, -1,("Select time zone:"))
+            self.tzButton = wx.Button(bkg, -1, ("Manual UTC offset"), size=(150,-1), style=wx.BU_LEFT)
             if self.timezone:
                 self.tzButton.SetLabel(self.timezone)
                 self.utcLabel.Disable()
                 self.utcEntry.Disable()
             self.tzMenu = wx.Menu()
-            manualTZmenu = self.tzMenu.Append(wx.NewId(), _("Manual UTC offset"))
+            manualTZmenu = self.tzMenu.Append(wx.NewIdRef(count=1), ("Manual UTC offset"))
             self.Bind(wx.EVT_MENU, self.manualTZ, manualTZmenu)
             tz_regions = {}
             for i,item in enumerate(timezones):
@@ -369,35 +369,35 @@ class GUI(wx.Frame):
             self.Bind(wx.EVT_BUTTON, self.tzMenuPopup, self.tzButton)
 
         # Timerange
-        timerangeLabel=wx.StaticText(bkg, -1,_("Geocode picture only if time difference to nearest track point is below (seconds)="))
+        timerangeLabel=wx.StaticText(bkg, -1,("Geocode picture only if time difference to nearest track point is below (seconds)="))
         self.timerangeEntry=wx.TextCtrl(bkg,size=(40,-1))
         self.timerangeEntry.SetValue(self.maxTimeDifference)
 
         # Log file,  dateCheck (deprecated)
-        self.logFile=wx.CheckBox(bkg,-1,_("Create a log file in picture folder"))
+        self.logFile=wx.CheckBox(bkg,-1,("Create a log file in picture folder"))
         self.logFile.SetValue(self.log)
-        self.dateCheck=wx.CheckBox(bkg,-1,_("Dates must match"))
+        self.dateCheck=wx.CheckBox(bkg,-1,("Dates must match"))
         self.dateCheck.SetValue(self.datesMustMatch)
         self.dateCheck.Hide()
 
         # Google Earth and Google Maps
-        self.geCheck=wx.CheckBox(bkg,-1,_("Create a Google Earth file")+": ")
+        self.geCheck=wx.CheckBox(bkg,-1,("Create a Google Earth file")+": ")
         self.geCheck.SetValue(True)
         self.geCheck.Hide()
         geInfoLabel=wx.StaticText(bkg, -1," "+"[Google Earth]->")
-        self.geTStamps=wx.CheckBox(bkg,-1,_("with TimeStamp"))
+        self.geTStamps=wx.CheckBox(bkg,-1,("with TimeStamp"))
         self.geTStamps.SetValue(self.timeStamp)
-        self.gmCheck=wx.CheckBox(bkg,-1,_("Google Maps export, folder URL="))
+        self.gmCheck=wx.CheckBox(bkg,-1,("Google Maps export, folder URL="))
         self.gmCheck.SetValue(self.GMaps)
         self.urlEntry=wx.TextCtrl(bkg,size=(500,-1))
         self.urlEntry.SetValue(self.urlGMaps)
 
         # backup, interpolations mod and geonames
-        self.backupCheck=wx.CheckBox(bkg,-1,_("backup pictures"))
+        self.backupCheck=wx.CheckBox(bkg,-1,("backup pictures"))
         self.backupCheck.SetValue(self.backup)
-        self.interpolationCheck=wx.CheckBox(bkg,-1,_("interpolation"))
+        self.interpolationCheck=wx.CheckBox(bkg,-1,("interpolation"))
         self.interpolationCheck.SetValue(self.interpolation)
-        self.geonamesCheck=wx.CheckBox(bkg,-1,_("add geonames and geotagged"))
+        self.geonamesCheck=wx.CheckBox(bkg,-1,("add geonames and geotagged"))
         self.geonamesCheck.SetValue(self.geonamesTags)
         self.Bind(wx.EVT_CHECKBOX,self.geonamesMessage,self.geonamesCheck)
 
@@ -436,7 +436,7 @@ class GUI(wx.Frame):
         settingsbox.Add(self.backupCheck,proportion=0,flag=wx.EXPAND| wx.ALL,border=10)
 
         # Image preview box
-        prebox=wx.StaticBox(bkg, -1, _("Image preview:"),size=(200,200))
+        prebox=wx.StaticBox(bkg, -1, ("Image preview:"),size=(200,200))
         previewbox=wx.StaticBoxSizer(prebox, wx.VERTICAL)
         self.imgWhite=wx.Image('default.jpg', wx.BITMAP_TYPE_ANY).ConvertToBitmap()
         self.imgPrev=wx.StaticBitmap(bkg,-1,self.imgWhite,size=(160,160))#style=wx.SIMPLE_BORDER
@@ -516,9 +516,9 @@ class GUI(wx.Frame):
         """Message to show in console if the user check the geonames check box """
         if self.geonames_username in ["","gpicsync"]: 
             if self.geonamesCheck.GetValue() ==  True:
-                wx.CallAfter(self.consolePrint,_("For better Geonames disponibility it is highly recommended to get your own free username account at http://www.geonames.org")+"\n")
-                wx.CallAfter(self.consolePrint,_("Your username can then be set in Menu option > configuration file > geonames_username=YourUserName. Save in Notepad, then 'quit' gpicsync (not 'quit and save settings') and reload.")+"\n")
-                wx.CallAfter(self.consolePrint,_("More informations for the Geonames webservice can be find at http://www.geonames.org/export/")+"\n")
+                wx.CallAfter(self.consolePrint,("For better Geonames disponibility it is highly recommended to get your own free username account at http://www.geonames.org")+"\n")
+                wx.CallAfter(self.consolePrint,("Your username can then be set in Menu option > configuration file > geonames_username=YourUserName. Save in Notepad, then 'quit' gpicsync (not 'quit and save settings') and reload.")+"\n")
+                wx.CallAfter(self.consolePrint,("More informations for the Geonames webservice can be find at http://www.geonames.org/export/")+"\n")
             
     def writeConfFile(self):
         """Write the whole configuration file"""
@@ -576,7 +576,7 @@ class GUI(wx.Frame):
     def showConfig(self,evt):
         """open the configuration file in notepad.exe"""
         os.popen('notepad.exe "%s"'% (os.environ["ALLUSERSPROFILE"]+"/gpicsync.conf"))
-        wx.CallAfter(self.consolePrint,"\n"+_("If you've changed and saved the configuration file you should restart the application to take effect.")+"\n")
+        wx.CallAfter(self.consolePrint,"\n"+("If you've changed and saved the configuration file you should restart the application to take effect.")+"\n")
 
     def consolePrint(self,msg):
         """
@@ -602,11 +602,11 @@ class GUI(wx.Frame):
         """
         choices = [ 'system', 'Catalan','S.Chinese','T.Chinese','Czech','Dutch','English', 'French',
         'German','Italian','Polish','Portuguese','Russian','Spanish']
-        dialog=wx.SingleChoiceDialog(self,_("Choose a language"),_("languages choice"),choices)
+        dialog=wx.SingleChoiceDialog(self,("Choose a language"),("languages choice"),choices)
         dialog.SetSelection(choices.index(self.language))
         if dialog.ShowModal() == wx.ID_OK:
             choice=dialog.GetStringSelection()
-            print "choice is : ", choice
+            print ("choice is : ", choice)
             self.language=choice
             wx.CallAfter(self.consolePrint,"\n"+"Next time you launch GPicSync it will be in "+self.language+".\n")
             self.writeConfFile()
@@ -618,7 +618,7 @@ class GUI(wx.Frame):
         """An about message dialog"""
         text="GPicSync  1.33 - 2014 - \n\n"\
         +"GPicSync is Free Software (GPL v2)\n\n"\
-        +_("More informations and help:")+"\n\n"+\
+        +("More informations and help:")+"\n\n"+\
         "https://github.com/metadirective/GPicSync"+"\n\n"\
         +"2014 - notfrancois AT gmail.com"
         dialog=wx.MessageDialog(self,message=text,
@@ -627,18 +627,18 @@ class GUI(wx.Frame):
 
     def geoWriterFrame(self,evt):
         """ Frame to manually write latitude/longitude in the EXIF header of the picture"""
-        self.winGeoFrame=wx.Frame(win,size=(300,300),title=_("Manual latitude/longitude EXIF writer"))
+        self.winGeoFrame=wx.Frame(win,size=(300,300),title=("Manual latitude/longitude EXIF writer"))
         bkg=wx.Panel(self.winGeoFrame)
-        instructionLabel = wx.StaticText(bkg, -1,_("Enter coordinates in decimal degrees"))
-        latLabel = wx.StaticText(bkg, -1,_("Latitude")+":")
+        instructionLabel = wx.StaticText(bkg, -1,("Enter coordinates in decimal degrees"))
+        latLabel = wx.StaticText(bkg, -1,("Latitude")+":")
         self.latEntry=wx.TextCtrl(bkg,size=(100,-1))
         self.latEntry.SetValue(str(self.defaultLat))
-        lonLabel = wx.StaticText(bkg, -1,_("Longitude")+":")
+        lonLabel = wx.StaticText(bkg, -1,("Longitude")+":")
         self.lonEntry=wx.TextCtrl(bkg,size=(100,-1))
         self.lonEntry.SetValue(str(self.defaultLon))
-        eleLabel = wx.StaticText(bkg, -1,_("Eventual elevation (meters)")+":")
+        eleLabel = wx.StaticText(bkg, -1,("Eventual elevation (meters)")+":")
         self.eleEntry=wx.TextCtrl(bkg,size=(100,-1))
-        selectButton=wx.Button(bkg,size=(-1,-1),label=_("Select and write in picture(s)"))
+        selectButton=wx.Button(bkg,size=(-1,-1),label=("Select and write in picture(s)"))
         self.Bind(wx.EVT_BUTTON, self.manualGeoWrite, selectButton)
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(instructionLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
@@ -669,7 +669,7 @@ class GUI(wx.Frame):
         def writeEXIF(latitude,longitude,latRef,longRef):
             if len(self.pathPictures)!=0:
                 for pic in self.pathPictures:
-                    wx.CallAfter(self.consolePrint,_("Writing GPS latitude/longitude ")+\
+                    wx.CallAfter(self.consolePrint,("Writing GPS latitude/longitude ")+\
                     latRef+latitude+" / "+longRef+longitude+" ---> "+os.path.basename(pic)+"\n")
                     if elevation!="":
                         eleExif= " -GPSAltitude="+elevation+" -GPSAltitudeRef=0 "
@@ -687,7 +687,7 @@ class GUI(wx.Frame):
                      -GPSLatitude=%s -GPSLongitude=%s %s\
                      -GPSLatitudeRef=%s -GPSLongitudeRef=%s "%s" '\
                     %(self.exifcmd,latitude,longitude,eleExif, latRef,longRef,pic))
-                wx.CallAfter(self.consolePrint,"---"+_("Finished")+"---\n")
+                wx.CallAfter(self.consolePrint,"---"+("Finished")+"---\n")
         try:
             if float(latitude)>0:
                 latRef="N"
@@ -699,7 +699,7 @@ class GUI(wx.Frame):
             longitude=str(abs(float(longitude)))
             start_new_thread(writeEXIF,(latitude,longitude,latRef,longRef))
         except:
-            wx.CallAfter(self.consolePrint,"\n"+_("Latitude or Longitude formats are not valid: no geocoding happened.")+"\n")
+            wx.CallAfter(self.consolePrint,"\n"+("Latitude or Longitude formats are not valid: no geocoding happened.")+"\n")
 
 
     def viewInGE(self,evt):
@@ -723,10 +723,10 @@ class GUI(wx.Frame):
                      googleEarth= "/Applications/Google\ Earth.app/Contents/MacOS/Google\ Earth"
         try:
             path=self.picDir+'/doc.kml'
-            print "path=",path
+            print ("path=",path)
         except:
-            text=_("To visualize the results in Google Earth you must either:")+"\n\n"\
-            +_("- finish a synchronisation")+"\n"\
+            text=("To visualize the results in Google Earth you must either:")+"\n\n"\
+            +("- finish a synchronisation")+"\n"\
             +("- select a folder you've already synchronized or double-click on the kml file in his folder'")
             wx.CallAfter(self.consolePrint,text)
         try:
@@ -734,28 +734,28 @@ class GUI(wx.Frame):
                 #googleEarth.OpenKmlFile(path,True)
                 pass
             else:
-            	if sys.platform.find("linux")!=-1:
-            	    def goGELinux():
+                if sys.platform.find("linux")!=-1:
+                    def goGELinux():
                         os.system(googleEarth +" "+path)
                     start_new_thread(goGELinux,())
                 else:
                     if sys.platform == 'darwin':
-            	    	def goGEOSX():
-                    		os.system(googleEarth +" "+path)
-                    	start_new_thread(goGEOSX,())
+                        def goGEOSX():
+                            os.system(googleEarth +" "+path)
+                        start_new_thread(goGEOSX,())
         except:
             wx.CallAfter(self.consolePrint,"\n"+_("Couldn't find or launch Google Earth")+"\n")
 
     def exitApp(self,evt):
         """Quit properly the app"""
-        print "Exiting the app..."
+        print ("Exiting the app...")
         self.Close()
         self.Destroy()
         sys.exit(1)
 
     def exitAppSave(self,evt):
         """Quit properly the app and save current settings in configuration file"""
-        print "Exiting the app and save settings..."
+        print ("Exiting the app and save settings...")
         self.writeConfFile()
         self.Close()
         self.Destroy()
@@ -806,12 +806,12 @@ class GUI(wx.Frame):
                     j+=1
                     if os.path.isfile(target)==True:
                         wx.CallAfter(self.consolePrint,\
-                        _("For information, GPX file created with GPSBabel in your picture folder."))
+                        ("For information, GPX file created with GPSBabel in your picture folder."))
                     else:
-                        wx.CallAfter(self.consolePrint,_("Possible problem with the creation of the gpx file"))
+                        wx.CallAfter(self.consolePrint,("Possible problem with the creation of the gpx file"))
 
                 except:
-                    wx.CallAfter(self.consolePrint,_("Couldn't create the necessary GPX file."))
+                    wx.CallAfter(self.consolePrint,("Couldn't create the necessary GPX file."))
 
         gpxPaths=""
         i=0
@@ -833,7 +833,7 @@ class GUI(wx.Frame):
     def syncPictures(self,evt):
         """Sync. pictures with the .gpx file"""
         if self.dirEntry.GetValue()=="" or self.gpxEntry.GetValue=="":
-                wx.CallAfter(self.consolePrint,_("You must first select a pictures folder and a GPX file.")+"\n")
+                wx.CallAfter(self.consolePrint,("You must first select a pictures folder and a GPX file.")+"\n")
         else:
             pass
         self.geCheck.SetValue(True) # Oblige the cration of a GE file anyway
@@ -849,13 +849,13 @@ class GUI(wx.Frame):
         def sync():
             if self.dirEntry.GetValue()!="" and self.gpxEntry.GetValue!="":
                 if self.timezone:
-                    wx.CallAfter(self.consolePrint,"\n------\n"+_("Beginning synchronization with ")\
-                    +_("Time zone is ")+self.timezone+\
-                    _(" and maximum time difference = ")+self.timerangeEntry.GetValue().encode()+_(" seconds")+"\n")
+                    wx.CallAfter(self.consolePrint,"\n------\n"+("Beginning synchronization with ")\
+                    +("Time zone is ")+self.timezone+\
+                    (" and maximum time difference = ")+self.timerangeEntry.GetValue()+(" seconds")+"\n")
                 else:
-                    wx.CallAfter(self.consolePrint,"\n------\n"+_("Beginning synchronization with ")\
-                    +_("UTC Offset =")+self.utcEntry.GetValue().encode()+\
-                    _(" hours and maximum time difference = ")+self.timerangeEntry.GetValue().encode()+_(" seconds")+"\n")
+                    wx.CallAfter(self.consolePrint,"\n------\n"+("Beginning synchronization with ")\
+                    +("UTC Offset =")+self.utcEntry.GetValue()+\
+                    (" hours and maximum time difference = ")+self.timerangeEntry.GetValue()+(" seconds")+"\n")
 
             else:
                 pass
@@ -866,24 +866,24 @@ class GUI(wx.Frame):
             if self.backupCheck.GetValue()==True:
                 backupFolder=self.picDir+'/originals-backup-'+os.path.basename(self.picDir)+'/'
                 wx.CallAfter(self.consolePrint,"\n"+
-                _("Creating an 'originals-backup' folder.")+"\n")
+                ("Creating an 'originals-backup' folder.")+"\n")
                 try:
                     os.mkdir(backupFolder)
                 except:
-                    print "Couldn't create the backup folder, it maybe already exist"
+                    print ("Couldn't create the backup folder, it maybe already exist")
 
             if self.geCheck.GetValue()==True:
-                wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Earth file (doc.kml) in the picture folder ...")+" \n")
+                wx.CallAfter(self.consolePrint,"\n"+("Starting to generate a Google Earth file (doc.kml) in the picture folder ...")+" \n")
                 localKml=KML(self.picDir+"/doc",os.path.basename(self.picDir),timeStampOrder=timeStampOrder,
                 utc=self.utcEntry.GetValue(),eleMode=eleMode,iconsStyle=self.iconsChoice.GetSelection(),gmaps=False)
                 localKml.writeInKml("\n<Folder>\n<name>Photos</name>")
                 try:
                     os.mkdir(self.picDir+'/thumbs')
                 except:
-                    print "Couldn't create the thumbs folder, it maybe already exist"
+                    print ("Couldn't create the thumbs folder, it maybe already exist")
 
             if self.gmCheck.GetValue()==True:
-                wx.CallAfter(self.consolePrint,"\n"+_("Starting to generate a Google Map file (doc-web.kml) in the picture folder")+" ... \n")
+                wx.CallAfter(self.consolePrint,"\n"+("Starting to generate a Google Map file (doc-web.kml) in the picture folder")+" ... \n")
                 webKml=KML(self.picDir+"/doc-web",os.path.basename(self.picDir),url=self.urlEntry.GetValue(),
                 utc=self.utcEntry.GetValue(),gmaps=True)
                 webKml.path(self.gpxFile)
@@ -892,11 +892,11 @@ class GUI(wx.Frame):
             if self.log==True:
                 try:
                     f=open(self.picDir+'/gpicsync.log','w')
-                    f.write(_("Geocoded with UTC Offset= ")+
-                    self.utcEntry.GetValue()+_(" and  Maximum time difference = ")\
+                    f.write(("Geocoded with UTC Offset= ")+
+                    self.utcEntry.GetValue()+(" and  Maximum time difference = ")\
                     +self.timerangeEntry.GetValue()+"\n")
-                    f.write(_("Pictures Folder: ")+self.picDir+"\n")
-                    f.write(_("GPX file: ")+self.gpxEntry.GetValue()+"\n\n")
+                    f.write(("Pictures Folder: ")+self.picDir+"\n")
+                    f.write(("GPX file: ")+self.gpxEntry.GetValue()+"\n\n")
                 except:
                     pass
 
@@ -926,9 +926,9 @@ class GUI(wx.Frame):
                 or fnmatch.fnmatch ( fileName, '*.MRW' )\
                 or fnmatch.fnmatch ( fileName, '*.mrw' ):
 
-                    print "\nFound fileName ",fileName," Processing now ..."
-                    wx.CallAfter(self.consolePrint,"\n"+_("(Found ")+fileName+" ...")
-                    print self.picDir+'/'+fileName
+                    print ("\nFound fileName ",fileName," Processing now ...")
+                    wx.CallAfter(self.consolePrint,"\n"+("(Found ")+fileName+" ...")
+                    print (self.picDir+'/'+fileName)
 
                     backupFolder=self.picDir+'/originals-backup-'+os.path.basename(self.picDir)+'/'
 
@@ -938,7 +938,7 @@ class GUI(wx.Frame):
 
                     #Create thumb and make a preview
                     if fnmatch.fnmatch (fileName, '*.JPG') or fnmatch.fnmatch (fileName, '*.jpg'):
-                        print "Create a thumb now!"
+                        print ("Create a thumb now!")
                         try:
                             im=Image.open(self.picDir+'/'+fileName)
                             width=int(im.size[0])
@@ -952,7 +952,7 @@ class GUI(wx.Frame):
                             im.save(self.picDir+"/thumbs/"+"thumb_"+fileName)
                             wx.CallAfter(self.imagePreview,self.picDir+"/thumbs/"+"thumb_"+fileName)
                         except:
-                            print "Warning: didn't create thumbnail, no JPG file ?"
+                            print ("Warning: didn't create thumbnail, no JPG file ?")
 
                     result=geo.syncPicture(self.picDir+'/'+fileName)
                     wx.CallAfter(self.consolePrint,result[0]+"\n")
@@ -963,7 +963,7 @@ class GUI(wx.Frame):
 
                     if self.log==True:
                         try:
-                            #f.write(_("Processed image ")+fileName+" : "+result[0]+"\n")
+                            #f.write(("Processed image ")+fileName+" : "+result[0]+"\n")
                             f.write("Processed image "+unidecode(fileName)+" : "+result[0]+"\n")
                         except:
                             pass
@@ -980,13 +980,13 @@ class GUI(wx.Frame):
                         try:
                             nearby=Geonames(lat=result[1],long=result[2],username=self.geonames_username)
                         except:
-                            wx.CallAfter(self.consolePrint,_("Couldn't retrieve geonames data...")+"\n")
+                            wx.CallAfter(self.consolePrint,("Couldn't retrieve geonames data...")+"\n")
                         try:
                             if self.geoname_nearbyplace==True:
                                 gnPlace=unicode(nearby.findNearbyPlace())
                             else: gnPlace=""
                         except:
-                            print "oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo"
+                            print ("oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
                             gnPlace=""
                         try:
                             gnDistance=unicode(nearby.findDistance())
@@ -1015,12 +1015,12 @@ class GUI(wx.Frame):
                             gnCountryCode=nearby.findCountryCode()
                         except:
                             gnCountryCode=""
-                            print "!!! Something went wrong while retreiving country code !!!"
+                            print ("!!! Something went wrong while retreiving country code !!!")
                         try:
                             gnOrientation=nearby.findOrientation()
                         except:
                             gnOrientation=""
-                            print "!!! Something went wrong while retreiving orientation !!!"
+                            print ("!!! Something went wrong while retreiving orientation !!!")
                         #try:
                         if 1:
                             if self.geoname_summary==True:
@@ -1034,13 +1034,13 @@ class GUI(wx.Frame):
                             tempLong=str(decimal.Decimal(result[2]).quantize(decimal.Decimal('0.000001')))
                             geotagLat="geo:lat="+tempLat
                             geotagLon="geo:lon="+tempLong
-                            wx.CallAfter(self.consolePrint,gnInfos+_(", writing geonames)")+"\n")
+                            wx.CallAfter(self.consolePrint,gnInfos+(", writing geonames)")+"\n")
 
                             geonameKeywords="" # create initial geonames string command
                             exiftagOptions = []
                             exiftagOptions.append(self.exifcmd)
                             
-                            print userdefine
+                            print (userdefine)
                             if self.gnOptChoice.GetSelection() in [2,3]:
                                 for geoname in [gnPlace,gnRegion,gnCountry,gnSummary,geotag,geotagLat,geotagLon,userdefine]:
                                     if geoname !="":
@@ -1089,11 +1089,11 @@ class GUI(wx.Frame):
                                 # tried : geonameKeywords.decode("utf-8")).encode("iso-8859-1")
                                 # trying lib unidecode see unicode to ascii (see issue 117 regarding Python 2.x and command line to exiftool containing unicode)
                                 #print geonameKeywords
-                                if sys.platform!=("linux2" or "darwin"): # Usage of unidecode for now on windows due to above problem ( https://code.google.com/p/gpicsync/issues/detail?id=117 )
+                                if sys.platform!=("linux" or "darwin"): # Usage of unidecode for now on windows due to above problem ( https://code.google.com/p/gpicsync/issues/detail?id=117 )
                                     if 0: # in current build 1.32
                                         os.popen('%s -tagsfromfile @ -iptc:all -codedcharacterset=utf8  %s  -overwrite_original "-DateTimeOriginal>FileModifyDate"  "%s"  '%(self.exifcmd,unidecode(geonameKeywords),self.picDir+'/'+fileName))
                                     if 1: # experimental
-                                        print "!!!!!!!!!!!!!!!!!!!!! New unicode test !!!!!!!!!!!!!!!!!!!!!!!"
+                                        print ("!!!!!!!!!!!!!!!!!!!!! New unicode test !!!!!!!!!!!!!!!!!!!!!!!")
                                         startupinfo = subprocess.STARTUPINFO()
                                         startupinfo.dwFlags |= subprocess.STARTF_USESHOWWINDOW
                                         command= '%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName)
@@ -1113,28 +1113,28 @@ class GUI(wx.Frame):
 
                         #except:
                         if 0:
-                            print "Had problem when writing geonames"
+                            print ("Had problem when writing geonames")
                             traceback.print_exc(file=sys.stdout)
 
             if self.stop==False:
-                wx.CallAfter(self.consolePrint,"\n*** "+_("FINISHED GEOCODING PROCESS")+" ***\n")
+                wx.CallAfter(self.consolePrint,"\n*** "+("FINISHED GEOCODING PROCESS")+" ***\n")
             if self.stop==True:
-                wx.CallAfter(self.consolePrint,"\n *** "+_("PROCESSING STOPPED BY THE USER")+" ***\n")
+                wx.CallAfter(self.consolePrint,"\n *** "+("PROCESSING STOPPED BY THE USER")+" ***\n")
             if self.log==True: f.close()
 
             if self.geCheck.GetValue()==True:
                 localKml.writeInKml("</Folder>\n")
-                wx.CallAfter(self.consolePrint,"\n"+_("Adding the GPS track log to the Google Earth kml file")+"...\n")
+                wx.CallAfter(self.consolePrint,"\n"+("Adding the GPS track log to the Google Earth kml file")+"...\n")
                 localKml.path(self.gpxFile,cut=10000)
                 localKml.close()
-                wx.CallAfter(self.consolePrint,"\n"+_("Click on the 'View in Google Earth' button to visualize the result")+".\n")
-                wx.CallAfter(self.consolePrint,_("( A Google Earth doc.kml file has been created in your picture folder.)")+"\n")
+                wx.CallAfter(self.consolePrint,"\n"+("Click on the 'View in Google Earth' button to visualize the result")+".\n")
+                wx.CallAfter(self.consolePrint,("( A Google Earth doc.kml file has been created in your picture folder.)")+"\n")
 
             if self.gmCheck.GetValue()==True:
                 webKml.writeInKml("</Folder>\n")
                 webKml.close()
-                wx.CallAfter(self.consolePrint,_("( A Google Maps doc-web.kml file has been created with the given url )")+"\n")
-            wx.CallAfter(self.consolePrint,_("If the geocoding process was not satisfactory, consider using the GPX inspector from Tools menu to debug your GPX")+"\n")
+                wx.CallAfter(self.consolePrint,("( A Google Maps doc-web.kml file has been created with the given url )")+"\n")
+            wx.CallAfter(self.consolePrint,("If the geocoding process was not satisfactory, consider using the GPX inspector from Tools menu to debug your GPX")+"\n")
 
         start_new_thread(sync,())
 
@@ -1142,10 +1142,10 @@ class GUI(wx.Frame):
             """ Local time correction if GPS and camera wasn't synchronized """
             self.tcam_l=self.camEntry.GetValue()
             self.tgps_l=self.gpsEntry.GetValue()
-            wx.CallAfter(self.consolePrint,"\n"+_("A time correction has been set")+" : "+
-            _("Time camera= ")+self.tcam_l+_(" Time GPS= ")+self.tgps_l+" .\n")
-            print "tcam_l =",self.tcam_l
-            print "tgps_l =",self.tgps_l
+            wx.CallAfter(self.consolePrint,"\n"+("A time correction has been set")+" : "+
+            ("Time camera= ")+self.tcam_l+(" Time GPS= ")+self.tgps_l+" .\n")
+            print ("tcam_l =",self.tcam_l)
+            print ("tgps_l =",self.tgps_l)
 
     def quitLocaltimeCorrection(self,evt):
             self.winOpt.Close()
@@ -1155,20 +1155,20 @@ class GUI(wx.Frame):
         frameWidth=440
         if sys.platform == 'darwin':
             frameWidth=530
-        self.winOpt=wx.Frame(win,size=(frameWidth,280),title=_("Local time corrections"))
+        self.winOpt=wx.Frame(win,size=(frameWidth,280),title=("Local time corrections"))
         bkg=wx.Panel(self.winOpt)
         #bkg.SetBackgroundColour('blue steel')
-        text="\t"+_("Use this option ONLY if your camera local time is wrong.")\
-        +"\n\n"+_("Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)")
+        text="\t"+("Use this option ONLY if your camera local time is wrong.")\
+        +"\n\n"+("Indicate here the local time now displayed by your camera and GPS (hh:mm:ss)")
         utcLabel = wx.StaticText(bkg, -1,text)
-        camLabel = wx.StaticText(bkg, -1,_("Local time displayed now by the camera"))
+        camLabel = wx.StaticText(bkg, -1,("Local time displayed now by the camera"))
         self.camEntry=wx.TextCtrl(bkg,size=(100,-1))
         self.camEntry.SetValue(self.tcam_l)
-        gpsLabel = wx.StaticText(bkg, -1,_("Local time displayed now by the GPS"))
+        gpsLabel = wx.StaticText(bkg, -1,("Local time displayed now by the GPS"))
         self.gpsEntry=wx.TextCtrl(bkg,size=(100,-1))
         self.gpsEntry.SetValue(self.tgps_l)
-        applyButton=wx.Button(bkg,size=(130,30),label=_("Apply correction"))
-        quitButton=wx.Button(bkg,size=(70,30),label=_("Quit"))
+        applyButton=wx.Button(bkg,size=(130,30),label=("Apply correction"))
+        quitButton=wx.Button(bkg,size=(70,30),label=("Quit"))
         self.Bind(wx.EVT_BUTTON, self.localtimeCorrection, applyButton)
         self.Bind(wx.EVT_BUTTON, self.quitLocaltimeCorrection, quitButton)
 
@@ -1191,20 +1191,20 @@ class GUI(wx.Frame):
         frameWidth=280
         if sys.platform == 'darwin':
             frameWidth=330
-        self.winExifReader=wx.Frame(win,size=(frameWidth,220),title=_("EXIF Reader"))
+        self.winExifReader=wx.Frame(win,size=(frameWidth,220),title=("EXIF Reader"))
         bkg=wx.Panel(self.winExifReader)
         #bkg.SetBackgroundColour('White')
-        text=_("Read the EXIF metadata of the selected picture.")
+        text=("Read the EXIF metadata of the selected picture.")
         introLabel = wx.StaticText(bkg, -1,text)
-        self.ExifReaderSelected=_("All EXIF metadata")
-        radio1=wx.RadioButton(bkg,-1,_("All EXIF metadata"))
-        radio2=wx.RadioButton(bkg,-1,_("Date/Time/Lat./Long."))
+        self.ExifReaderSelected=("All EXIF metadata")
+        radio1=wx.RadioButton(bkg,-1,("All EXIF metadata"))
+        radio2=wx.RadioButton(bkg,-1,("Date/Time/Lat./Long."))
         def onRadio(evt):
             radioSelected=evt.GetEventObject()
             self.ExifReaderSelected=radioSelected.GetLabel()
         for eachRadio in [radio1,radio2]:
             self.Bind(wx.EVT_RADIOBUTTON ,onRadio,eachRadio)
-        readButton=wx.Button(bkg,size=(130,30),label=_("Select a picture"))
+        readButton=wx.Button(bkg,size=(130,30),label=("Select a picture"))
         self.Bind(wx.EVT_BUTTON, self.readEXIF, readButton)
 
         vbox=wx.BoxSizer(wx.VERTICAL)
@@ -1217,7 +1217,7 @@ class GUI(wx.Frame):
 
     def readEXIF(self,evt):
         """read the selected EXIF informations and eventually crate a thumb"""
-        print "Selected ",self.ExifReaderSelected
+        print ("Selected ",self.ExifReaderSelected)
         picture=wx.FileDialog(self)
         picture.ShowModal()
         pathPicture=picture.GetPath()
@@ -1225,7 +1225,7 @@ class GUI(wx.Frame):
             myPicture=GeoExif(pathPicture)
             try:
                 pathThumb=str(os.path.dirname(pathPicture))+"/thumbs/thumb_"+str(os.path.basename(pathPicture))
-                print "Thumb path",pathThumb
+                print ("Thumb path",pathThumb)
                 if os.path.isfile(pathThumb)==False:
                     if os.path.isdir(os.path.dirname(pathThumb))==False:
                         os.mkdir(os.path.dirname(pathThumb))
@@ -1239,35 +1239,35 @@ class GUI(wx.Frame):
                     im.save(pathThumb)
                 self.imagePreview(prevPath=pathThumb)
             except:
-                print "Coudln't create a thumnail, probably not a JPG file"
+                print ("Coudln't create a thumnail, probably not a JPG file")
             def read():
-                wx.CallAfter(self.consolePrint,"\n\n"+_("Selected metada ")+"\n")
+                wx.CallAfter(self.consolePrint,"\n\n"+("Selected metada ")+"\n")
                 wx.CallAfter(self.consolePrint,"-------------------\n")
-                if self.ExifReaderSelected==_("All EXIF metadata"):
+                if self.ExifReaderSelected==("All EXIF metadata"):
                     wx.CallAfter(self.consolePrint,pathPicture+"\n\n")
                     wx.CallAfter(self.consolePrint,myPicture.readExifAll().decode("utf-8","ignore"))
 
-                if self.ExifReaderSelected==_("Date/Time/Lat./Long."):
+                if self.ExifReaderSelected==("Date/Time/Lat./Long."):
                     dateTime=myPicture.readDateTime()
                     datetimeString=dateTime[0]+":"+dateTime[1]
                     wx.CallAfter(self.consolePrint,pathPicture+"\n\n")
                     if len(datetimeString)>5:
                         wx.CallAfter(self.consolePrint,datetimeString)
-                        wx.CallAfter(self.consolePrint,"    "+_("lat./long.")+"="+str(myPicture.readLatLong()))
+                        wx.CallAfter(self.consolePrint,"    "+("lat./long.")+"="+str(myPicture.readLatLong()))
                     else:
-                        wx.CallAfter(self.consolePrint,_("None"))
+                        wx.CallAfter(self.consolePrint,("None"))
             start_new_thread(read,())
             self.winExifReader.Close()
 
     def renameFrame(self,evt):
         """A frame for the rename tool"""
-        self.winRenameTool=wx.Frame(win,size=(300,220),title=_("Renaming tool"))
+        self.winRenameTool=wx.Frame(win,size=(300,220),title=("Renaming tool"))
         bkg=wx.Panel(self.winRenameTool)
         #bkg.SetBackgroundColour('White')
-        text=_("This tool renames your pictures with the ")+"\n"+_("original time/date and lat./long.(if present)")
+        text=("This tool renames your pictures with the ")+"\n"+("original time/date and lat./long.(if present)")
         introLabel = wx.StaticText(bkg, -1,text)
-        readButton=wx.Button(bkg,size=(200,30),label=_("Rename pictures in a folder"))
-        readButtonFolder=wx.Button(bkg,size=(200,30),label=_("Rename a single picture"))
+        readButton=wx.Button(bkg,size=(200,30),label=("Rename pictures in a folder"))
+        readButtonFolder=wx.Button(bkg,size=(200,30),label=("Rename a single picture"))
         self.Bind(wx.EVT_BUTTON, self.renamePicturesInFolder, readButton)
         self.Bind(wx.EVT_BUTTON, self.renamePicture, readButtonFolder)
         vbox=wx.BoxSizer(wx.VERTICAL)
@@ -1285,7 +1285,7 @@ class GUI(wx.Frame):
         self.pathPicture=picture.GetPath()
         self.winRenameTool.Close()
         if self.pathPicture !="" or None:
-            wx.CallAfter(self.consolePrint,"\n"+_("Beginning renaming..."))
+            wx.CallAfter(self.consolePrint,"\n"+("Beginning renaming..."))
             def rename():
                 myPicture=GeoExif(self.pathPicture)
                 string=myPicture.readDateTime()[0]+" "+myPicture.readDateTime()[1]
@@ -1293,10 +1293,10 @@ class GUI(wx.Frame):
                 latlong=myPicture.readLatLong()
                 if latlong==None: latlong=""
                 if len(string)<5:
-                    wx.CallAfter(self.consolePrint,"\n"+_("Didn't find Original Time/Date for ")+self.pathPicture)
+                    wx.CallAfter(self.consolePrint,"\n"+("Didn't find Original Time/Date for ")+self.pathPicture)
                 else:
                     os.rename(self.pathPicture,os.path.dirname(self.pathPicture)+"/"+string+" "+latlong+".jpg")
-                    wx.CallAfter(self.consolePrint,"\n"+_("Renamed ")+os.path.basename(self.pathPicture)+" -> "+string+latlong+".jpg")
+                    wx.CallAfter(self.consolePrint,"\n"+("Renamed ")+os.path.basename(self.pathPicture)+" -> "+string+latlong+".jpg")
             start_new_thread(rename,())
 
     def renamePicturesInFolder(self,evt):
@@ -1306,86 +1306,86 @@ class GUI(wx.Frame):
         openDir.ShowModal()
         self.picDir=openDir.GetPath()
         if self.picDir!="" or None:
-            wx.CallAfter(self.consolePrint,"\n"+_("Beginning renaming..."))
+            wx.CallAfter(self.consolePrint,"\n"+("Beginning renaming..."))
             def rename():
                 for fileName in os.listdir ( self.picDir ):
                         if self.stop==True:
-                            wx.CallAfter(self.consolePrint,"\n"+_("Interrupted by the user"))
+                            wx.CallAfter(self.consolePrint,"\n"+("Interrupted by the user"))
                             self.stop=False
                             break
                         if fnmatch.fnmatch ( fileName, '*.JPG' )or \
                         fnmatch.fnmatch ( fileName, '*.jpg' ):
-                            print self.picDir+'/'+fileName
+                            print (self.picDir+'/'+fileName)
                             myPicture=GeoExif(self.picDir+"/"+fileName)
                             string=myPicture.readDateTime()[0]+" "+myPicture.readDateTime()[1]
-                            print string, len(string)
+                            print (string, len(string))
                             if len(string)<5:
-                                wx.CallAfter(self.consolePrint,"\n"+_("Didn't find Original Time/Date for ")+fileName)
+                                wx.CallAfter(self.consolePrint,"\n"+("Didn't find Original Time/Date for ")+fileName)
                                 break
                             string=string.replace(":","-")
                             latlong=myPicture.readLatLong()
                             if latlong==None: latlong=""
-                            print "latlong= ",latlong
+                            print ("latlong= ",latlong)
                             os.rename(self.picDir+'/'+fileName,self.picDir+"/"+string+" "+latlong+".jpg")
-                            wx.CallAfter(self.consolePrint,"\n"+_("Renamed ")+fileName+" to "+string+" "+latlong+".jpg")
-                wx.CallAfter(self.consolePrint,"\n"+_("Finished"))
+                            wx.CallAfter(self.consolePrint,"\n"+("Renamed ")+fileName+" to "+string+" "+latlong+".jpg")
+                wx.CallAfter(self.consolePrint,"\n"+("Finished"))
             start_new_thread(rename,())
 
     def kmzGeneratorFrame(self,evt):
         """A frame to generate a KMZ  file"""
         self.winKmzGenerator=wx.Frame(win,size=(280,180),title="KMZ Generator")
         bkg=wx.Panel(self.winKmzGenerator)
-        text="\n"+_("Create a kmz file archive")
+        text="\n"+("Create a kmz file archive")
         introLabel = wx.StaticText(bkg, -1,text)
-        readButton=wx.Button(bkg,size=(150,30),label=_("Create KMZ file !"))
+        readButton=wx.Button(bkg,size=(150,30),label=("Create KMZ file !"))
         self.Bind(wx.EVT_BUTTON, self.kmzGenerator, readButton)
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         vbox.Add(readButton,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
         bkg.SetSizer(vbox)
         if sys.platform == 'darwin':
-          wx.CallAfter(self.consolePrint,"\n"+_("Sorry this tool is not yet available for the MacOS X version")+" \n")
+          wx.CallAfter(self.consolePrint,"\n"+("Sorry this tool is not yet available for the MacOS X version")+" \n")
         else:
           self.winKmzGenerator.Show()
 
     def kmzGenerator(self,evt):
         """A tool to create a kmz file containing the geolocalized pictures"""
-        print  "kmz ordered ..."
+        print  ("kmz ordered ...")
         self.winKmzGenerator.Close()
         if self.picDir == None or self.picDir !="":
-            wx.CallAfter(self.consolePrint,"\n"+_("Creating a KMZ file in the pictures folder...")+"\n")
+            wx.CallAfter(self.consolePrint,"\n"+("Creating a KMZ file in the pictures folder...")+"\n")
             zip = zipfile.ZipFile(self.picDir+'/'+os.path.basename(self.picDir)+".zip", 'w')
             zip.write(self.picDir+'/doc.kml','doc.kml',zipfile.ZIP_DEFLATED)
-            wx.CallAfter(self.consolePrint,"\n"+_("Adding doc.kml"))
+            wx.CallAfter(self.consolePrint,"\n"+("Adding doc.kml"))
             for fileName in os.listdir ( self.picDir ):
                 if fnmatch.fnmatch ( fileName, '*.JPG' )or fnmatch.fnmatch ( fileName, '*.jpg' ):
                     zip.write(self.picDir+"/"+fileName,fileName.encode(),zipfile.ZIP_DEFLATED)
-                    wx.CallAfter(self.consolePrint,"\n"+_("Adding ")+fileName)
+                    wx.CallAfter(self.consolePrint,"\n"+("Adding ")+fileName)
             if (self.iconsChoice.GetSelection() == 0):
-              wx.CallAfter(self.consolePrint,"\n"+_("Adding ") + "thumbs")
+              wx.CallAfter(self.consolePrint,"\n"+("Adding ") + "thumbs")
               for fileName in os.listdir ( self.picDir+'/thumbs' ):
                   zip.write(self.picDir+"/thumbs/"+fileName,'thumbs/' + fileName.encode(),zipfile.ZIP_DEFLATED)
-                  wx.CallAfter(self.consolePrint,"\n"+_("Adding ")+fileName)
+                  wx.CallAfter(self.consolePrint,"\n"+("Adding ")+fileName)
             zip.close()
             try:
                 os.rename(self.picDir+'/'+os.path.basename(self.picDir)+".zip",self.picDir+'/'+os.path.basename(self.picDir)+".kmz")
-                wx.CallAfter(self.consolePrint,"\n"+_("KMZ file created in pictures folder")+"\n")
+                wx.CallAfter(self.consolePrint,"\n"+("KMZ file created in pictures folder")+"\n")
             except WindowsError:
-                wx.CallAfter(self.consolePrint,"\n"+_("Couldn't rename the zip file to kmz (maybe a previous file already exist)")+"\n")
+                wx.CallAfter(self.consolePrint,"\n"+("Couldn't rename the zip file to kmz (maybe a previous file already exist)")+"\n")
         else:
-            text="\n --- \n"+_("To create a Google Earth kmz file you must either:")+"\n\n"\
-            +_("- finish a synchronisation")+"\n"\
-            +_("- select a folder you've already synchronized then select the KMZ Generator tool")+"\n --- \n"
+            text="\n --- \n"+("To create a Google Earth kmz file you must either:")+"\n\n"\
+            +("- finish a synchronisation")+"\n"\
+            +("- select a folder you've already synchronized then select the KMZ Generator tool")+"\n --- \n"
             wx.CallAfter(self.consolePrint,text)
 
 
     def gpxInspectorFrame(self,evt):
         """A frame to inspect a gpx file"""
-        self.winGpxInspector=wx.Frame(win,size=(280,180),title=_("GPX Inspector"))
+        self.winGpxInspector=wx.Frame(win,size=(280,180),title=("GPX Inspector"))
         bkg=wx.Panel(self.winGpxInspector)
-        text=_("Inspect a gpx file and show tracklog data.")
+        text=("Inspect a gpx file and show tracklog data.")
         introLabel = wx.StaticText(bkg, -1,text)
-        readButton=wx.Button(bkg,size=(150,30),label=_("Select a gpx file"))
+        readButton=wx.Button(bkg,size=(150,30),label=("Select a gpx file"))
         self.Bind(wx.EVT_BUTTON, self.gpxInspector, readButton)
         vbox=wx.BoxSizer(wx.VERTICAL)
         vbox.Add(introLabel,proportion=0,flag=wx.ALIGN_CENTER|wx.ALL,border=20)
@@ -1400,16 +1400,16 @@ class GUI(wx.Frame):
         gpx.SetWildcard("*.gpx")
         gpxPath=gpx.GetPath()
         self.winGpxInspector.Close()
-        print "gpxPath=", gpxPath
+        print ("gpxPath=", gpxPath)
         if gpxPath =="" or None:
-            wx.CallAfter(self.consolePrint,"\n"+_("Select a gpx file first."))
+            wx.CallAfter(self.consolePrint,"\n"+("Select a gpx file first."))
         else:
             gpxPath=[gpxPath]
             gpxObject = Gpx(gpxPath)
             myGpx=gpxObject.extract()
-            wx.CallAfter(self.consolePrint,"\n"+_("Looking at ")+gpxPath[0]+"\n")
-            points_found_str = _("Number of valid track points found")+" : " + str(len(myGpx))
-            check_console_msg = "\n\n" + _("Check the console logs to get help about the issues with your gpx file") if len(myGpx) == 0 else ""
+            wx.CallAfter(self.consolePrint,"\n"+("Looking at ")+gpxPath[0]+"\n")
+            points_found_str = ("Number of valid track points found")+" : " + str(len(myGpx))
+            check_console_msg = "\n\n" + ("Check the console logs to get help about the issues with your gpx file") if len(myGpx) == 0 else ""
             def warn_user():
                 self.consolePrint(gpxObject.errors + points_found_str +"\n")
                 dialog=wx.MessageDialog(self, message=points_found_str + check_console_msg, style=wx.OK | wx.ICON_INFORMATION)
@@ -1417,10 +1417,10 @@ class GUI(wx.Frame):
 
             def inspect():
                 for trkpt in myGpx:
-                    wx.CallAfter(self.consolePrint,_("Date")+": "+trkpt["date"]+"\t"+_("Time")+": "\
-                    +trkpt["time"]+"\t"+_("Latitude")+": "+trkpt["lat"]
-                    +"\t"+_("Longitude")+": "+trkpt["lon"]
-                    +"\t"+_("Altitude")+": "+trkpt["ele"]+"\n")
+                    wx.CallAfter(self.consolePrint,("Date")+": "+trkpt["date"]+"\t"+("Time")+": "\
+                    +trkpt["time"]+"\t"+("Latitude")+": "+trkpt["lat"]
+                    +"\t"+("Longitude")+": "+trkpt["lon"]
+                    +"\t"+("Altitude")+": "+trkpt["ele"]+"\n")
             start_new_thread(inspect,())
             wx.CallAfter(warn_user)
 
@@ -1430,7 +1430,7 @@ class GUI(wx.Frame):
 
     def manualTZ(self, evt):
         self.timezone = None
-        self.tzButton.SetLabel(_("Manual UTC offset"))
+        self.tzButton.SetLabel(("Manual UTC offset"))
         self.utcLabel.Enable()
         self.utcEntry.Enable()
 

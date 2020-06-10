@@ -59,7 +59,7 @@ class Gpx(object):
         if len(self.gpx_trkpts)==0: self.errors += "Didn't find any valid trkpt :(\n"
         if num_points_with_time == 0:  self.errors += "None of your points have a <time> tag, please add such tags before processing with GPicSync\n"
         print(self.errors)
-        print "Number of valid track points found: ",len(self.gpx_trkpts)
+        print ("Number of valid track points found: ",len(self.gpx_trkpts))
         #print self.gpx_trkpts
 
     def extract(self):
@@ -71,7 +71,7 @@ class Gpx(object):
         'lon': returns a string longitude like '7.2847080265'
         'time': returns a string 24h time (hh mm sss) like '15:21:27'
         """
-        print "Extracting data from valids track points ..."
+        print ("Extracting data from valids track points ...")
         self.geoData=[]
         for line in self.gpx_trkpts:
             #lineTree=ET.fromstring(line)
@@ -107,4 +107,4 @@ class Gpx(object):
     
 if __name__=="__main__":
     myGpx=Gpx("test2.gpx") 
-    print myGpx.extract()     
+    print (myGpx.extract())
