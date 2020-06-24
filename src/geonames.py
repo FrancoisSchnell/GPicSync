@@ -58,7 +58,7 @@ class Geonames(object):
         content=re.search('(<'+tag+'>.*</'+tag+'>)',page).group()
         content=content.split("<"+tag+">")[1].split("</"+tag+">")[0]
         #return content
-        return unicode(content)
+        return str(content)
         
     def findNearbyPlace(self):
         """ find nearby place at geonames.org"""
