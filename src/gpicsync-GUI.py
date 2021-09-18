@@ -144,8 +144,8 @@ class GUI(wx.Frame):
         print ("Attempting to read the configuration file...")
         #try: 
         if configFile!=False:   
-            conf= configparser.ConfigParser()
-            conf.readfp(fconf) #parse the config file
+            conf = configparser.ConfigParser()
+            conf.read_file(fconf) #parse the config file
             if conf.has_option("gpicsync","timezone") == True:
                 self.timezone=conf.get("gpicsync","timezone")
                 if self.timezone=="": self.timezone=None
@@ -259,22 +259,22 @@ class GUI(wx.Frame):
         #bkg.SetBackgroundColour((244,180,56))
         menuBar=wx.MenuBar()
         menu1=wx.Menu()
-        timeShift=menu1.Append(wx.NewIdRef(count=1),("Local time correction"))
-        languageChoice=menu1.Append(wx.NewIdRef(count=1),("Language"))
+        timeShift=menu1.Append(wx.ID_NEW, "",("Local time correction"))
+        languageChoice=menu1.Append(wx.ID_NEW, "",("Language"))
         self.Bind(wx.EVT_MENU,self.languageApp,languageChoice)
         if sys.platform == 'win32':
             configFile=menu1.Append(wx.NewIdRef(count=1),("Configuration file"))
             self.Bind(wx.EVT_MENU,self.showConfig,configFile)
         menuBar.Append(menu1,("&Options"))
         menu2=wx.Menu()
-        about=menu2.Append(wx.NewIdRef(count=1),("About..."))
+        about=menu2.Append(wx.ID_NEW, "",("About..."))
         menuTools=wx.Menu()
         menuBar.Append(menuTools,("&Tools"))
-        exifReader=menuTools.Append(wx.NewIdRef(count=1),("EXIF reader"))
-        exifGeoWriter=menuTools.Append(wx.NewIdRef(count=1),("EXIF writer"))
-        renameToolMenu=menuTools.Append(wx.NewIdRef(count=1),("Geo-Rename pictures"))
-        gpxInspectorMenu=menuTools.Append(wx.NewIdRef(count=1),("GPX Inspector"))
-        kmzGeneratorMenu=menuTools.Append(wx.NewIdRef(count=1),("KMZ Generator"))
+        exifReader=menuTools.Append(wx.ID_NEW, "",("EXIF reader"))
+        exifGeoWriter=menuTools.Append(wx.ID_NEW, "",("EXIF writer"))
+        renameToolMenu=menuTools.Append(wx.ID_NEW, "",("Geo-Rename pictures"))
+        gpxInspectorMenu=menuTools.Append(wx.ID_NEW, "",("GPX Inspector"))
+        kmzGeneratorMenu=menuTools.Append(wx.ID_NEW, "",("KMZ Generator"))
         menuBar.Append(menu2,("&Help"))
         statusBar=self.CreateStatusBar()
         self.Bind(wx.EVT_MENU,self.localtimeFrame,timeShift)
@@ -350,7 +350,7 @@ class GUI(wx.Frame):
                 self.utcLabel.Disable()
                 self.utcEntry.Disable()
             self.tzMenu = wx.Menu()
-            manualTZmenu = self.tzMenu.Append(wx.NewIdRef(count=1), ("Manual UTC offset"))
+            manualTZmenu = self.tzMenu.Append(wx.ID_NEW, "", ("Manual UTC offset"))
             self.Bind(wx.EVT_MENU, self.manualTZ, manualTZmenu)
             tz_regions = {}
             for i,item in enumerate(timezones):
