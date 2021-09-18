@@ -127,13 +127,20 @@ class GUI(wx.Frame):
                 configFile=True
                 fconf=open(os.environ["ALLUSERSPROFILE"]+"/gpicsync.conf","r+")
             else: configFile= False
-        if sys.platform==("linux" or "darwin"):
+        # if sys.platform==("linux" or "darwin"):
+        if sys.platform in ["linux", "darwin"]:
             confPath=os.path.expanduser("~/.gpicsync.conf")
             print ("Searching configuration file ~/.gpicsync.conf")
             if os.path.isfile(confPath):
                 configFile=True
                 fconf=open(os.path.expanduser("~/.gpicsync.conf"),"r+")
-            else: configFile=False
+            else:
+                confPath="./gpicsync.conf"
+                if os.path.isfile(confPath):
+                    configFile=True
+                    fconf=open(confPath,"r+")
+                else:
+                    configFile=False
         if configFile==False:
             print ("Couldn't find the configuration file.")
             dialog=wx.MessageDialog(self,message="Couldn't find the configuration file",
@@ -986,24 +993,24 @@ class GUI(wx.Frame):
                             wx.CallAfter(self.consolePrint,("Couldn't retrieve geonames data...")+"\n")
                         try:
                             if self.geoname_nearbyplace==True:
-                                gnPlace=unicode(nearby.findNearbyPlace())
+                                gnPlace=str(nearby.findNearbyPlace())
                             else: gnPlace=""
                         except:
                             print ("oooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo")
                             gnPlace=""
                         try:
-                            gnDistance=unicode(nearby.findDistance())
+                            gnDistance=str(nearby.findDistance())
                         except:
                             gnDistance=""
                         try:
                             if self.geoname_region==True:
-                                gnRegion=unicode(nearby.findRegion())
+                                gnRegion=str(nearby.findRegion())
                             else: gnRegion=""
                         except:
                             gnRegion=""
                         try:
                             if self.geoname_country==True:
-                                gnCountry=unicode(nearby.findCountry())
+                                gnCountry=str(nearby.findCountry())
                             else: 
                                 gnCountry=""
                         except:
@@ -1027,7 +1034,7 @@ class GUI(wx.Frame):
                         #try:
                         if 1:
                             if self.geoname_summary==True:
-                                gnSummary=gnDistance+"  Km to "+unicode(gnPlace)+"  in "+unicode(gnRegion)+" "+unicode(gnCountry)
+                                gnSummary=gnDistance+"  Km to "+str(gnPlace)+"  in "+str(gnRegion)+" "+str(gnCountry)
                             else:
                                 gnSummary=""
                             gnInfos="Geonames: "+gnDistance+" Km "+gnOrientation +" "+ gnPlace+" "+gnRegion+" "+gnCountry+" "+gnCountryCode
@@ -1047,36 +1054,36 @@ class GUI(wx.Frame):
                             if self.gnOptChoice.GetSelection() in [2,3]:
                                 for geoname in [gnPlace,gnRegion,gnCountry,gnSummary,geotag,geotagLat,geotagLon,userdefine]:
                                     if geoname !="":
-                                        geonameKeywords+=' -keywords="%s" ' % unicode(geoname)
+                                        geonameKeywords+=' -keywords="%s" ' % str(geoname)
                                         exiftagOptions.append((u'-keywords="%s" ' % geoname))
 
                             if self.geoname_caption==True:
                                 gnIPTCsummary= self.geoname_IPTCsummary
                                 for var in [("{LATITUDE}",tempLat),("{LONGITUDE}",tempLong),
-                                ("{DISTANCETO}",gnDistance),("{NEARBYPLACE}",unicode(gnPlace)),
-                                ("{REGION}",unicode(gnRegion)),("{COUNTRY}",unicode(gnCountry)),("{ORIENTATION}",gnOrientation)]:
+                                ("{DISTANCETO}",gnDistance),("{NEARBYPLACE}",str(gnPlace)),
+                                ("{REGION}",str(gnRegion)),("{COUNTRY}",str(gnCountry)),("{ORIENTATION}",gnOrientation)]:
                                     gnIPTCsummary=gnIPTCsummary.replace(var[0],var[1])
                                 gnIPTCsummary=' -iptc:caption-abstract="'+gnIPTCsummary+'"' #took space out before -iptc
                                 #print "=== gnIPTCsummary=== ",gnIPTCsummary, "======"
 
                             if self.gnOptChoice.GetSelection() in [0,1]:
-                                if gnPlace !="": geonameKeywords+=' -iptc:city="'+unicode(gnPlace)+'"'
-                                if gnRegion !="": geonameKeywords+=' -iptc:province-state="'+unicode(gnRegion)+'"'
-                                if gnCountry !="": geonameKeywords+=' -iptc:Country-PrimaryLocationName="'+unicode(gnCountry)+'"'
+                                if gnPlace !="": geonameKeywords+=' -iptc:city="'+str(gnPlace)+'"'
+                                if gnRegion !="": geonameKeywords+=' -iptc:province-state="'+str(gnRegion)+'"'
+                                if gnCountry !="": geonameKeywords+=' -iptc:Country-PrimaryLocationName="'+str(gnCountry)+'"'
                                 
-                                if gnPlace !="": exiftagOptions.append(('-iptc:city="'+unicode(gnPlace)+'"'))
-                                if gnRegion !="": exiftagOptions.append(('-iptc:province-state="'+unicode(gnRegion)+'"'))
-                                if gnCountry !="": exiftagOptions.append(('-iptc:Country-PrimaryLocationName="'+unicode(gnCountry)+'"'))
+                                if gnPlace !="": exiftagOptions.append(('-iptc:city="'+str(gnPlace)+'"'))
+                                if gnRegion !="": exiftagOptions.append(('-iptc:province-state="'+str(gnRegion)+'"'))
+                                if gnCountry !="": exiftagOptions.append(('-iptc:Country-PrimaryLocationName="'+str(gnCountry)+'"'))
                                 #print "*************",gnCountryCode,type(gnCountryCode)
-                                if gnCountryCode !="": geonameKeywords+=' -iptc:Country-PrimaryLocationCode="'+unicode(gnCountryCode)+'"'
-                                if gnCountryCode !="": exiftagOptions.append(('-iptc:Country-PrimaryLocationCode="'+unicode(gnCountryCode)+'"'))
+                                if gnCountryCode !="": geonameKeywords+=' -iptc:Country-PrimaryLocationCode="'+str(gnCountryCode)+'"'
+                                if gnCountryCode !="": exiftagOptions.append(('-iptc:Country-PrimaryLocationCode="'+str(gnCountryCode)+'"'))
                                 if 1:
-                                    geonameKeywords+=' -iptc:Sub-location="'+unicode(gnDistance)+" Km "+unicode(gnOrientation)+" "+unicode(gnPlace)+'"'
-                                    exiftagOptions.append(('-iptc:Sub-location="'+unicode(gnDistance)+" Km "+unicode(gnOrientation)+" "+unicode(gnPlace)+'"'))
-                                if gnPlace !="": geonameKeywords+=' -iptc:city="'+unicode(gnPlace)+'"'
+                                    geonameKeywords+=' -iptc:Sub-location="'+str(gnDistance)+" Km "+str(gnOrientation)+" "+str(gnPlace)+'"'
+                                    exiftagOptions.append(('-iptc:Sub-location="'+str(gnDistance)+" Km "+str(gnOrientation)+" "+str(gnPlace)+'"'))
+                                if gnPlace !="": geonameKeywords+=' -iptc:city="'+str(gnPlace)+'"'
 
                             if self.gnOptChoice.GetSelection() in [0,2]:
-                                geonameKeywords+=unicode(gnIPTCsummary)
+                                geonameKeywords+=str(gnIPTCsummary)
                                 exiftagOptions.append(gnIPTCsummary)
 
                             #print "\n=== geonameKeywords ===\n", geonameKeywords,"\n======"
@@ -1086,13 +1093,14 @@ class GUI(wx.Frame):
                             ## It seems related to this issue http://bugs.python.org/issue1759845 which apparently is solved but only for Python 3 ??
                             ## Help would be appreciated !!!  :/
                             if 1:
-                                # tried: unicode(geonameKeywords).encode(locale.getpreferredencoding())  ??
-                                # tried: unicode(s.decode("utf-8")).encode("utf-8") 
+                                # tried: str(geonameKeywords).encode(locale.getpreferredencoding())  ??
+                                # tried: str(s.decode("utf-8")).encode("utf-8") 
                                 # tried: -tagsfromfile @ -iptc:all -codedcharacterset=utf8
                                 # tried : geonameKeywords.decode("utf-8")).encode("iso-8859-1")
                                 # trying lib unidecode see unicode to ascii (see issue 117 regarding Python 2.x and command line to exiftool containing unicode)
                                 #print geonameKeywords
-                                if sys.platform!=("linux" or "darwin"): # Usage of unidecode for now on windows due to above problem ( https://code.google.com/p/gpicsync/issues/detail?id=117 )
+                                # if sys.platform!=("linux" or "darwin"): # Usage of unidecode for now on windows due to above problem ( https://code.google.com/p/gpicsync/issues/detail?id=117 )
+                                if sys.platform not in ["linux", "darwin"]:
                                     if 0: # in current build 1.32
                                         os.popen('%s -tagsfromfile @ -iptc:all -codedcharacterset=utf8  %s  -overwrite_original "-DateTimeOriginal>FileModifyDate"  "%s"  '%(self.exifcmd,unidecode(geonameKeywords),self.picDir+'/'+fileName))
                                     if 1: # experimental
@@ -1103,9 +1111,9 @@ class GUI(wx.Frame):
                                         subprocess.call(command.encode("utf-8"),startupinfo=startupinfo, shell=False)
                                         
                                 else: # following line contributed by hsivonen which may work on OSX / Linux ( https://code.google.com/p/gpicsync/issues/detail?id=91 )
-                                    os.popen(('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords.decode("utf-8"),self.picDir+'/'+fileName)).encode("utf-8"))
+                                    os.popen(('%s %s  -overwrite_original "-DateTimeOriginal>FileModifyDate" "%s" '%(self.exifcmd,geonameKeywords,self.picDir+'/'+fileName)))
                                     
-                                #os.popen('%s -tagsfromfile @ -iptc:all -codedcharacterset=utf8 %s  -overwrite_original "-DateTimeOriginal>FileModifyDate"  "%s"  '%(self.exifcmd,unicode(geonameKeywords).encode("utf-8"),self.picDir+'/'+fileName))
+                                #os.popen('%s -tagsfromfile @ -iptc:all -codedcharacterset=utf8 %s  -overwrite_original "-DateTimeOriginal>FileModifyDate"  "%s"  '%(self.exifcmd,str(geonameKeywords).encode("utf-8"),self.picDir+'/'+fileName))
                             
                             if 0:
                                 exiftagOptions.append(u'-overwrite_original')
@@ -1248,7 +1256,7 @@ class GUI(wx.Frame):
                 wx.CallAfter(self.consolePrint,"-------------------\n")
                 if self.ExifReaderSelected==("All EXIF metadata"):
                     wx.CallAfter(self.consolePrint,pathPicture+"\n\n")
-                    wx.CallAfter(self.consolePrint,myPicture.readExifAll().decode("utf-8","ignore"))
+                    wx.CallAfter(self.consolePrint,myPicture.readExifAll())
 
                 if self.ExifReaderSelected==("Date/Time/Lat./Long."):
                     dateTime=myPicture.readDateTime()
